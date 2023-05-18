@@ -1,0 +1,3 @@
+[submodule "magic_lantern_msgs"]
+	path = magic_lantern_msgs
+	url = https://github.com/rmunozor2703/magic_lantern_ros.git
