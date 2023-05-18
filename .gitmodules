@@ -1,0 +1,3 @@
+[submodule "magic_lantern_ros"]
+	path = magic_lantern_ros
+	url = https://github.com/rmunozor2703/magic_lantern_ros.git
