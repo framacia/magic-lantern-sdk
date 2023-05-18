@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c444d6f85828f1b4f9b89c7c387f9ddd, type: 3}
   m_Name: msgbrowser_settings
   m_EditorClassIdentifier: 
-  inputPath: C:/Users/FubIntLab/Documents/Unity-Robotics-Hub/tutorials/ros_unity_integration/ros_packages/unity_robotics_demo_msgs
+  inputPath: C:/Users/FubIntLab/Map_comm/magic_lantern_msgs/magic_lantern_msgs
   relativeOutPath: RosMessages

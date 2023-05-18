@@ -1,6 +1,6 @@
 using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
-using RosPose = RosMessageTypes.UnityRoboticsDemo.PosRotMsg;
+using RosPose = RosMessageTypes.MagicLantern.PosRotMsg;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 
 
