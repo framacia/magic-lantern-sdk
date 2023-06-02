@@ -17,5 +17,6 @@ public class Anchor : MonoBehaviour
     }
 
     public string anchorId;
-    public float volumeWidth;
+    public float volumeSize;
+    public float filterProximity;
 }
