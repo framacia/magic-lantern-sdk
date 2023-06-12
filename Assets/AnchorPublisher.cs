@@ -6,7 +6,7 @@ public class AnchorPublisher : MonoBehaviour
 {
     ROSConnection ros;
     public string topicName = "anchor_info";
-    public float publishMessageFrequency = 5.0f;
+    private float publishMessageFrequency = 1f;
 
     // Used to determine how much time has elapsed since the last message was published
     private float timeElapsed;
@@ -21,10 +21,10 @@ public class AnchorPublisher : MonoBehaviour
 
     private void Update()
     {   
-        
+        float Frequency = publishMessageFrequency;
         timeElapsed += Time.deltaTime;
 
-        if (timeElapsed > publishMessageFrequency)
+        if (timeElapsed > Frequency)
         {
             GameObject[] anchorObjects = GameObject.FindGameObjectsWithTag("anchor");
             foreach (GameObject anchorObject in anchorObjects)

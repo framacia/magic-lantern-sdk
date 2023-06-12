@@ -457,7 +457,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topicName: anchor_info
-  publishMessageFrequency: 1
 --- !u!1 &690474523
 GameObject:
   m_ObjectHideFlags: 0
