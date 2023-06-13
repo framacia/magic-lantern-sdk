@@ -20,6 +20,7 @@ public class RtabmapInfo : MonoBehaviour
     void InfoDisplay(RtabInfo infoMessage)
     { 
        // Publish the rtabmap useful information
+        Debug.Log("Header: " + infoMessage.header);
         Debug.Log("Id: " + infoMessage.refId);
         Debug.Log("Loop Closure Id: " + infoMessage.loopClosureId);
         Debug.Log("Proximity Detection Id: " + infoMessage.proximityDetectionId);
@@ -28,7 +29,8 @@ public class RtabmapInfo : MonoBehaviour
 
     void OdomDisplay(RtabOdom odomMessage)
     { 
-       // Publish the odom useful information
+       // Publish the odom useful 
+        Debug.Log("Header: " + odomMessage.header);
         Debug.Log("odom Lost: " + odomMessage.lost);
         Debug.Log("Number of matches: " + odomMessage.matches);
         Debug.Log("Number of inliers: " + odomMessage.inliers);
