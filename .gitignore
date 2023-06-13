@@ -54,3 +54,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Macos
+.DS_Store
