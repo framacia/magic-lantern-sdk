@@ -6,6 +6,7 @@ public class AnchorDefinition : MonoBehaviour
     {
         UpdateVisualizers();
         _camera = Camera.main;
+        _lastPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -15,6 +16,16 @@ public class AnchorDefinition : MonoBehaviour
             UpdateVisualizers();
             _dirty = false;
         }
+        // if anchor has moved, add it to the dirty queue
+        if (!_lastPosition.Equals(transform.position))
+        {
+            Debouncer.Instance.Debounce(1, () =>
+            {
+                AnchorPublisher.Instance.DirtyAnchorDefinitions.Enqueue(this);
+            });
+            _lastPosition = transform.position;
+        }
+        // update boundary viz
         float distanceToCamera = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
             new Vector2(
@@ -53,10 +64,9 @@ public class AnchorDefinition : MonoBehaviour
 
     private bool _dirty = true;
     private Camera _camera;
+    private Vector3 _lastPosition;
 
-
-    public string anchorId;
-    public float volumeSize;
+    public string AnchorId;
 
     public Color InactiveBoundaryColor
     {
