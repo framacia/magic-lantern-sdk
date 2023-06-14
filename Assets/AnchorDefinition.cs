@@ -2,47 +2,91 @@ using UnityEngine;
 
 public class AnchorDefinition : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-
+        UpdateVisualizers();
+        _camera = Camera.main;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_dirty)
         {
-
+            UpdateVisualizers();
             _dirty = false;
         }
+        float distanceToCamera = Vector2.Distance(
+            new Vector2(transform.position.x, transform.position.z),
+            new Vector2(
+                _camera.transform.position.x,
+                _camera.transform.position.z
+            )
+        );
+        BoundaryCylinder.sharedMaterial.color =
+            distanceToCamera > _filterProximity
+                ? _inactiveBoundaryColor
+                : _activeBoundaryColor;
     }
 
-    [SerializeField, SerializeProperty("filterProximity")]
+    void UpdateVisualizers()
+    {
+        BoundaryCylinder.transform.localScale = new Vector3(
+            _filterProximity * 2,
+            BoundaryCylinder.transform.localScale.y,
+            _filterProximity * 2
+        );
+    }
+
+    void SetDirty()
+    {
+        _dirty = true;
+    }
+
+    [SerializeField, SerializeProperty("FilterProximity")]
     private float _filterProximity;
 
+    [SerializeField, SerializeProperty("InactiveBoundaryColor")]
+    private Color _inactiveBoundaryColor;
+
+    [SerializeField, SerializeProperty("ActiveBoundaryColor")]
+    private Color _activeBoundaryColor;
+
     private bool _dirty = true;
+    private Camera _camera;
+
 
     public string anchorId;
     public float volumeSize;
 
-    public float filterProximity
+    public Color InactiveBoundaryColor
     {
-        get
-        {
-            return _filterProximity;
-        }
+        get => _inactiveBoundaryColor;
         set
         {
-            Debug.Log("Set filterProximity");
-            _filterProximity = value;
-            BoundaryCylinder.transform.localScale = new Vector3(
-                _filterProximity,
-                BoundaryCylinder.transform.localScale.y,
-                _filterProximity
-            );
-            _dirty = true;
+            _inactiveBoundaryColor = value;
+            SetDirty();
         }
     }
 
-    public GameObject BoundaryCylinder;
+    public Color ActiveBoundaryColor
+    {
+        get => _activeBoundaryColor;
+        set
+        {
+            _activeBoundaryColor = value;
+            SetDirty();
+        }
+    }
+
+    public float FilterProximity
+    {
+        get => _filterProximity;
+        set
+        {
+            _filterProximity = value;
+            SetDirty();
+        }
+    }
+
+    public MeshRenderer BoundaryCylinder;
 }
