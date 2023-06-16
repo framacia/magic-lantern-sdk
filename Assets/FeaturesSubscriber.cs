@@ -22,6 +22,8 @@ public class FeaturesSubscriber : MonoBehaviour
         _pointCloudData = pointCloud.data;
         _isPointCloudInitialized = true;
         ConvertPointCloudToPositions();
+        if (updated != null)
+            updated();
     }
 
     void ConvertPointCloudToPositions()
@@ -54,10 +56,6 @@ public class FeaturesSubscriber : MonoBehaviour
             _positions.Add(position);
         }
     }
-
-    public float UpdateInterval = 0.1f;  // Interval at which to update the particle system
-    private float _lastUpdateTime;  // Time of the last update
-    private bool _isUpdating;  // Flag to indicate if an update is in progress
 
     // ROS variables
     public string Topic = "feature_point_cloud";

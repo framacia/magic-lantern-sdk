@@ -8,6 +8,7 @@ public class PointCloudParticleVisualizer : MonoBehaviour
 {
     void OnPointCloudChanged()
     {
+        //Debug.Log("onPointCloudChanged " + _featuresSubscriber.positions.Count);
         var points = s_Vertices;
         points.Clear();
 
@@ -47,6 +48,11 @@ public class PointCloudParticleVisualizer : MonoBehaviour
     {
         _featuresSubscriber = GetComponent<FeaturesSubscriber>();
         _particleSystem = GetComponent<ParticleSystem>();
+    }
+
+    void Start()
+    {
+        SetVisible(true);
     }
 
     void OnEnable()
