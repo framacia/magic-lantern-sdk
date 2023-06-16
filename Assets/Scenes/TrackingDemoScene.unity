@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18018606, g: 0.22559257, b: 0.30678663, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 559933960}
   - component: {fileID: 559933961}
   - component: {fileID: 559933962}
+  - component: {fileID: 559933963}
   m_Layer: 0
   m_Name: RosSubscriber
   m_TagString: Untagged
@@ -357,6 +358,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cafa1a2900124060b32ffc66d9dbec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &559933963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559933956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926dc27e7af8dc2458a27f7c0bb8b145, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 0}
+  particleSize: 0.1
+  updateInterval: 0.1
+  topic: feature_point_cloud
 --- !u!1 &690474523
 GameObject:
   m_ObjectHideFlags: 0
