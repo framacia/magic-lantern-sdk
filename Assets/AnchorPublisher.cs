@@ -8,7 +8,7 @@ public class AnchorPublisher : SingletonBehavior<AnchorPublisher>
     void Start()
     {
         _ros = ROSConnection.GetOrCreateInstance();
-        Debug.Log("holaaa" + _ros);
+        
         _ros.RegisterPublisher<AnchorInformationMsg>(TopicName);
 
         AnchorDict = new Dictionary<string, AnchorDefinition>();
