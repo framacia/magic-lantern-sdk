@@ -19,6 +19,10 @@ public class FeaturesSubscriber : MonoBehaviour
 
     void OnReceivePointCloud(PointCloud2 pointCloud)
     {
+        if (!RosErrorFlagReader.noError)
+        {
+            return;
+        }
         _pointCloudData = pointCloud.data;
         _isPointCloudInitialized = true;
         ConvertPointCloudToPositions();

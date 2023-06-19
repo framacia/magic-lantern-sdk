@@ -25,6 +25,10 @@ public class AnchorPublisher : SingletonBehavior<AnchorPublisher>
 
     void FixedUpdate()
     {
+        if (!RosErrorFlagReader.noError)
+        {
+            return;
+        }
         UpdateAnchors();
     }
 

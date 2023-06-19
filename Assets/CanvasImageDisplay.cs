@@ -8,6 +8,10 @@ public class CanvasImageDisplay : MonoBehaviour
 {
     void ShowImage(RosFrame imageMessage)
     {
+        if (!RosErrorFlagReader.noError)
+        {
+            return;
+        }
         _imageData = imageMessage.data;
     }
 
