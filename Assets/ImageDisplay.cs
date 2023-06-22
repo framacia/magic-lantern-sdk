@@ -10,7 +10,6 @@ public class ImageDisplay : MonoBehaviour
 
     void Start()
     {
-
         // Create a texture. Texture size does not matter, since
         // LoadImage will replace with with incoming image size.
         _texture2d = new Texture2D(320, 240);
@@ -20,6 +19,7 @@ public class ImageDisplay : MonoBehaviour
 
     void ShowImage(RosFrame imageMessage)
     {
+        
         _texture2d.LoadImage(imageMessage.data);
         GetComponent<Renderer>().material.mainTexture = _texture2d;
     }

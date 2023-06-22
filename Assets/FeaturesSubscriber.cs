@@ -19,6 +19,10 @@ public class FeaturesSubscriber : MonoBehaviour
 
     void OnReceivePointCloud(PointCloud2 pointCloud)
     {
+        if (!RosErrorFlagReader.noError)
+        {
+            return;
+        }
         _pointCloudData = pointCloud.data;
         _isPointCloudInitialized = true;
         ConvertPointCloudToPositions();
@@ -52,8 +56,26 @@ public class FeaturesSubscriber : MonoBehaviour
             // Create a Vector3 position from the extracted values
             Vector3 position = new Vector3(-y, z, x);
 
+            if (
+                float.IsNaN(position.x) ||
+                float.IsNaN(position.y) ||
+                float.IsNaN(position.z) ||
+                !float.IsFinite(position.x) ||
+                !float.IsFinite(position.y) ||
+                !float.IsFinite(position.z) ||
+                Math.Abs(position.x) > MaxFeatureDistance ||
+                Math.Abs(position.y) > MaxFeatureDistance ||
+                Math.Abs(position.z) > MaxFeatureDistance
+            )
+            {
+                continue;
+            }
             // Add the position to the list
             _positions.Add(position);
+            if (_positions.Count == MaxFeatureCount)
+            {
+                break;
+            }
         }
     }
 
@@ -80,4 +102,7 @@ public class FeaturesSubscriber : MonoBehaviour
     }
 
     private List<Vector3> _positions;
+
+    public int MaxFeatureCount;
+    public float MaxFeatureDistance;
 }

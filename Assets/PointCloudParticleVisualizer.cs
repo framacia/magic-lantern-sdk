@@ -8,7 +8,6 @@ public class PointCloudParticleVisualizer : MonoBehaviour
 {
     void OnPointCloudChanged()
     {
-        //Debug.Log("onPointCloudChanged " + _featuresSubscriber.positions.Count);
         var points = s_Vertices;
         points.Clear();
 
@@ -25,8 +24,10 @@ public class PointCloudParticleVisualizer : MonoBehaviour
         var color = _particleSystem.main.startColor.color;
         var size = _particleSystem.main.startSize.constant;
 
+
         for (int i = 0; i < numParticles; ++i)
         {
+            // Debug.Log("onPointCloudChanged " + points[i]);
             _particles[i].startColor = color;
             _particles[i].startSize = size;
             _particles[i].position = points[i];
