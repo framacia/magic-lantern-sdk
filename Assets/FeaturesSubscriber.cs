@@ -23,6 +23,7 @@ public class FeaturesSubscriber : MonoBehaviour
         {
             return;
         }
+        _pointCloud = pointCloud;
         _pointCloudData = pointCloud.data;
         _isPointCloudInitialized = true;
         ConvertPointCloudToPositions();
@@ -39,20 +40,25 @@ public class FeaturesSubscriber : MonoBehaviour
         }
 
         // Assuming each point consists of x, y, and z coordinates (each float takes 4 bytes)
-        int pointSize = 12;  // Size of each point (3 floats)
-        int pointCount = _pointCloudData.Length / pointSize;
-
+        int pointSize = (int)_pointCloud.point_step;
+        int pointCount = (int)_pointCloud.width;
+        int pointDataOffset = 0;
         _positions.Clear();
 
         for (int i = 0; i < pointCount; i++)
         {
-            int startIndex = i * pointSize;
+            //int startIndex = i * pointSize;
 
             // Extract x, y, and z values from the byte array
-            float x = BitConverter.ToSingle(_pointCloudData, startIndex);
-            float y = BitConverter.ToSingle(_pointCloudData, startIndex + 4);
-            float z = BitConverter.ToSingle(_pointCloudData, startIndex + 8);
+            float x = BitConverter.ToSingle(_pointCloudData, pointDataOffset + 0);
+            float y = BitConverter.ToSingle(_pointCloudData, pointDataOffset + 4);
+            float z = BitConverter.ToSingle(_pointCloudData, pointDataOffset + 8);
+            if (Topic == "features_stm")
+            {
+                 float rgb = BitConverter.ToSingle(_pointCloudData, pointDataOffset + 16);
+            }
 
+            pointDataOffset += pointSize;
             // Create a Vector3 position from the extracted values
             Vector3 position = new Vector3(-y, z, x);
 
@@ -83,6 +89,7 @@ public class FeaturesSubscriber : MonoBehaviour
     public string Topic = "feature_point_cloud";
     private bool _isPointCloudInitialized = false;
     private byte[] _pointCloudData;
+    private PointCloud2 _pointCloud;
 
     /// <summary>
     /// Invoked whenever the point cloud is updated.
