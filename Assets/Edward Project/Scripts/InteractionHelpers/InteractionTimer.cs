@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class InteractionTimer : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class InteractionTimer : MonoBehaviour
     public Action OnFinishInteraction;
     public Action OnCancelInteraction;
 
+    [SerializeField] private UnityEvent OnFinishUnityEvent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +56,9 @@ public class InteractionTimer : MonoBehaviour
             {
                 if (OnFinishInteraction != null)
                     OnFinishInteraction();
+
+                if (OnFinishUnityEvent != null)
+                    OnFinishUnityEvent.Invoke();
 
                 IsInteracting = false;
                 ResetInteraction();

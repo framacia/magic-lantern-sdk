@@ -5,11 +5,22 @@ using UnityEngine;
 public class CameraPointedObject : MonoBehaviour
 {
     public float targetAngle = 5f;
-    public new Transform camera;
+    private Transform camera;
+
+    [HideInInspector]
     public InteractionTimer iTimer;
 
     public bool testRaycast = false;
     public LayerMask blockingLayers = 0;
+
+    private void Awake()
+    {
+        if (camera == null)
+            camera = Camera.main.transform;
+
+        if(iTimer == null)
+            iTimer = GetComponentInChildren<InteractionTimer>(true);
+    }
 
     // Update is called once per frame
     void Update()
