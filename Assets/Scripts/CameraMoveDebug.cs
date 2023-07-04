@@ -9,14 +9,21 @@ public class CameraMoveDebug : MonoBehaviour
     [SerializeField] float speed = 1f;
     [SerializeField] TextMeshProUGUI fpsCounterText;
 
-    private void Awake()
+    private void Start()
     {
-        //Is it really necessary setting this??? Find a good place to add it 
-#if UNITY_ANDROID && !UNITY_EDITOR
-        Application.targetFrameRate = 60;
-#endif
+
 
         cam = GetComponent<Camera>();
+
+        //Invoke("DelayedStart", 3f);
+    }
+
+    private void DelayedStart()
+    {
+        //Is it really necessary setting this??? Find a good place to add it 
+        QualitySettings.vSyncCount = 0;
+
+        Application.targetFrameRate = 61;
     }
 
     // Update is called once per frame
