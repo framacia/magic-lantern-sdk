@@ -8,4 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EdwardMerge.unity
     guid: 3f8164e53e65216499fd8c4caebb030c
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 4ebeba8f068d26544be72d89f0292dd4, type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 5a8f941a4acfa594886a75f76254d7e7, type: 2}

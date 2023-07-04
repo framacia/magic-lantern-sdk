@@ -2570,7 +2570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1582871653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7463,7 +7463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5460a106f013c104380b14c23458bddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 0}
+  cube: {fileID: 1647624269}
 --- !u!4 &1582871663
 Transform:
   m_ObjectHideFlags: 0
@@ -7492,7 +7492,7 @@ GameObject:
   - component: {fileID: 1647624270}
   - component: {fileID: 1647624273}
   - component: {fileID: 1647624274}
-  - component: {fileID: 1647624275}
+  - component: {fileID: 1647624276}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7613,8 +7613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  fpsCounterText: {fileID: 1270337651}
---- !u!114 &1647624275
+  fpsCounterText: {fileID: 0}
+--- !u!114 &1647624276
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7623,11 +7623,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1647624269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 703aacc1786898140b5f47fc7343be7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ce35a69095dafe47b5593a69989e368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxRate: 9999
-  TargetFrameRate: 60
+  m_GuiText: {fileID: 1270337651}
 --- !u!1 &1708681370
 GameObject:
   m_ObjectHideFlags: 0

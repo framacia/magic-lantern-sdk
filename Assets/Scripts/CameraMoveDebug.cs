@@ -15,7 +15,7 @@ public class CameraMoveDebug : MonoBehaviour
 
         cam = GetComponent<Camera>();
 
-        //Invoke("DelayedStart", 3f);
+        Invoke("DelayedStart", 0.5f);
     }
 
     private void DelayedStart()
