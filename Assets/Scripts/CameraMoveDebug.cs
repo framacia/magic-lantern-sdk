@@ -25,7 +25,6 @@ public class CameraMoveDebug : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-#if UNITY_EDITOR
         float xAxisValue = Input.GetAxis("HorizontalArrow");
         float zAxisValue = Input.GetAxis("VerticalArrow");
 
@@ -43,7 +42,7 @@ public class CameraMoveDebug : MonoBehaviour
 
             gameObject.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
         }
-#endif
+
 
     }
 
