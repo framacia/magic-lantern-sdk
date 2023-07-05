@@ -9,5 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/EdwardMerge.unity
     guid: 3f8164e53e65216499fd8c4caebb030c
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2a7aa5aa2dfff7040b09dac11562d92e, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 654a2a1d96e86364ba52c10a6680e2be, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 187fedefd40b5414cbfccc97ba4a6a1d, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 4ebeba8f068d26544be72d89f0292dd4, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 5a8f941a4acfa594886a75f76254d7e7, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 38f70711513784c47b6d937745d05034, type: 2}

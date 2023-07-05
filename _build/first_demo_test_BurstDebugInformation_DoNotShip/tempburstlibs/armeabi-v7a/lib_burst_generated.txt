@@ -128,6 +128,10 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\StagingArea\tempburstl
 --compilation-defines=USING_ANIMATION_MODULE
 --compilation-defines=USING_PHYSICS2D_MODULE
 --compilation-defines=TIMELINE_FRAMEACCURATE
+--compilation-defines=MODULE_URP_ENABLED
+--compilation-defines=USE_LEGACY_INPUT_HELPERS
+--compilation-defines=UNITY_ANALYTICS
+--compilation-defines=XR_MGMT_GTE_320
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\Burst
 --output=C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\StagingArea\tempburstlibs\armeabi-v7a\lib_burst_generated
