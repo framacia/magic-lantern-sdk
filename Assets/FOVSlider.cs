@@ -7,6 +7,11 @@ public class FOVSlider : MonoBehaviour
 {
     public TextMeshProUGUI fovText;
 
+    private void Start()
+    {
+        fovText.text = Camera.main.fieldOfView.ToString();
+    }
+
     public void ChangeFOV(float fov)
     {
         Camera.main.fieldOfView = fov;
