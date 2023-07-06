@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class FOVSlider : MonoBehaviour
@@ -9,7 +10,7 @@ public class FOVSlider : MonoBehaviour
 
     private void Start()
     {
-        fovText.text = Camera.main.fieldOfView.ToString();
+        fovText.text = Camera.main.GetHorizontalFieldOfView().ToString();
     }
 
     public void ChangeFOV(float fov)
