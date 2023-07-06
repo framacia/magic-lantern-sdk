@@ -4,7 +4,9 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+#if UNITY_EDITOR
 using TNRD.Utilities;
+#endif
 
 public class CameraPointedObject : MonoBehaviour
 {
@@ -36,6 +38,7 @@ public class CameraPointedObject : MonoBehaviour
         iTimer.OnFinishInteraction += OnObjectInteracted;
     }
 
+#if UNITY_EDITOR
     /// <summary>
     /// Sets up timer and model children when this script is added to GameObject
     /// </summary>
@@ -62,10 +65,9 @@ public class CameraPointedObject : MonoBehaviour
         {
             interactingText = "Interacting...";
         }
-#if UNITY_EDITOR
         IconManager.SetIcon(gameObject, LabelIcon.Purple);
-#endif
     }
+#endif
 
     // Update is called once per frame
     void Update()
