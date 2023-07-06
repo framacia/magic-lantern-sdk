@@ -62,8 +62,9 @@ public class CameraPointedObject : MonoBehaviour
         {
             interactingText = "Interacting...";
         }
-
+#if UNITY_EDITOR
         IconManager.SetIcon(gameObject, LabelIcon.Purple);
+#endif
     }
 
     // Update is called once per frame
