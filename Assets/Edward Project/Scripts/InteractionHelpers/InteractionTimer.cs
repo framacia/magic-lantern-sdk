@@ -27,14 +27,13 @@ public class InteractionTimer : MonoBehaviour
     public GameObject UI;
     public RectTransform panel;
     public Image fillIndicator;
+    public TextMeshProUGUI stateText;
     private Camera cam;
 
     public bool IsInteracting { get; private set; } = false;
     public bool IsResting { get; private set; } = true;
     public Action OnFinishInteraction;
     public Action OnCancelInteraction;
-
-    [SerializeField] private UnityEvent OnFinishUnityEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +55,6 @@ public class InteractionTimer : MonoBehaviour
             {
                 if (OnFinishInteraction != null)
                     OnFinishInteraction();
-
-                if (OnFinishUnityEvent != null)
-                    OnFinishUnityEvent.Invoke();
 
                 IsInteracting = false;
                 ResetInteraction();

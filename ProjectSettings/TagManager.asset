@@ -14,9 +14,9 @@ TagManager:
   - UI
   - 
   - Grabbable
-  - 
-  - 
-  - 
+  - Grabbed
+  - Ignore_Grabbables
+  - Block_Raycast
   - 
   - 
   - 

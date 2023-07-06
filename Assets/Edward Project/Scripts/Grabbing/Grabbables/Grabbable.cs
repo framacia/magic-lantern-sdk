@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public enum GrabbableState {FREE, GRABBED, PLACED, LOCKED}
+public enum GrabbableState { FREE, GRABBED, PLACED, LOCKED }
 
 public abstract class Grabbable : MonoBehaviour
 {
@@ -25,10 +25,10 @@ public abstract class Grabbable : MonoBehaviour
 
     protected Transform grabTarget; //Target that the grabbable will follow when grabbed.
 
-    protected bool attemptingToGrab {get; private set;} = false;
-    
+    protected bool attemptingToGrab { get; private set; } = false;
+
     [field: SerializeField]
-    protected float lerpScale {get; private set;} = 7.0f;
+    protected float lerpScale { get; private set; } = 7.0f;
 
     // ---- Grab subscribable void actions
     public Action OnStartGrabbing;
@@ -39,53 +39,60 @@ public abstract class Grabbable : MonoBehaviour
 
     protected Camera cam;
 
-    protected virtual void Start(){
+    protected virtual void Start()
+    {
         usesGravity = rb.useGravity;
         cam = Camera.main;
     }
 
-    public virtual bool StartGrabbingAttempt(Transform target){
-        if(attemptingToGrab)
+    public virtual bool StartGrabbingAttempt(Transform target)
+    {
+        if (attemptingToGrab)
             return false;
 
-        if(state != GrabbableState.FREE && state != GrabbableState.PLACED)
+        if (state != GrabbableState.FREE && state != GrabbableState.PLACED)
             return false;
 
         attemptingToGrab = true;
         iTimer.StartInteraction();
         this.grabTarget = target;
-        if(OnStartGrabbing != null)
+        if (OnStartGrabbing != null)
             OnStartGrabbing();
         return true;
     }
 
-    public virtual void Grab(){
-        if(state == GrabbableState.PLACED || state == GrabbableState.LOCKED){ //Grab can be forced that why we consider the LOCKED state
+    public virtual void Grab()
+    {
+        if (state == GrabbableState.PLACED || state == GrabbableState.LOCKED)
+        { //Grab can be forced that why we consider the LOCKED state
             RemoveFromPlace();
         }
         attemptingToGrab = false;
         UpdateState(state, GrabbableState.GRABBED);
         this.gameObject.layer = LayerMask.NameToLayer("Grabbed"); // Not efficient but solid when changing projects
-        if(OnGrab != null)
+        if (OnGrab != null)
             OnGrab();
     }
 
-    public virtual void StopGrabbingAttempt(){
+    public virtual void StopGrabbingAttempt()
+    {
         iTimer.CancelInteraction();
         grabTarget = null;
         ReleaseFromGrab();
-        if(OnStopGrabbing != null)
+        if (OnStopGrabbing != null)
             OnStopGrabbing();
     }
 
-    public virtual void Release(){
+    public virtual void Release()
+    {
         ReleaseFromGrab();
         UpdateState(state, GrabbableState.FREE);
-        if(OnRelease != null)
+        if (OnRelease != null)
             OnRelease();
     }
 
-    protected virtual void ReleaseFromGrab(){
+    protected virtual void ReleaseFromGrab()
+    {
         grabTarget = null;
         attemptingToGrab = false;
         this.gameObject.layer = LayerMask.NameToLayer("Grabbable");
@@ -93,7 +100,8 @@ public abstract class Grabbable : MonoBehaviour
 
     public abstract void UpdateGrabbedPosition();
 
-    public void Place(){
+    public void Place()
+    {
         placeable = pendingPlaceable;
         pendingPlaceable = null;
         grabTarget = null;
@@ -106,32 +114,38 @@ public abstract class Grabbable : MonoBehaviour
         rb.MoveRotation(placeable.target.transform.rotation);
 
         placeable.iTimer.OnFinishInteraction -= this.Place;
-        if(OnPlace != null)
+        if (OnPlace != null)
             OnPlace();
     }
-    public void RemoveFromPlace(){
+    public void RemoveFromPlace()
+    {
         rb.isKinematic = false;
         Debug.Log("Removing from placeable");
         placeable.Remove();
         placeable = null;
     }
-    protected void UpdateState(GrabbableState prevState, GrabbableState targetState){
+    protected void UpdateState(GrabbableState prevState, GrabbableState targetState)
+    {
         previousState = prevState;
         state = targetState;
     }
 
-    protected Vector3 CalculateCameraToTargetVector(){
+    protected Vector3 CalculateCameraToTargetVector()
+    {
         return (grabTarget.transform.position - cam.transform.position).normalized;
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other)
+    {
         //Do not check if already placed
-        if(state == GrabbableState.PLACED || state == GrabbableState.LOCKED)
+        if (state == GrabbableState.PLACED || state == GrabbableState.LOCKED)
             return;
 
         Placeable p = other.GetComponent<Placeable>();
-        if(p != null){
-            if(p.CheckIfCanPlaceObject(this.gameObject)){
+        if (p != null)
+        {
+            if (p.CheckIfCanPlaceObject(this.gameObject))
+            {
                 pendingPlaceable = p;
                 p.iTimer.OnFinishInteraction += this.Place;
                 p.StartPlacingObject(this.gameObject);
@@ -139,9 +153,11 @@ public abstract class Grabbable : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) {
+    private void OnTriggerExit(Collider other)
+    {
         Placeable p = other.GetComponent<Placeable>();
-        if(p == pendingPlaceable){
+        if (p != null && p == pendingPlaceable)
+        {
             p.iTimer.OnFinishInteraction -= this.Place;
             p.StopPlacingObject();
         }
