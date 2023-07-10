@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/EdwardMerge.unity
-    guid: 3f8164e53e65216499fd8c4caebb030c
+    path: Assets/Scenes/DownstairsLab.unity
+    guid: e9bb4ba752a72604d98dcdaf6e58504c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 2a7aa5aa2dfff7040b09dac11562d92e, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 654a2a1d96e86364ba52c10a6680e2be, type: 2}

@@ -16,6 +16,11 @@ public class FOVSlider : MonoBehaviour
     public void ChangeFOV(float fov)
     {
         Camera.main.fieldOfView = fov;
-        fovText.text = fov.ToString();
+        //fovText.text = Camera.main.fieldOfView.ToString();
+    }
+
+    private void Update()
+    {
+        fovText.text = Camera.main.fieldOfView.ToString();
     }
 }
