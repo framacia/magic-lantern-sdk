@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,11 +7,9 @@ using UnityEngine;
 public class CameraMoveDebug : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
-    [SerializeField] TextMeshProUGUI fpsCounterText;
 
     private void Start()
     {
-
         Invoke("DelayedStart", 0.5f);
     }
 
@@ -42,15 +41,5 @@ public class CameraMoveDebug : MonoBehaviour
 
             gameObject.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
         }
-
-
-    }
-
-    private void Update()
-    {
-        //if (fpsCounterText != null)
-        //{
-        //    fpsCounterText.text = (1.0f / Time.deltaTime).ToString("F1");
-        //}
     }
 }

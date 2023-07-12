@@ -11,12 +11,13 @@ namespace UnityStandardAssets.Utility
         private int m_FpsAccumulator = 0;
         private float m_FpsNextPeriod = 0;
         private int m_CurrentFps;
-        const string display = "{0} FPS";
-        public TextMeshProUGUI m_GuiText;
+        const string display = "{0}";
+        private TextMeshProUGUI m_GuiText;
 
 
         private void Start()
         {
+            m_GuiText = GameObject.Find("FPS Text").GetComponent<TextMeshProUGUI>();
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
         }
 
@@ -30,7 +31,8 @@ namespace UnityStandardAssets.Utility
                 m_CurrentFps = (int)(m_FpsAccumulator / fpsMeasurePeriod);
                 m_FpsAccumulator = 0;
                 m_FpsNextPeriod += fpsMeasurePeriod;
-                m_GuiText.text = string.Format(display, m_CurrentFps);
+                if (m_GuiText != null)
+                    m_GuiText.text = string.Format(display, m_CurrentFps);
             }
         }
     }
