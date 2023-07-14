@@ -7,8 +7,6 @@ public class ARMLNetworkManager : NetworkManager
 {
     [Header("ARML")]
     public bool isAdmin = false;
-    [SerializeField] GameObject lanternPlayer;
-    [SerializeField] GameObject adminPlayer;
 
     private void Awake()
     {
@@ -25,20 +23,4 @@ public class ARMLNetworkManager : NetworkManager
             StartHost();
         }
     }
-
-    //public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-    //{
-    //    if (!isAdmin)
-    //    {
-    //        GameObject _lanternPlayer = Instantiate(lanternPlayer);
-    //        NetworkServer.AddPlayerForConnection(conn, _lanternPlayer);
-    //    }
-    //    else
-    //    {
-    //        GameObject _adminPlayer = Instantiate(adminPlayer);
-    //        NetworkServer.AddPlayerForConnection(conn, _adminPlayer);
-    //    }
-    //}
 }
-
-

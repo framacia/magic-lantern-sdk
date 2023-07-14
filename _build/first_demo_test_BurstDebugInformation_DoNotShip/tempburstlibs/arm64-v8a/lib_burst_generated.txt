@@ -20,12 +20,12 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Telepathy;
 --assembly-defines=Unity.XR.OpenXR.Features.MockRuntime;
 --assembly-defines=Unity.XR.CoreUtils;
+--assembly-defines=Unity.XR.OpenXR;
 --assembly-defines=Unity.XR.ARSubsystems;
 --assembly-defines=OccaSoftware.Exposure.Shaders;
 --assembly-defines=Unity.XR.OpenXR.Features.MetaQuestSupport;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Mirror.Examples;
---assembly-defines=Unity.XR.OpenXR;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.XR.OpenXR.Features.OculusQuestSupport;
 --assembly-defines=kcp2k;
@@ -107,12 +107,12 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Telepathy;
 --assembly-defines=Unity.XR.OpenXR.Features.MockRuntime;
 --assembly-defines=Unity.XR.CoreUtils;
+--assembly-defines=Unity.XR.OpenXR;
 --assembly-defines=Unity.XR.ARSubsystems;
 --assembly-defines=OccaSoftware.Exposure.Shaders;
 --assembly-defines=Unity.XR.OpenXR.Features.MetaQuestSupport;
 --assembly-defines=Unity.RenderPipelines.Core.ShaderLibrary;
 --assembly-defines=Mirror.Examples;
---assembly-defines=Unity.XR.OpenXR;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.XR.OpenXR.Features.OculusQuestSupport;
 --assembly-defines=kcp2k;

@@ -1,8 +1,10 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -22,7 +24,9 @@ public class NetworkPlayer : NetworkBehaviour
     private void Awake()
     {
         manager = FindObjectOfType<ARMLNetworkManager>();
-        adminUI = transform.Find("AdminUI").gameObject;
+
+        //TODO Find better way of handling this reference
+        adminUI = GameObject.Find("AdminUI").gameObject;
     }
 
     public override void OnStartLocalPlayer()
@@ -30,12 +34,17 @@ public class NetworkPlayer : NetworkBehaviour
         if (isServer)
         {
             playerType = PlayerType.LanternPlayer;
+            adminUI.SetActive(false);
         }
 
-        if(manager.isAdmin)
+        if (manager.isAdmin)
         {
             playerType = PlayerType.AdminPlayer;
+            adminUI.SetActive(true);
         }
+
+        //Subscribe to event only if local player
+        PostProcessingController.OnPostProcessingChanged += UpdatePostProcessing;
     }
 
     private void Start()
@@ -51,62 +60,52 @@ public class NetworkPlayer : NetworkBehaviour
 
         name = playerType.ToString();
 
-        if (playerType == PlayerType.LanternPlayer)
-        {
-            adminUI.SetActive(false);
-        }
-
         geometryParent = GameObject.Find("--GEOMETRY--");
+
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if(playerType == PlayerType.AdminPlayer)
-        {
-            float xAxisValue = Input.GetAxis("HorizontalArrow");
-            float zAxisValue = Input.GetAxis("VerticalArrow");
+        if (!isLocalPlayer) return;
 
-            CmdMoveObject(xAxisValue, zAxisValue);
-        }
+        float xAxisValue = Input.GetAxis("Horizontal");
+        float zAxisValue = Input.GetAxis("Vertical");
+
+        if (xAxisValue > 0.1f || zAxisValue > 0.1f || xAxisValue < -0.1f || zAxisValue < -0.1f)
+            MoveGeometry(xAxisValue, zAxisValue);
     }
 
-    [Command]
-    void CmdMoveObject(float xAxisValue, float zAxisValue)
+    void MoveGeometry(float xAxisValue, float zAxisValue)
     {
         if (geometryParent != null)
         {
             //Rotation
-            geometryParent.transform.Rotate(-zAxisValue * speed, xAxisValue * speed, 0);
+            //geometryParent.transform.Rotate(-zAxisValue * speed, xAxisValue * speed, 0);
 
             //Force Z rotation to 0
             Vector3 currentRotation = transform.rotation.eulerAngles;
             transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 0);
 
             //Translation
-            Vector3 movementVector = (geometryParent.transform.forward * Input.GetAxis("Vertical") * 10) + 
-                (geometryParent.transform.right * Input.GetAxis("Horizontal") * 10);
+            Vector3 movementVector = (geometryParent.transform.forward * zAxisValue * 10) +
+                (geometryParent.transform.right * xAxisValue * 10);
 
             geometryParent.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
+
+            UpdateObjectPosition(geometryParent, geometryParent.transform.position);
         }
     }
 
-    //private void AssignPlayerType()
-    //{
-    //    if (isServer && isLocalPlayer)
-    //    {
-    //        playerType = PlayerType.LanternPlayer;
-    //    }
-    //    else if (isServer && !isLocalPlayer)
-    //    {
-    //        playerType = PlayerType.AdminPlayer;
-    //    }
-    //    else if (!isServer && isLocalPlayer)
-    //    {
-    //        playerType = PlayerType.AdminPlayer;
-    //    }
-    //    else if (!isServer && !isLocalPlayer)
-    //    {
-    //        playerType = PlayerType.LanternPlayer;
-    //    }
-    //}
+    [Command]
+    void UpdateObjectPosition(GameObject go, Vector3 newPosition)
+    {
+        go.transform.position = newPosition;
+    }
+
+    //TODO Test if this can be called direcly from the action subscription
+    [Command]
+    void UpdatePostProcessing(PostProcessingConfig config, GameObject go)
+    {
+        go.GetComponent<PostProcessingController>().SetPostProcessingConfig(config);
+    }
 }
