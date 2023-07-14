@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public static class AnimationHelper
 {
-    public static IEnumerator ZoomIn(RectTransform transform, float speed, UnityEvent? OnEnd)
+    public static IEnumerator ZoomIn(RectTransform transform, float speed, UnityEvent OnEnd)
     {
         float time = 0;
         while (time < 1)
@@ -20,7 +20,7 @@ public static class AnimationHelper
         OnEnd?.Invoke();
     }
 
-    public static IEnumerator ZoomOut(RectTransform transform, float speed, UnityEvent? OnEnd)
+    public static IEnumerator ZoomOut(RectTransform transform, float speed, UnityEvent OnEnd)
     {
         float time = 0;
         while (time < 1)
@@ -34,7 +34,7 @@ public static class AnimationHelper
         OnEnd?.Invoke();
     }
 
-    public static IEnumerator FadeIn(CanvasGroup canvasGroup, float speed, UnityEvent? OnEnd)
+    public static IEnumerator FadeIn(CanvasGroup canvasGroup, float speed, UnityEvent OnEnd)
     {
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
@@ -51,7 +51,7 @@ public static class AnimationHelper
         OnEnd?.Invoke();
     }
 
-    public static IEnumerator FadeOut(CanvasGroup canvasGroup, float speed, UnityEvent? OnEnd)
+    public static IEnumerator FadeOut(CanvasGroup canvasGroup, float speed, UnityEvent OnEnd)
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.interactable = false;
@@ -68,7 +68,7 @@ public static class AnimationHelper
         OnEnd?.Invoke();
     }
 
-    public static IEnumerator SlideIn(RectTransform transform, Page.EntryDirection direction, float speed, UnityEvent? OnEnd)
+    public static IEnumerator SlideIn(RectTransform transform, Page.EntryDirection direction, float speed, UnityEvent OnEnd)
     {
         Vector2 startPosition;
         switch (direction)
@@ -102,7 +102,7 @@ public static class AnimationHelper
         OnEnd?.Invoke();
     }
 
-    public static IEnumerator SlideOut(RectTransform transform, Page.EntryDirection direction, float speed, UnityEvent? OnEnd)
+    public static IEnumerator SlideOut(RectTransform transform, Page.EntryDirection direction, float speed, UnityEvent OnEnd)
     {
         Vector2 endPosition;
         switch (direction)

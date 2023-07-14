@@ -154,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.UPF.ARML
+    Android: com.UPF.ARML2
     Standalone: com.UPF.ARML-Tracking-Demo
     iPhone: com.ARML.test
   buildNumber:
