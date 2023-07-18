@@ -25,6 +25,8 @@ public class ARMLNetworkManager : NetworkManager
         if (!isAdmin)
         {
             StartHost();
+            GetComponent<NetworkManagerHUD>().enabled = false;
+            //TODO Handle the on-screen notifications for Admin connected/disconnected etc.
         }
         else
         {
@@ -58,5 +60,16 @@ public class ARMLNetworkManager : NetworkManager
             Debug.LogError("ARML Hotspot not found! Check your connection settings");
             return null;
         }
+    }
+
+    public override void OnStartServer()
+    {
+        Debug.Log("Host has started server");
+    }
+
+    public override void OnServerConnect()
+    {
+        base.OnServerConnect();
+        Debug.Log("Client has connected to server");
     }
 }

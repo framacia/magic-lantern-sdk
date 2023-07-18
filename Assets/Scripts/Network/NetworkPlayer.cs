@@ -1,3 +1,4 @@
+using AClockworkBerry;
 using Mirror;
 using System;
 using System.Collections;
@@ -9,7 +10,7 @@ using UnityEngine.Rendering;
 public class NetworkPlayer : NetworkBehaviour
 {
     GameObject geometryParent;
-    GameObject adminUI;
+    AdminUIController adminUI;
     ARMLNetworkManager manager;
     float speed = 1f;
 
@@ -24,27 +25,30 @@ public class NetworkPlayer : NetworkBehaviour
     private void Awake()
     {
         manager = FindObjectOfType<ARMLNetworkManager>();
-
-        //TODO Find better way of handling this reference
-        adminUI = GameObject.Find("AdminUI").gameObject;
+        adminUI = FindObjectOfType<AdminUIController>(true);
     }
 
     public override void OnStartLocalPlayer()
     {
+
         if (isServer)
         {
             playerType = PlayerType.LanternPlayer;
-            adminUI.SetActive(false);
+            adminUI.SetCanvasVisibility(false);
         }
 
         if (manager.isAdmin)
         {
             playerType = PlayerType.AdminPlayer;
-            adminUI.SetActive(true);
+            adminUI.SetCanvasVisibility(true);
+            string message = "Admin device joined server";
+            //Debug.Log(message);
+            CmdSendScreenLoggerMessage(message);
         }
 
-        //Subscribe to event only if local player
-        PostProcessingController.OnPostProcessingChanged += UpdatePostProcessing;
+        //Subscribe to events only if local player
+        PostProcessingController.OnPostProcessingChanged += CmdUpdatePostProcessing;
+        ScreenLogger.OnScreenLoggerToggled += CmdToggleScreenLogger;
     }
 
     private void Start()
@@ -55,7 +59,10 @@ public class NetworkPlayer : NetworkBehaviour
             if (isServer)
                 playerType = PlayerType.AdminPlayer;
             else
+            {
                 playerType = PlayerType.LanternPlayer;
+            }
+
         }
 
         name = playerType.ToString();
@@ -104,8 +111,20 @@ public class NetworkPlayer : NetworkBehaviour
 
     //TODO Test if this can be called direcly from the action subscription
     [Command]
-    void UpdatePostProcessing(PostProcessingConfig config, GameObject go)
+    void CmdUpdatePostProcessing(PostProcessingConfig config, GameObject go)
     {
         go.GetComponent<PostProcessingController>().SetPostProcessingConfig(config);
+    }
+
+    [Command]
+    public void CmdToggleScreenLogger(bool b)
+    {
+        ScreenLogger.Instance.ShowLog = b;
+    }
+
+    [Command]
+    void CmdSendScreenLoggerMessage(string message)
+    {
+        Debug.Log(message);
     }
 }
