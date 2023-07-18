@@ -1,0 +1,45 @@
+.container {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+}
+
+.button {
+    min-height: 40px;
+    margin-left: -5%;
+    margin-right: -5%;
+}
+
+.header {
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}
+
+.background {
+    background-color: rgba(81, 124, 80, 255);
+    color: rgba(255, 255, 255, 255);
+}
+
+.expand {
+}
+
+.border {
+    border-left-color: rgba(82, 125, 81, 255);
+    border-right-color: rgba(82, 125, 81, 255);
+    border-top-color: rgba(82, 125, 81, 255);
+    border-bottom-color: rgba(82, 125, 81, 255);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.highlight {
+    color: rgba(0, 0, 0, 255);
+    background-color: rgba(164, 153, 55, 255);
+}

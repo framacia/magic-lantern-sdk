@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement name="TitleContainer">
+        <ui:Label text="AR Magic Lantern Game Designer" display-tooltip-when-elided="true" style="-unity-text-align: upper-center; -unity-font-style: bold; font-size: 18px; -unity-text-outline-width: 0; -unity-text-outline-color: rgb(67, 67, 67); color: rgb(255, 133, 0);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="LoadSOContainer" style="align-items: stretch; justify-content: flex-start; opacity: 1; -unity-text-align: upper-left;">
+        <uie:ObjectField label="Game to Load" name="loadGameObjectField" />
+    </ui:VisualElement>
+    <ui:Button text="Load Game" display-tooltip-when-elided="true" name="loadGameButton" style="width: auto; justify-content: flex-start; align-items: auto; flex-wrap: nowrap; flex-direction: column; opacity: 1; -unity-text-align: middle-center; transform-origin: center; position: relative; left: auto;" />
+    <ui:VisualElement name="GameNameContainer" style="margin-top: 20px;">
+        <ui:Label text="Game Name" display-tooltip-when-elided="true" name="gameNameLabel" />
+    </ui:VisualElement>
+</ui:UXML>
