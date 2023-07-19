@@ -56,6 +56,7 @@ public class AdminUIController : NetworkBehaviour
 
         cam.lensShift = new Vector2(cam.lensShift.x, value);
         CmdOnChangeVerticalLensShift(cam.lensShift);
+        Debug.Log(string.Format("Vertical Lens Shift: {0}", cam.lensShift.ToString("F3")));
     }
 
     [Command(requiresAuthority = false)]
@@ -67,7 +68,7 @@ public class AdminUIController : NetworkBehaviour
 
     public void ToggleVignette(bool b)
     {
-        postProcessingController.OnToggleVignette(b);
+        postProcessingController?.OnToggleVignette(b);
     }
 
     public void ChangeValueContrast(float value)
@@ -78,6 +79,14 @@ public class AdminUIController : NetworkBehaviour
     public void ToggleVirtualDouble()
     {
         virtualDouble.SetActive(!virtualDouble.activeSelf);
+        CmdOnToggleVirtualDouble();
+    }
+
+    [Command(requiresAuthority = false)]
+    void CmdOnToggleVirtualDouble()
+    {
+        virtualDouble.SetActive(!virtualDouble.activeSelf);
+
     }
 
 }

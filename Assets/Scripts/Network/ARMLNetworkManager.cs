@@ -36,6 +36,12 @@ public class ARMLNetworkManager : NetworkManager
         }
     }
 
+    public override void OnStartHost()
+    {
+        base.OnStartHost();
+
+    }
+
     public void SetNetworkAddress(string networkAddress)
     {
         networkAddress = networkAddress ?? string.Empty;

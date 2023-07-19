@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int LevelIndex { get; private set; }
+
+    public Level(int levelIndex)
     {
-        
+        LevelIndex = levelIndex;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    GameObject go;
 }

@@ -36,8 +36,7 @@ public class NetworkPlayer : NetworkBehaviour
             playerType = PlayerType.LanternPlayer;
             adminUI.SetCanvasVisibility(false);
         }
-
-        if (manager.isAdmin)
+        else if (manager.isAdmin)
         {
             playerType = PlayerType.AdminPlayer;
             adminUI.SetCanvasVisibility(true);

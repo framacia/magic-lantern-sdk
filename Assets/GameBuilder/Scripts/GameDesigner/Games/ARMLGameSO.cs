@@ -8,7 +8,7 @@ namespace FranTest.GameBuilder
     public class ARMLGameSO : ScriptableObject
     {
         [SerializeField] string gameName;
-        [SerializeField] GameObject gameObject;
+        [SerializeField] List<Level> levels;
 
         /// <summary>
         /// Returns the list of tasks

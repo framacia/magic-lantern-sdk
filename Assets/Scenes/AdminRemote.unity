@@ -350,7 +350,8 @@ MonoBehaviour:
     dynamicAdjustmentTolerance: 1
     deliveryTimeEmaDuration: 2
   timeInterpolationGui: 0
-  autoHost: 0
+  isAdmin: 0
+  autoConnectoToHotspot: 0
 --- !u!4 &1431378407
 Transform:
   m_ObjectHideFlags: 0
