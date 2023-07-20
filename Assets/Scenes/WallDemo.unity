@@ -419,6 +419,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -637,6 +641,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -738,6 +746,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -1052,6 +1064,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -1269,6 +1285,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -1782,6 +1802,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -2229,6 +2253,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -2372,6 +2400,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -2537,6 +2569,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -2649,6 +2685,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -2857,6 +2897,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -2989,6 +3033,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -3585,6 +3633,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -3839,6 +3891,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11401706, guid: e0aeafd6ca709b5449035c42f4e3879e, type: 3}
+      propertyPath: ShowLog
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2109244090638472714, guid: e0aeafd6ca709b5449035c42f4e3879e, type: 3}
       propertyPath: sceneId
       value: 2967001063
@@ -3972,6 +4028,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -4495,6 +4555,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -4735,6 +4799,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -5139,6 +5207,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -5435,6 +5507,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -5719,6 +5795,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -5907,7 +5987,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4555415979025528219, guid: fa35d607659ee7447a778bf7773b757e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -19.389893
+      value: -19.38977
       objectReference: {fileID: 0}
     - target: {fileID: 5932281411395271966, guid: fa35d607659ee7447a778bf7773b757e, type: 3}
       propertyPath: m_Name
@@ -6131,6 +6211,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -6524,6 +6608,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
       value: Interaction Timer
@@ -6671,19 +6759,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.97195816
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.23515399
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6691,7 +6779,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -27.201
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1764342245208949522, guid: ff31917ae19f8da459c2a815007cc045, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -6870,6 +6958,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name
@@ -9099,7 +9191,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1632461917}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -9434,7 +9526,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 206815637}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -9882,7 +9974,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 341690941}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -10887,7 +10979,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 2059723896}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -15967,7 +16059,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1779324484}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -16620,7 +16712,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 2030734200}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -16772,7 +16864,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1508050579}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -16869,7 +16961,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 761849111}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17065,7 +17157,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1172941293}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17216,7 +17308,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 2113507449}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17390,7 +17482,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1311579630}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17441,7 +17533,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1554601483}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17681,7 +17773,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1664934406}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -17799,7 +17891,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1935370171}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18016,7 +18108,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1764392247}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18148,7 +18240,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1786215619}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18358,7 +18450,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1706695499}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18494,7 +18586,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 410240785}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18621,7 +18713,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1997483143}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18795,7 +18887,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 927377688}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -18986,7 +19078,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1037232582}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -19286,7 +19378,7 @@ MonoBehaviour:
   targetAngle: 4
   iTimer: {fileID: 1902476155}
   interactingText: Pushing...
-  checkObstaclesRaycast: 0
+  checkObstaclesRaycast: 1
   blockingLayers:
     serializedVersion: 2
     m_Bits: 1024

@@ -75,6 +75,7 @@ public class CameraPointedObject : MonoBehaviour
             //model.GetComponent<MeshFilter>().mesh = PrimitiveType.Cube as Mesh;
             model.transform.SetParent(transform);
             model.transform.position = transform.position;
+            model.SetActive(false);
         }
 
         if(string.IsNullOrEmpty(interactingText))
@@ -89,7 +90,10 @@ public class CameraPointedObject : MonoBehaviour
     void Update()
     {
         if (camera == null)
+        {
+            camera = Camera.main?.transform;
             return;
+        }
 
         Vector3 camToThis = this.transform.position - camera.position;
         float angle = Vector3.Angle(camera.forward, camToThis);

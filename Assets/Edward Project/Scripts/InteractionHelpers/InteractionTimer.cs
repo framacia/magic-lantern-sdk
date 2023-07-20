@@ -30,6 +30,8 @@ public class InteractionTimer : MonoBehaviour
     public TextMeshProUGUI stateText;
     private Camera cam;
 
+    public bool hideTimerUI;
+
     public bool IsInteracting { get; private set; } = false;
     public bool IsResting { get; private set; } = true;
     public Action OnFinishInteraction;
@@ -86,6 +88,7 @@ public class InteractionTimer : MonoBehaviour
         IsResting = false;
         IsInteracting = true;
         UI.SetActive(true);
+        UI.GetComponent<Canvas>().enabled = !hideTimerUI;
     }
 
     public void CancelInteraction()
