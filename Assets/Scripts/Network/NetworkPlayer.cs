@@ -13,6 +13,7 @@ public class NetworkPlayer : NetworkBehaviour
     AdminUIController adminUI;
     ARMLNetworkManager manager;
     float speed = 1f;
+    public static event Action OnPlayerLoaded;
 
     enum PlayerType
     {
@@ -48,6 +49,8 @@ public class NetworkPlayer : NetworkBehaviour
         //Subscribe to events only if local player
         PostProcessingController.OnPostProcessingChanged += CmdUpdatePostProcessing;
         ScreenLogger.OnScreenLoggerToggled += CmdToggleScreenLogger;
+
+        OnPlayerLoaded?.Invoke();
     }
 
     private void Start()
@@ -66,7 +69,7 @@ public class NetworkPlayer : NetworkBehaviour
 
         name = playerType.ToString();
 
-        geometryParent = GameObject.Find("--GEOMETRY--");
+        //geometryParent = GameObject.Find("--GEOMETRY--");
 
     }
 
@@ -77,8 +80,8 @@ public class NetworkPlayer : NetworkBehaviour
         float xAxisValue = Input.GetAxis("Horizontal");
         float zAxisValue = Input.GetAxis("Vertical");
 
-        if (xAxisValue > 0.1f || zAxisValue > 0.1f || xAxisValue < -0.1f || zAxisValue < -0.1f)
-            MoveGeometry(xAxisValue, zAxisValue);
+        //if (xAxisValue > 0.1f || zAxisValue > 0.1f || xAxisValue < -0.1f || zAxisValue < -0.1f)
+            //MoveGeometry(xAxisValue, zAxisValue);
     }
 
     void MoveGeometry(float xAxisValue, float zAxisValue)

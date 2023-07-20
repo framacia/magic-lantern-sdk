@@ -38,6 +38,16 @@ public class InteractionTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NetworkPlayer.OnPlayerLoaded += GetCamera;
+    }
+
+    private void OnDisable()
+    {
+        NetworkPlayer.OnPlayerLoaded -= GetCamera;
+    }
+
+    void GetCamera()
+    {
         cam = Camera.main;
     }
 
@@ -95,6 +105,9 @@ public class InteractionTimer : MonoBehaviour
 
     private void UpdateUI()
     {
+        if (!cam)
+            return;
+
         panel.position = cam.WorldToScreenPoint(this.transform.position);
         fillIndicator.fillAmount = InteractionPercent;
     }
