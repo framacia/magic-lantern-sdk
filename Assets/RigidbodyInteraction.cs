@@ -6,6 +6,7 @@ using UnityEngine;
 public class RigidbodyInteraction : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] AudioClip thudClip;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,8 @@ public class RigidbodyInteraction : MonoBehaviour
 
     public void AddForce(float force)
     {
-        Vector3 forceVector = new Vector3(0, 0, force);
+        Vector3 forceVector = transform.up * force;
         rb.AddForce(forceVector);
+        AudioSource.PlayClipAtPoint(thudClip, this.transform.position, 1f);
     }
 }

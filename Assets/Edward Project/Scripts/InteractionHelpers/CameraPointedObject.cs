@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Scripting;
+using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using TNRD.Utilities;
 #endif
@@ -22,6 +23,11 @@ public class CameraPointedObject : MonoBehaviour
     public LayerMask blockingLayers = 0;
 
     private GameObject model;
+
+    [SerializeField] Material outlineMaterial;
+    private Material[] originalMaterials;
+    private MeshRenderer renderer;
+
     [SerializeField] private UnityEvent OnObjectInteractedEvent;
 
     private void Start()
@@ -38,6 +44,9 @@ public class CameraPointedObject : MonoBehaviour
             iTimer.stateText.text = interactingText;
 
         iTimer.OnFinishInteraction += OnObjectInteracted;
+
+        renderer = GetComponent<MeshRenderer>();
+        originalMaterials = renderer.materials;
     }
 
 #if UNITY_EDITOR
@@ -107,7 +116,7 @@ public class CameraPointedObject : MonoBehaviour
             raycastResult = Physics.Raycast(camera.position, camToThis, out hit, camToThis.magnitude, blockingLayers, QueryTriggerInteraction.Ignore);
 
             //If raycast hit itself, ignore
-            if (hit.collider.gameObject == this.gameObject)
+            if (hit.collider?.gameObject == this.gameObject)
                 raycastResult = false;
 
         }
@@ -115,10 +124,15 @@ public class CameraPointedObject : MonoBehaviour
         if (angle <= targetAngle && !raycastResult)
         {
             StartTimer();
+            if (outlineMaterial == null)
+                return;
+
+            AddOutlineMaterial();            
         }
         else
         {
             StopTimer();
+            RemoveOutlineMaterial();
         }
     }
 
@@ -138,5 +152,29 @@ public class CameraPointedObject : MonoBehaviour
     {
         if (OnObjectInteractedEvent != null)
             OnObjectInteractedEvent.Invoke();
+    }
+
+    void AddOutlineMaterial()
+    {
+        //If material number has already been edited, return
+        if (renderer.materials.Length != originalMaterials.Length)
+            return;
+
+        Material[] newMaterials = new Material[originalMaterials.Length + 1];
+        for (int i = 0; i < originalMaterials.Length; i++)
+        {
+            newMaterials[i] = originalMaterials[i];
+        }
+        newMaterials[originalMaterials.Length] = outlineMaterial;
+        renderer.materials = newMaterials;
+    }
+
+    void RemoveOutlineMaterial()
+    {
+        //If material number already original, return
+        if (renderer.materials.Length == originalMaterials.Length)
+            return;
+
+        renderer.materials = originalMaterials;
     }
 }

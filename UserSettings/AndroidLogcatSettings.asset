@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML2",
-        "processId": 7341,
+        "processId": 19554,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -48,6 +48,30 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML2",
             "processId": 7341,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 9668,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 10578,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 13350,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 19554,
             "exited": false
         }
     ],
