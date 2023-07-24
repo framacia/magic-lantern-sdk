@@ -40,12 +40,12 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Mirror.Transports;
 --assembly-defines=Mirror.Components;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
+--assembly-defines=Unity.Polybrush;
 --assembly-defines=Unity.Timeline;
 --assembly-defines=Unity.InputSystem;
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=SimpleWebTransport;
 --assembly-defines=Unity.XR.Oculus;
---assembly-defines=Unity.Polybrush;
 --assembly-defines=Mirror.Authenticators;
 --assembly-defines=Unity.XR.ARFoundation.InternalUtils;
 --assembly-defines=OccaSoftware.Exposure.Demo;
@@ -137,12 +137,12 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Mirror.Transports;
 --assembly-defines=Mirror.Components;
 --assembly-defines=Unity.RenderPipeline.Universal.ShaderLibrary;
+--assembly-defines=Unity.Polybrush;
 --assembly-defines=Unity.Timeline;
 --assembly-defines=Unity.InputSystem;
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=SimpleWebTransport;
 --assembly-defines=Unity.XR.Oculus;
---assembly-defines=Unity.Polybrush;
 --assembly-defines=Mirror.Authenticators;
 --assembly-defines=Unity.XR.ARFoundation.InternalUtils;
 --assembly-defines=OccaSoftware.Exposure.Demo;
