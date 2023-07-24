@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML2",
-        "processId": 19554,
+        "processId": 14249,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -72,6 +72,12 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML2",
             "processId": 19554,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 14249,
             "exited": false
         }
     ],
