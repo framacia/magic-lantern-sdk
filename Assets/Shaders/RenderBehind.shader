@@ -1,4 +1,4 @@
-Shader "Fran/RenderBehind-Unlit"
+Shader "Fran/Unlit"
 {
     Properties
     {

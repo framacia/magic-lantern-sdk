@@ -15,8 +15,8 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.AI.Navigation;
 --assembly-defines=Unity.XR.OpenXR.Features.ConformanceAutomation;
---assembly-defines=Unity.XR.ARCore;
 --assembly-defines=Unity.Robotics.ROSTCPConnector.MessageGeneration;
+--assembly-defines=Unity.XR.ARCore;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Telepathy;
 --assembly-defines=Unity.XR.OpenXR.Features.MockRuntime;
@@ -35,7 +35,6 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.XR.ARFoundation;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
---assembly-defines=Unity.TerrainTools;
 --assembly-defines=Mirror;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.Robotics.ROSTCPConnector;
@@ -47,7 +46,6 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=SimpleWebTransport;
 --assembly-defines=Unity.XR.Oculus;
---assembly-defines=Unity.Polybrush;
 --assembly-defines=Mirror.Authenticators;
 --assembly-defines=Unity.XR.ARFoundation.InternalUtils;
 --assembly-defines=OccaSoftware.Exposure.Demo;
@@ -106,8 +104,8 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.RenderPipelines.Core.Runtime;
 --assembly-defines=Unity.AI.Navigation;
 --assembly-defines=Unity.XR.OpenXR.Features.ConformanceAutomation;
---assembly-defines=Unity.XR.ARCore;
 --assembly-defines=Unity.Robotics.ROSTCPConnector.MessageGeneration;
+--assembly-defines=Unity.XR.ARCore;
 --assembly-defines=Unity.VisualScripting.Flow;
 --assembly-defines=Telepathy;
 --assembly-defines=Unity.XR.OpenXR.Features.MockRuntime;
@@ -126,7 +124,6 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.XR.ARFoundation;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
---assembly-defines=Unity.TerrainTools;
 --assembly-defines=Mirror;
 --assembly-defines=Unity.VisualScripting.Core;
 --assembly-defines=Unity.Robotics.ROSTCPConnector;
@@ -138,7 +135,6 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.InputSystem.ForUI;
 --assembly-defines=SimpleWebTransport;
 --assembly-defines=Unity.XR.Oculus;
---assembly-defines=Unity.Polybrush;
 --assembly-defines=Mirror.Authenticators;
 --assembly-defines=Unity.XR.ARFoundation.InternalUtils;
 --assembly-defines=OccaSoftware.Exposure.Demo;
