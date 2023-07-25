@@ -18,7 +18,7 @@ public class CameraMoveDebug : MonoBehaviour
         //Is it really necessary setting this??? Find a good place to add it 
         QualitySettings.vSyncCount = 0;
 
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = 61;
     }
 
     // Update is called once per frame
