@@ -96,7 +96,7 @@ public class CameraPointedObject : MonoBehaviour
 #endif
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (camera == null)
         {

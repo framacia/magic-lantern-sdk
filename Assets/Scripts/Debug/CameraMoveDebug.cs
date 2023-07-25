@@ -22,7 +22,7 @@ public class CameraMoveDebug : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         float xAxisValue = Input.GetAxis("HorizontalArrow");
         float zAxisValue = Input.GetAxis("VerticalArrow");
@@ -30,7 +30,8 @@ public class CameraMoveDebug : MonoBehaviour
         if (gameObject != null)
         {
             //Rotation
-            gameObject.transform.Rotate(-zAxisValue * speed, xAxisValue * speed, 0);
+            gameObject.transform.Rotate(-zAxisValue * speed * Time.deltaTime, 
+                xAxisValue * speed * Time.deltaTime, 0); ;
 
             //Force Z rotation to 0
             Vector3 currentRotation = transform.rotation.eulerAngles;
