@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML2",
-        "processId": 21271,
+        "processId": 30334,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -114,6 +114,42 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML2",
             "processId": 21271,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 23830,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 28916,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML2",
+            "processId": 30334,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARMLTrackingDemo3",
+            "processId": 16873,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML2",
+            "processId": 17531,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML2",
+            "processId": 17938,
             "exited": false
         }
     ],
