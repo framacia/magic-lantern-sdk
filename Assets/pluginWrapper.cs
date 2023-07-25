@@ -55,8 +55,13 @@ public class HelloWorldScript : MonoBehaviour
 
         // float updateFrequency = 1f / 200f; // 30 Hz
 
-        StartCoroutine(UpdateEuler());
+        //StartCoroutine(UpdateEuler());
         // InvokeRepeating("UpdateEuler", 0f, updateFrequency);
+    }
+
+    private void LateUpdate()
+    {
+        UpdateCameraRotation();
     }
 
     // Method to update Euler angles at 30 Hz
@@ -64,24 +69,27 @@ public class HelloWorldScript : MonoBehaviour
     {
         while (true)
         {
-            Quaternion q = HelloWorldScript.GetQuaternion(device_path, device_address);
-            Quaternion qc = new Quaternion(-q.x, q.y, q.z, q.w);
-            // Debug.Log($"Quaternion: x = {qc.x}, y = {qc.y}, z = {qc.z}, w = {qc.w}");
-
-            if (rosStartEuler == Vector3.zero)
-            {
-                rosStartEuler = qc.eulerAngles;
-                Debug.Log(rosStartEuler);
-                yield return new WaitForSeconds(1f / 100f);
-            }
-
-            // Update the rotation of the cylinder based on the received qc
-            // transform.rotation = qc;
-            Vector3 eulerDiff = qc.eulerAngles - rosStartEuler;
-            transform.localRotation = Quaternion.Euler(camStartEuler + eulerDiff);
+            UpdateCameraRotation();
 
             yield return new WaitForSeconds(1f / 100f);
         }
     }
 
+    private void UpdateCameraRotation()
+    {
+        Quaternion q = HelloWorldScript.GetQuaternion(device_path, device_address);
+        Quaternion qc = new Quaternion(-q.x, q.y, q.z, q.w);
+        // Debug.Log($"Quaternion: x = {qc.x}, y = {qc.y}, z = {qc.z}, w = {qc.w}");
+
+        if (rosStartEuler == Vector3.zero)
+        {
+            rosStartEuler = qc.eulerAngles;
+            Debug.Log(rosStartEuler);
+        }
+
+        // Update the rotation of the cylinder based on the received qc
+        // transform.rotation = qc;
+        Vector3 eulerDiff = qc.eulerAngles - rosStartEuler;
+        transform.localRotation = Quaternion.Euler(camStartEuler + eulerDiff);
+    }
 }
