@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using UnityEngine;
 using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Linq;
 
 public class IMUCameraRotation : MonoBehaviour
 {
@@ -38,10 +40,10 @@ public class IMUCameraRotation : MonoBehaviour
 
     #endregion
 
-    private Vector3 rosStartEuler = Vector3.zero;
+    private Vector3 initialImuRotation = Vector3.zero;
     private Vector3 camStartEuler;
 
-    private Vector3 eulerDiff;
+    private Vector3 correctedImuRotation;
 
 
     [SerializeField] float accelerationThreshold = 15f;
@@ -50,6 +52,7 @@ public class IMUCameraRotation : MonoBehaviour
 
     [SerializeField] TMPro.TextMeshProUGUI accelerationThresholdText;
     [SerializeField] TMPro.TextMeshProUGUI accelerationAmountText;
+    [SerializeField] TMPro.TextMeshProUGUI averageFramesText;
 
     //PostProcessingController postProcessingController;
 
@@ -57,9 +60,12 @@ public class IMUCameraRotation : MonoBehaviour
     private Quaternion lastRotation;
 
     //Averaging stuff   
-    int averageFrames = 5; 
+    [SerializeField] int averageFrames = 1; 
     private int count;
-    private Vector3 averagedAngularVelocity;
+    private Vector3 averagedImuAngularVelocity;
+    Queue<Vector3> averagedImuAngularVelocityQueue = new Queue<Vector3>();
+
+    private Vector3 currentAccelerationVector;
 
     private void Start()
     {
@@ -78,19 +84,19 @@ public class IMUCameraRotation : MonoBehaviour
 #endif
         lastRotation = Quaternion.identity;
 
-        StartCoroutine(UpdateEulerCoroutine());
+        //StartCoroutine(UpdateEulerCoroutine());
     }
 
     // Method to update Euler angles
     IEnumerator UpdateEulerCoroutine()
     {
-        Quaternion q = IMUCameraRotation.GetQuaternion(device_path, device_address);
-        Quaternion qc = new Quaternion(q.x, q.y, -q.z, q.w);
+        Quaternion imuRotation = IMUCameraRotation.GetQuaternion(device_path, device_address);
+        Quaternion remappedImuRotation = new Quaternion(imuRotation.x, imuRotation.y, -imuRotation.z, imuRotation.w);
 
-        if (rosStartEuler == Vector3.zero)
+        if (initialImuRotation == Vector3.zero)
         {
-            rosStartEuler = qc.eulerAngles;
-            Debug.Log(rosStartEuler);
+            initialImuRotation = remappedImuRotation.eulerAngles;
+            Debug.Log(initialImuRotation);
             yield return new WaitForSeconds(1f / updateRate);
             StartCoroutine(UpdateEulerCoroutine());
             yield break;
@@ -98,30 +104,23 @@ public class IMUCameraRotation : MonoBehaviour
 
         // Update the rotation of the cylinder based on the received qc
         // transform.rotation = qc;
-        eulerDiff = qc.eulerAngles - rosStartEuler;
+        correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
 
         //Get average Angular Velocity of IMU rotation
-        Vector3 eulerDiffVelocity = GetAngularVelocityVector(eulerDiff);
-        averagedAngularVelocity = GetAverageVector(eulerDiffVelocity);
+        Vector3 imuAngularVelocity = GetAngularVelocityVector(correctedImuRotation);
+        averagedImuAngularVelocity = GetCurrentAccelerationVector(imuAngularVelocity);
 
-        ////If angular velocity bigger than threshold, apply blur effect
-        //if (eulerDiffVelocity.magnitude > accelerationThreshold)
-        //{
-        //    //postProcessingController?.ChangeDoFFocalLength(eulerDiffVelocity.magnitude * 10);
-        //}
+        transform.localRotation = Quaternion.Euler(correctedImuRotation + camStartEuler);
 
-        Vector3 accelerationVector = Vector3.zero;
-
-        //If angular velocity bigger than threshold, apply acceleration to rotation vector
-        if (averagedAngularVelocity.magnitude > accelerationThreshold)
+        if (imuAngularVelocity.magnitude > accelerationThreshold)
         {
-            //accelerationVector = eulerDiff * accelerationAmount;
-            //Debug.Log(accelerationVector);
-            Debug.Log(averagedAngularVelocity.magnitude);
+            transform.Rotate(averagedImuAngularVelocity * accelerationAmount);
+            Debug.Log("Acceleration Vector: " + averagedImuAngularVelocity * accelerationAmount);
         }
+        else
+        {
 
-        //Apply rotation to gameobject
-        transform.localRotation = Quaternion.Euler(eulerDiff + accelerationVector + camStartEuler);
+        }
 
         yield return new WaitForSeconds(1f / updateRate);
 
@@ -136,18 +135,18 @@ public class IMUCameraRotation : MonoBehaviour
         Quaternion q = IMUCameraRotation.GetQuaternion(device_path, device_address);
         Quaternion qc = new Quaternion(q.x, q.y, -q.z, q.w);
 
-        if (rosStartEuler == Vector3.zero)
+        if (initialImuRotation == Vector3.zero)
         {
-            rosStartEuler = qc.eulerAngles;
-            Debug.Log(rosStartEuler);
+            initialImuRotation = qc.eulerAngles;
+            Debug.Log(initialImuRotation);
         }
 
         // Update the rotation of the cylinder based on the received qc
         // transform.rotation = qc;
-        eulerDiff = qc.eulerAngles - rosStartEuler;
+        correctedImuRotation = qc.eulerAngles - initialImuRotation;
 
         //Apply rotation to gameobject
-        transform.localRotation = Quaternion.Euler(camStartEuler + eulerDiff);
+        transform.localRotation = Quaternion.Euler(camStartEuler + correctedImuRotation);
 
         timer.Stop();
 
@@ -164,28 +163,68 @@ public class IMUCameraRotation : MonoBehaviour
         return eulerRot / Time.deltaTime;
     }
 
-    Vector3 GetAverageVector(Vector3 vector)
+    Vector3 GetCurrentAccelerationVector(Vector3 vector)
     {
-        count++;
+        //if (currentAccelerationVector == Vector3.zero)
+        //{
+        //    currentAccelerationVector = vector;
+        //    Debug.Log(currentAccelerationVector);
+        //}
+        //return currentAccelerationVector;
+   
+        averagedImuAngularVelocityQueue.Enqueue(vector);
 
-        if (count > averageFrames)
-        {
-            averagedAngularVelocity = averagedAngularVelocity + (vector - averagedAngularVelocity) / (averageFrames + 1);
-            return averagedAngularVelocity;
-        }
-        else
-        {
-            //NOTE: The MovingAverage will not have a value until at least "MovingAverageLength" values are known (10 values per your requirement)
-            averagedAngularVelocity += vector;
 
-            //This will calculate ONLY the very first value of the MovingAverage,
-            if (count == averageFrames)
+        if (averagedImuAngularVelocityQueue.Count >= averageFrames)
+        {
+            var vectorSum = Vector3.zero;
+
+            foreach(Vector3 v in averagedImuAngularVelocityQueue)
             {
-                averagedAngularVelocity = averagedAngularVelocity / count;
-
+                vectorSum += v;
             }
-            return averagedAngularVelocity;
+
+            currentAccelerationVector = vectorSum / averagedImuAngularVelocityQueue.Count;
+            averagedImuAngularVelocityQueue.Clear();
         }
+
+        return currentAccelerationVector;
+    }
+
+    private void LateUpdate()
+    {
+        Quaternion imuRotation = IMUCameraRotation.GetQuaternion(device_path, device_address);
+        Quaternion remappedImuRotation = new Quaternion(imuRotation.x, imuRotation.y, -imuRotation.z, imuRotation.w);
+
+        if (initialImuRotation == Vector3.zero)
+        {
+            initialImuRotation = remappedImuRotation.eulerAngles;
+            Debug.Log(initialImuRotation);
+        }
+
+        // Update the rotation of the cylinder based on the received qc
+        // transform.rotation = qc;
+        correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
+
+        //Get average Angular Velocity of IMU rotation
+        Vector3 imuAngularVelocity = GetAngularVelocityVector(correctedImuRotation);
+
+
+        //if (imuAngularVelocity.magnitude > accelerationThreshold)
+        //{
+            transform.localRotation = Quaternion.Euler(correctedImuRotation + camStartEuler + 
+                (GetCurrentAccelerationVector(imuAngularVelocity) * accelerationAmount));
+
+        //}
+        //else
+        //{
+            //currentAccelerationVector = Vector3.zero;
+            //transform.localRotation = Quaternion.Euler(correctedImuRotation + camStartEuler);
+        //}
+
+
+        //transform.Rotate(currentAccelerationVector);
+
     }
 
     public void SetAccelerationThreshold(float value)
@@ -198,5 +237,11 @@ public class IMUCameraRotation : MonoBehaviour
     {
         accelerationAmount = value;
         accelerationAmountText.text = "Amount " + value.ToString();
+    }
+
+    public void SetAverageFrames(float value)
+    {
+        averageFrames = (int)value;
+        averageFramesText.text = "Frames " + value.ToString();
     }
 }

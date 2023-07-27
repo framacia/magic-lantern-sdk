@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "192.168.121.100:5555",
     "m_SelectedPackage": {
-        "deviceId": "192.168.121.100:5555",
-        "name": "com.UPF.ARML2",
-        "processId": 5376,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -136,68 +136,32 @@
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 19804,
+            "name": "com.UPF.ARML",
+            "processId": 19448,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 2201,
+            "name": "com.UPF.ARML",
+            "processId": 20219,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 2608,
+            "name": "com.UPF.ARML",
+            "processId": 20594,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 2955,
+            "name": "com.UPF.ARML",
+            "processId": 21186,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 2121,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 2720,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 3471,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 3994,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 4413,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 4919,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML2",
-            "processId": 5376,
+            "name": "com.UPF.ARML",
+            "processId": 21635,
             "exited": false
         }
     ],
