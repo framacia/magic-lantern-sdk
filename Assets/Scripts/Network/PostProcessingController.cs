@@ -12,6 +12,7 @@ public class PostProcessingController : MonoBehaviour
     private Volume volume;
     private Vignette vignette;
     private ColorAdjustments colorAdjustments;
+    private DepthOfField depthOfField;
 
     public static Action<PostProcessingConfig, GameObject> OnPostProcessingChanged;
 
@@ -20,6 +21,7 @@ public class PostProcessingController : MonoBehaviour
         volume = GetComponent<Volume>();
         volume.profile.TryGet(out vignette);
         volume.profile.TryGet(out colorAdjustments);
+        volume.profile.TryGet(out depthOfField);
     }
 
     public void OnToggleVignette(bool toggle)
@@ -32,6 +34,13 @@ public class PostProcessingController : MonoBehaviour
     {
         colorAdjustments.contrast.value = value * 100;
         OnPostProcessingChanged?.Invoke(GetPostProcessingConfig(), this.gameObject);
+    }
+
+    public void ChangeDoFFocalLength(float value)
+    {
+        if(depthOfField != null)
+            depthOfField.focalLength.value = value;
+        //TODO No need to send this through network or invoke event for now
     }
 
     public void SetPostProcessingConfig(PostProcessingConfig config)

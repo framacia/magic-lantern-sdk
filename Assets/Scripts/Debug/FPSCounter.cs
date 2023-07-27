@@ -14,16 +14,21 @@ namespace UnityStandardAssets.Utility
         const string display = "{0}";
         private TextMeshProUGUI m_GuiText;
 
+        Rigidbody rb;
 
         private void Start()
         {
             m_GuiText = GameObject.Find("FPS Text").GetComponent<TextMeshProUGUI>();
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
+
+            rb = GetComponent<Rigidbody>();
         }
 
 
         private void Update()
         {
+
+
             // measure average frames per second
             m_FpsAccumulator++;
             if (Time.realtimeSinceStartup > m_FpsNextPeriod)

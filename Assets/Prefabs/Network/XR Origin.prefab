@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 587058876
+  _assetId: 0
   serverOnly: 0
   visible: 0
   hasSpawned: 0
@@ -292,7 +292,6 @@ GameObject:
   - component: {fileID: 5319180064161788030}
   - component: {fileID: 8885337631831964406}
   - component: {fileID: 1777253922756335645}
-  - component: {fileID: 8752666547532088267}
   - component: {fileID: 4870932139925463922}
   - component: {fileID: 8184032431890755296}
   - component: {fileID: 2873429415681544312}
@@ -398,20 +397,6 @@ MonoBehaviour:
   m_LightEstimation: 0
   m_FacingDirection: 1
   m_RenderMode: 0
---- !u!114 &8752666547532088267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864876935045644810}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 816b289ef451e094f9ae174fb4cf8db0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UseCustomMaterial: 0
-  m_CustomMaterial: {fileID: 0}
 --- !u!114 &4870932139925463922
 MonoBehaviour:
   m_ObjectHideFlags: 0
