@@ -154,7 +154,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.UPF.ARMLTrackingDemo3
+    Android: com.UPF.ARMLTrackingDemo4
     iPhone: com.ARML.test
   buildNumber:
     Bratwurst: 0
