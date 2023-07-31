@@ -95,13 +95,12 @@ public class CameraPointedObject : MonoBehaviour
     }
 #endif
 
-    // Update is called once per frame
-    void LateUpdate()
+    // If this is not FixedUpdate, IMU cam rotation may not be registered, also it's better to raycast on FixedUpdate
+    void FixedUpdate()
     {
         if (camera == null)
         {
             camera = Camera.main?.transform;
-            return;
         }
 
         Vector3 camToThis = this.transform.position - camera.position;
