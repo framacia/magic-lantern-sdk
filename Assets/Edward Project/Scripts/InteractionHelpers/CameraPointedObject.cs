@@ -101,6 +101,7 @@ public class CameraPointedObject : MonoBehaviour
         if (camera == null)
         {
             camera = Camera.main?.transform;
+            return;
         }
 
         Vector3 camToThis = this.transform.position - camera.position;
@@ -123,10 +124,11 @@ public class CameraPointedObject : MonoBehaviour
         if (angle <= targetAngle && !raycastResult)
         {
             StartTimer();
+
             if (outlineMaterial == null)
                 return;
 
-            AddOutlineMaterial();            
+            AddOutlineMaterial();
         }
         else
         {
@@ -155,9 +157,12 @@ public class CameraPointedObject : MonoBehaviour
 
     void AddOutlineMaterial()
     {
-        //If material number has already been edited, return
+        //If material number has already been edited, update fill and return
         if (renderer.materials.Length != originalMaterials.Length)
+        {
+            renderer.materials[originalMaterials.Length].SetFloat("_FillRate", iTimer.CurrentInteractionTime / iTimer.RequiredInteractionTime);
             return;
+        }
 
         Material[] newMaterials = new Material[originalMaterials.Length + 1];
         for (int i = 0; i < originalMaterials.Length; i++)

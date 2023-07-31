@@ -6,12 +6,14 @@ using UnityEngine;
 public class RigidbodyInteraction : MonoBehaviour
 {
     Rigidbody rb;
+    Camera cam;
     [SerializeField] AudioClip thudClip;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        cam = Camera.main;
     }
 
     private void OnValidate()
@@ -21,7 +23,12 @@ public class RigidbodyInteraction : MonoBehaviour
 
     public void AddForce(float force)
     {
-        Vector3 forceVector = transform.up * force;
+        if(!cam)
+            cam = Camera.main;
+
+        //Relative to camera
+        Vector3 forceVector = cam.transform.forward * force;
+
         rb.AddForce(forceVector);
         AudioSource.PlayClipAtPoint(thudClip, this.transform.position, 1f);
     }
