@@ -40,13 +40,13 @@ public class BNO055Sensor : MonoBehaviour
     private static extern void closeDevice();
 
     // Declare the instance variable
-    private BNO055Sensor sensor; 
+    private BNO055Sensor sensor;
 
     // Public variables to set device path and address
     private string devicePath = "/dev/i2c-5";
     private int deviceAddress = 0x28;
     private byte registerAddress = 0x3d;
-    private byte mode =  0x08;
+    private byte mode = 0x08;
 
     public static BNO055Sensor Instance { get; private set; }
 
@@ -159,6 +159,7 @@ public class BNO055Sensor : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         // Set mode of the sensor
         bool result = SetMode(registerAddress, mode);
         if (result)
@@ -169,6 +170,7 @@ public class BNO055Sensor : MonoBehaviour
         {
             Debug.LogError("setMode failed!");
         }
+#endif
     }
 
     /*private void Update()
@@ -210,6 +212,8 @@ public class BNO055Sensor : MonoBehaviour
     // Close the device when the script is destroyed
     private void OnDestroy()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         closeDevice();
+#endif
     }
 }
