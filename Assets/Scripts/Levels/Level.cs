@@ -6,11 +6,11 @@ using UnityEngine.Playables;
 
 public class Level : MonoBehaviour
 {
+    public bool autoFinish = false;
+    [HideInInspector] public int levelIndex;
+
     private LevelController levelController;
     private PlayableDirector director;
-
-    public bool autoFinish = false;
-    public int levelIndex;
 
     private void Awake()
     {
@@ -49,9 +49,27 @@ public class Level : MonoBehaviour
         Debug.LogFormat("Level {0} timeline stopped", levelIndex);
     }
 
-    public void Play()
+    public void PlayTimeline()
     {
         if (director)
+        {
             director.Play();
+        }
+    }
+
+    public void StopTimeline(bool setEndTime)
+    {
+        if (director)
+        {
+            //Reset state to first timeline frame
+            if (!setEndTime)
+                director.time = 0f;
+            //Reset to last timeline frame
+            else
+                director.time = director.duration;
+
+            director.Evaluate();
+            director.Stop();           
+        }
     }
 }

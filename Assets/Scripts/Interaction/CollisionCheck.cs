@@ -6,18 +6,19 @@ using UnityEngine.Events;
 
 public class CollisionCheck : MonoBehaviour
 {
-
     [SerializeField] private UnityEvent OnCollisionCheckMetEvent;
-    [SerializeField] private int numberOfChecks;
-    private int currentNumberOfChecks;
-    [SerializeField] private string colliderName;
+    [SerializeField] private int numberOfChecksToTrigger;
+    [SerializeField] private string colliderNameFilter;
     [SerializeField] private bool isParentName;
+    [SerializeField] private bool allowSameObjectRecollision;
+
+    private int currentNumberOfChecks;
     private bool conditionMet;
+    private List<Collider> alreadyCheckedColliders = new List<Collider>();
 
     void OnCollisionCheckMet()
     {
-        if (OnCollisionCheckMetEvent != null)
-            OnCollisionCheckMetEvent.Invoke();
+        OnCollisionCheckMetEvent?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,23 +33,26 @@ public class CollisionCheck : MonoBehaviour
 
     private void CheckCollision(Collider other)
     {
-        //Check already met?
-        if (currentNumberOfChecks + 1 >= numberOfChecks && !conditionMet)
+        //Name filter check
+        if ((isParentName && other.transform.parent.name == colliderNameFilter) || (!isParentName && other.transform.name == colliderNameFilter))
         {
-            OnCollisionCheckMet();
-            conditionMet = true;
-            return;
-        }
+            //If collider already checked, return
+            if (!allowSameObjectRecollision && alreadyCheckedColliders.Contains(other))
+                return;
 
-        if (isParentName)
-        {
-            if (other.transform.parent.name == colliderName)
-                currentNumberOfChecks++;
-        }
-        else
-        {
-            if (other.transform.name == colliderName)
-                currentNumberOfChecks++;
+            currentNumberOfChecks++;
+
+            //Check number goal already met?
+            if (currentNumberOfChecks >= numberOfChecksToTrigger && !conditionMet)
+            {
+                OnCollisionCheckMet();
+                conditionMet = true;
+                alreadyCheckedColliders.Clear();
+                return;
+            }
+
+            if (!allowSameObjectRecollision)
+                alreadyCheckedColliders.Add(other);
         }
     }
 }

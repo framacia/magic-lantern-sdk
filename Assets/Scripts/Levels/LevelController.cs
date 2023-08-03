@@ -6,41 +6,82 @@ using UnityEngine.Playables;
 
 public class LevelController : MonoBehaviour
 {
-    [SerializeField] List<Level> levels;
+    [SerializeField, ReadOnly] private List<Level> levels = new List<Level>();
     private int currentLevel;
 
     private void Start()
     {
-        //Set level index to levels
-        for(int i = 0; i < levels.Count; i++)
+        //Current child-based automatic level assign mode
+        foreach(Transform child in transform)
         {
-            levels[i].levelIndex = i;
+            Debug.Log(child.name);
+            levels.Add(child.GetComponent<Level>());
         }
+
+        // Previous manual list mode
+        ////Set level index to levels
+        //for (int i = 0; i < levels.Count; i++)
+        //{
+        //    levels[i].levelIndex = i;
+        //}
     }
 
     public void PlayNextLevel()
     {
-        //If it exists
-        if (levels[currentLevel++])
-            currentLevel++;
-        PlayLevel();
+        PlayLevel(currentLevel++);
     }
 
-    public void PlayLevelIndex(Level levelIndex)
+    public void PlayLevelByReference(Level levelIndex)
     {
         //If it exists
         if (levels.Contains(levelIndex))
         {
-            currentLevel = levels.IndexOf(levelIndex);
-            PlayLevel();
+            PlayLevel(levels.IndexOf(levelIndex));
         }
-        else
-            Debug.LogError("Tried to load a Level that is not in LevelController list");
     }
 
-    private void PlayLevel()
+    public void PlayLevel(int index)
     {
-        levels[currentLevel].Play();
-        Debug.LogFormat("Playing level {0}", currentLevel);
+        if (levels[index])
+        {
+            currentLevel = index;
+            levels[currentLevel].PlayTimeline();
+            Debug.LogFormat("Playing level {0}", currentLevel);
+
+            //Stop all other level timelines
+            foreach (var level in levels)
+            {
+                if (level.levelIndex == index)
+                    continue;
+
+                if (level.levelIndex > index)
+                    level.StopTimeline(false);
+                else
+                    level.StopTimeline(true);
+            }
+        }
+        else
+        {
+            Debug.LogErrorFormat("Tried to load Level with index {0} that is not in LevelController list", index);
+        }
+    }
+
+    private void Update()
+    {
+        DebugForceChangeLevel();
+    }
+
+    void DebugForceChangeLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            PlayLevel(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            PlayLevel(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            PlayLevel(2);
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            PlayLevel(3);
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+            PlayLevel(4);
     }
 }

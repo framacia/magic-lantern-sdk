@@ -8,8 +8,9 @@ using UnityEngine.Playables;
 public class ChangeTextBehaviour : PlayableBehaviour
 {
     public string textToChangeTo = null;
-    string originalText;
     public bool setEmptyAtTheEnd = true;
+
+    string originalText;
 
     TextMeshProUGUI tMPro;
 

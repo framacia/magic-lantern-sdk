@@ -55,6 +55,7 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.Robotics.ROSTCPConnector.Messages;
 --assembly-defines=OccaSoftware.Exposure.Runtime;
 --assembly-defines=SALSA-LipSync;
+--assembly-defines=DOTween;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=System.Runtime;
@@ -152,6 +153,7 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.Robotics.ROSTCPConnector.Messages;
 --assembly-defines=OccaSoftware.Exposure.Runtime;
 --assembly-defines=SALSA-LipSync;
+--assembly-defines=DOTween;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=System.Runtime;
