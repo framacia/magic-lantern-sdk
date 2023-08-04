@@ -11,6 +11,7 @@ public class CollisionCheck : MonoBehaviour
     [SerializeField] private string colliderNameFilter;
     [SerializeField] private bool isParentName;
     [SerializeField] private bool allowSameObjectRecollision;
+    //[SerializeField] private CheckType checkType;
 
     private int currentNumberOfChecks;
     private bool conditionMet;
@@ -21,14 +22,19 @@ public class CollisionCheck : MonoBehaviour
         OnCollisionCheckMetEvent?.Invoke();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        CheckCollision(collision.collider);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         CheckCollision(other);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionExit(Collision collision)
     {
-        CheckCollision(collision.collider);
+        
     }
 
     private void CheckCollision(Collider other)

@@ -14,8 +14,13 @@ public class LevelController : MonoBehaviour
         //Current child-based automatic level assign mode
         foreach(Transform child in transform)
         {
-            Debug.Log(child.name);
-            levels.Add(child.GetComponent<Level>());
+            levels.Add(child.GetComponent<Level>());            
+        }
+
+        //Assign level index to levels
+        foreach(var level in levels)
+        {
+            level.levelIndex = levels.IndexOf(level);
         }
 
         // Previous manual list mode
@@ -40,7 +45,7 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    public void PlayLevel(int index)
+    private void PlayLevel(int index)
     {
         if (levels[index])
         {
@@ -54,10 +59,12 @@ public class LevelController : MonoBehaviour
                 if (level.levelIndex == index)
                     continue;
 
+                //If it's a future level, stop it and set the end time to the start
                 if (level.levelIndex > index)
-                    level.StopTimeline(false);
+                    level.PauseTimeline(false);
+                //If it's a previous level, stop it and set the end time to the end of the timeline
                 else
-                    level.StopTimeline(true);
+                    level.PauseTimeline(true);
             }
         }
         else

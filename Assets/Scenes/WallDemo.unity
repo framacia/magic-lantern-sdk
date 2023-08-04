@@ -15303,6 +15303,7 @@ MonoBehaviour:
   colliderNameFilter: 
   isParentName: 1
   allowSameObjectRecollision: 0
+  checkType: 0
 --- !u!1001 &1544534228
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class Level : MonoBehaviour
 
     private LevelController levelController;
     private PlayableDirector director;
+    private double currentTime;
 
     private void Awake()
     {
@@ -53,11 +54,20 @@ public class Level : MonoBehaviour
     {
         if (director)
         {
+            director.time = 0f;
             director.Play();
         }
     }
 
-    public void StopTimeline(bool setEndTime)
+    public void ResumeTimeline()
+    {
+        if (director)
+        {
+            director.Play();
+        }
+    }
+
+    public void PauseTimeline(bool setEndTime)
     {
         if (director)
         {
@@ -69,7 +79,7 @@ public class Level : MonoBehaviour
                 director.time = director.duration;
 
             director.Evaluate();
-            director.Stop();           
+            director.Pause();
         }
     }
 }
