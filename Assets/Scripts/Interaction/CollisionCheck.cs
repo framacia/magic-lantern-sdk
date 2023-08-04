@@ -6,16 +6,28 @@ using UnityEngine.Events;
 
 public class CollisionCheck : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnCollisionCheckMetEvent;
+    enum CheckType
+    {
+        OnEnter,
+        OnExit
+    }
+
+    [SerializeField] private CheckType checkType;
     [SerializeField] private int numberOfChecksToTrigger;
     [SerializeField] private string colliderNameFilter;
     [SerializeField] private bool isParentName;
     [SerializeField] private bool allowSameObjectRecollision;
-    //[SerializeField] private CheckType checkType;
+    [SerializeField] private UnityEvent OnCollisionCheckMetEvent;
 
+    private Collider ownCollider;
     private int currentNumberOfChecks;
     private bool conditionMet;
     private List<Collider> alreadyCheckedColliders = new List<Collider>();
+
+    private void Start()
+    {
+        ownCollider = GetComponent<Collider>();
+    }
 
     void OnCollisionCheckMet()
     {
@@ -24,17 +36,26 @@ public class CollisionCheck : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        CheckCollision(collision.collider);
+        if(!ownCollider.isTrigger && checkType == CheckType.OnEnter)
+            CheckCollision(collision.collider);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        CheckCollision(other);
+        if (ownCollider.isTrigger && checkType == CheckType.OnEnter)
+            CheckCollision(other);
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        
+        if (!ownCollider.isTrigger && checkType == CheckType.OnExit)
+            CheckCollision(collision.collider);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (ownCollider.isTrigger && checkType == CheckType.OnExit)
+            CheckCollision(other);
     }
 
     private void CheckCollision(Collider other)

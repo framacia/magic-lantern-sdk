@@ -6,6 +6,9 @@ using UnityEngine.Timeline;
 
 public class TransformLerpBehaviour : PlayableBehaviour
 {
+    public double customClipStart;
+    public double customClipEnd;
+
     public Vector3 targetPositionOffset;
     public Vector3 targetRotationOffset;
     public Vector3 targetScaleAbsolute;
@@ -18,6 +21,7 @@ public class TransformLerpBehaviour : PlayableBehaviour
 
     private bool firstFrameHappened;
     private bool isCurrentClip;
+    private PlayableAsset clip;
 
 
     public override void ProcessFrame(Playable playable, FrameData info, object playerData)
@@ -58,7 +62,7 @@ public class TransformLerpBehaviour : PlayableBehaviour
         if (targetRotationOffset != Vector3.zero)
         {
             Quaternion lerpedRotation = Quaternion.Slerp(initialRotation, initialRotation * Quaternion.Euler(targetRotationOffset), animCurve.Evaluate(clipTime));
-            targetTransform.rotation = lerpedRotation;
+            targetTransform.localRotation = lerpedRotation;
         }
 
         // Lerp scale if enabled.
@@ -69,20 +73,26 @@ public class TransformLerpBehaviour : PlayableBehaviour
         }
     }
 
-
-    //Trying to set initial position when scrolling through timeline - not necessary
+    //Trying to set clip initial and end position when scrolling through timeline or clicking off - not necessary but useful
     public override void OnBehaviourPause(Playable playable, FrameData info)
     {
-        //Access the current time of the PlayableDirector.
+        if (!targetTransform) return;
+
         double currentDirectorTime = playable.GetGraph().GetRootPlayable(0).GetTime();
-        double clipStartTime = playable.GetTime();
-        double clipEndTime = clipStartTime + playable.GetDuration();
 
+        //If timeline time is BEFORE start of clip, set initial values
+        if (currentDirectorTime < customClipStart)
+        {
+            targetTransform.localPosition = initialPosition;
+            targetTransform.localRotation = initialRotation;
+        }
+        //If timeline time is AFTER end of clip, set final values
+        else if (currentDirectorTime > customClipEnd)
+        {
+            targetTransform.localPosition = initialPosition + targetPositionOffset;
+            targetTransform.localRotation = initialRotation * Quaternion.Euler(targetRotationOffset);
 
-        //if (currentDirectorTime < clipStartTime)
-        //    targetTransform.localPosition = initialPosition;
-        //else if (currentDirectorTime > clipEndTime)
-        //    targetTransform.localPosition = initialPosition + targetPositionOffset;
+        }
 
         isCurrentClip = false;
 

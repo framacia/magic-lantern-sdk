@@ -24,9 +24,30 @@ public class Level : MonoBehaviour
             return;
 
         director.playOnAwake = false;
+        director.extrapolationMode = DirectorWrapMode.Hold;
     }
 
-    void OnEnable()
+    private void Update()
+    {
+        CheckIfTimelineHasReachedEnd();
+    }
+
+    private void CheckIfTimelineHasReachedEnd()
+    {
+        if(!director) return;
+
+        if(director.time >= director.duration && director.playableGraph.IsPlaying())
+        {
+            Debug.Log("Level " + levelIndex + " has ended");
+            director.Pause();
+            if (autoFinish)
+                levelController.PlayNextLevel();
+        }
+    }
+
+    //With Wrap Mode Hold this is useless as director never really "ends"
+    #region "Stop implementation"
+    /*void OnEnable()
     {
         if (director)
             director.stopped += OnPlayableDirectorStopped;
@@ -48,7 +69,8 @@ public class Level : MonoBehaviour
             levelController.PlayNextLevel();
 
         Debug.LogFormat("Level {0} timeline stopped", levelIndex);
-    }
+    }*/
+    #endregion
 
     public void PlayTimeline()
     {
@@ -69,17 +91,43 @@ public class Level : MonoBehaviour
 
     public void PauseTimeline(bool setEndTime)
     {
-        if (director)
-        {
-            //Reset state to first timeline frame
-            if (!setEndTime)
-                director.time = 0f;
-            //Reset to last timeline frame
-            else
-                director.time = director.duration;
+        if (!director) return;
 
+        //Reset state to first timeline frame
+        if (!setEndTime)
+        {
+            director.time = 0f;
+            //director.Play(); //Force play for one frame to get binding - workaround
             director.Evaluate();
             director.Pause();
         }
+        //Reset to last timeline frame
+        else
+        {
+            //Original method
+            //director.time = director.duration;
+            ////director.Play(); //Force play for one frame to get binding - workaround
+            //director.Evaluate();
+            //director.Pause();
+
+            //Fast-forward method
+            director.Play();
+            director.playableGraph.GetRootPlayable(0).SetSpeed(100f);
+            StartCoroutine(FastForwardLevel());
+        }
+    }
+
+    //Plays the timeline very fast and then pauses in the last frame to simulate going through it (fast-forward)
+    IEnumerator FastForwardLevel()
+    {
+        //Loop until director reaches end (minus error range for safety)
+        if (director.time >= director.duration - 0.1f)
+        {
+            director.playableGraph.GetRootPlayable(0).SetSpeed(1f);
+            director.Pause();
+            StopCoroutine(FastForwardLevel());
+        }
+        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(FastForwardLevel());       
     }
 }

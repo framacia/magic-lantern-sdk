@@ -4285,6 +4285,7 @@ Transform:
   - {fileID: 543450652931993060}
   - {fileID: 543450652702581841}
   - {fileID: 1513475680}
+  - {fileID: 794287033}
   - {fileID: 427560714}
   - {fileID: 5052542616913892283}
   m_Father: {fileID: 1692067538}
@@ -9244,6 +9245,143 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels: []
+--- !u!1 &794287032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 794287033}
+  - component: {fileID: 794287037}
+  - component: {fileID: 794287036}
+  - component: {fileID: 794287035}
+  - component: {fileID: 794287034}
+  m_Layer: 0
+  m_Name: WallCollisionCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &794287033
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794287032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.149, y: 0.973, z: 4.024}
+  m_LocalScale: {x: 2.0484014, y: 1.1093472, z: 3.7399404}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 66919544}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &794287034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794287032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c81d23e1d3c4e740ba0180700f7ba6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkType: 1
+  numberOfChecksToTrigger: 28
+  colliderNameFilter: Interactables
+  isParentName: 1
+  allowSameObjectRecollision: 0
+  OnCollisionCheckMetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 771113231}
+        m_TargetAssemblyTypeName: LevelController, Assembly-CSharp
+        m_MethodName: PlayLevelByReference
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1730993904}
+          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!65 &794287035
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794287032}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &794287036
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794287032}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &794287037
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794287032}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &804187781
 GameObject:
   m_ObjectHideFlags: 0
@@ -15179,9 +15317,8 @@ GameObject:
   - component: {fileID: 1513475684}
   - component: {fileID: 1513475683}
   - component: {fileID: 1513475681}
-  - component: {fileID: 1513475685}
   m_Layer: 0
-  m_Name: FloorCollisionCheck
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15272,38 +15409,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1513475679}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1513475685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513475679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c81d23e1d3c4e740ba0180700f7ba6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnCollisionCheckMetEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 771113231}
-        m_TargetAssemblyTypeName: LevelController, Assembly-CSharp
-        m_MethodName: PlayLevelByReference
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1730993904}
-          m_ObjectArgumentAssemblyTypeName: Level, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  numberOfChecksToTrigger: 25
-  colliderNameFilter: 
-  isParentName: 1
-  allowSameObjectRecollision: 0
-  checkType: 0
 --- !u!1001 &1544534228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17260,7 +17365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e734bc01171d1746b38027ab720eaab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoFinish: 0
+  autoFinish: 1
   levelIndex: 0
 --- !u!320 &1730993905
 PlayableDirector:
@@ -17273,7 +17378,7 @@ PlayableDirector:
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 7e60ee36f32e0844aaafc779f4556560, type: 2}
   m_InitialState: 0
-  m_WrapMode: 2
+  m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
@@ -32816,7 +32921,12 @@ Animator:
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'index_03_l'\n\tTransform 'lowerarm_l'\n\tTransform
+    'root'\n\tTransform 'pinky_03_l'\n\tTransform 'neck_01'\n\tTransform 'CC_Base_L_Eye'\n\tTransform
+    'pinky_03_r'\n\tTransform 'clavicle_l'\n\tTransform 'ring_02_l'\n\tTransform
+    'ball_l'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

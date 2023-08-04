@@ -10,6 +10,9 @@ public class TransformLerpClip : PlayableAsset, IPropertyPreview
 
     public AnimationCurve animCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
+    [HideInInspector] public double customClipStart { get; set; }
+    [HideInInspector] public double customClipEnd { get; set; }
+
     public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
     {
         var playable = ScriptPlayable<TransformLerpBehaviour>.Create(graph);
@@ -21,12 +24,18 @@ public class TransformLerpClip : PlayableAsset, IPropertyPreview
 
         behaviour.animCurve = animCurve;
 
+        behaviour.customClipStart = customClipStart;
+        behaviour.customClipEnd = customClipEnd;
+
         return playable;
     }
 
     public void GatherProperties(PlayableDirector director, IPropertyCollector driver)
     {
 #if UNITY_EDITOR
+        if (Application.isPlaying) //Doing this at runtime causes strange behaviour
+            return;
+
         const string kLocalPosition = "m_LocalPosition";
 
         driver.AddFromName<Transform>(kLocalPosition + ".x");

@@ -1,6 +1,7 @@
 using RosMessageTypes.Geometry;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -12,28 +13,22 @@ public class LevelController : MonoBehaviour
     private void Start()
     {
         //Current child-based automatic level assign mode
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
-            levels.Add(child.GetComponent<Level>());            
+            levels.Add(child.GetComponent<Level>());
         }
 
         //Assign level index to levels
-        foreach(var level in levels)
+        foreach (var level in levels)
         {
             level.levelIndex = levels.IndexOf(level);
         }
-
-        // Previous manual list mode
-        ////Set level index to levels
-        //for (int i = 0; i < levels.Count; i++)
-        //{
-        //    levels[i].levelIndex = i;
-        //}
     }
 
     public void PlayNextLevel()
     {
-        PlayLevel(currentLevel++);
+        int nextLevel = currentLevel + 1;
+        PlayLevel(nextLevel);
     }
 
     public void PlayLevelByReference(Level levelIndex)
@@ -47,25 +42,32 @@ public class LevelController : MonoBehaviour
 
     private void PlayLevel(int index)
     {
-        if (levels[index])
+        if (levels.Count > index)
         {
             currentLevel = index;
             levels[currentLevel].PlayTimeline();
-            Debug.LogFormat("Playing level {0}", currentLevel);
+            Debug.LogFormat("Playing level {0}", currentLevel + 1);
 
+
+            //This is force level change debug stuff, rethink it but meanwhile commenting it
             //Stop all other level timelines
-            foreach (var level in levels)
-            {
-                if (level.levelIndex == index)
-                    continue;
+            //foreach (var level in levels)
+            //{
+            //    if (level.levelIndex == index)
+            //    {
+            //        Debug.LogFormat("{0}: Level index already loaded.", gameObject.name);
+            //        continue;
 
-                //If it's a future level, stop it and set the end time to the start
-                if (level.levelIndex > index)
-                    level.PauseTimeline(false);
-                //If it's a previous level, stop it and set the end time to the end of the timeline
-                else
-                    level.PauseTimeline(true);
-            }
+            //    }
+
+            //    //If it's a future level, stop it and set the end time to the start
+            //    if (level.levelIndex > index)
+            //        level.PauseTimeline(false);
+            //    //If it's a previous level, stop it and set the end time to the end of the timeline
+            //    else
+            //        //level.PauseTimeline(true);
+            //        level.PauseTimeline(true);
+            //}
         }
         else
         {
@@ -76,6 +78,8 @@ public class LevelController : MonoBehaviour
     private void Update()
     {
         DebugForceChangeLevel();
+
+        //I think there will be logic issues if we let timelines actually "stop/finish" instead of pausing them at the last frame. Consider.
     }
 
     void DebugForceChangeLevel()
