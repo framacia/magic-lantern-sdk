@@ -69,6 +69,13 @@ public class CollisionCheck : MonoBehaviour
 
             currentNumberOfChecks++;
 
+            //If Rigidbody interaction, play SFX (unnecessary) - maybe better to change for feedback sfx attached to this component
+            if (other.GetComponent<RigidbodyInteraction>() && !other.GetComponent<AudioSource>().isPlaying)
+            {
+                other.GetComponent<RigidbodyInteraction>().PlaySFX();
+            }
+                
+
             //Check number goal already met?
             if (currentNumberOfChecks >= numberOfChecksToTrigger && !conditionMet)
             {

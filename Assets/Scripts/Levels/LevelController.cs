@@ -23,6 +23,8 @@ public class LevelController : MonoBehaviour
         {
             level.levelIndex = levels.IndexOf(level);
         }
+
+        PlayLevel(0);
     }
 
     public void PlayNextLevel()
@@ -46,8 +48,7 @@ public class LevelController : MonoBehaviour
         {
             currentLevel = index;
             levels[currentLevel].PlayTimeline();
-            Debug.LogFormat("Playing level {0}", currentLevel + 1);
-
+            Debug.LogFormat("<color=yellow>LevelController: Playing Level {0}</color>", currentLevel + 1);
 
             //This is force level change debug stuff, rethink it but meanwhile commenting it
             //Stop all other level timelines
@@ -57,7 +58,6 @@ public class LevelController : MonoBehaviour
             //    {
             //        Debug.LogFormat("{0}: Level index already loaded.", gameObject.name);
             //        continue;
-
             //    }
 
             //    //If it's a future level, stop it and set the end time to the start

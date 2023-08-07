@@ -7,12 +7,15 @@ public class RigidbodyInteraction : MonoBehaviour
 {
     Rigidbody rb;
     Camera cam;
-    [SerializeField] AudioClip thudClip;
+    [SerializeField] AudioClip soundFXClip;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        audioSource = this.GetComponent<AudioSource>();
+        audioSource.clip = soundFXClip;
         cam = Camera.main;
     }
 
@@ -30,6 +33,12 @@ public class RigidbodyInteraction : MonoBehaviour
         Vector3 forceVector = cam.transform.forward * force;
 
         rb.AddForce(forceVector);
-        AudioSource.PlayClipAtPoint(thudClip, this.transform.position, 1f);
+        PlaySFX();
+    }
+
+    public void PlaySFX()
+    {
+        audioSource.pitch = (Random.Range(0.8f, 1.2f));
+        audioSource.Play();
     }
 }

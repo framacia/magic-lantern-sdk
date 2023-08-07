@@ -38,7 +38,7 @@ public class Level : MonoBehaviour
 
         if(director.time >= director.duration && director.playableGraph.IsPlaying())
         {
-            Debug.Log("Level " + levelIndex + " has ended");
+            Debug.Log("Level " + levelIndex + 1 + " timeline has ended");
             director.Pause();
             if (autoFinish)
                 levelController.PlayNextLevel();
