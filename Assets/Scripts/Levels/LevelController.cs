@@ -10,6 +10,24 @@ public class LevelController : MonoBehaviour
     [SerializeField, ReadOnly] private List<Level> levels = new List<Level>();
     private int currentLevel;
 
+    #region "Singleton"
+    public static LevelController Instance { get; private set; }
+
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    #endregion
+
     private void Start()
     {
         //Current child-based automatic level assign mode
@@ -33,15 +51,23 @@ public class LevelController : MonoBehaviour
         PlayLevel(nextLevel);
     }
 
-    public void PlayLevelByReference(Level levelIndex)
+    /// <summary>
+    /// Plays level attached in parameter, usually done through a UnityEvent in the inspector
+    /// </summary>
+    /// <param name="level">The level.</param>
+    public void PlayLevelByReference(Level level)
     {
         //If it exists
-        if (levels.Contains(levelIndex))
+        if (levels.Contains(level))
         {
-            PlayLevel(levels.IndexOf(levelIndex));
+            PlayLevel(levels.IndexOf(level));
         }
     }
 
+    /// <summary>
+    /// Plays the level, if it has a timeline, it will play it. Other levels are stopped
+    /// </summary>
+    /// <param name="index">The level index.</param>
     private void PlayLevel(int index)
     {
         if (levels.Count > index)
@@ -49,6 +75,18 @@ public class LevelController : MonoBehaviour
             currentLevel = index;
             levels[currentLevel].PlayTimeline();
             Debug.LogFormat("<color=yellow>LevelController: Playing Level {0}</color>", currentLevel + 1);
+
+            //Temporary solution, pause all other level timelines
+            foreach (var level in levels)
+            {
+                if (level.levelIndex == index)
+                {
+                    Debug.LogFormat("{0}: Level index already loaded.", gameObject.name);
+                    continue;
+                }
+
+                level.PauseTimeline();
+            }
 
             //This is force level change debug stuff, rethink it but meanwhile commenting it
             //Stop all other level timelines
@@ -71,17 +109,18 @@ public class LevelController : MonoBehaviour
         }
         else
         {
-            Debug.LogErrorFormat("Tried to load Level with index {0} that is not in LevelController list", index);
+            Debug.LogErrorFormat("Tried to load Level number {0} that is not in LevelController list", index + 1);
         }
     }
 
     private void Update()
     {
         DebugForceChangeLevel();
-
-        //I think there will be logic issues if we let timelines actually "stop/finish" instead of pausing them at the last frame. Consider.
     }
 
+    /// <summary>
+    /// Forces the selected level to Play
+    /// </summary>
     void DebugForceChangeLevel()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))

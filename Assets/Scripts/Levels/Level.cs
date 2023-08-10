@@ -9,15 +9,14 @@ public class Level : MonoBehaviour
     public bool autoFinish = false;
     [HideInInspector] public int levelIndex;
 
-    private LevelController levelController;
     private PlayableDirector director;
     private double currentTime;
 
+    /// <summary>
+    /// Gets director component and sets up initial values (play on awake/wrap mode)
+    /// </summary>
     private void Awake()
     {
-        //TODO check if it's better to make it a singleton
-        levelController = FindObjectOfType<LevelController>();
-
         director = GetComponent<PlayableDirector>();
 
         if (!director)
@@ -32,16 +31,19 @@ public class Level : MonoBehaviour
         CheckIfTimelineHasReachedEnd();
     }
 
+    /// <summary>
+    /// Checks if timeline has reached last frame, if it has it gets paused and the next Level is autoplayed accordingly
+    /// </summary>
     private void CheckIfTimelineHasReachedEnd()
     {
-        if(!director) return;
+        if (!director) return;
 
-        if(director.time >= director.duration && director.playableGraph.IsPlaying())
+        if (director.time >= director.duration && director.playableGraph.IsPlaying())
         {
             Debug.Log("Level " + levelIndex + 1 + " timeline has ended");
             director.Pause();
             if (autoFinish)
-                levelController.PlayNextLevel();
+                LevelController.Instance.PlayNextLevel();
         }
     }
 
@@ -72,6 +74,9 @@ public class Level : MonoBehaviour
     }*/
     #endregion
 
+    /// <summary>
+    /// Plays the Level timeline from the beginning
+    /// </summary>
     public void PlayTimeline()
     {
         if (director)
@@ -81,6 +86,9 @@ public class Level : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resumes the timeline.
+    /// </summary>
     public void ResumeTimeline()
     {
         if (director)
@@ -89,35 +97,47 @@ public class Level : MonoBehaviour
         }
     }
 
-    public void PauseTimeline(bool setEndTime)
+    public void StopTimeline()
     {
         if (!director) return;
 
-        //Reset state to first timeline frame
-        if (!setEndTime)
-        {
-            director.time = 0f;
-            //director.Play(); //Force play for one frame to get binding - workaround
-            director.Evaluate();
-            director.Pause();
-        }
-        //Reset to last timeline frame
-        else
-        {
-            //Original method
-            //director.time = director.duration;
-            ////director.Play(); //Force play for one frame to get binding - workaround
-            //director.Evaluate();
-            //director.Pause();
+        //Original method
+        //director.time = director.duration;
+        ////director.Play(); //Force play for one frame to get binding - workaround
+        //director.Evaluate();
+        //director.Pause();
 
-            //Fast-forward method
-            director.Play();
-            director.playableGraph.GetRootPlayable(0).SetSpeed(100f);
-            StartCoroutine(FastForwardLevel());
-        }
+        //Fast-forward method
+        director.Play();
+        director.playableGraph.GetRootPlayable(0).SetSpeed(100f);
+        StartCoroutine(FastForwardLevel());
     }
 
-    //Plays the timeline very fast and then pauses in the last frame to simulate going through it (fast-forward)
+
+    /// <summary>
+    /// Resets the timeline back to first frame and pauses it
+    /// </summary>
+    public void ResetTimeline()
+    {
+        if (!director) return;
+
+        director.time = 0f;
+        director.Play(); //Force play for one frame to get binding - workaround
+        director.Evaluate();
+        director.Pause();
+    }
+
+    /// <summary>
+    /// Pauses the timeline and keeps it in the current frame
+    /// </summary>
+    public void PauseTimeline()
+    {
+        if (!director) return;
+
+        director.Pause();
+    }
+
+    //Fast forwards timeline and then pauses in the last frame to simulate going through it
     IEnumerator FastForwardLevel()
     {
         //Loop until director reaches end (minus error range for safety)
@@ -128,6 +148,6 @@ public class Level : MonoBehaviour
             StopCoroutine(FastForwardLevel());
         }
         yield return new WaitForSeconds(0.1f);
-        StartCoroutine(FastForwardLevel());       
+        StartCoroutine(FastForwardLevel());
     }
 }

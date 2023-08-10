@@ -39,9 +39,6 @@ public class BNO055Sensor : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern void closeDevice();
 
-    // Declare the instance variable
-    private BNO055Sensor sensor;
-
     // Public variables to set device path and address
     private string devicePath = "/dev/i2c-5";
     private int deviceAddress = 0x28;
