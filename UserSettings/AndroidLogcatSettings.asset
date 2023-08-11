@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "192.168.121.100:5555",
+    "m_SelectedDeviceId": "DM4XEYM7NB9P9PGM",
     "m_SelectedPackage": {
-        "deviceId": "192.168.121.100:5555",
+        "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML",
-        "processId": 5387,
+        "processId": 27735,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -132,6 +132,12 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML2",
             "processId": 30334,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 27735,
             "exited": false
         },
         {
