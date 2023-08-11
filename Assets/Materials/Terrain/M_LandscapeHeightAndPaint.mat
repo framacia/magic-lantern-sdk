@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_LandscapeHeightAndPaint
-  m_Shader: {fileID: -6465566751694194690, guid: e5d08f35653df43428cc84039ccd1a92, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 64a565cced0cd074c925bd7ec4f41405, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -76,7 +76,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture1:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 06e12b782bcbb864cb38ea2fdb3d3017, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PaintTexture1Normal:
+        m_Texture: {fileID: 2800000, guid: 9e483c0f1eb62e641a92c261ba165433, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -133,6 +137,7 @@ Material:
     - _Metallic: 0
     - _Middle_Tiling: 52.6
     - _OcclusionStrength: 1
+    - _PaintTexture1Tiling: 871.3
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -153,6 +158,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OverlayColor: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5994505177852360818
