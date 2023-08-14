@@ -58,4 +58,26 @@ MonoBehaviour:
     lockedRotations: {x: 1, y: 1, z: 1}
     useNormalsForRotation: 0
     maxSlopeAngle: 45
+  - allowedLayers:
+      serializedVersion: 2
+      m_Bits: 4023
+    prefab: {fileID: 8292397370208249231, guid: 6cdb821c3e1661b45b87075fdd93345d, type: 3}
+    possibility: 0.8
+    scaleMin: 0.8
+    scaleMax: 1.2
+    placementOffset: {x: 0, y: 0, z: 0}
+    lockedRotations: {x: 1, y: 1, z: 1}
+    useNormalsForRotation: 0
+    maxSlopeAngle: 45
+  - allowedLayers:
+      serializedVersion: 2
+      m_Bits: 4023
+    prefab: {fileID: 8292397370208249231, guid: 46d0aa8b49b503d42a906b441e07b85d, type: 3}
+    possibility: 0.8
+    scaleMin: 0.8
+    scaleMax: 1.2
+    placementOffset: {x: 0, y: 0, z: 0}
+    lockedRotations: {x: 1, y: 1, z: 1}
+    useNormalsForRotation: 0
+    maxSlopeAngle: 45
   objectsToPlace: 10
