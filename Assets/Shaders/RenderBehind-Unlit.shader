@@ -49,6 +49,8 @@ Shader "Fran/RenderBehind-Unlit"
         {
             Name "Unlit"
 
+            //[DisableBatching]
+
             // -------------------------------------
             // Render State Commands
             AlphaToMask[_AlphaToMask]
@@ -69,7 +71,6 @@ Shader "Fran/RenderBehind-Unlit"
 
             // -------------------------------------
             // Unity defined keywords
-            #pragma multi_compile_fog
             #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
             #pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
             #pragma multi_compile _ DEBUG_DISPLAY

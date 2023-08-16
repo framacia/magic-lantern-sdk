@@ -3,7 +3,37 @@ guid: fd3fc5c0953f55e47ad8d8f64909a5f1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default OBJ.005
+    second: {fileID: 2100000, guid: bc1a2f6d87dfeae44891da4799cb1098, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: colomn
+    second: {fileID: 2100000, guid: 51d217db22822b741bcc267672dab9fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fontain
+    second: {fileID: 2100000, guid: 5b27992f64d9fa04290b79ea4e9e7ac5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: main
+    second: {fileID: 2100000, guid: 15a8d7f799398cb42adcdaf4c10a1cfc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: path
+    second: {fileID: 2100000, guid: 891a7b79e6de822499cf6e59cdeb3d96, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u041C\u0430\u0442\u0435\u0440\u0438\u0430\u043B"
+    second: {fileID: 2100000, guid: 9f254fcf848685d4dad075727acda806, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
