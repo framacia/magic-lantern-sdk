@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML",
-        "processId": 30586,
+        "processId": 7914,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -150,6 +150,18 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
             "processId": 30586,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 7220,
+            "exited": false
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 7914,
             "exited": false
         },
         {
