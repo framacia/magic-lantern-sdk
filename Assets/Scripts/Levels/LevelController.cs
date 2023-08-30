@@ -81,7 +81,7 @@ public class LevelController : MonoBehaviour
             {
                 if (level.levelIndex == index)
                 {
-                    Debug.LogFormat("{0}: Level index already loaded.", gameObject.name);
+                    //Debug.LogFormat("{0}: Level index already loaded.", gameObject.name);
                     continue;
                 }
 

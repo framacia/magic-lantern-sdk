@@ -125,7 +125,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BottomHeight: -2.16
+    - _BottomHeight: -1.46
     - _BottomSmoothness: 4.97
     - _Bottom_Tiling: 9.18
     - _BumpScale: 1

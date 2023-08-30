@@ -15,7 +15,6 @@ public class CameraPointedObject : MonoBehaviour
     public float targetAngle = 5f;
     private Transform camera;
 
-
     [HideInInspector] public InteractionTimer iTimer;
     [SerializeField] private string interactingText = "Interacting...";
 
@@ -30,6 +29,8 @@ public class CameraPointedObject : MonoBehaviour
 
     [SerializeField] private UnityEvent OnObjectInteractedEvent;
 
+    [SerializeField] InteractionType interactionType;
+
     private void Start()
     {
         if (camera == null)
@@ -43,10 +44,21 @@ public class CameraPointedObject : MonoBehaviour
         if (!string.IsNullOrEmpty(interactingText))
             iTimer.stateText.text = interactingText;
 
-        iTimer.OnFinishInteraction += OnObjectInteracted;
-
         renderer = GetComponent<MeshRenderer>();
         originalMaterials = renderer.materials;
+    }
+
+    private void OnEnable()
+    {
+        iTimer.OnFinishInteraction += OnObjectInteracted;
+        NetworkPlayer.OnPlayerLoaded += OnPlayerLoaded;
+    }
+
+    private void OnDisable()
+    {
+        iTimer.OnFinishInteraction -= OnObjectInteracted;
+        NetworkPlayer.OnPlayerLoaded -= OnPlayerLoaded;
+        InteractionTypeController.Instance.OnInteractionTypeChanged -= SwitchInteractionType;
     }
 
 #if UNITY_EDITOR
@@ -58,7 +70,7 @@ public class CameraPointedObject : MonoBehaviour
             iTimer = GetComponentInChildren<InteractionTimer>(true);
         }
 
-        if(model == null)
+        if (model == null)
         {
             transform.Find("Model");
         }
@@ -87,7 +99,7 @@ public class CameraPointedObject : MonoBehaviour
             model.SetActive(false);
         }
 
-        if(string.IsNullOrEmpty(interactingText))
+        if (string.IsNullOrEmpty(interactingText))
         {
             interactingText = "Interacting...";
         }
@@ -123,7 +135,13 @@ public class CameraPointedObject : MonoBehaviour
 
         if (angle <= targetAngle && !raycastResult)
         {
-            StartTimer();
+            //If Dwell mode, start timer
+            if (interactionType == InteractionType.Dwell)
+                StartTimer();
+
+            //If button mode
+            if (interactionType == InteractionType.Button && Input.GetMouseButtonDown(0))
+                OnObjectInteracted();
 
             if (outlineMaterial == null)
                 return;
@@ -132,7 +150,9 @@ public class CameraPointedObject : MonoBehaviour
         }
         else
         {
-            StopTimer();
+            if (interactionType == InteractionType.Dwell)
+                StopTimer();
+
             RemoveOutlineMaterial();
         }
     }
@@ -180,5 +200,16 @@ public class CameraPointedObject : MonoBehaviour
             return;
 
         renderer.materials = originalMaterials;
+    }
+
+    void SwitchInteractionType(InteractionType newInteractionType)
+    {
+        interactionType = newInteractionType;
+    }
+
+    //I have to do this because gameobjects with NetworkIdentity are deactivated at the beginning so cant be subscribed
+    private void OnPlayerLoaded()
+    {
+        InteractionTypeController.Instance.OnInteractionTypeChanged += SwitchInteractionType;
     }
 }

@@ -3,165 +3,39 @@
     "m_SelectedPackage": {
         "deviceId": "DM4XEYM7NB9P9PGM",
         "name": "com.UPF.ARML",
-        "processId": 7914,
+        "processId": 23784,
         "exited": false
     },
     "m_SelectedPriority": 4,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 26562,
+            "name": "com.UPF.ARML",
+            "processId": 11101,
             "exited": true
         },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 27927,
+            "name": "com.UPF.ARML",
+            "processId": 12165,
             "exited": true
         },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 30714,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 4904,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 5922,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 6653,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 7341,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 9668,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 10578,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 13350,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 19554,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 31672,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 2568,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 6394,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 10008,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 26538,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 10626,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 21271,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 23830,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 28916,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML2",
-            "processId": 30334,
-            "exited": false
+            "name": "com.UPF.ARML",
+            "processId": 16980,
+            "exited": true
         },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
-            "processId": 27735,
-            "exited": false
+            "processId": 20777,
+            "exited": true
         },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
-            "processId": 29260,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 30586,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 7220,
-            "exited": false
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 7914,
+            "processId": 23784,
             "exited": false
         },
         {

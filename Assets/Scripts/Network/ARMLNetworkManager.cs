@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using System.Net;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class ARMLNetworkManager : NetworkManager
 {
@@ -12,16 +13,31 @@ public class ARMLNetworkManager : NetworkManager
     public bool isAdmin = false;
     public bool autoConnectoToHotspot = false;
 
+    #region Singleton
+    public static ARMLNetworkManager Instance { get; private set; }
+
     private void Awake()
     {
-#if UNITY_EDITOR
-        isAdmin = true;
-#endif
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_EDITOR
+        isAdmin = true;
+#endif
+
         if (!isAdmin)
         {
             StartHost();
@@ -39,7 +55,6 @@ public class ARMLNetworkManager : NetworkManager
     public override void OnStartHost()
     {
         base.OnStartHost();
-
     }
 
     public void SetNetworkAddress(string networkAddress)

@@ -859,7 +859,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "x": 0.0,
+        "x": 13.699999809265137,
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
@@ -2601,7 +2601,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 1.0,
+    "m_Value": 2.75,
     "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.5,
@@ -3234,7 +3234,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.0,
+    "m_Value": 0.34599998593330386,
     "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
@@ -3407,7 +3407,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 0.0,
+    "m_Value": 1.0,
     "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,

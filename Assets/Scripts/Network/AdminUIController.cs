@@ -10,6 +10,7 @@ public class AdminUIController : NetworkBehaviour
     Camera cam;
     PostProcessingController postProcessingController;
     [SerializeField] GameObject virtualDouble;
+    bool isButtonInteraction = false;
 
     private void Start()
     {
@@ -86,7 +87,19 @@ public class AdminUIController : NetworkBehaviour
     void CmdOnToggleVirtualDouble()
     {
         virtualDouble.SetActive(!virtualDouble.activeSelf);
+    }
 
+    public void ToggleInteractionType()
+    {
+        isButtonInteraction = !isButtonInteraction;
+        InteractionTypeController.Instance.ChangeInteractionType(isButtonInteraction);
+        CmdOnToggleInteractionType(isButtonInteraction);
+    }
+
+    [Command(requiresAuthority = false)]
+    void CmdOnToggleInteractionType(bool state)
+    {
+        InteractionTypeController.Instance.ChangeInteractionType(state);
     }
 
 }
