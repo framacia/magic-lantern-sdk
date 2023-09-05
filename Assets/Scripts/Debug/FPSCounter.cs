@@ -18,7 +18,7 @@ namespace UnityStandardAssets.Utility
 
         private void Start()
         {
-            m_GuiText = GameObject.Find("FPS Text").GetComponent<TextMeshProUGUI>();
+            m_GuiText = GetComponent<TextMeshProUGUI>();
             m_FpsNextPeriod = Time.realtimeSinceStartup + fpsMeasurePeriod;
 
             rb = GetComponent<Rigidbody>();
