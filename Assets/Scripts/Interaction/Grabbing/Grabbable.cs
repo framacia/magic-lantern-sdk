@@ -132,7 +132,7 @@ public abstract class Grabbable : MonoBehaviour
 
     protected Vector3 CalculateCameraToTargetVector()
     {
-        return (grabTarget.transform.position - cam.transform.position).normalized;
+        return (grabTarget.transform.position - Camera.main.transform.position).normalized;
     }
 
     private void OnTriggerEnter(Collider other)

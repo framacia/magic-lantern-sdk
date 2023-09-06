@@ -8,27 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "77d517016182d724",
+            "id": "0891b6f9a74df3f2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
-            }
-          },
-          {
-            "id": "e8a92efc58cdbda7",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "New Scene Set-up.md",
-                "mode": "source",
-                "source": false
+                "file": "Images/Collision Check.png"
               }
             }
           },
           {
-            "id": "0891b6f9a74df3f2",
+            "id": "4c3116c19d3bbdad",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -40,7 +30,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -167,9 +157,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0891b6f9a74df3f2",
+  "active": "4c3116c19d3bbdad",
   "lastOpenFiles": [
+    "TO DO - Game Builder.md",
+    "TO DO - Scenes.md",
     "New Scene Set-up.md",
-    "Documentation.md"
+    "Documentation.md",
+    "Images/anchored grabbable.png",
+    "Images/Collision Check.png",
+    "Images/Placeable.png",
+    "Images/Camera pointed object.png",
+    "Images/Levels hierarchy.png",
+    "Images/Levels hierarchy.png",
+    "Images/Network UI.png",
+    "Images/CameraPointedObject.png",
+    "Images"
   ]
 }

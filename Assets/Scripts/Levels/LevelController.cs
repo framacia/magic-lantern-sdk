@@ -133,5 +133,15 @@ public class LevelController : MonoBehaviour
             PlayLevel(3);
         if (Input.GetKeyDown(KeyCode.Alpha5))
             PlayLevel(4);
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+            PlayLevel(5);
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            PlayLevel(6);
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+            PlayLevel(7);
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+            PlayLevel(8);
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+            PlayLevel(9);
     }
 }

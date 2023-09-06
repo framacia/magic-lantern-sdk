@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnchoredGrabbable : Grabbable
 {
@@ -10,9 +11,14 @@ public class AnchoredGrabbable : Grabbable
     [field: SerializeField]
     protected bool matchRotation {get; private set;} = false;
 
+    //TODO Should be in parent class
+    [field: Header("Event")]
+    [SerializeField] private UnityEvent OnObjectGrabbedEvent;
+
     public override void Grab(){
         distanceFromTarget = CalculateDistanceFromTarget();
         rb.useGravity = false;
+        OnObjectGrabbedEvent?.Invoke();
         base.Grab();
     }
 

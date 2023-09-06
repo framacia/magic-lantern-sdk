@@ -6,11 +6,16 @@ using UnityEngine.Playables;
 
 public class Level : MonoBehaviour
 {
+    [Tooltip("Unsure if having this automatically go to next Level when its timeline ends, or once all conditions are met. Think about it")]
     public bool autoFinish = false;
     [HideInInspector] public int levelIndex;
 
+    [SerializeField] int conditionsToMeet;
+    private int conditionsAlreadyMet;
+
     private PlayableDirector director;
     private double currentTime;
+    private List<GameObject> children = new List<GameObject>();
 
     /// <summary>
     /// Gets director component and sets up initial values (play on awake/wrap mode)
@@ -24,6 +29,19 @@ public class Level : MonoBehaviour
 
         director.playOnAwake = false;
         director.extrapolationMode = DirectorWrapMode.Hold;
+    }
+
+    private void Start()
+    {
+        //Populate children list to hold reference
+        foreach (Transform child in transform)
+        {
+            children.Add(child.gameObject);
+            print(child.name);
+        }
+
+        //By default, deactivate at start to avoid seeing the level before it's played
+        SetChildrenActive(false);
     }
 
     private void Update()
@@ -84,6 +102,8 @@ public class Level : MonoBehaviour
             director.time = 0f;
             director.Play();
         }
+
+        SetChildrenActive(true);
     }
 
     /// <summary>
@@ -95,6 +115,8 @@ public class Level : MonoBehaviour
         {
             director.Play();
         }
+
+        SetChildrenActive(true);
     }
 
     public void StopTimeline()
@@ -132,6 +154,8 @@ public class Level : MonoBehaviour
     /// </summary>
     public void PauseTimeline()
     {
+        SetChildrenActive(false);
+
         if (!director) return;
 
         director.Pause();
@@ -149,5 +173,23 @@ public class Level : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         StartCoroutine(FastForwardLevel());
+    }
+
+    private void SetChildrenActive(bool state)
+    {
+        //Using a list preloaded with references has the risk of ignoring instantiated gameObjects, but unlikely
+        foreach(var child in children)
+            child.SetActive(state);
+    }
+
+    public void CompleteCondition()
+    {
+        conditionsAlreadyMet++;
+
+        if(conditionsAlreadyMet >= conditionsToMeet && autoFinish)
+        {
+            //Finish Level
+            LevelController.Instance.PlayNextLevel();
+        }
     }
 }

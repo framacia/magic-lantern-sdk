@@ -78,6 +78,11 @@ public class CameraPointedObject : MonoBehaviour
         {
             transform.Find("Model");
         }
+
+        if(outlineMaterial == null)
+        {
+            outlineMaterial = Resources.Load("M_Outline") as Material;
+        }
     }
 
     /// <summary>
