@@ -7,8 +7,8 @@ using UnityEngine.Playables;
 
 public class LevelController : MonoBehaviour
 {
+    [SerializeField, ReadOnly] private int currentLevel;
     [SerializeField, ReadOnly] private List<Level> levels = new List<Level>();
-    private int currentLevel;
 
     #region "Singleton"
     public static LevelController Instance { get; private set; }

@@ -7,11 +7,17 @@ using UnityEngine.Playables;
 public class Level : MonoBehaviour
 {
     [Tooltip("Unsure if having this automatically go to next Level when its timeline ends, or once all conditions are met. Think about it")]
-    public bool autoFinish = false;
+    [Header("Finish")]
+    public bool autoFinishOnConditionsMet = false;
+    public bool autoFinishOnTimelineEnd = false;
     [HideInInspector] public int levelIndex;
 
+    [Header("Conditions")]
     [SerializeField] int conditionsToMeet;
     private int conditionsAlreadyMet;
+
+    [Header("Objects")]
+    [SerializeField] bool deactivateObjectsIfUnloaded = false;
 
     private PlayableDirector director;
     private double currentTime;
@@ -60,7 +66,7 @@ public class Level : MonoBehaviour
         {
             Debug.Log("Level " + (levelIndex + 1).ToString() + " timeline has ended");
             director.Pause();
-            if (autoFinish)
+            if (autoFinishOnTimelineEnd)
                 LevelController.Instance.PlayNextLevel();
         }
     }
@@ -135,7 +141,6 @@ public class Level : MonoBehaviour
         StartCoroutine(FastForwardLevel());
     }
 
-
     /// <summary>
     /// Resets the timeline back to first frame and pauses it
     /// </summary>
@@ -177,8 +182,11 @@ public class Level : MonoBehaviour
 
     private void SetChildrenActive(bool state)
     {
+        if (!deactivateObjectsIfUnloaded) return;
+
         //Using a list preloaded with references has the risk of ignoring instantiated gameObjects, but unlikely
-        foreach(var child in children)
+        //However maybe we should give option to reparent objects in timeline to handle objects persistent across Levels
+        foreach (var child in children)
             child.SetActive(state);
     }
 
@@ -186,10 +194,15 @@ public class Level : MonoBehaviour
     {
         conditionsAlreadyMet++;
 
-        if(conditionsAlreadyMet >= conditionsToMeet && autoFinish)
+        if (conditionsAlreadyMet >= conditionsToMeet && autoFinishOnConditionsMet)
         {
             //Finish Level
             LevelController.Instance.PlayNextLevel();
         }
+    }
+
+    public void RemoveCondition()
+    {
+        conditionsAlreadyMet--;
     }
 }

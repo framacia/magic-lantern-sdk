@@ -33,8 +33,9 @@ public class Placeable : MonoBehaviour
     [Header("Feedback")]
     public ActionFeedback feedback;
 
-    [Header("Event")]
+    [Header("Events")]
     [SerializeField] private UnityEvent OnObjectPlacedEvent;
+    [SerializeField] private UnityEvent OnObjectRemovedEvent;
 
 
     private void Awake()
@@ -100,6 +101,7 @@ public class Placeable : MonoBehaviour
         placedObject = null;
         displayMesh.SetActive(true);
         canPlaceLastPlacedObject = false;
+        OnObjectRemovedEvent?.Invoke();
     }
 
     public bool CheckIfCanPlaceObject(GameObject other)

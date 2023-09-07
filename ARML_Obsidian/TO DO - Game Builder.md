@@ -17,11 +17,14 @@ kanban-plugin: basic
 - [ ] Automatize Character setup (animation, gaze, dialogue canvas)
 - [ ] Integrate Lip-Sync
 - [ ] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors
+- [ ] Clean up logic related to Interaction Timer
+- [ ] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 
 
 ## DOING
 
 - [ ] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
+- [ ] Make bricks particle system
 
 
 ## DONE
@@ -29,6 +32,7 @@ kanban-plugin: basic
 **Complete**
 - [x] Make the selection process shader tied to the object placement and not the camera view
 - [x] Add condition number to Level (generic conditions that must be met to complete Level, eg. place 3 placeables)
+- [x] Define feedback (particle + sound) system - reuse Edwards?
 - [x] Add Unity Event triggers for Grabbables and Placeables.
 
 

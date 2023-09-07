@@ -12,24 +12,30 @@ using TNRD.Utilities;
 
 public class CameraPointedObject : MonoBehaviour
 {
-    public float targetAngle = 5f;
     private Transform camera;
-
     [HideInInspector] public InteractionTimer iTimer;
-    [SerializeField] private string interactingText = "Interacting...";
 
+    [Header("Interaction")]
+    public float targetAngle = 5f;
+    [SerializeField] InteractionType interactionType;
+
+    [Header("Raycast")]
     public bool checkObstaclesRaycast = false;
     public LayerMask blockingLayers = 0;
 
     private GameObject model;
 
+    [Header("Visual")]
+    [SerializeField] private string interactingText = "Interacting...";
     [SerializeField] Material outlineMaterial;
     private Material[] originalMaterials;
     private MeshRenderer renderer;
 
-    [SerializeField] private UnityEvent OnObjectInteractedEvent;
+    [Header("Feedback")]
+    public ActionFeedback feedback;
 
-    [SerializeField] InteractionType interactionType;
+    [Header("Event")]
+    [SerializeField] private UnityEvent OnObjectInteractedEvent;
 
     private void Start()
     {
@@ -39,6 +45,11 @@ public class CameraPointedObject : MonoBehaviour
         if (iTimer == null)
         {
             iTimer = GetComponentInChildren<InteractionTimer>(true);
+        }
+
+        if(feedback == null && GetComponent<ActionFeedback>())
+        {
+            feedback = GetComponent<ActionFeedback>();
         }
 
         if (!string.IsNullOrEmpty(interactingText))
@@ -79,7 +90,7 @@ public class CameraPointedObject : MonoBehaviour
             transform.Find("Model");
         }
 
-        if(outlineMaterial == null)
+        if (outlineMaterial == null)
         {
             outlineMaterial = Resources.Load("M_Outline") as Material;
         }
@@ -182,6 +193,8 @@ public class CameraPointedObject : MonoBehaviour
     {
         if (OnObjectInteractedEvent != null)
             OnObjectInteractedEvent.Invoke();
+
+        feedback?.Play();
     }
 
     void AddOutlineMaterial()

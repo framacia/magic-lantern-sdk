@@ -72,7 +72,7 @@ public class CollisionCheck : MonoBehaviour
             //If Rigidbody interaction, play SFX (unnecessary) - maybe better to change for feedback sfx attached to this component
             if (other.GetComponent<RigidbodyInteraction>() && !other.GetComponent<AudioSource>().isPlaying)
             {
-                other.GetComponent<RigidbodyInteraction>().PlaySFX();
+                //other.GetComponent<RigidbodyInteraction>().PlaySFX();
             }
                 
 
