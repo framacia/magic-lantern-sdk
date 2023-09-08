@@ -11,13 +11,15 @@ public class ActionFeedback : MonoBehaviour
     [SerializeField] AudioSource audioSource;
 
     [Header("Particles")]
-    public ParticleSystem[] particles;
+    [SerializeField] ParticleSystem particleSystem;
 
     // Start is called before the first frame update
     private void Start()
     {
         if(audioSource == null && GetComponent<AudioSource>())
             audioSource = GetComponent<AudioSource>();
+        if (particleSystem == null && GetComponentInChildren<ParticleSystem>())
+            particleSystem = GetComponentInChildren<ParticleSystem>();
         audioSource.clip = soundFXClip;
     }
 
@@ -26,7 +28,8 @@ public class ActionFeedback : MonoBehaviour
         if(soundFXClip)
             PlaySFX();
 
-        PlayParticles();
+        if(particleSystem)
+            PlayParticles();
     }
 
     //Have to use AudioSource because PlayOneShot does not support pitch changes
@@ -38,9 +41,6 @@ public class ActionFeedback : MonoBehaviour
 
     private void PlayParticles()
     {
-        for (int i = 0; i < particles.Length; i++)
-        {
-            particles[i].Play();
-        }
+        particleSystem.Play();
     }
 }
