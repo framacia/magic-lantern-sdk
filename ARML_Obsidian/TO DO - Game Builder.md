@@ -24,7 +24,6 @@ kanban-plugin: basic
 ## DOING
 
 - [ ] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
-- [ ] Make bricks particle system
 
 
 ## DONE
@@ -34,6 +33,7 @@ kanban-plugin: basic
 - [x] Add condition number to Level (generic conditions that must be met to complete Level, eg. place 3 placeables)
 - [x] Define feedback (particle + sound) system - reuse Edwards?
 - [x] Add Unity Event triggers for Grabbables and Placeables.
+- [x] Make bricks particle system
 
 
 ## BLOCKED

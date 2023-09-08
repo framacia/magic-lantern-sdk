@@ -21,6 +21,8 @@
 - Can use GameObject name to filter for the right object.
 ![[Placeable.png]]
 # Interaction Helpers
+## Interaction Timer (outdated)
+![[interaction timer.png]]
 ## Collision Check
 - Can be placed on a collider to make collision/trigger checks with a name filter.
 - Can choose OnTrigger or OnExit.
@@ -46,3 +48,5 @@
 - The Conditions are completely generic and are met via the Interactables' Events.
 ![[Level.png]]
 
+# Admin Panel
+## Camera

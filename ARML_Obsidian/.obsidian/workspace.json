@@ -11,13 +11,28 @@
             "id": "4c3116c19d3bbdad",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "New Scene Set-up.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "1502dccca241a96f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Wall Demo Set-up.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -83,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Wall Demo Set-up.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Wall Demo Set-up.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Wall Demo Set-up.md"
               }
             }
           }
@@ -144,22 +159,23 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "4c3116c19d3bbdad",
+  "active": "1502dccca241a96f",
   "lastOpenFiles": [
-    "Images/Collision Check.png",
-    "TO DO - Game Builder.md",
-    "Documentation.md",
+    "TO DO - Scenes.md",
     "New Scene Set-up.md",
+    "Documentation.md",
+    "Images/interaction timer.png",
+    "Wall Demo Set-up.md",
+    "Images/Camera pointed object.png",
+    "Images/CameraPointedObject.png",
+    "TO DO - Game Builder.md",
+    "Images/wall collision check.png",
+    "Pasted image 20230908123242 1.png",
+    "Images/unity wall.png",
+    "Images/blender wall.png",
+    "Images/Collision Check.png",
     "Images/Level.png",
     "Images/Planebound Grabbable.png",
-    "Images/LevelController.png",
-    "Images/Rigidbody Interaction.png",
-    "TO DO - Scenes.md",
-    "Images/anchored grabbable.png",
-    "Images/Placeable.png",
-    "Images/Camera pointed object.png",
-    "Images/Levels hierarchy.png",
-    "Images/Levels hierarchy.png",
     "Images"
   ]
 }
