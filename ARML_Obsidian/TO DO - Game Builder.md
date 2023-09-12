@@ -19,7 +19,6 @@ kanban-plugin: basic
 - [ ] Integrate Lip-Sync
 - [ ] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors
 - [ ] Clean up logic related to Interaction Timer
-- [ ] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 
 
 ## DOING
@@ -35,6 +34,7 @@ kanban-plugin: basic
 - [x] Add Unity Event triggers for Grabbables and Placeables.
 - [x] Make bricks particle system
 - [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
+- [x] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 
 
 ## BLOCKED

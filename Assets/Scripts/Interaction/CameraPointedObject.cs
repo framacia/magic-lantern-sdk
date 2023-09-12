@@ -28,6 +28,7 @@ public class CameraPointedObject : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private string interactingText = "Interacting...";
     [SerializeField] Material outlineMaterial;
+    [SerializeField] float outlineThickness = 1.5f;
     private Material[] originalMaterials;
     private MeshRenderer renderer;
 
@@ -213,6 +214,8 @@ public class CameraPointedObject : MonoBehaviour
         }
         newMaterials[originalMaterials.Length] = outlineMaterial;
         renderer.materials = newMaterials;
+        //Change outline thickness
+        renderer.materials[originalMaterials.Length].SetFloat("_Thickness", outlineThickness);
     }
 
     void RemoveOutlineMaterial()
