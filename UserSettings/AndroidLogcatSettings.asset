@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.100:5555",
         "name": "com.UPF.ARML",
-        "processId": 2435,
+        "processId": 3553,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -41,37 +41,37 @@
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 4356,
+            "processId": 2246,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 4769,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.android.launcher3",
-            "processId": 1104,
+            "processId": 2252,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2526,
+            "processId": 2416,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2926,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.android.launcher3",
-            "processId": 1073,
+            "processId": 1095,
             "exited": false
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2435,
+            "processId": 3553,
             "exited": false
         }
     ],
@@ -83,7 +83,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -99,7 +99,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",

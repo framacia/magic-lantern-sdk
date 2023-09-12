@@ -115,9 +115,11 @@ public class CameraGrabber : MonoBehaviour
     {
         Grabbable g = other.GetComponent<Grabbable>();
         if (g != null)
+        {
             grabbablesInsideTrigger.Add(g);
+            g.GrabbingUpdate(); //TODO rethink this
+        }
 
-        g.GrabbingUpdate();
     }
 
     private void ReleasePendingGrabbedObject()

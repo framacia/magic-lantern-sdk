@@ -35,9 +35,11 @@
             "id": "308ed0edcb02edc3",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Documentation.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -108,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Documentation.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -125,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Documentation.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -148,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Documentation.md"
               }
             }
           }
@@ -171,10 +173,10 @@
   },
   "active": "308ed0edcb02edc3",
   "lastOpenFiles": [
-    "TO DO - Scenes.md",
-    "TO DO - Game Builder.md",
-    "Wall Demo Set-up.md",
     "New Scene Set-up.md",
+    "TO DO - Game Builder.md",
+    "TO DO - Scenes.md",
+    "Wall Demo Set-up.md",
     "IP Addresses.md",
     "Documentation.md",
     "Images/stencil quad.png",

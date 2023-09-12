@@ -25,7 +25,7 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)] // Replace with your actual native plugin name
     private static extern void GetTranslationVector(float[] t_f_data);
 
-    Vector3 trackedPos, initialPos;
+    Vector3 rotatedTranslationVector, initialPos;
     bool isStopped = false;
     Thread trackingThread;
     AutoResetEvent resetEvent;
@@ -54,7 +54,7 @@ public class RealSenseController : MonoBehaviour
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
         resetEvent.Set();
-        transform.position = initialPos + trackedPos;
+        transform.position = initialPos + rotatedTranslationVector;
 #endif
     }
 
@@ -67,7 +67,8 @@ public class RealSenseController : MonoBehaviour
             findFeatures();
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
-            trackedPos = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
+            Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
+            rotatedTranslationVector = Quaternion.AngleAxis(45, Vector3.right) * remappedTranslationVector;
         }
     }
 
@@ -77,7 +78,7 @@ public class RealSenseController : MonoBehaviour
         isStopped = true;
     }
 
-    private void onDestroy()
+    private void OnDestroy()
     {
         CleanupCamera();
         isStopped = true;
