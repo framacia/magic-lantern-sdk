@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public enum GrabbableState { FREE, GRABBED, PLACED, LOCKED }
 
-public abstract class Grabbable : MonoBehaviour
+public abstract class Grabbable : Interactable
 {
     [field: Header("Physics")]
     [field: SerializeField] public Rigidbody rb { get; protected set; }
@@ -30,6 +31,10 @@ public abstract class Grabbable : MonoBehaviour
     [field: SerializeField]
     protected float lerpScale { get; private set; } = 7.0f;
 
+    //TODO Should be in parent class
+    [field: Header("Event")]
+    [SerializeField] protected UnityEvent OnObjectGrabbedEvent;
+
     // ---- Grab subscribable void actions
     public Action OnStartGrabbing;
     public Action OnStopGrabbing;
@@ -41,6 +46,7 @@ public abstract class Grabbable : MonoBehaviour
 
     protected virtual void Start()
     {
+        base.Start();
         usesGravity = rb.useGravity;
         cam = Camera.main;
     }
@@ -55,6 +61,11 @@ public abstract class Grabbable : MonoBehaviour
 
         attemptingToGrab = true;
         iTimer.StartInteraction();
+
+        //Set outline material
+        if (outlineMaterial != null)
+            AddOutlineMaterial();
+
         this.grabTarget = target;
         if (OnStartGrabbing != null)
             OnStartGrabbing();
@@ -72,6 +83,8 @@ public abstract class Grabbable : MonoBehaviour
         this.gameObject.layer = LayerMask.NameToLayer("Grabbed"); // Not efficient but solid when changing projects
         if (OnGrab != null)
             OnGrab();
+
+        RemoveOutlineMaterial();
     }
 
     public virtual void StopGrabbingAttempt()
@@ -96,6 +109,8 @@ public abstract class Grabbable : MonoBehaviour
         grabTarget = null;
         attemptingToGrab = false;
         this.gameObject.layer = LayerMask.NameToLayer("Grabbable");
+
+        RemoveOutlineMaterial();
     }
 
     public abstract void UpdateGrabbedPosition();
@@ -161,5 +176,16 @@ public abstract class Grabbable : MonoBehaviour
             p.iTimer.OnFinishInteraction -= this.Place;
             p.StopPlacingObject();
         }
+    }
+
+    //TODO Probably rethink this
+    public void GrabbingUpdate()
+    {
+        if (state != GrabbableState.FREE)
+            return;
+
+        //Set outline material
+        if (outlineMaterial != null)
+            AddOutlineMaterial();
     }
 }

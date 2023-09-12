@@ -8,12 +8,9 @@ public class AnchoredGrabbable : Grabbable
     protected float distanceFromTarget;
     protected Quaternion targetRotation;
 
+    [field: Header("Anchored Grabbable")]
     [field: SerializeField]
-    protected bool matchRotation {get; private set;} = false;
-
-    //TODO Should be in parent class
-    [field: Header("Event")]
-    [SerializeField] private UnityEvent OnObjectGrabbedEvent;
+    protected bool MatchRotation {get; private set;} = false;
 
     public override void Grab(){
         distanceFromTarget = CalculateDistanceFromTarget();
@@ -33,7 +30,7 @@ public class AnchoredGrabbable : Grabbable
         targetRotation = grabTarget.rotation;
 
         this.rb.MovePosition(Vector3.Lerp(this.rb.position, targetPosition, Time.fixedDeltaTime * lerpScale));
-        if(matchRotation){
+        if(MatchRotation){
             this.rb.MoveRotation(Quaternion.Lerp(this.rb.rotation, targetRotation, Time.fixedDeltaTime * lerpScale));
         }
     }

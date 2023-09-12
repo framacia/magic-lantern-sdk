@@ -10,120 +10,24 @@ using UnityEngine.UIElements;
 using TNRD.Utilities;
 #endif
 
-public class CameraPointedObject : MonoBehaviour
+public class CameraPointedObject : Interactable
 {
-    private Transform camera;
-    [HideInInspector] public InteractionTimer iTimer;
-
-    [Header("Interaction")]
+    [Header("Camera Pointed Object")]
     public float targetAngle = 5f;
-    [SerializeField] InteractionType interactionType;
-
-    [Header("Raycast")]
     public bool checkObstaclesRaycast = false;
     public LayerMask blockingLayers = 0;
 
-    private GameObject model;
-
-    [Header("Visual")]
-    [SerializeField] private string interactingText = "Interacting...";
-    [SerializeField] Material outlineMaterial;
-    [SerializeField] float outlineThickness = 1.5f;
-    private Material[] originalMaterials;
-    private MeshRenderer renderer;
-
-    [Header("Feedback")]
-    public ActionFeedback feedback;
-
     [Header("Event")]
-    [SerializeField] private UnityEvent OnObjectInteractedEvent;
-
-    private void Start()
-    {
-        if (camera == null)
-            camera = Camera.main?.transform;
-
-        if (iTimer == null)
-        {
-            iTimer = GetComponentInChildren<InteractionTimer>(true);
-        }
-
-        if(feedback == null && GetComponent<ActionFeedback>())
-        {
-            feedback = GetComponent<ActionFeedback>();
-        }
-
-        if (!string.IsNullOrEmpty(interactingText))
-            iTimer.stateText.text = interactingText;
-
-        if (GetComponent<MeshRenderer>())
-            renderer = GetComponent<MeshRenderer>();
-        else
-            renderer = GetComponentInChildren<MeshRenderer>();
-
-        originalMaterials = renderer.materials;
-    }
-
-    private void OnEnable()
-    {
-        iTimer.OnFinishInteraction += OnObjectInteracted;
-        NetworkPlayer.OnPlayerLoaded += OnPlayerLoaded;
-    }
-
-    private void OnDisable()
-    {
-        iTimer.OnFinishInteraction -= OnObjectInteracted;
-        NetworkPlayer.OnPlayerLoaded -= OnPlayerLoaded;
-        InteractionTypeController.Instance.OnInteractionTypeChanged -= SwitchInteractionType;
-    }
+    [SerializeField] protected UnityEvent OnObjectInteractedEvent;
 
 #if UNITY_EDITOR
-
-    private void OnValidate()
-    {
-        if (iTimer == null)
-        {
-            iTimer = GetComponentInChildren<InteractionTimer>(true);
-        }
-
-        if (model == null)
-        {
-            transform.Find("Model");
-        }
-
-        if (outlineMaterial == null)
-        {
-            outlineMaterial = Resources.Load("M_Outline") as Material;
-        }
-    }
 
     /// <summary>
     /// Sets up timer and model children when this script is added to GameObject
     /// </summary>
     private void Reset()
     {
-        if (GetComponentInChildren<InteractionTimer>(true) == null)
-        {
-            GameObject iTimerPrefab = PrefabUtility.InstantiatePrefab(Resources.Load("Interaction Timer"), transform) as GameObject;
-
-            iTimer = iTimerPrefab.GetComponent<InteractionTimer>();
-        }
-
-        if (transform.Find("Model") == null)
-        {
-            //model = new GameObject("Model", typeof(MeshFilter), typeof(MeshRenderer));
-            model = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            model.name = "Model";
-            //model.GetComponent<MeshFilter>().mesh = PrimitiveType.Cube as Mesh;
-            model.transform.SetParent(transform);
-            model.transform.position = transform.position;
-            model.SetActive(false);
-        }
-
-        if (string.IsNullOrEmpty(interactingText))
-        {
-            interactingText = "Interacting...";
-        }
+        base.Reset();
         IconManager.SetIcon(gameObject, LabelIcon.Purple);
     }
 #endif
@@ -134,11 +38,11 @@ public class CameraPointedObject : MonoBehaviour
         if (camera == null)
         {
             camera = Camera.main?.transform;
-            return;
+            return; //return here to avoid null reference exception
         }
 
-        Vector3 camToThis = this.transform.position - camera.position;
-        float angle = Vector3.Angle(camera.forward, camToThis);
+        Vector3 camToThis = this.transform.position - camera.transform.position;
+        float angle = Vector3.Angle(camera.transform.forward, camToThis);
 
         //Check if there is a collider blocking the raycast. The camera pointed object does not use collider.
         bool raycastResult = false;
@@ -146,12 +50,11 @@ public class CameraPointedObject : MonoBehaviour
         {
             RaycastHit hit = new RaycastHit();
 
-            raycastResult = Physics.Raycast(camera.position, camToThis, out hit, camToThis.magnitude, blockingLayers, QueryTriggerInteraction.Ignore);
+            raycastResult = Physics.Raycast(GetComponent<Camera>().transform.position, camToThis, out hit, camToThis.magnitude, blockingLayers, QueryTriggerInteraction.Ignore);
 
             //If raycast hit itself, ignore
             if (hit.collider?.gameObject == this.gameObject)
                 raycastResult = false;
-
         }
 
         if (angle <= targetAngle && !raycastResult)
@@ -178,19 +81,7 @@ public class CameraPointedObject : MonoBehaviour
         }
     }
 
-    void StartTimer()
-    {
-        if (!iTimer.IsInteracting)
-            iTimer.StartInteraction();
-    }
-
-    void StopTimer()
-    {
-        if (iTimer.IsInteracting)
-            iTimer.CancelInteraction();
-    }
-
-    void OnObjectInteracted()
+    protected void OnObjectInteracted()
     {
         if (OnObjectInteractedEvent != null)
             OnObjectInteractedEvent.Invoke();
@@ -198,43 +89,15 @@ public class CameraPointedObject : MonoBehaviour
         feedback?.Play();
     }
 
-    void AddOutlineMaterial()
+    protected override void OnEnable()
     {
-        //If material number has already been edited, update fill and return
-        if (renderer.materials.Length != originalMaterials.Length)
-        {
-            renderer.materials[originalMaterials.Length].SetFloat("_FillRate", iTimer.CurrentInteractionTime / iTimer.RequiredInteractionTime);
-            return;
-        }
-
-        Material[] newMaterials = new Material[originalMaterials.Length + 1];
-        for (int i = 0; i < originalMaterials.Length; i++)
-        {
-            newMaterials[i] = originalMaterials[i];
-        }
-        newMaterials[originalMaterials.Length] = outlineMaterial;
-        renderer.materials = newMaterials;
-        //Change outline thickness
-        renderer.materials[originalMaterials.Length].SetFloat("_Thickness", outlineThickness);
+        base.OnEnable();
+        iTimer.OnFinishInteraction += OnObjectInteracted;
     }
 
-    void RemoveOutlineMaterial()
+    protected override void OnDisable()
     {
-        //If material number already original, return
-        if (renderer.materials.Length == originalMaterials.Length)
-            return;
-
-        renderer.materials = originalMaterials;
-    }
-
-    void SwitchInteractionType(InteractionType newInteractionType)
-    {
-        interactionType = newInteractionType;
-    }
-
-    //I have to do this because gameobjects with NetworkIdentity are deactivated at the beginning so cant be subscribed
-    private void OnPlayerLoaded()
-    {
-        InteractionTypeController.Instance.OnInteractionTypeChanged += SwitchInteractionType;
+        base.OnDisable();
+        iTimer.OnFinishInteraction -= OnObjectInteracted;
     }
 }

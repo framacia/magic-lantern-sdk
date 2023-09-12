@@ -8,21 +8,21 @@ kanban-plugin: basic
 
 - [ ] Add "Chapter Mask" to choose what objects are present in what chapter and get automatically "activated/getdeactivated". Can be added to interactor class or a new class so you can choose as if it were layers. Then check before the start of every chapter if gameobject should on/off
 - [ ] Find a way to make LevelController apply/revert timeline changes when switching back and forth between levels
-- [ ] Automatize Placeable Hierarchy setup/can just use prefab?
-- [ ] Automatize Grabbable Hierarchy setup/can just use prefab?
 - [ ] Is it worth updating TransformLerp system into DOTween?
+- [ ] Consider making a custom EditorScript for interactables (due to the weird inheritance serialized field order)
+- [ ] Integrate Lip-Sync
+- [ ] Automatize Character setup (animation, gaze, dialogue canvas)
+- [ ] Move grabbing collision logic to Grabbable objects and not CameraGrabber
 
 
 ## TO DO
 
-- [ ] Automatize Character setup (animation, gaze, dialogue canvas)
-- [ ] Integrate Lip-Sync
-- [ ] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors
 - [ ] Clean up logic related to Interaction Timer
 
 
 ## DOING
 
+- [ ] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code
 
 
 ## DONE
@@ -35,6 +35,8 @@ kanban-plugin: basic
 - [x] Make bricks particle system
 - [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
 - [x] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
+- [x] Automatize Placeable Hierarchy setup/can just use prefab?
+- [x] Automatize Grabbable Hierarchy setup/can just use prefab?
 
 
 ## BLOCKED

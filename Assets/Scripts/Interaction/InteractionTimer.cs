@@ -11,7 +11,7 @@ public class InteractionTimer : MonoBehaviour
 {
     [field: Header("Interaction Time")]
     [field: SerializeField]
-    public float RequiredInteractionTime { get; private set; } = 1.5f;
+    public float RequiredInteractionTime { get; set; } = 1.5f;
     [field: SerializeField]
     public float CurrentInteractionTime { get; private set; } = 0f;
 

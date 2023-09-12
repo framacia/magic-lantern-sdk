@@ -23,6 +23,18 @@
             "id": "1502dccca241a96f",
             "type": "leaf",
             "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Documentation.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "308ed0edcb02edc3",
+            "type": "leaf",
+            "state": {
               "type": "kanban",
               "state": {
                 "file": "TO DO - Game Builder.md"
@@ -30,7 +42,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -157,14 +169,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1502dccca241a96f",
+  "active": "308ed0edcb02edc3",
   "lastOpenFiles": [
     "TO DO - Scenes.md",
     "TO DO - Game Builder.md",
-    "New Scene Set-up.md",
     "Wall Demo Set-up.md",
-    "Images/stencil quad.png",
+    "New Scene Set-up.md",
+    "IP Addresses.md",
     "Documentation.md",
+    "Images/stencil quad.png",
     "Images/wall stencil.png",
     "Images/interaction timer.png",
     "Images/Camera pointed object.png",
