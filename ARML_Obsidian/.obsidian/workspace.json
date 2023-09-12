@@ -23,11 +23,9 @@
             "id": "1502dccca241a96f",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "Wall Demo Set-up.md",
-                "mode": "source",
-                "source": false
+                "file": "TO DO - Game Builder.md"
               }
             }
           }
@@ -82,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 227.5
   },
   "right": {
     "id": "d7a70d64ac0639a6",
@@ -98,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Wall Demo Set-up.md",
+                "file": "TO DO - Game Builder.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Wall Demo Set-up.md",
+                "file": "TO DO - Game Builder.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Wall Demo Set-up.md"
+                "file": "TO DO - Game Builder.md"
               }
             }
           }
@@ -162,20 +160,20 @@
   "active": "1502dccca241a96f",
   "lastOpenFiles": [
     "TO DO - Scenes.md",
+    "TO DO - Game Builder.md",
     "New Scene Set-up.md",
-    "Documentation.md",
-    "Images/interaction timer.png",
     "Wall Demo Set-up.md",
+    "Images/stencil quad.png",
+    "Documentation.md",
+    "Images/wall stencil.png",
+    "Images/interaction timer.png",
     "Images/Camera pointed object.png",
     "Images/CameraPointedObject.png",
-    "TO DO - Game Builder.md",
     "Images/wall collision check.png",
     "Pasted image 20230908123242 1.png",
     "Images/unity wall.png",
     "Images/blender wall.png",
     "Images/Collision Check.png",
-    "Images/Level.png",
-    "Images/Planebound Grabbable.png",
     "Images"
   ]
 }

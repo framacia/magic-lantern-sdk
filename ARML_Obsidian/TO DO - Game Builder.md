@@ -10,6 +10,7 @@ kanban-plugin: basic
 - [ ] Find a way to make LevelController apply/revert timeline changes when switching back and forth between levels
 - [ ] Automatize Placeable Hierarchy setup/can just use prefab?
 - [ ] Automatize Grabbable Hierarchy setup/can just use prefab?
+- [ ] Is it worth updating TransformLerp system into DOTween?
 
 
 ## TO DO
@@ -23,7 +24,6 @@ kanban-plugin: basic
 
 ## DOING
 
-- [ ] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
 
 
 ## DONE
@@ -34,10 +34,12 @@ kanban-plugin: basic
 - [x] Define feedback (particle + sound) system - reuse Edwards?
 - [x] Add Unity Event triggers for Grabbables and Placeables.
 - [x] Make bricks particle system
+- [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
 
 
 ## BLOCKED
 
+- [ ] Stopped implementing DOTween Timeline system in the middle because not sure it is worth it #timeline
 
 
 ***
@@ -50,6 +52,6 @@ kanban-plugin: basic
 
 %% kanban:settings
 ```
-{"kanban-plugin":"basic"}
+{"kanban-plugin":"basic","date-colors":[]}
 ```
 %%

@@ -11,6 +11,7 @@ kanban-plugin: basic
 ## TO DO
 
 - [ ] WallDemo - Add dirt to Villa texture
+- [ ] WallDemo - Improve roman character #animation
 
 
 ## DOING

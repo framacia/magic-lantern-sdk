@@ -1,0 +1,20 @@
+{
+  "hide-tags-display": false,
+  "tag-colors": [
+    {
+      "tagKey": "#code",
+      "color": "rgba(255, 255, 255, 1)",
+      "backgroundColor": "rgba(209, 0, 0, 0.1)"
+    },
+    {
+      "tagKey": "#art",
+      "color": "rgba(255, 255, 255, 1)",
+      "backgroundColor": "rgba(0, 228, 235, 0.1)"
+    },
+    {
+      "tagKey": "#animation",
+      "color": "rgba(255, 255, 255, 1)",
+      "backgroundColor": "rgba(255, 99, 0, 0.1)"
+    }
+  ]
+}
