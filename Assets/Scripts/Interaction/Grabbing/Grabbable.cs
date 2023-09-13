@@ -64,7 +64,7 @@ public abstract class Grabbable : Interactable
 
         //Set outline material
         if (outlineMaterial != null)
-            AddOutlineMaterial();
+            AddOutlineMaterial(renderer);
 
         this.grabTarget = target;
         if (OnStartGrabbing != null)
@@ -84,7 +84,7 @@ public abstract class Grabbable : Interactable
         if (OnGrab != null)
             OnGrab();
 
-        RemoveOutlineMaterial();
+        RemoveOutlineMaterial(renderer);
     }
 
     public virtual void StopGrabbingAttempt()
@@ -110,7 +110,7 @@ public abstract class Grabbable : Interactable
         attemptingToGrab = false;
         this.gameObject.layer = LayerMask.NameToLayer("Grabbable");
 
-        RemoveOutlineMaterial();
+        RemoveOutlineMaterial(renderer);
     }
 
     public abstract void UpdateGrabbedPosition();
@@ -121,7 +121,7 @@ public abstract class Grabbable : Interactable
         pendingPlaceable = null;
         grabTarget = null;
 
-        UpdateState(state, placeable.lockObjectOnPlacement ? GrabbableState.LOCKED : GrabbableState.PLACED);
+        UpdateState(state, placeable.LockObjectOnPlacement ? GrabbableState.LOCKED : GrabbableState.PLACED);
         this.gameObject.layer = LayerMask.NameToLayer("Grabbable");
 
         rb.isKinematic = true;
@@ -131,6 +131,8 @@ public abstract class Grabbable : Interactable
         placeable.iTimer.OnFinishInteraction -= this.Place;
         if (OnPlace != null)
             OnPlace();
+
+        RemoveOutlineMaterial(renderer);
     }
     public void RemoveFromPlace()
     {
@@ -138,6 +140,7 @@ public abstract class Grabbable : Interactable
         Debug.Log("Removing from placeable");
         placeable.Remove();
         placeable = null;
+        RemoveOutlineMaterial(renderer);
     }
     protected void UpdateState(GrabbableState prevState, GrabbableState targetState)
     {
@@ -178,14 +181,24 @@ public abstract class Grabbable : Interactable
         }
     }
 
+    //Used to update the fill rate of the placeable outline material
+    private void OnTriggerStay(Collider other)
+    {
+        Placeable p = other.GetComponent<Placeable>();
+        if (p != null)
+        {
+            p.UpdatePlacing();
+        }
+    }
+
     //TODO Probably rethink this
     public void GrabbingUpdate()
     {
-        if (state != GrabbableState.FREE)
+        if (state == GrabbableState.GRABBED || state == GrabbableState.LOCKED)
             return;
 
         //Set outline material
         if (outlineMaterial != null)
-            AddOutlineMaterial();
+            UpdateOutlineFill(renderer);
     }
 }

@@ -77,14 +77,11 @@ public abstract class Interactable : MonoBehaviour
         interactionType = newInteractionType;
     }
 
-    protected void AddOutlineMaterial()
+    protected void AddOutlineMaterial(Renderer renderer)
     {
-        //TODO rewrite this, not good to have a one-time-event (setting material) and update (filling material) in the same method
-
         //If material number has already been edited, update fill and return
         if (renderer.materials.Length != originalMaterials.Length)
         {
-            renderer.materials[originalMaterials.Length].SetFloat("_FillRate", iTimer.CurrentInteractionTime / iTimer.RequiredInteractionTime);
             return;
         }
 
@@ -99,13 +96,22 @@ public abstract class Interactable : MonoBehaviour
         renderer.materials[originalMaterials.Length].SetFloat("_Thickness", outlineThickness);
     }
 
-    protected void RemoveOutlineMaterial()
+    protected void RemoveOutlineMaterial(Renderer renderer)
     {
         //If material number already original, return
         if (renderer.materials.Length == originalMaterials.Length)
             return;
 
         renderer.materials = originalMaterials;
+    }
+
+    protected void UpdateOutlineFill(Renderer renderer)
+    {
+        //If material number has already been edited, update fill and return
+        if (renderer.materials.Length != originalMaterials.Length)
+        {
+            renderer.materials[originalMaterials.Length].SetFloat("_FillRate", iTimer.CurrentInteractionTime / iTimer.RequiredInteractionTime);
+        }
     }
 
     protected void StartTimer()

@@ -70,14 +70,14 @@ public class CameraPointedObject : Interactable
             if (outlineMaterial == null)
                 return;
 
-            AddOutlineMaterial();
+            AddOutlineMaterial(renderer);
         }
         else
         {
             if (interactionType == InteractionType.Dwell)
                 StopTimer();
 
-            RemoveOutlineMaterial();
+            RemoveOutlineMaterial(renderer);
         }
     }
 

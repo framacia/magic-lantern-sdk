@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Placeable : MonoBehaviour
+public class Placeable : Interactable
 {
     [field: Header("Object Properties")]
     [field: SerializeField]
@@ -13,10 +13,8 @@ public class Placeable : MonoBehaviour
 
     [field: Header("Placement settings")]
     [field: SerializeField]
-    public bool lockObjectOnPlacement { get; protected set; } = false;
+    public bool LockObjectOnPlacement { get; protected set; } = false;
     public bool HasObject { get { return placedObject != null; } }
-
-    public InteractionTimer iTimer;
 
     public GameObject pendingPlacedObject { get; protected set; }
     public GameObject placedObject { get; protected set; }
@@ -26,17 +24,13 @@ public class Placeable : MonoBehaviour
     public float minimumSquaredDistanceToPlaceAgain = 1f;
     [field: Header("Name filtering")]
     [field: SerializeField]
-    public bool nameFilter { get; private set; } = false;
+    public bool NameFilter { get; private set; } = false;
     [field: SerializeField]
-    protected string[] names { get; private set; }
-
-    [Header("Feedback")]
-    public ActionFeedback feedback;
+    protected string[] Names { get; private set; }
 
     [Header("Events")]
     [SerializeField] private UnityEvent OnObjectPlacedEvent;
     [SerializeField] private UnityEvent OnObjectRemovedEvent;
-
 
     private void Awake()
     {
@@ -62,12 +56,12 @@ public class Placeable : MonoBehaviour
 
     bool CheckNamesFilter(GameObject other)
     {
-        if (!nameFilter)
+        if (!NameFilter)
             return true;
 
-        for (int i = 0; i < names.Length; i++)
+        for (int i = 0; i < Names.Length; i++)
         {
-            if (other.gameObject.name == names[i])
+            if (other.gameObject.name == Names[i])
                 return true;
         }
 
@@ -78,18 +72,21 @@ public class Placeable : MonoBehaviour
     {
         pendingPlacedObject = other;
         iTimer.StartInteraction();
+        AddOutlineMaterial(displayMesh.GetComponent<Renderer>());
     }
 
     public void StopPlacingObject()
     {
         pendingPlacedObject = null;
         iTimer.CancelInteraction();
+        RemoveOutlineMaterial(displayMesh.GetComponent<Renderer>());
     }
 
     public void Place()
     {
         placedObject = pendingPlacedObject;
         pendingPlacedObject = null;
+        RemoveOutlineMaterial(displayMesh.GetComponent<Renderer>());
         displayMesh.SetActive(false);
         feedback?.Play();
         OnObjectPlacedEvent?.Invoke();
@@ -102,6 +99,7 @@ public class Placeable : MonoBehaviour
         displayMesh.SetActive(true);
         canPlaceLastPlacedObject = false;
         OnObjectRemovedEvent?.Invoke();
+        RemoveOutlineMaterial(displayMesh.GetComponent<Renderer>());
     }
 
     public bool CheckIfCanPlaceObject(GameObject other)
@@ -109,5 +107,11 @@ public class Placeable : MonoBehaviour
         bool canPlace = pendingPlacedObject == null && placedObject == null;
         bool isLastObject = other == lastPlacedObject;
         return (canPlace && (!isLastObject || (isLastObject && canPlaceLastPlacedObject)) && CheckNamesFilter(other));
+    }
+
+    //Wrapper to update the outline material from the Grabbable's OnTriggerStay
+    public void UpdatePlacing()
+    {
+        UpdateOutlineFill(displayMesh.GetComponent<Renderer>());
     }
 }

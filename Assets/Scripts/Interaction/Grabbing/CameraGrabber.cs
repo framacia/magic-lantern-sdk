@@ -114,9 +114,15 @@ public class CameraGrabber : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Grabbable g = other.GetComponent<Grabbable>();
-        if (g != null)
+        if (g == null)
+            return;
+        grabbablesInsideTrigger.Add(g);
+
+
+        if (grabbedObject == null)
         {
-            grabbablesInsideTrigger.Add(g);
+            if (g == lastGrabbedObject && !canGrabLastGrabbedObject)
+                return;
             g.GrabbingUpdate(); //TODO rethink this
         }
 

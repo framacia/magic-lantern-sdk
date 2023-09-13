@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1663994459290602467}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6607171379249011322}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4697132703510978480
 MeshFilter:
@@ -59,7 +59,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -131,15 +131,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6540655849709860837}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.41664, y: 0.41664, z: 0.41664}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5117999012863333454}
   - {fileID: 8053157262768760552}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3053104300664797623
 Rigidbody:
@@ -183,7 +183,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -201,10 +201,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a6cb0659e20846559976d6ffde64e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iTimer: {fileID: 1245579971245665045}
+  interactionType: 0
+  requiredInteractionTime: 1.5
+  interactingText: Grabbing...
+  outlineMaterial: {fileID: 2100000, guid: f41185843d05ccd46a6c88fe521721ef, type: 2}
+  outlineThickness: 8.13
+  feedback: {fileID: 0}
   <rb>k__BackingField: {fileID: 3053104300664797623}
   <iTimer>k__BackingField: {fileID: 1245579971245665045}
   <lerpScale>k__BackingField: 7
-  <matchRotation>k__BackingField: 0
+  OnObjectGrabbedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  <MatchRotation>k__BackingField: 0
 --- !u!1001 &3755869964278580016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -224,6 +234,10 @@ PrefabInstance:
     - target: {fileID: 2292094795452844462, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2690539824780290085, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
+      propertyPath: hideTimerUI
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3068141566755850248, guid: 3a7e3f9fb32ebbd499513924e8b12749, type: 3}
       propertyPath: m_Name

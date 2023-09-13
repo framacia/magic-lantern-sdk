@@ -30,18 +30,13 @@ public class RealSenseController : MonoBehaviour
     Thread trackingThread;
     AutoResetEvent resetEvent;
 
-    public static float[] RetrieveTranslationVector()
-    {
-        float[] t_f_data = new float[3];
-        GetTranslationVector(t_f_data);
-        return t_f_data;
-    }
+
 
     private void Start()
     {
         initialPos = transform.position;
-
 #if UNITY_ANDROID && !UNITY_EDITOR
+
         // Initialize the RealSense camera when the script starts
         initCamera(424, 240, 480, 270);
         trackingThread = new Thread(ThreadUpdate);
@@ -49,13 +44,20 @@ public class RealSenseController : MonoBehaviour
         resetEvent = new AutoResetEvent(false);
 #endif
     }
+#if UNITY_ANDROID && !UNITY_EDITOR
 
     private void Update()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
         resetEvent.Set();
         transform.position = initialPos + rotatedTranslationVector;
-#endif
+
+    }
+
+        public static float[] RetrieveTranslationVector()
+    {
+        float[] t_f_data = new float[3];
+        GetTranslationVector(t_f_data);
+        return t_f_data;
     }
 
     private void ThreadUpdate()
@@ -84,4 +86,5 @@ public class RealSenseController : MonoBehaviour
         isStopped = true;
         trackingThread.Abort();
     }
+#endif
 }

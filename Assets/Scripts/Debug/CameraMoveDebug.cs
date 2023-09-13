@@ -7,10 +7,13 @@ using UnityEngine;
 public class CameraMoveDebug : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
+    [SerializeField] bool isMouse = false;
 
     private void Start()
     {
         Invoke("DelayedStart", 0.5f);
+
+     
     }
 
     private void DelayedStart()
@@ -24,8 +27,19 @@ public class CameraMoveDebug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xAxisValue = Input.GetAxis("HorizontalArrow");
-        float zAxisValue = Input.GetAxis("VerticalArrow");
+        float xAxisValue;
+        float zAxisValue;
+
+        if (!isMouse)
+        {
+            xAxisValue = Input.GetAxis("HorizontalArrow");
+            zAxisValue = Input.GetAxis("VerticalArrow");
+        }
+        else
+        {
+            xAxisValue = Input.GetAxis("Mouse X");
+            zAxisValue = Input.GetAxis("Mouse Y");
+        }
 
         if (gameObject != null)
         {
@@ -37,7 +51,7 @@ public class CameraMoveDebug : MonoBehaviour
             transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, 0);
 
             //Translation
-            Vector3 movementVector = (gameObject.transform.forward * Input.GetAxis("Vertical") * 10) + 
+            Vector3 movementVector = (gameObject.transform.forward * Input.GetAxis("Vertical") * 10) +
                 (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);
 
             gameObject.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;

@@ -42,9 +42,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "ff079b9bf2c2d551",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "TO DO - Game Builder.md"
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -110,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentation.md",
+                "file": "TO DO - Game Builder.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +137,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentation.md",
+                "file": "TO DO - Game Builder.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +160,27 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentation.md"
+                "file": "TO DO - Game Builder.md"
+              }
+            }
+          },
+          {
+            "id": "64b1dc6a3998a0ff",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
+              }
+            }
+          },
+          {
+            "id": "1f60468d76599c53",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "TO DO - Game Builder.md"
               }
             }
           }
@@ -158,7 +188,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
@@ -171,12 +201,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "308ed0edcb02edc3",
+  "active": "ff079b9bf2c2d551",
   "lastOpenFiles": [
     "New Scene Set-up.md",
-    "TO DO - Game Builder.md",
-    "TO DO - Scenes.md",
     "Wall Demo Set-up.md",
+    "TO DO - Scenes.md",
+    "TO DO - Game Builder.md",
     "IP Addresses.md",
     "Documentation.md",
     "Images/stencil quad.png",
