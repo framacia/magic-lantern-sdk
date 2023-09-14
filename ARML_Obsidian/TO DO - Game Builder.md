@@ -1,5 +1,7 @@
 ---
+
 kanban-plugin: basic
+
 ---
 
 ## TO CONSIDER
@@ -20,7 +22,6 @@ kanban-plugin: basic
 
 ## DOING
 
-- [ ] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code
 
 
 ## DONE
@@ -34,6 +35,7 @@ kanban-plugin: basic
 - [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
 - [x] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 - [x] Automatize Placeable Hierarchy setup/can just use prefab?
+- [x] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code
 - [x] Automatize Grabbable Hierarchy setup/can just use prefab?
 
 

@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.100:5555",
         "name": "com.UPF.ARML",
-        "processId": 2909,
+        "processId": 2458,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -72,6 +72,18 @@
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
             "processId": 2909,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2285,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2458,
             "exited": false
         }
     ],

@@ -79,7 +79,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected void AddOutlineMaterial(Renderer renderer)
     {
-        //If material number has already been edited, update fill and return
+        //If material number has already been edited, return
         if (renderer.materials.Length != originalMaterials.Length)
         {
             return;
@@ -96,7 +96,18 @@ public abstract class Interactable : MonoBehaviour
         renderer.materials[originalMaterials.Length].SetFloat("_Thickness", outlineThickness);
     }
 
-    protected void RemoveOutlineMaterial(Renderer renderer)
+    //First overload, uses private model variable
+    public void RemoveOutlineMaterial()
+    {
+        //If material number already original, return
+        if (renderer.materials.Length == originalMaterials.Length)
+            return;
+
+        renderer.materials = originalMaterials;
+    }
+
+    //Second overload, allows for putting another model as parameter
+    public void RemoveOutlineMaterial(Renderer renderer)
     {
         //If material number already original, return
         if (renderer.materials.Length == originalMaterials.Length)

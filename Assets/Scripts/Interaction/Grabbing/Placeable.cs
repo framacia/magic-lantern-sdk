@@ -88,7 +88,7 @@ public class Placeable : Interactable
         pendingPlacedObject = null;
         RemoveOutlineMaterial(displayMesh.GetComponent<Renderer>());
         displayMesh.SetActive(false);
-        feedback?.Play();
+        feedback?.PlayRandomTriggerFeedback();
         OnObjectPlacedEvent?.Invoke();
     }
 

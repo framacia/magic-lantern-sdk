@@ -71,6 +71,8 @@ public class CameraPointedObject : Interactable
                 return;
 
             AddOutlineMaterial(renderer);
+            UpdateOutlineFill(renderer);
+            feedback.PlayProgressFeedback();
         }
         else
         {
@@ -78,6 +80,7 @@ public class CameraPointedObject : Interactable
                 StopTimer();
 
             RemoveOutlineMaterial(renderer);
+            feedback.StopProgressFeedback();
         }
     }
 
@@ -86,7 +89,7 @@ public class CameraPointedObject : Interactable
         if (OnObjectInteractedEvent != null)
             OnObjectInteractedEvent.Invoke();
 
-        feedback?.Play();
+        feedback?.PlayRandomTriggerFeedback();
     }
 
     protected override void OnEnable()

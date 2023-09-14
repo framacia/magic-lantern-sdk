@@ -33,7 +33,7 @@ public class Grabber : MonoBehaviour
     public void ForceGrabObject(Grabbable other){
         grabbedObject = other;
         grabbedObject.OnPlace += ForceReleaseObject;
-        feedback?.Play();
+        feedback?.PlayRandomTriggerFeedback();
         other.Grab();
     }
 

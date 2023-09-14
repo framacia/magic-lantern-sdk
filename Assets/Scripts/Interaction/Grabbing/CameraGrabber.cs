@@ -45,7 +45,7 @@ public class CameraGrabber : MonoBehaviour
     {
         grabbedObject = other;
         grabbedObject.OnPlace += ForceReleaseObject;
-        feedback?.Play();
+        feedback?.PlayRandomTriggerFeedback();
         other.Grab();
     }
 

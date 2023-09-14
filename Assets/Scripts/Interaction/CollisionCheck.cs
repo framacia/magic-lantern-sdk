@@ -12,11 +12,18 @@ public class CollisionCheck : MonoBehaviour
         OnExit
     }
 
+    [Header("Collision")]
     [SerializeField] private CheckType checkType;
     [SerializeField] private int numberOfChecksToTrigger;
+    [SerializeField] private bool allowSameObjectRecollision;
+    [SerializeField] private bool deactivateCollidedInteractables;
+    [SerializeField] private bool triggerActionFeedback;
+
+    [Header("Name Filter")]
     [SerializeField] private string colliderNameFilter;
     [SerializeField] private bool isParentName;
-    [SerializeField] private bool allowSameObjectRecollision;
+
+    [Header("Event")]
     [SerializeField] private UnityEvent OnCollisionCheckMetEvent;
 
     private Collider ownCollider;
@@ -36,7 +43,7 @@ public class CollisionCheck : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!ownCollider.isTrigger && checkType == CheckType.OnEnter)
+        if (!ownCollider.isTrigger && checkType == CheckType.OnEnter)
             CheckCollision(collision.collider);
     }
 
@@ -69,12 +76,18 @@ public class CollisionCheck : MonoBehaviour
 
             currentNumberOfChecks++;
 
-            //If Rigidbody interaction, play SFX (unnecessary) - maybe better to change for feedback sfx attached to this component
-            if (other.GetComponent<RigidbodyInteraction>() && !other.GetComponent<AudioSource>().isPlaying)
+            //Deactivate Collided Interactable
+            if (other.GetComponent<Interactable>() && deactivateCollidedInteractables)
             {
-                //other.GetComponent<RigidbodyInteraction>().PlaySFX();
+                other.GetComponent<Interactable>().RemoveOutlineMaterial();
+                other.GetComponent<Interactable>().enabled = false;
             }
-                
+
+            //Trigger Action Feedback
+            if(other.GetComponent<ActionFeedback>() && triggerActionFeedback)
+            {
+                other.GetComponent<ActionFeedback>().PlayRandomTriggerFeedback();
+            }
 
             //Check number goal already met?
             if (currentNumberOfChecks >= numberOfChecksToTrigger && !conditionMet)
