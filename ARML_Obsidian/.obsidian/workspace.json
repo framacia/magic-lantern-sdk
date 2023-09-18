@@ -52,9 +52,55 @@
                 "file": "TO DO - Game Builder.md"
               }
             }
+          },
+          {
+            "id": "d211337d9c511a81",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.4.12"
+              }
+            }
+          },
+          {
+            "id": "32cb6421417fb480",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Notas Meetings.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "8e0f173f7d9a6808",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Notas Meetings.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "dcfa3f934eaa9fe2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Notas Meetings.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -120,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Notas Meetings.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Notas Meetings.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -160,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Notas Meetings.md"
               }
             }
           },
@@ -180,16 +226,24 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Notas Meetings.md"
               }
             }
+          },
+          {
+            "id": "09e09b39e76848ec",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -198,11 +252,14 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "ff079b9bf2c2d551",
+  "active": "dcfa3f934eaa9fe2",
   "lastOpenFiles": [
+    "Assets.md",
+    "Notas Meetings.md",
     "New Scene Set-up.md",
     "Wall Demo Set-up.md",
     "TO DO - Scenes.md",

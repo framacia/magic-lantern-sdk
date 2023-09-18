@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
 
+#if !UNITY_EDITOR && UNITY_ANDROID
 public class RealSenseController : MonoBehaviour
 {
     private const string PLUGIN_NAME = "camera_motion";
@@ -145,3 +146,4 @@ public class RealSenseController : MonoBehaviour
         trackingThread.Abort();
     }
 }
+#endif

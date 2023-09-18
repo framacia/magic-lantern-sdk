@@ -76,11 +76,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture1:
-        m_Texture: {fileID: 2800000, guid: 06e12b782bcbb864cb38ea2fdb3d3017, type: 3}
+        m_Texture: {fileID: 2800000, guid: 25e1cd4545bfb424d9479bc94b7ba95a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture1Normal:
-        m_Texture: {fileID: 2800000, guid: 9e483c0f1eb62e641a92c261ba165433, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1bfb650c876c9e64c97daeabe9f26ebe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture2:
@@ -146,7 +146,7 @@ Material:
     - _GlossyReflections: 0
     - _Height: 30.3
     - _Metallic: 0
-    - _Middle_Tiling: 52.6
+    - _Middle_Tiling: 154.5
     - _OcclusionStrength: 1
     - _PaintStrength: 1
     - _PaintTexture1Tiling: 871.3
