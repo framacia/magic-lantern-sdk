@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "192.168.121.100:5555",
+    "m_SelectedDeviceId": "192.168.121.105:5555",
     "m_SelectedPackage": {
-        "deviceId": "192.168.121.100:5555",
+        "deviceId": "192.168.121.105:5555",
         "name": "com.UPF.ARML",
-        "processId": 2458,
+        "processId": 5674,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -84,6 +84,66 @@
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
             "processId": 2458,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2763,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3174,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.android.settings",
+            "processId": 943,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3387,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3898,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.android.launcher3",
+            "processId": 1024,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4581,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 5026,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 5352,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 5674,
             "exited": false
         }
     ],

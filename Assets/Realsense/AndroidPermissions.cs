@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class AndroidPermissions : MonoBehaviour
 {
-#if UNITY_ANDROID && !UNITY_EDITOR
     void Awake()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         if (!UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera))
         {
             Debug.Log("Request permissions");
@@ -20,6 +20,11 @@ public class AndroidPermissions : MonoBehaviour
             rsContext.CallStatic("init", currentActivity);
 
         }
-    }
 #endif
+    }
+
+    private void Start()
+    {
+        
+    }
 }

@@ -1,8 +1,9 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
+using System.IO;
+using System;
 
-#if !UNITY_EDITOR && UNITY_ANDROID
 public class RealSenseController : MonoBehaviour
 {
     private const string PLUGIN_NAME = "camera_motion";
@@ -16,8 +17,26 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern void CleanupCamera();
 
-    [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
-    private static extern void initCamera(int color_width, int color_height, int depth_width, int depth_height);
+    [DllImport(PLUGIN_NAME)]
+    private static extern void colorStreamConfig(int width, int height, int fps);
+    [DllImport(PLUGIN_NAME)]
+    private static extern void depthStreamConfig(int width, int height, int fps);
+
+    [DllImport(PLUGIN_NAME)]
+    private static extern void bagFileStreamConfig(string bagFileAddress);
+
+    [DllImport(PLUGIN_NAME)]
+    private static extern void initCamera();
+
+    [DllImport(PLUGIN_NAME)]
+    private static extern void setParams(float newRatioTresh,
+                                  float newMinDepth,
+                                  float newMaxDepth,
+                                  int newMin3DPoints,
+                                  float newMaxDistanceF2F,
+                                  int newMaxFeaturesSolver,
+                                  float newClipLimit,
+                                  int tilesGridSize);
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void createORB(int nfeatures = 500,
@@ -60,6 +79,23 @@ public class RealSenseController : MonoBehaviour
     private int frameCount = 0;
     private float fpsUpdateInterval = 0.1f;
 
+    public int colorWidth = 640;
+    public int colorHeight = 480;
+    public int colorFPS = 30;
+    public int depthWidth = 640;
+    public int depthHeight = 480;
+    public int depthFPS = 30;
+    public float ratioTresh = 0.7f;
+    public float minDepth = 0.0f;
+    public float maxDepth = 6.0f;
+    public int min3DPoints = 15;
+    public float maxDistanceF2F = 0.05f;
+    public int maxFeaturesSolver = 400;
+    public float clipLimit = 3.0f;
+    public int tilesGridSize = 5;
+
+    public bool useRecord = false;
+
     /// <summary>
     /// FRAN STARTS HERE
     /// </summary>
@@ -98,10 +134,32 @@ public class RealSenseController : MonoBehaviour
 
     private void Start()
     {
+#if !UNITY_EDITOR && UNITY_ANDROID
+        Invoke("DelayedStart", 0.5f);
         initialPos = transform.position;
-
+        Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
-        initCamera(640, 480, 640, 480);
+        if (useRecord){
+            string bagFilePath = System.IO.Path.Combine("/sdcard/Documents/20230918_163323.bag");
+
+            if (File.Exists(bagFilePath))
+            {
+                // The file exists, you can proceed with your operations on the file.
+                Debug.Log("The file exists: " + bagFilePath);
+                bagFileStreamConfig(bagFilePath);
+            }
+            else
+            {
+                // The file does not exist, handle the case where the file is missing.
+                Debug.LogError("The file does not exist: " + bagFilePath);
+            }
+            
+        } else {
+            colorStreamConfig(colorWidth, colorHeight, colorFPS);
+            depthStreamConfig(depthWidth, depthHeight, depthFPS);
+        }
+        
+        initCamera();
         trackingThread = new Thread(ThreadUpdate);
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
@@ -110,7 +168,14 @@ public class RealSenseController : MonoBehaviour
             createSIFT(siftNFeatures, siftNOctaveLayers, siftContrastThreshold, siftEdgeThreshold, siftSigma, siftEnable_precise_upscale);
         else if (featureExtractorType == FeatureExtractorType.ORB)
             createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
+
+
+        setParams(ratioTresh, minDepth, maxDepth, min3DPoints, maxDistanceF2F, maxFeaturesSolver, clipLimit, tilesGridSize);
+        
+#endif
     }
+
+#if !UNITY_EDITOR && UNITY_ANDROID
 
     private void Update()
     {
@@ -145,5 +210,5 @@ public class RealSenseController : MonoBehaviour
         isStopped = true;
         trackingThread.Abort();
     }
-}
 #endif
+}

@@ -76,11 +76,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture1:
-        m_Texture: {fileID: 2800000, guid: 25e1cd4545bfb424d9479bc94b7ba95a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 703e4f5e374b2994c9d9ef7f2c552ffc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture1Normal:
-        m_Texture: {fileID: 2800000, guid: 1bfb650c876c9e64c97daeabe9f26ebe, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PaintTexture2:
@@ -149,7 +149,7 @@ Material:
     - _Middle_Tiling: 154.5
     - _OcclusionStrength: 1
     - _PaintStrength: 1
-    - _PaintTexture1Tiling: 871.3
+    - _PaintTexture1Tiling: 183.5
     - _PaintTexture2Tiling: 1
     - _Parallax: 0.005
     - _QueueControl: 0

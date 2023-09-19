@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Notas Meetings.md",
+                "file": "IP Addresses.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Notas Meetings.md",
+                "file": "IP Addresses.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Notas Meetings.md",
+                "file": "IP Addresses.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Notas Meetings.md"
+                "file": "IP Addresses.md"
               }
             }
           },
@@ -226,7 +226,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Notas Meetings.md"
+                "file": "IP Addresses.md"
               }
             }
           },
@@ -243,7 +243,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 242.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -258,12 +258,12 @@
   },
   "active": "dcfa3f934eaa9fe2",
   "lastOpenFiles": [
+    "New Scene Set-up.md",
+    "TO DO - Game Builder.md",
+    "TO DO - Scenes.md",
     "Assets.md",
     "Notas Meetings.md",
-    "New Scene Set-up.md",
     "Wall Demo Set-up.md",
-    "TO DO - Scenes.md",
-    "TO DO - Game Builder.md",
     "IP Addresses.md",
     "Documentation.md",
     "Images/stencil quad.png",
