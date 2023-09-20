@@ -93,7 +93,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "IP Addresses.md",
+                "file": "Assets.md",
                 "mode": "source",
                 "source": false
               }
@@ -166,7 +166,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "IP Addresses.md",
+                "file": "Assets.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -183,7 +183,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "IP Addresses.md",
+                "file": "Assets.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -206,7 +206,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "IP Addresses.md"
+                "file": "Assets.md"
               }
             }
           },
@@ -226,7 +226,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "IP Addresses.md"
+                "file": "Assets.md"
               }
             }
           },
@@ -243,7 +243,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 242.5
+    "width": 309.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -256,15 +256,15 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "dcfa3f934eaa9fe2",
+  "active": "09e09b39e76848ec",
   "lastOpenFiles": [
+    "IP Addresses.md",
     "New Scene Set-up.md",
     "TO DO - Game Builder.md",
     "TO DO - Scenes.md",
     "Assets.md",
     "Notas Meetings.md",
     "Wall Demo Set-up.md",
-    "IP Addresses.md",
     "Documentation.md",
     "Images/stencil quad.png",
     "Images/wall stencil.png",

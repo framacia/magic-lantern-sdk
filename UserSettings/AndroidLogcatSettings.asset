@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.105:5555",
         "name": "com.UPF.ARML",
-        "processId": 5674,
+        "processId": 2962,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -100,50 +100,50 @@
         },
         {
             "deviceId": "192.168.121.105:5555",
-            "name": "com.android.settings",
-            "processId": 943,
+            "name": "com.UPF.ARML",
+            "processId": 2409,
             "exited": true
         },
         {
             "deviceId": "192.168.121.105:5555",
             "name": "com.UPF.ARML",
-            "processId": 3387,
+            "processId": 2896,
             "exited": true
         },
         {
             "deviceId": "192.168.121.105:5555",
             "name": "com.UPF.ARML",
-            "processId": 3898,
+            "processId": 3278,
             "exited": true
         },
         {
             "deviceId": "192.168.121.105:5555",
-            "name": "com.android.launcher3",
-            "processId": 1024,
+            "name": "com.UPF.ARML",
+            "processId": 3608,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1134,
             "exited": false
         },
         {
             "deviceId": "192.168.121.105:5555",
             "name": "com.UPF.ARML",
-            "processId": 4581,
+            "processId": 1917,
             "exited": false
         },
         {
             "deviceId": "192.168.121.105:5555",
             "name": "com.UPF.ARML",
-            "processId": 5026,
+            "processId": 2411,
             "exited": false
         },
         {
             "deviceId": "192.168.121.105:5555",
             "name": "com.UPF.ARML",
-            "processId": 5352,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.105:5555",
-            "name": "com.UPF.ARML",
-            "processId": 5674,
+            "processId": 2962,
             "exited": false
         }
     ],

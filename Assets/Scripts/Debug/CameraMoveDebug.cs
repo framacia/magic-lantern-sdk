@@ -13,15 +13,17 @@ public class CameraMoveDebug : MonoBehaviour
     {
         Invoke("DelayedStart", 0.5f);
 
-     
+
     }
 
     private void DelayedStart()
     {
+#if UNITY_ANDROID
         //Is it really necessary setting this??? Find a good place to add it 
         QualitySettings.vSyncCount = 0;
 
         Application.targetFrameRate = 61;
+#endif
     }
 
     // Update is called once per frame
@@ -55,6 +57,12 @@ public class CameraMoveDebug : MonoBehaviour
                 (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);
 
             gameObject.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
+        }
+
+        //Close app when user presses Android Home button
+        if (Input.GetKey(KeyCode.Escape))
+        { 
+            Application.Quit(); 
         }
     }
 }
