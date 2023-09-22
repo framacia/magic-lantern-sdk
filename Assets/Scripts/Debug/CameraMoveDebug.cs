@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class CameraMoveDebug : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
     [SerializeField] bool isMouse = false;
+    [SerializeField] TMP_Text vectorText;
 
     private void Start()
     {
@@ -45,7 +47,7 @@ public class CameraMoveDebug : MonoBehaviour
 
         if (gameObject != null)
         {
-            gameObject.transform.Rotate(-zAxisValue * speed * Time.deltaTime,
+            /*gameObject.transform.Rotate(-zAxisValue * speed * Time.deltaTime,
                 xAxisValue * speed * Time.deltaTime, 0);
 
             //Force Z rotation to 0
@@ -54,15 +56,20 @@ public class CameraMoveDebug : MonoBehaviour
 
             //Translation
             Vector3 movementVector = (gameObject.transform.forward * Input.GetAxis("Vertical") * 10) +
-                (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);
+                (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);*/
 
-            gameObject.transform.position += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
+            gameObject.transform.position += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
         }
 
         //Close app when user presses Android Home button
         if (Input.GetKey(KeyCode.Escape))
         { 
             Application.Quit(); 
+        }
+
+        if (vectorText)
+        {
+            vectorText.text = transform.position.ToString();
         }
     }
 }

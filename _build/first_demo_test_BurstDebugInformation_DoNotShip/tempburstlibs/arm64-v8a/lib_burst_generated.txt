@@ -23,6 +23,7 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.Collections;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
 --assembly-defines=Unity.TextMeshPro;
+--assembly-defines=Unity.SharpZipLib.Utils;
 --assembly-defines=kcp2k;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
@@ -66,9 +67,11 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=SALSA-LipSync;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
+--assembly-defines=Unity.SharpZipLib;
 --assembly-defines=DOTween;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
@@ -181,6 +184,7 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.Collections;
 --assembly-defines=Unity.ProBuilder.Poly2Tri;
 --assembly-defines=Unity.TextMeshPro;
+--assembly-defines=Unity.SharpZipLib.Utils;
 --assembly-defines=kcp2k;
 --assembly-defines=Unity.RenderPipelines.Universal.Runtime;
 --assembly-defines=Unity.Burst;
@@ -224,9 +228,11 @@ Library: C:\Work\FuBIntLab\repos\magic_lantern_unity\Temp\BurstOutput\tempburstl
 --assembly-defines=Unity.ProBuilder.KdTree;
 --assembly-defines=SALSA-LipSync;
 --assembly-defines=Unity.Collections.LowLevel.ILSupport;
+--assembly-defines=Unity.SharpZipLib;
 --assembly-defines=DOTween;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
+--assembly-defines=Newtonsoft.Json;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;

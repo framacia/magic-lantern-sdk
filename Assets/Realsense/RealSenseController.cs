@@ -36,7 +36,11 @@ public class RealSenseController : MonoBehaviour
                                   float newMaxDistanceF2F,
                                   int newMaxFeaturesSolver,
                                   float newClipLimit,
-                                  int tilesGridSize);
+                                  int tilesGridSize,
+                                  int newFilterTemplateWindowSize,
+                                  float newFilterSearchWindowSize,
+                                  int newFilterStrengH,
+                                  float newGamma);
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void createORB(int nfeatures = 500,
@@ -93,6 +97,10 @@ public class RealSenseController : MonoBehaviour
     public int maxFeaturesSolver = 400;
     public float clipLimit = 3.0f;
     public int tilesGridSize = 5;
+    public int filterTemplateWindowSize = 5;
+    public float filterSearchWindowSize = 10;
+    public int filterStrengH = 7;
+    public float gamma = 1;
 
     public bool useRecord = false;
 
@@ -136,7 +144,7 @@ public class RealSenseController : MonoBehaviour
     {
 #if !UNITY_EDITOR && UNITY_ANDROID
         Invoke("DelayedStart", 0.5f);
-        initialPos = transform.position;
+        initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
         if (useRecord){
@@ -170,7 +178,8 @@ public class RealSenseController : MonoBehaviour
             createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
 
 
-        setParams(ratioTresh, minDepth, maxDepth, min3DPoints, maxDistanceF2F, maxFeaturesSolver, clipLimit, tilesGridSize);
+        setParams(ratioTresh, minDepth, maxDepth, min3DPoints, maxDistanceF2F, maxFeaturesSolver, clipLimit, tilesGridSize, filterTemplateWindowSize,
+        filterSearchWindowSize, filterStrengH, gamma);
         
 #endif
     }
@@ -180,7 +189,7 @@ public class RealSenseController : MonoBehaviour
     private void Update()
     {
         resetEvent.Set();
-        transform.position = initialPos + rotatedTranslationVector;
+        transform.localPosition = initialPos + rotatedTranslationVector;
 
     }
 
