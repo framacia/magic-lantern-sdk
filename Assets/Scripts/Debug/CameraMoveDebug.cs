@@ -58,7 +58,7 @@ public class CameraMoveDebug : MonoBehaviour
             Vector3 movementVector = (gameObject.transform.forward * Input.GetAxis("Vertical") * 10) +
                 (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);*/
 
-            gameObject.transform.position += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
+            gameObject.transform.localPosition += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
         }
 
         //Close app when user presses Android Home button

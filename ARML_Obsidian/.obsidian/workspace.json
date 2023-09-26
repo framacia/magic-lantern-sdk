@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documentation.md",
+                "file": "Assets.md",
                 "mode": "source",
                 "source": false
               }
@@ -91,16 +91,14 @@
             "id": "dcfa3f934eaa9fe2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "Assets.md",
-                "mode": "source",
-                "source": false
+                "file": "TO DO - Game Builder.md"
               }
             }
           }
         ],
-        "currentTab": 7
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -256,16 +254,16 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "09e09b39e76848ec",
+  "active": "1502dccca241a96f",
   "lastOpenFiles": [
-    "IP Addresses.md",
-    "New Scene Set-up.md",
     "TO DO - Game Builder.md",
+    "Documentation.md",
+    "Notas Meetings.md",
+    "New Scene Set-up.md",
+    "IP Addresses.md",
     "TO DO - Scenes.md",
     "Assets.md",
-    "Notas Meetings.md",
     "Wall Demo Set-up.md",
-    "Documentation.md",
     "Images/stencil quad.png",
     "Images/wall stencil.png",
     "Images/interaction timer.png",

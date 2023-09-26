@@ -13,6 +13,9 @@ kanban-plugin: basic
 - [ ] Integrate Lip-Sync
 - [ ] Automatize Character setup (animation, gaze, dialogue canvas)
 - [ ] Move grabbing collision logic to Grabbable objects and not CameraGrabber
+- [ ] Change camera background colour to indicate interactable areas of interest (Paul says magic vs. lantern mode)
+- [ ] Idea for X-Ray/infrared mode - take 3D scan texture of environment and filter it for simulating (x ray, infrared, whatever)
+- [ ] Use button to show information/video about object you are pointing at
 
 
 ## TO DO
