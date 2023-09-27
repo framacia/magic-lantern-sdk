@@ -21,6 +21,7 @@ kanban-plugin: basic
 ## TO DO
 
 - [ ] Clean up logic related to Interaction Timer
+- [ ] Add option to change the distance to the camera while grabbing
 
 
 ## DOING

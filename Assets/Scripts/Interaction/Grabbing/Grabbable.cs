@@ -8,6 +8,8 @@ using UnityEngine.Events;
 
 public enum GrabbableState { FREE, GRABBED, PLACED, LOCKED }
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public abstract class Grabbable : Interactable
 {
     [field: Header("Physics")]

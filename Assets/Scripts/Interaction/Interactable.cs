@@ -21,6 +21,7 @@ public abstract class Interactable : MonoBehaviour
     [Header("Visual")]
     [SerializeField] protected string interactingText = "Interacting...";
     [SerializeField] protected Material outlineMaterial;
+    //[SerializeField] [Tooltip("The material slot in which the outline will be based")] protected int outlineMaterialIndex;
     [SerializeField] protected float outlineThickness = 1.5f;
     protected Material[] originalMaterials;
     protected MeshRenderer renderer;
@@ -63,13 +64,15 @@ public abstract class Interactable : MonoBehaviour
     protected virtual void OnDisable()
     {
         NetworkPlayer.OnPlayerLoaded -= OnPlayerLoaded;
-        InteractionTypeController.Instance.OnInteractionTypeChanged -= SwitchInteractionType;
+        if (InteractionTypeController.Instance)
+            InteractionTypeController.Instance.OnInteractionTypeChanged -= SwitchInteractionType;
     }
 
     //I have to do this because gameobjects with NetworkIdentity are deactivated at the beginning so cant be subscribed
     protected void OnPlayerLoaded()
     {
-        InteractionTypeController.Instance.OnInteractionTypeChanged += SwitchInteractionType;
+        if (InteractionTypeController.Instance)
+            InteractionTypeController.Instance.OnInteractionTypeChanged += SwitchInteractionType;
     }
 
     protected void SwitchInteractionType(InteractionType newInteractionType)

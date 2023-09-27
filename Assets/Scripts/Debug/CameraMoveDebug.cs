@@ -47,7 +47,7 @@ public class CameraMoveDebug : MonoBehaviour
 
         if (gameObject != null)
         {
-            /*gameObject.transform.Rotate(-zAxisValue * speed * Time.deltaTime,
+            gameObject.transform.Rotate(-zAxisValue * speed * Time.deltaTime,
                 xAxisValue * speed * Time.deltaTime, 0);
 
             //Force Z rotation to 0
@@ -56,9 +56,11 @@ public class CameraMoveDebug : MonoBehaviour
 
             //Translation
             Vector3 movementVector = (gameObject.transform.forward * Input.GetAxis("Vertical") * 10) +
-                (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);*/
+                (gameObject.transform.right * Input.GetAxis("Horizontal") * 10);
 
-            gameObject.transform.localPosition += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
+            //gameObject.transform.localPosition += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
+
+            gameObject.transform.localPosition += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
         }
 
         //Close app when user presses Android Home button

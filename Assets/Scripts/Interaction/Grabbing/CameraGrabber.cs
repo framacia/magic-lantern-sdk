@@ -28,12 +28,21 @@ public class CameraGrabber : MonoBehaviour
         target.transform.parent = transform;
         targetDistanceToCam = 1f;
         target.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + targetDistanceToCam);
+
+        //This is horrible but due to the Camera Grab Collider's rotation (because of lens shift) - we need to apply an offset to target rotation
+        target.transform.Rotate(new Vector3(transform.eulerAngles.x, 0,0));
     }
 
     private void GrabObject()
     {
         //Set target to grabbed object distance -- move this to its own function?
-        targetDistanceToCam = Vector3.Distance(pendingGrabbedObject.transform.position, transform.position);
+
+        //If Grabbable wants to override the distance to cam, else stay at the current distance (default behavior)
+        //if (pendingGrabbedObject.OverrideDistanceToCam)
+        //    targetDistanceToCam = pendingGrabbedObject.DistanceToCam;
+        //else
+            targetDistanceToCam = Vector3.Distance(pendingGrabbedObject.transform.position, transform.position);
+
         target.localPosition = new Vector3(0, 0, targetDistanceToCam);
 
         ForceGrabObject(pendingGrabbedObject);
