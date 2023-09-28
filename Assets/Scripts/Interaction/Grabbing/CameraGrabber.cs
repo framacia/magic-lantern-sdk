@@ -27,10 +27,10 @@ public class CameraGrabber : MonoBehaviour
         target = new GameObject("Grab Target").transform;
         target.transform.parent = transform;
         targetDistanceToCam = 1f;
-        target.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + targetDistanceToCam);
+        target.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + targetDistanceToCam);
 
         //This is horrible but due to the Camera Grab Collider's rotation (because of lens shift) - we need to apply an offset to target rotation
-        target.transform.Rotate(new Vector3(transform.eulerAngles.x, 0,0));
+        target.transform.Rotate(new Vector3(transform.eulerAngles.x, 0, 0));
     }
 
     private void GrabObject()
@@ -41,7 +41,7 @@ public class CameraGrabber : MonoBehaviour
         //if (pendingGrabbedObject.OverrideDistanceToCam)
         //    targetDistanceToCam = pendingGrabbedObject.DistanceToCam;
         //else
-            targetDistanceToCam = Vector3.Distance(pendingGrabbedObject.transform.position, transform.position);
+        targetDistanceToCam = Vector3.Distance(pendingGrabbedObject.transform.position, transform.position);
 
         target.localPosition = new Vector3(0, 0, targetDistanceToCam);
 

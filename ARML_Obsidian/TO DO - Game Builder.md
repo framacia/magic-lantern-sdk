@@ -21,7 +21,6 @@ kanban-plugin: basic
 ## TO DO
 
 - [ ] Clean up logic related to Interaction Timer
-- [ ] Add option to change the distance to the camera while grabbing
 
 
 ## DOING
@@ -37,6 +36,7 @@ kanban-plugin: basic
 - [x] Add Unity Event triggers for Grabbables and Placeables.
 - [x] Make bricks particle system
 - [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
+- [x] Add option to change the distance to the camera while grabbing
 - [x] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 - [x] Automatize Placeable Hierarchy setup/can just use prefab?
 - [x] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code

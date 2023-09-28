@@ -8,85 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "4c3116c19d3bbdad",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "New Scene Set-up.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1502dccca241a96f",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "TO DO - Game Builder.md"
-              }
-            }
-          },
-          {
-            "id": "308ed0edcb02edc3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Documentation.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "ff079b9bf2c2d551",
-            "type": "leaf",
-            "state": {
-              "type": "kanban",
-              "state": {
-                "file": "TO DO - Game Builder.md"
-              }
-            }
-          },
-          {
-            "id": "d211337d9c511a81",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.4.12"
-              }
-            }
-          },
-          {
-            "id": "32cb6421417fb480",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Notas Meetings.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "8e0f173f7d9a6808",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Notas Meetings.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "dcfa3f934eaa9fe2",
+            "id": "0f6ff5379ba5ff58",
             "type": "leaf",
             "state": {
               "type": "kanban",
@@ -95,8 +17,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -235,11 +156,12 @@
             }
           }
         ],
-        "currentTab": 6
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 309.5
+    "width": 324.5,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -252,11 +174,11 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "1502dccca241a96f",
+  "active": "0f6ff5379ba5ff58",
   "lastOpenFiles": [
     "TO DO - Scenes.md",
-    "Assets.md",
     "TO DO - Game Builder.md",
+    "Assets.md",
     "Documentation.md",
     "Notas Meetings.md",
     "New Scene Set-up.md",

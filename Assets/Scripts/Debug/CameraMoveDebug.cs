@@ -14,16 +14,15 @@ public class CameraMoveDebug : MonoBehaviour
     private void Start()
     {
         Invoke("DelayedStart", 0.5f);
-
-
     }
 
     private void DelayedStart()
     {
-#if UNITY_ANDROID
+#if !UNITY_EDITOR
         //Is it really necessary setting this??? Find a good place to add it 
+#if UNITY_ANDROID
         QualitySettings.vSyncCount = 0;
-
+#endif
         Application.targetFrameRate = 61;
 #endif
     }

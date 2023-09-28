@@ -142,7 +142,7 @@ public class RealSenseController : MonoBehaviour
 
     private void Start()
     {
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
         Invoke("DelayedStart", 0.5f);
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
@@ -184,7 +184,7 @@ public class RealSenseController : MonoBehaviour
 #endif
     }
 
-#if !UNITY_EDITOR && UNITY_ANDROID
+#if !UNITY_EDITOR
 
     private void Update()
     {
@@ -209,7 +209,8 @@ public class RealSenseController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        trackingThread.Abort();
+        CleanupCamera();
+        trackingThread.Join();
         isStopped = true;
     }
 
@@ -217,7 +218,7 @@ public class RealSenseController : MonoBehaviour
     {
         CleanupCamera();
         isStopped = true;
-        trackingThread.Abort();
+        trackingThread.Join();
     }
 #endif
 }
