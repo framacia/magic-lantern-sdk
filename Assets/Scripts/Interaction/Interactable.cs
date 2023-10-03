@@ -53,7 +53,8 @@ public abstract class Interactable : MonoBehaviour
         else
             renderer = GetComponentInChildren<MeshRenderer>();
 
-        originalMaterials = renderer.materials;
+        if (renderer)
+            originalMaterials = renderer.materials;
     }
 
     protected virtual void OnEnable()
@@ -82,6 +83,8 @@ public abstract class Interactable : MonoBehaviour
 
     protected void AddOutlineMaterial(Renderer renderer)
     {
+        if (!renderer) return;
+
         //If material number has already been edited, return
         if (renderer.materials.Length != originalMaterials.Length)
         {
@@ -112,6 +115,9 @@ public abstract class Interactable : MonoBehaviour
     //Second overload, allows for putting another model as parameter
     public void RemoveOutlineMaterial(Renderer renderer)
     {
+        if (renderer == null)
+            return;
+
         //If material number already original, return
         if (renderer.materials.Length == originalMaterials.Length)
             return;
@@ -121,6 +127,8 @@ public abstract class Interactable : MonoBehaviour
 
     protected void UpdateOutlineFill(Renderer renderer)
     {
+        if(!renderer) return;
+
         //If material number has already been edited, update fill and return
         if (renderer.materials.Length != originalMaterials.Length)
         {

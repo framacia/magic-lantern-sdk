@@ -79,7 +79,9 @@ public class CameraPointedObject : Interactable
             if (interactionType == InteractionType.Dwell)
                 StopTimer();
 
-            RemoveOutlineMaterial(renderer);
+            if (outlineMaterial)
+                RemoveOutlineMaterial(renderer);
+
             feedback.StopProgressFeedback();
         }
     }
