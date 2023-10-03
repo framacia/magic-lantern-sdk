@@ -17,6 +17,9 @@ scopes = {
 	"last_search.310DEAF1" = ""
 	"OpenInspectorPreview.310DEAF1" = "0"
 	"currentGroup.310DEAF1" = ""
+	"last_search.3BE40471" = "interactiontype"
+	"OpenInspectorPreview.3BE40471" = "1"
+	"currentGroup.3BE40471" = "scene"
 }
 providers = {
 	adb = {
@@ -68,6 +71,8 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"i"
+	""
 ]
 searchItemFavorites = [
 ]
