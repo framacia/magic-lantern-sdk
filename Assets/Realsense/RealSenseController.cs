@@ -15,7 +15,7 @@ public class RealSenseController : MonoBehaviour
     private static extern float GetDepthAtCenter();
 
     [DllImport(PLUGIN_NAME)]
-    private static extern void CleanupCamera();
+    private static extern void cleanupCamera();
 
     [DllImport(PLUGIN_NAME)]
     private static extern void colorStreamConfig(int width, int height, int fps);
@@ -63,10 +63,13 @@ public class RealSenseController : MonoBehaviour
                                         bool enable_precise_upscale = false
                                     );
 
-    [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
-    // private static extern void createORB();
-
     // [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
+    // private static extern void createORB();
+    [DllImport(PLUGIN_NAME)] 
+    private static extern void firstIteration();
+
+
+    [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void findFeatures();
 
     [DllImport(PLUGIN_NAME)] // Replace with your actual native plugin name
@@ -74,14 +77,14 @@ public class RealSenseController : MonoBehaviour
 
     public static float[] RetrieveTranslationVector()
     {
-        float[] t_f_data = new float[7];
+        float[] t_f_data = new float[3];
         GetTranslationVector(t_f_data);
         return t_f_data;
     }
 
-    private float elapsedTime = 0f;
-    private int frameCount = 0;
-    private float fpsUpdateInterval = 0.1f;
+    [DllImport(PLUGIN_NAME)] 
+    private static extern void addNewKeyFrame();
+
 
     public int colorWidth = 640;
     public int colorHeight = 480;
@@ -101,7 +104,6 @@ public class RealSenseController : MonoBehaviour
     public float filterSearchWindowSize = 10;
     public int filterStrengH = 7;
     public float gamma = 1;
-
     public bool useRecord = false;
 
     /// <summary>
@@ -142,7 +144,7 @@ public class RealSenseController : MonoBehaviour
 
     private void Start()
     {
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
         Invoke("DelayedStart", 0.5f);
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
@@ -180,11 +182,13 @@ public class RealSenseController : MonoBehaviour
 
         setParams(ratioTresh, minDepth, maxDepth, min3DPoints, maxDistanceF2F, maxFeaturesSolver, clipLimit, tilesGridSize, filterTemplateWindowSize,
         filterSearchWindowSize, filterStrengH, gamma);
+
+        firstIteration();
         
-#endif
+// #endif
     }
 
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
 
     private void Update()
     {
@@ -202,23 +206,29 @@ public class RealSenseController : MonoBehaviour
             findFeatures();
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
-            Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
-            rotatedTranslationVector = Quaternion.AngleAxis(45, Vector3.right) * remappedTranslationVector;
+            Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
+            rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
+        
+            //  if (Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     Debug.Log("keyframe added");
+            //     addNewKeyFrame();
+            // }
         }
     }
 
-    private void OnApplicationQuit()
-    {
-        CleanupCamera();
-        trackingThread.Join();
-        isStopped = true;
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     // CleanupCamera();
+    //     // trackingThread.Join();
+    //     isStopped = true;
+    // }
 
     private void OnDestroy()
     {
-        CleanupCamera();
+        cleanupCamera();
         isStopped = true;
         trackingThread.Join();
     }
-#endif
+// #endif
 }
