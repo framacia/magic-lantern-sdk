@@ -215,6 +215,7 @@ public class RealSenseController : MonoBehaviour
             //     addNewKeyFrame();
             // }
         }
+        
     }
 
     // private void OnApplicationQuit()
@@ -226,9 +227,11 @@ public class RealSenseController : MonoBehaviour
 
     private void OnDestroy()
     {
-        cleanupCamera();
+        
         isStopped = true;
-        trackingThread.Join();
+        resetEvent.Set(); // Signal the thread to exit
+        trackingThread.Join(); // Wait for the thread to finish
+        cleanupCamera();
     }
 // #endif
 }
