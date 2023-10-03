@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Stair
+  - WallRun
+  - Climb
+  - Fly
   - anchor
+  - Animal
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -13,30 +19,30 @@ TagManager:
   - Water
   - UI
   - 
+  - Grabbable
+  - Grabbed
+  - Ignore_Grabbables
+  - Block_Raycast
+  - StencilLayer1
+  - 
+  - 
+  - 
+  - BodyPart
+  - 
+  - 
+  - 
+  - 
+  - Animal
+  - 
+  - 
+  - Enemy
   - 
   - 
   - 
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Item
   - 
   m_SortingLayers:
   - name: Default

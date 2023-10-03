@@ -6,6 +6,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/_iOSBuild/
+/_iOSBuild_BurstDebugInformation_DoNotShip/
+/_build/
 
 # OpenCVForUnity Plugin (see README for download instructions)
 [Aa]ssets/Plugins/OpenCVForUnity/

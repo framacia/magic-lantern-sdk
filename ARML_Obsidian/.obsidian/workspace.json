@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "e720bd62deb6a726",
+    "type": "split",
+    "children": [
+      {
+        "id": "27dd7ce5df3a1f2c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f6ff5379ba5ff58",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "TO DO - Game Builder.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b042a000d964fcc7",
+    "type": "split",
+    "children": [
+      {
+        "id": "ef29921f0d39cc2b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dc7ffb1b64f8ff9e",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "cfe3dcc2a7d93fee",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "3a8e3ac0488064ed",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 227.5
+  },
+  "right": {
+    "id": "d7a70d64ac0639a6",
+    "type": "split",
+    "children": [
+      {
+        "id": "02851266e8c3fce6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8b9635d07d40bae2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "TO DO - Game Builder.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "737d761ae1969e3f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "TO DO - Game Builder.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3d91c1ee517121a4",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "749d44480849f671",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "TO DO - Game Builder.md"
+              }
+            }
+          },
+          {
+            "id": "64b1dc6a3998a0ff",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency"
+              }
+            }
+          },
+          {
+            "id": "1f60468d76599c53",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "TO DO - Game Builder.md"
+              }
+            }
+          },
+          {
+            "id": "09e09b39e76848ec",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 324.5,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
+    }
+  },
+  "active": "0f6ff5379ba5ff58",
+  "lastOpenFiles": [
+    "TO DO - Scenes.md",
+    "TO DO - Game Builder.md",
+    "Assets.md",
+    "Documentation.md",
+    "Notas Meetings.md",
+    "New Scene Set-up.md",
+    "IP Addresses.md",
+    "Wall Demo Set-up.md",
+    "Images/stencil quad.png",
+    "Images/wall stencil.png",
+    "Images/interaction timer.png",
+    "Images/Camera pointed object.png",
+    "Images/CameraPointedObject.png",
+    "Images/wall collision check.png",
+    "Pasted image 20230908123242 1.png",
+    "Images/unity wall.png",
+    "Images/blender wall.png",
+    "Images/Collision Check.png",
+    "Images"
+  ]
+}

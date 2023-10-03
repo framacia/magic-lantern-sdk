@@ -1,0 +1,247 @@
+{
+    "m_SelectedDeviceId": "192.168.121.105:5555",
+    "m_SelectedPackage": {
+        "deviceId": "192.168.230.195:5555",
+        "name": "com.UPF.ARML",
+        "processId": 2108,
+        "exited": false
+    },
+    "m_SelectedPriority": 4,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 11101,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 12165,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 16980,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 20777,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.UPF.ARML",
+            "processId": 23784,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2210,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2383,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2411,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.android.launcher3",
+            "processId": 1033,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2345,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2909,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2285,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2458,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2763,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3174,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2409,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2896,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3278,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3608,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1134,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 1917,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2411,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2962,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.105:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4194,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.230.195:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2236,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.230.195:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2441,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.230.195:5555",
+            "name": "com.android.tv.settings",
+            "processId": 928,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.230.195:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2108,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_FilterOptions": {
+        "m_Filter": "",
+        "m_UseRegularExpressions": true,
+        "m_MatchCase": false
+    },
+    "m_SymbolPaths": [],
+    "m_CaptureVideoSettings": {
+        "TimeLimitEnabled": false,
+        "TimeLimit": 180,
+        "VideoSizeEnabled": false,
+        "VideoSizeX": 1280,
+        "VideoSizeY": 720,
+        "BitRateEnabled": false,
+        "BitRateK": 20000,
+        "DisplayIdEnabled": false,
+        "DisplayId": ""
+    }
+}
