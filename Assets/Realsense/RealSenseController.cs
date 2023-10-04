@@ -194,6 +194,11 @@ public class RealSenseController : MonoBehaviour
     {
         resetEvent.Set();
         transform.localPosition = initialPos + rotatedTranslationVector;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("keyframe added");
+            addNewKeyFrame();
+        }
 
     }
 
@@ -209,11 +214,7 @@ public class RealSenseController : MonoBehaviour
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
             rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
         
-            //  if (Input.GetKeyDown(KeyCode.Space))
-            // {
-            //     Debug.Log("keyframe added");
-            //     addNewKeyFrame();
-            // }
+          
         }
         
     }
