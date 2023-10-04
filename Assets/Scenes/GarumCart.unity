@@ -4130,6 +4130,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3386472574744847759, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
+      propertyPath: sceneId
+      value: 4183808968
+      objectReference: {fileID: 0}
     - target: {fileID: 3605571521103222206, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4246,6 +4250,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5987903565121681565, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5987903565121681565, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5987903565121681565, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5987903565121681565, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6696874334178781268, guid: 8068fcc16ef4d514b82c0eee67d376ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4295,13 +4315,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5405597541972880871, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -19.5
+    - target: {fileID: 1726486929629397947, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: sceneId
+      value: 2926705339
       objectReference: {fileID: 0}
     - target: {fileID: 6480750571873232608, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: sceneId
       value: 3633525185
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7400952994930251935, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4346,10 +4370,6 @@ PrefabInstance:
     - target: {fileID: 7756904292992657832, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: m_Name
       value: --LANTERN--
-      objectReference: {fileID: 0}
-    - target: {fileID: 7756904292992657832, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6523,7 +6543,7 @@ MonoBehaviour:
   outlineMaterial: {fileID: 2100000, guid: f41185843d05ccd46a6c88fe521721ef, type: 2}
   outlineThickness: 1.5
   feedback: {fileID: 1963024661}
-  targetAngle: -180
+  targetAngle: 10
   checkObstaclesRaycast: 0
   blockingLayers:
     serializedVersion: 2
@@ -6621,7 +6641,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.646
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6723,7 +6743,7 @@ NavMeshAgent:
   m_Acceleration: 7.34
   avoidancePriority: 50
   m_AngularSpeed: 2000
-  m_StoppingDistance: 0.1
+  m_StoppingDistance: 0.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 0
@@ -6760,7 +6780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2310063eb2dcd46895e2d492aced98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {fileID: 488789083}
+  targetPosition: {fileID: 687669183}
 --- !u!1001 &2064270329
 PrefabInstance:
   m_ObjectHideFlags: 0

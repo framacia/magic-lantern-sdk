@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AdminUIController : NetworkBehaviour
 {
@@ -12,8 +13,29 @@ public class AdminUIController : NetworkBehaviour
     [SerializeField] GameObject virtualDouble;
     bool isButtonInteraction = false;
 
+    #region Singleton
+    public static AdminUIController Instance { get; private set; }
+
+    private void Awake()
+    {
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+            //transform.SetParent(null);
+        }
+    }
+    #endregion
+
     private void Start()
     {
+        DontDestroyOnLoad(gameObject.transform.parent);
+
         cam = Camera.main;
         postProcessingController = FindObjectOfType<PostProcessingController>(true);
     }
@@ -102,4 +124,16 @@ public class AdminUIController : NetworkBehaviour
         InteractionTypeController.Instance.ChangeInteractionType(state);
     }
 
+    public void RestartCurrentScene()
+    {
+        SceneController.Instance.ResetCurrentScene();
+        CmdOnRestartCurrentScene();
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdOnRestartCurrentScene()
+    {
+        SceneController.Instance.ResetCurrentScene();
+        //ARMLNetworkManager.Instance.ServerChangeScene(SceneManager.GetActiveScene().name);
+    }
 }
