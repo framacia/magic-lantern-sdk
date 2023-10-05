@@ -13,8 +13,10 @@ using TNRD.Utilities;
 public class CameraPointedObject : Interactable
 {
     [Header("Camera Pointed Object")]
-    public float targetAngle = 5f;
-    public bool checkObstaclesRaycast = false;
+    [SerializeField] private float targetAngle = 5f;
+    [SerializeField, Tooltip("Triggers unless you are looking at the object")]
+    private bool invertAngleCheck = false;
+    [SerializeField] private bool checkObstaclesRaycast = false;
     public LayerMask blockingLayers = 0;
 
     [Header("Event")]
@@ -57,32 +59,28 @@ public class CameraPointedObject : Interactable
                 raycastResult = false;
         }
 
-        if (angle <= targetAngle && !raycastResult)
+        //Normal angle check
+        if (!invertAngleCheck)
         {
-            //If Dwell mode, start timer
-            if (interactionType == InteractionType.Dwell)
-                StartTimer();
-
-            //If button mode
-            if (interactionType == InteractionType.Button && Input.GetMouseButtonDown(0))
-                OnObjectInteracted();
-
-            if (outlineMaterial == null)
-                return;
-
-            AddOutlineMaterial(renderer);
-            UpdateOutlineFill(renderer);
-            feedback.PlayProgressFeedback();
+            if (angle <= targetAngle && !raycastResult)
+            {
+                AngleCheckSuccessful();
+            }
+            else
+            {
+                AngleCheckFail();
+            }
         }
-        else
+        else //Inverted angle check
         {
-            if (interactionType == InteractionType.Dwell)
-                StopTimer();
-
-            if (outlineMaterial)
-                RemoveOutlineMaterial(renderer);
-
-            feedback.StopProgressFeedback();
+            if (angle >= targetAngle && !raycastResult)
+            {
+                AngleCheckSuccessful();
+            }
+            else
+            {
+                AngleCheckFail();
+            }
         }
     }
 
@@ -104,5 +102,34 @@ public class CameraPointedObject : Interactable
     {
         base.OnDisable();
         iTimer.OnFinishInteraction -= OnObjectInteracted;
+    }
+
+    private void AngleCheckSuccessful()
+    {
+        //If Dwell mode, start timer
+        if (interactionType == InteractionType.Dwell)
+            StartTimer();
+
+        //If button mode
+        if (interactionType == InteractionType.Button && Input.GetMouseButtonDown(0))
+            OnObjectInteracted();
+
+        if (outlineMaterial == null)
+            return;
+
+        AddOutlineMaterial(renderer);
+        UpdateOutlineFill(renderer);
+        feedback.PlayProgressFeedback();
+    }
+
+    private void AngleCheckFail()
+    {
+        if (interactionType == InteractionType.Dwell)
+            StopTimer();
+
+        if (outlineMaterial)
+            RemoveOutlineMaterial(renderer);
+
+        feedback.StopProgressFeedback();
     }
 }

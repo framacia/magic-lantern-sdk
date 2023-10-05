@@ -10,5 +10,5 @@
 
 | Name            | License | Link                                                                         |
 | --------------- | ------- | ---------------------------------------------------------------------------- |
-| Auto Exposure                |  Paid       |                                                                              |
+| Auto Exposure   | Paid    |                                                                              |
 | Asset Inventory | Paid    | https://assetstore.unity.com/packages/tools/utilities/asset-inventory-226927 |

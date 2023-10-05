@@ -27,22 +27,22 @@ TagManager:
   - 
   - 
   - 
-  - BodyPart
-  - 
-  - 
-  - 
-  - 
-  - Animal
-  - 
-  - 
-  - Enemy
   - 
   - 
   - 
   - 
   - 
   - 
-  - Item
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   m_SortingLayers:
   - name: Default

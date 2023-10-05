@@ -11,9 +11,11 @@
             "id": "0f6ff5379ba5ff58",
             "type": "leaf",
             "state": {
-              "type": "kanban",
+              "type": "markdown",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Assets.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -83,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Assets.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO - Game Builder.md",
+                "file": "Assets.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Assets.md"
               }
             }
           },
@@ -143,7 +145,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "TO DO - Game Builder.md"
+                "file": "Assets.md"
               }
             }
           },
@@ -156,12 +158,11 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 324.5,
-    "collapsed": true
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -176,8 +177,8 @@
   },
   "active": "0f6ff5379ba5ff58",
   "lastOpenFiles": [
-    "TO DO - Scenes.md",
     "TO DO - Game Builder.md",
+    "TO DO - Scenes.md",
     "Assets.md",
     "Documentation.md",
     "Notas Meetings.md",

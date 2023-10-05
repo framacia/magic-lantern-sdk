@@ -5,19 +5,20 @@ using UnityEngine.AI;
 
 public class DogAgentController : MonoBehaviour
 {
-    [SerializeField] Transform targetPosition;
+    [SerializeField] private Transform targetTransform;
+    [SerializeField] private Transform crateTransform;
+    [SerializeField, Range(0, 1)] private float distancePercentage = 0.5f;
+
     private NavMeshAgent agent;
-    private Vector3 currentTarget;
-    Animator anim;
-    Vector2 smoothDeltaPosition = Vector2.zero;
-    Vector2 velocity = Vector2.zero;
+    private Animator anim;
+    private Vector2 smoothDeltaPosition = Vector2.zero;
+    private Vector2 velocity = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();    
+        agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        currentTarget = targetPosition.position;
 
         //Don't update position automatically
         agent.updatePosition = false;
@@ -26,17 +27,22 @@ public class DogAgentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GoToClick();
+        //GoToClick();
 
         //Calculate speed/animation
         CalculateSpeedAnimation();
 
-        //if (agent)
-        //    agent.SetDestination(currentTarget);
+        if (agent)
+        {
+            //Place agent in between the target and the crate
+            agent.SetDestination(targetTransform.position + (crateTransform.position - targetTransform.position) *  (1 - distancePercentage));
+        }
     }
 
     void GoToClick()
     {
+        if (Camera.main == null) return;
+
         if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -67,16 +73,12 @@ public class DogAgentController : MonoBehaviour
         if (Time.deltaTime > 1e-5f)
             velocity = smoothDeltaPosition / Time.deltaTime;
 
-        bool shouldMove = velocity.magnitude > 0.2f && agent.remainingDistance > agent.radius;
+        bool shouldMove = velocity.magnitude > 0.005f && agent.remainingDistance >= agent.stoppingDistance; //> agent.radius; //Commenting so agent doesn't "hover"
 
         // Update animation parameters
         anim.SetBool("moving", shouldMove);
         //anim.SetFloat("velx", velocity.x);
         //anim.SetFloat("vely", velocity.y);
-
-        LookAt lookAt = GetComponentInChildren<LookAt>();
-        if (lookAt)
-            lookAt.lookAtTargetPosition = agent.steeringTarget + transform.forward;
 
         // Pull character towards agent
         if (worldDeltaPosition.magnitude > agent.radius)
@@ -89,6 +91,5 @@ public class DogAgentController : MonoBehaviour
         Vector3 position = anim.rootPosition;
         position.y = agent.nextPosition.y;
         transform.position = position;
-
     }
 }
