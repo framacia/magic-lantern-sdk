@@ -4,11 +4,12 @@ public class IKLook : MonoBehaviour
 {
     [SerializeField] private Transform bone;
     [SerializeField] private Transform target;
-    [SerializeField] private Vector3 rotationLimit = new Vector3(180, 180, 180);
+    [SerializeField] private Vector3 rotationLimit = new Vector3(120, 120, 120);
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Vector3 rotationOffset;
     //public Vector3 StartDirection;
-    private Quaternion startRotation;
+    private Quaternion startBoneRotation;
+    private Vector3 startParentRotation;
 
     void Awake()
     {
@@ -16,7 +17,8 @@ public class IKLook : MonoBehaviour
             return;
 
         //StartDirection = target.position - transform.position;
-        startRotation = bone.rotation;
+        startBoneRotation = bone.rotation;
+        startParentRotation = transform.eulerAngles;
     }
 
     void LateUpdate()
@@ -24,16 +26,33 @@ public class IKLook : MonoBehaviour
         if (target == null)
             return;
 
+        float prevBoneRotX = bone.eulerAngles.x;
+        float prevBoneRotY = bone.eulerAngles.y;
+        float prevBoneRotZ = bone.eulerAngles.z;
+
         Vector3 direction = (target.position - bone.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction) * startRotation;
+        Vector3 lookRotation = (Quaternion.LookRotation(direction) * startBoneRotation).eulerAngles;
 
-        //If any of the axis goes above limit, stay the same
-        float limitedLookRotationX = Mathf.Abs(bone.rotation.x - startRotation.x) > rotationLimit.x ? bone.rotation.x : lookRotation.x;
-        float limitedLookRotationY = Mathf.Abs(bone.rotation.y - startRotation.y) > rotationLimit.y ? bone.rotation.y : lookRotation.y;
-        float limitedLookRotationZ = Mathf.Abs(bone.rotation.z - startRotation.z) > rotationLimit.z ? bone.rotation.z : lookRotation.z;
+        bone.eulerAngles = lookRotation - startParentRotation;
+        if (Mathf.Abs((bone.localEulerAngles.x + 360) % 360 - (startBoneRotation.eulerAngles.x + 360) % 360) > rotationLimit.x)
+        {
+            print("local x " + (bone.localEulerAngles.x + 360) % 360);
+            //bone.eulerAngles = new Vector3(prevBoneRotX, bone.eulerAngles.y, bone.eulerAngles.z);
+            bone.eulerAngles = new Vector3(bone.eulerAngles.x, prevBoneRotY, bone.eulerAngles.z);
+        }
+        //if (Mathf.Abs((bone.localEulerAngles.y + 360) % 360 - (startBoneRotation.eulerAngles.y + 360) % 360) > rotationLimit.y)
+        //{
+        //    bone.eulerAngles = new Vector3(bone.eulerAngles.x, prevBoneRotY, bone.eulerAngles.z);
+        //}
+        //if (Mathf.Abs((bone.localEulerAngles.z + 360) % 360 - (startBoneRotation.eulerAngles.z + 360) % 360) > rotationLimit.z)
+        //{
+        //    bone.eulerAngles = new Vector3(bone.eulerAngles.x, bone.eulerAngles.y, prevBoneRotZ);
+        //}
 
-        bone.eulerAngles = new Vector3(limitedLookRotationX, limitedLookRotationY, limitedLookRotationZ);
-        //bone.rotation = Quaternion.Slerp(bone.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        //bone.localEulerAngles = new Vector3(
+        //    Mathf.Clamp(bone.localEulerAngles.x, -360, rotationLimit.x),
+        //    Mathf.Clamp(bone.localEulerAngles.y, -rotationLimit.y, rotationLimit.y),
+        //    Mathf.Clamp(bone.localEulerAngles.z, -rotationLimit.z, rotationLimit.z));
     }
 }
 
