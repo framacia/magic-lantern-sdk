@@ -2218,6 +2218,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish_Spawnable (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d2b58ee47b2fe3e41b068287470a6014, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3648,7 +3652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.09271866
+      value: 0.05614173
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3656,7 +3660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9956924
+      value: 0.9984228
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalRotation.z
@@ -3668,7 +3672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 169.36
+      value: 173.563
       objectReference: {fileID: 0}
     - target: {fileID: 4868515256976388, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -3676,7 +3680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 95201595007085728, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 95201595007085728, guid: 95f21b9fb869eef4e84c79dac58fc6d4, type: 3}
       propertyPath: m_UpdateMode
@@ -4337,6 +4341,34 @@ PrefabInstance:
     - target: {fileID: 1726486929629397947, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: sceneId
       value: 2926705339
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.869
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.73605484
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6769219
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3026953980991145799, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 85.207
       objectReference: {fileID: 0}
     - target: {fileID: 6480750571873232608, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: sceneId
@@ -5193,6 +5225,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d2b58ee47b2fe3e41b068287470a6014, type: 3}
       propertyPath: m_Name
       value: Fish_Spawnable
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d2b58ee47b2fe3e41b068287470a6014, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6199,7 +6235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1191738771636821726, guid: aecabe068e6f29546970f8fd1b21985a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.08
+      value: 2.95
       objectReference: {fileID: 0}
     - target: {fileID: 1191738771636821726, guid: aecabe068e6f29546970f8fd1b21985a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6207,7 +6243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1191738771636821726, guid: aecabe068e6f29546970f8fd1b21985a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.28
+      value: -3.24
       objectReference: {fileID: 0}
     - target: {fileID: 1191738771636821726, guid: aecabe068e6f29546970f8fd1b21985a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6570,7 +6606,7 @@ MonoBehaviour:
   outlineMaterial: {fileID: 2100000, guid: f41185843d05ccd46a6c88fe521721ef, type: 2}
   outlineThickness: 1.5
   feedback: {fileID: 1963024661}
-  targetAngle: 50
+  targetAngle: 30
   invertAngleCheck: 1
   checkObstaclesRaycast: 0
   blockingLayers:
@@ -6669,7 +6705,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.646
+      value: 0.749
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -6786,14 +6822,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963024656}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef2310063eb2dcd46895e2d492aced98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 1785513577}
   crateTransform: {fileID: 687669183}
-  distancePercentage: 0.496
+  distancePercentage: 0.168
 --- !u!114 &1963024668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6808,7 +6844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bone: {fileID: 1983673931}
   target: {fileID: 1785513577}
-  rotationLimit: {x: 120, y: 120, z: 120}
+  rotationLimit: {x: 70, y: 120, z: 120}
   rotationSpeed: 1
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &1983673931 stripped
