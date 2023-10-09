@@ -37,30 +37,29 @@ public class IKLook : MonoBehaviour
         bone.eulerAngles = new Vector3(-bone.eulerAngles.x, bone.eulerAngles.y, bone.eulerAngles.z);
 
         float currentBoneTransformDiffY = ((bone.eulerAngles.y - transform.localEulerAngles.y - 180) + 360) % 360;
-        //float currentBoneTransformDiffY = bone.eulerAngles.y - transform.localEulerAngles.y;
 
-        //if (currentBoneTransformDiffY > 190 || currentBoneTransformDiffY < 0)
-        //{
-        //    bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneTransformDiffY, bone.eulerAngles.z);
-        //    //bone.eulerAngles = previousBoneRotation;
-        //}
-        //else //If rotation is within acceptable range, overwrite previousBoneTransformDiffY
-        //{
-        //    previousBoneTransformDiffY = currentBoneTransformDiffY;
-        //}
-
-        if (bone.localEulerAngles.x > 30 || bone.localEulerAngles.x < -30)
+        if (currentBoneTransformDiffY > 190 || currentBoneTransformDiffY < 0)
         {
             bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneTransformDiffY, bone.eulerAngles.z);
+            //bone.eulerAngles = previousBoneRotation;
         }
-        else
+        else //If rotation is within acceptable range, overwrite previousBoneTransformDiffY
         {
             previousBoneTransformDiffY = currentBoneTransformDiffY;
         }
 
-        print("prev: " + previousBoneTransformDiffY);
-        print("bone: " + bone.eulerAngles.y);
-        print("diff: " + currentBoneTransformDiffY);
+        //if (bone.localEulerAngles.x > 30 || bone.localEulerAngles.x < -30)
+        //{
+        //    bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneTransformDiffY, bone.eulerAngles.z);
+        //}
+        //else
+        //{
+        //    previousBoneTransformDiffY = currentBoneTransformDiffY;
+        //}
+
+        //print("prev: " + previousBoneTransformDiffY);
+        //print("bone: " + bone.eulerAngles.y);
+        //print("diff: " + currentBoneTransformDiffY);
     }
 }
 
