@@ -15,7 +15,7 @@ public class BNO055_Arduino : MonoBehaviour
 
     public static BNO055_Arduino Instance { get; private set; }
 
-    public float maxThreshold = 0.1f;
+    // public float maxThreshold = 0.1f;
 
     private void Awake()
     {
@@ -65,30 +65,26 @@ public class BNO055_Arduino : MonoBehaviour
     {
         // Update the rotation of the GameObject based on received quaternion data
         if (isRunning) {
-            if (qxPrev != 0 && qyPrev != 0 && qzPrev != 0) {
-                double differenceX = Math.Abs(qxPrev - qx);
-                double differenceY = Math.Abs(qyPrev - qy);
-                double differenceZ = Math.Abs(qzPrev - qz);
-                if ((float)differenceX >= maxThreshold || (float)differenceY >= maxThreshold || (float)differenceZ >= maxThreshold) {
-                    qx = qxPrev;
-                    qy = qyPrev;
-                    qz = qzPrev;
-                    qw = qwPrev;
-                }
-                Quaternion remappedImuRotation = new Quaternion((float)qy, -(float)qz, -(float)qx, (float)qw);
-                if (initialImuRotation == Vector3.zero) {
-                    initialImuRotation = remappedImuRotation.eulerAngles;
-                }
+            // if (qxPrev != 0 && qyPrev != 0 && qzPrev != 0) {
+            //     double differenceX = Math.Abs(qxPrev - qx);
+            //     double differenceY = Math.Abs(qyPrev - qy);
+            //     double differenceZ = Math.Abs(qzPrev - qz);
+                // if ((float)differenceX <= maxThreshold && (float)differenceY <= maxThreshold && (float)differenceZ >= maxThreshold) {
+                    Quaternion remappedImuRotation = new Quaternion((float)qy, -(float)qz, -(float)qx, (float)qw);
+                    if (initialImuRotation == Vector3.zero) {
+                        initialImuRotation = remappedImuRotation.eulerAngles;
+                    }
 
-                Vector3 correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
+                    Vector3 correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
 
-                transform.localEulerAngles = correctedImuRotation + camStartEuler;
-            } 
-            qxPrev = qx;
-            qyPrev = qy;
-            qzPrev = qz;
-            qwPrev = qw;
-        }
+                    transform.localEulerAngles = correctedImuRotation + camStartEuler;
+                }
+        //     }
+        //     qxPrev = qx;
+        //     qyPrev = qy;
+        //     qzPrev = qz;
+        //     qwPrev = qw;
+        // }
         
         
     }
