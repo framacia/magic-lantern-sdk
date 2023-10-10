@@ -5,13 +5,14 @@ public class IKLook : MonoBehaviour
 {
     [SerializeField] private Transform bone;
     [SerializeField] private Transform target;
-    [SerializeField] private Vector3 rotationLimit = new Vector3(120, 120, 120);
+    //[SerializeField] private Vector3 rotationLimit = new Vector3(120, 120, 120);
+    [SerializeField] private float rotationLimit = 60f;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Vector3 rotationOffset;
     //public Vector3 StartDirection;
     private Quaternion startBoneRotation;
     private Vector3 startParentRotation;
-    private float previousBoneTransformDiffY;
+    private float previousBoneRotY;
 
     void Start()
     {
@@ -21,6 +22,8 @@ public class IKLook : MonoBehaviour
         //StartDirection = target.position - transform.position;
         startBoneRotation = bone.rotation;
         startParentRotation = transform.eulerAngles;
+
+        previousBoneRotY = bone.eulerAngles.y;
     }
 
     void LateUpdate()
@@ -36,30 +39,22 @@ public class IKLook : MonoBehaviour
         //Remap to invert X axis
         bone.eulerAngles = new Vector3(-bone.eulerAngles.x, bone.eulerAngles.y, bone.eulerAngles.z);
 
-        float currentBoneTransformDiffY = ((bone.eulerAngles.y - transform.localEulerAngles.y - 180) + 360) % 360;
+        float currentBoneTransformDiffY = Mathf.DeltaAngle(bone.eulerAngles.y, transform.localEulerAngles.y) - 90;
 
-        if (currentBoneTransformDiffY > 190 || currentBoneTransformDiffY < 0)
+        print(currentBoneTransformDiffY);
+
+        if (currentBoneTransformDiffY > rotationLimit || currentBoneTransformDiffY < -rotationLimit)
         {
-            bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneTransformDiffY, bone.eulerAngles.z);
+            bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneRotY, bone.eulerAngles.z);
             //bone.eulerAngles = previousBoneRotation;
         }
         else //If rotation is within acceptable range, overwrite previousBoneTransformDiffY
         {
-            previousBoneTransformDiffY = currentBoneTransformDiffY;
+            if (bone.localEulerAngles.x > rotationLimit || bone.localEulerAngles.x < -rotationLimit)
+                return;
+
+            previousBoneRotY = bone.eulerAngles.y;
         }
-
-        //if (bone.localEulerAngles.x > 30 || bone.localEulerAngles.x < -30)
-        //{
-        //    bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneTransformDiffY, bone.eulerAngles.z);
-        //}
-        //else
-        //{
-        //    previousBoneTransformDiffY = currentBoneTransformDiffY;
-        //}
-
-        //print("prev: " + previousBoneTransformDiffY);
-        //print("bone: " + bone.eulerAngles.y);
-        //print("diff: " + currentBoneTransformDiffY);
     }
 }
 

@@ -14,7 +14,6 @@ public class AnchoredGrabbable : Grabbable
     [field: SerializeField]
     public float DistanceToTargetOffset { get; private set; } = 0f;
 
-
     public override void Grab()
     {
         distanceFromTarget = CalculateDistanceFromTarget();

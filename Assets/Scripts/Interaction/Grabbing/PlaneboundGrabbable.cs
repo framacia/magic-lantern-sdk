@@ -40,11 +40,11 @@ public class PlaneboundGrabbable : Grabbable
     {
         if (state == GrabbableState.FREE)
         {
-            CalculatePlaneboudPosition();
+            CalculatePlaneboundPosition();
         }
     }
 
-    protected void CalculatePlaneboudPosition()
+    protected void CalculatePlaneboundPosition()
     {
         //Calculate distance from the plane and project it to the normal to apply the correction
         Vector3 correction = Vector3.Project(this.transform.position - (constraintPlane.distance * -constraintPlane.normal), constraintPlane.normal);
