@@ -141,6 +141,7 @@ public class RealSenseController : MonoBehaviour
     bool isStopped = false;
     Thread trackingThread;
     AutoResetEvent resetEvent;
+    float AngleX;
 
     private void Start()
     {
