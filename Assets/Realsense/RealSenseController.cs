@@ -7,12 +7,6 @@ using System;
 public class RealSenseController : MonoBehaviour
 {
     private const string PLUGIN_NAME = "camera_motion";
-    // Import the C++ functions from the native plugin
-    [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
-    private static extern void InitializeCamera();
-
-    [DllImport(PLUGIN_NAME)]
-    private static extern float GetDepthAtCenter();
 
     [DllImport(PLUGIN_NAME)]
     private static extern void cleanupCamera();
@@ -29,18 +23,10 @@ public class RealSenseController : MonoBehaviour
     private static extern void initCamera();
 
     [DllImport(PLUGIN_NAME)]
-    private static extern void setParams(float newRatioTresh,
-                                  float newMinDepth,
-                                  float newMaxDepth,
-                                  int newMin3DPoints,
-                                  float newMaxDistanceF2F,
-                                  int newMaxFeaturesSolver,
-                                  float newClipLimit,
-                                  int tilesGridSize,
-                                  int newFilterTemplateWindowSize,
-                                  float newFilterSearchWindowSize,
-                                  int newFilterStrengH,
-                                  float newGamma);
+    private static extern void initImu();
+
+    [DllImport(PLUGIN_NAME)]
+    private static extern void setParams(CameraConfig config);
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void createORB(int nfeatures = 500,
@@ -82,8 +68,35 @@ public class RealSenseController : MonoBehaviour
         return t_f_data;
     }
 
+    [DllImport(PLUGIN_NAME)] // Replace with your actual native plugin name
+    private static extern void GetCameraOrientation(float[] cameraAngle);
+
+    public static float[] RetrieveCameraOrientation()
+    {
+        float[] cameraAngle = new float[3];
+        GetCameraOrientation(cameraAngle);
+        return cameraAngle;
+    }
+
     [DllImport(PLUGIN_NAME)] 
     private static extern void addNewKeyFrame();
+
+  
+    public struct CameraConfig {
+        public float ratioTresh;
+        public float minDepth;
+        public float maxDepth;
+        public int min3DPoints;
+        public float maxDistanceF2F;
+        public int maxFeaturesSolver;
+        public float clipLimit;
+        public int tilesGridSize;
+        public int filterTemplateWindowSize;
+        public float filterSearchWindowSize;
+        public int filterStrengH;
+        public float gamma;
+    }
+
 
 
     public int colorWidth = 640;
@@ -143,6 +156,8 @@ public class RealSenseController : MonoBehaviour
     AutoResetEvent resetEvent;
     float AngleX;
 
+    float angleX;
+
     private void Start()
     {
 // #if !UNITY_EDITOR
@@ -171,20 +186,58 @@ public class RealSenseController : MonoBehaviour
         }
         
         initCamera();
-        trackingThread = new Thread(ThreadUpdate);
-        trackingThread.Start();
-        resetEvent = new AutoResetEvent(false);
+        initImu();
 
         if (featureExtractorType == FeatureExtractorType.SIFT)
             createSIFT(siftNFeatures, siftNOctaveLayers, siftContrastThreshold, siftEdgeThreshold, siftSigma, siftEnable_precise_upscale);
         else if (featureExtractorType == FeatureExtractorType.ORB)
             createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
 
-
-        setParams(ratioTresh, minDepth, maxDepth, min3DPoints, maxDistanceF2F, maxFeaturesSolver, clipLimit, tilesGridSize, filterTemplateWindowSize,
-        filterSearchWindowSize, filterStrengH, gamma);
+        CameraConfig config = new CameraConfig();
+        config.ratioTresh = ratioTresh;
+        config.minDepth = minDepth;
+        config.maxDepth = maxDepth;
+        config.min3DPoints = min3DPoints;
+        config.maxDistanceF2F = maxDistanceF2F;
+        config.maxFeaturesSolver = maxFeaturesSolver;
+        config.clipLimit = clipLimit;
+        config.tilesGridSize = tilesGridSize;
+        config.filterTemplateWindowSize = filterTemplateWindowSize;
+        config.filterSearchWindowSize = filterSearchWindowSize;
+        config.filterStrengH = filterStrengH;
+        config.gamma = gamma;
+        
+        setParams(config);
 
         firstIteration();
+
+        float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
+        int numberOfSamples = 1000;
+
+        for (int i = 0; i < numberOfSamples; i++)
+        {
+            float[] cameraAngle = RetrieveCameraOrientation();
+            totalCameraAngle[0] += cameraAngle[0];
+            totalCameraAngle[1] += cameraAngle[1];
+            totalCameraAngle[2] += cameraAngle[2];
+        }
+
+        float averageX = totalCameraAngle[0] / numberOfSamples;
+        float averageY = totalCameraAngle[1] / numberOfSamples;
+        float averageZ = totalCameraAngle[2] / numberOfSamples;
+
+        
+        Debug.Log("Average Camera Orientation x: " + averageX);
+        Debug.Log("Average Camera Orientation y: " + averageY);
+        Debug.Log("Average Camera Orientation z: " + averageZ);
+
+        angleX = averageZ;
+
+        trackingThread = new Thread(ThreadUpdate);
+        trackingThread.Start();
+        resetEvent = new AutoResetEvent(false);
+
+        
         
 // #endif
     }
@@ -213,9 +266,9 @@ public class RealSenseController : MonoBehaviour
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
-            rotatedTranslationVector = Quaternion.AngleAxis(45, Vector3.right) * remappedTranslationVector;
-        
-          
+            rotatedTranslationVector = Quaternion.AngleAxis(angleX, Vector3.right) * remappedTranslationVector;
+
+            
         }
         
     }
