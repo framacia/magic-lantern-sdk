@@ -154,14 +154,11 @@ public class RealSenseController : MonoBehaviour
     bool isStopped = false;
     Thread trackingThread;
     AutoResetEvent resetEvent;
-    float AngleX;
-
     float angleX;
 
     private void Start()
     {
 // #if !UNITY_EDITOR
-        Invoke("DelayedStart", 0.5f);
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
@@ -211,6 +208,7 @@ public class RealSenseController : MonoBehaviour
 
         firstIteration();
 
+        
         float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
         int numberOfSamples = 1000;
 
@@ -233,10 +231,13 @@ public class RealSenseController : MonoBehaviour
 
         angleX = averageZ;
 
+
         trackingThread = new Thread(ThreadUpdate);
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
 
+
+      
         
         
 // #endif
