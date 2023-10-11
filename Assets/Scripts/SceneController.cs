@@ -33,4 +33,5 @@ public class SceneController : MonoBehaviour
         Resources.UnloadUnusedAssets();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
+
 }

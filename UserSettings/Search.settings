@@ -20,6 +20,9 @@ scopes = {
 	"last_search.3BE40471" = "interactiontype"
 	"OpenInspectorPreview.3BE40471" = "1"
 	"currentGroup.3BE40471" = "scene"
+	"last_search.E8DA15E5" = ""
+	"OpenInspectorPreview.E8DA15E5" = "0"
+	"currentGroup.E8DA15E5" = "all"
 }
 providers = {
 	adb = {

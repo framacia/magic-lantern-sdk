@@ -12,10 +12,8 @@ public class BNO055_Arduino : MonoBehaviour
     double qxPrev, qyPrev, qzPrev, qwPrev;
     Vector3 camStartEuler;
     private Vector3 initialImuRotation = Vector3.zero;
-
     public static BNO055_Arduino Instance { get; private set; }
-
-    // public float maxThreshold = 0.1f;
+    public float maxThreshold = 0.1f;
 
     private void Awake()
     {
@@ -69,7 +67,7 @@ public class BNO055_Arduino : MonoBehaviour
             //     double differenceX = Math.Abs(qxPrev - qx);
             //     double differenceY = Math.Abs(qyPrev - qy);
             //     double differenceZ = Math.Abs(qzPrev - qz);
-                // if ((float)differenceX <= maxThreshold && (float)differenceY <= maxThreshold && (float)differenceZ >= maxThreshold) {
+            //     if ((float)differenceX <= maxThreshold && (float)differenceY <= maxThreshold && (float)differenceZ <= maxThreshold) {
                     Quaternion remappedImuRotation = new Quaternion((float)qy, -(float)qz, -(float)qx, (float)qw);
                     if (initialImuRotation == Vector3.zero) {
                         initialImuRotation = remappedImuRotation.eulerAngles;
@@ -78,14 +76,21 @@ public class BNO055_Arduino : MonoBehaviour
                     Vector3 correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
 
                     transform.localEulerAngles = correctedImuRotation + camStartEuler;
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        Debug.Log("Restarted rotation");        
+                        initialImuRotation = remappedImuRotation.eulerAngles;
+                    }
                 }
-        //     }
-        //     qxPrev = qx;
-        //     qyPrev = qy;
-        //     qzPrev = qz;
-        //     qwPrev = qw;
+            // }
+            // qxPrev = qx;
+            // qyPrev = qy;
+            // qzPrev = qz;
+            // qwPrev = qw;
         // }
-        
+
+
         
     }
 

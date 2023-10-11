@@ -253,6 +253,8 @@ public class RealSenseController : MonoBehaviour
         {
             Debug.Log("keyframe added");
             addNewKeyFrame();
+        
+
         }
 
     }
@@ -267,7 +269,7 @@ public class RealSenseController : MonoBehaviour
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
-            rotatedTranslationVector = Quaternion.AngleAxis(angleX, Vector3.right) * remappedTranslationVector;
+            rotatedTranslationVector = Quaternion.AngleAxis(60, Vector3.right) * remappedTranslationVector;
 
             
         }
