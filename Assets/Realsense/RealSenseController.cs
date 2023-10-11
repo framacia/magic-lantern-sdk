@@ -155,6 +155,7 @@ public class RealSenseController : MonoBehaviour
     Thread trackingThread;
     AutoResetEvent resetEvent;
     float angleX;
+    bool reset_odom = false;
 
     private void Start()
     {
@@ -252,7 +253,8 @@ public class RealSenseController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("keyframe added");
-            addNewKeyFrame();
+            reset_odom = true;
+            //addNewKeyFrame();
         
 
         }
@@ -271,6 +273,11 @@ public class RealSenseController : MonoBehaviour
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
             rotatedTranslationVector = Quaternion.AngleAxis(60, Vector3.right) * remappedTranslationVector;
 
+            if (reset_odom == true)
+            {
+                addNewKeyFrame();
+                reset_odom = false;
+            }
             
         }
         

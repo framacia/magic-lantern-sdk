@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
         {
             Instance = this;
             transform.SetParent(null);
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
     #endregion
@@ -32,6 +32,14 @@ public class SceneController : MonoBehaviour
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         Resources.UnloadUnusedAssets();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetCurrentScene();
+        }
     }
 
 }

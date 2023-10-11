@@ -20,7 +20,7 @@ public class CameraParentController : MonoBehaviour
 
         if (Instance != null && Instance != this)
         {
-            Destroy(this.gameObject.transform.parent);
+            Destroy(this.gameObject.transform.parent.gameObject);
         }
         else
         {
