@@ -45,8 +45,10 @@ public class IKLook : MonoBehaviour
 
         if (currentBoneTransformDiffY > rotationLimit || currentBoneTransformDiffY < -rotationLimit)
         {
-            bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneRotY, bone.eulerAngles.z);
+            //bone.eulerAngles = new Vector3(bone.eulerAngles.x, previousBoneRotY, bone.eulerAngles.z);
             //bone.eulerAngles = previousBoneRotation;
+
+            bone.localEulerAngles = new Vector3(0, 0, 0);
         }
         else //If rotation is within acceptable range, overwrite previousBoneTransformDiffY
         {

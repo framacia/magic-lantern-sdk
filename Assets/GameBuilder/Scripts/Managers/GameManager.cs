@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FranTest.GameBuilder
@@ -7,13 +8,14 @@ namespace FranTest.GameBuilder
     [ExecuteInEditMode]
     public class GameManager : MonoBehaviour
     {
-        //Singleton
+        #region Singleton
         public static GameManager Instance { get; private set; }
-
-        [SerializeField] ARMLGameSO loadedGameSO;
 
         private void Awake()
         {
+            if (!Application.isPlaying) { return; }
+            // If there is an instance, and it's not me, delete myself.
+
             if (Instance != null && Instance != this)
             {
                 Destroy(this);
@@ -21,7 +23,19 @@ namespace FranTest.GameBuilder
             else
             {
                 Instance = this;
+                transform.SetParent(null);
+                DontDestroyOnLoad(gameObject);
             }
+        }
+        #endregion
+
+        [SerializeField] ARMLGameSO loadedGameSO;
+        private int currentScore;
+        private float currentTime;
+
+        private void Start()
+        {
+            loadedGameSO.LoadScores($"/{loadedGameSO.GetGameName()}.json");
         }
 
         public void LoadGame(ARMLGameSO game)
@@ -29,21 +43,15 @@ namespace FranTest.GameBuilder
             loadedGameSO = game;
         }
 
-        private void OnValidate()
+        public void SaveScore(string playerName)
         {
-            
+            loadedGameSO.AddHighScore(new ScoreEntry(currentScore, Time.realtimeSinceStartup, playerName));
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public void OnApplicationQuit()
         {
-
+            //AssetDatabase.SaveAssets();    
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
