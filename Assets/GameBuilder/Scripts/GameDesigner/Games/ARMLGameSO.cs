@@ -42,7 +42,7 @@ namespace FranTest.GameBuilder
     }
 
     [Serializable]
-    public class ScoreEntry
+    public struct ScoreEntry
     {
         public int score;
         public float timeToComplete;

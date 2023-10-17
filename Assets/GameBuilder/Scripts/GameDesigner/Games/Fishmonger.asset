@@ -14,12 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameName: Fishmonger
   levels: []
-  highScores:
-  - score: 0
-    timeToComplete: 0
-    name: 
-    dateTime: 
-  - score: 0
-    timeToComplete: 19.494862
-    name: Fran
-    dateTime: 16/10/2023 15:39:32
+  highScores: []
+  usesScores: 0

@@ -60,6 +60,10 @@ namespace FranTest.GameBuilder
         /// <param name="playerName">The name of the player.</param>
         public void SaveScore(string playerName)
         {
+            // Check if the loaded game scriptable object uses scores.
+            if (!loadedGameSO.usesScores)
+                return;
+
             // Add a new high score entry to the loaded ARMLGameSO.
             loadedGameSO.AddHighScore(new ScoreEntry(currentScore, Time.realtimeSinceStartup, playerName));
         }

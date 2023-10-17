@@ -21,6 +21,10 @@ kanban-plugin: basic
 ## TO DO
 
 - [ ] Clean up logic related to Interaction Timer
+- [ ] Move JSON saving to a point between scene loads or maybe even OnApplicationQuit to avoid save hiccups.
+- [ ] Dog should always be pointing roughly towards the target - limit transform rotation of the dog so that it nevers is more than 180 degrees away from the target
+- [ ] Add functionality to grabber so that it can only be pushed (right now it can be pushed and pulled)
+- [ ] Bark when walking backwards
 
 
 ## DOING

@@ -2,43 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Unity.VisualScripting.Member;
 
 public class DogAgentController : MonoBehaviour
 {
-    [SerializeField] private Transform targetTransform;
-    [SerializeField] private Transform crateTransform;
-    [SerializeField, Range(0, 1)] private float distancePercentage = 0.5f;
+    [SerializeField] private Transform targetTransform; // The target transform for the agent.
+    [SerializeField] private Transform crateTransform;  // The crate transform for intermediate destination.
+    [SerializeField, Range(0, 1)] private float distancePercentage = 0.5f; // The percentage of the distance between target and crate.
 
-    private NavMeshAgent agent;
-    private Animator anim;
+    private NavMeshAgent agent;  // The NavMeshAgent component.
+    private Animator anim;      // The Animator component for animations.
     private Vector2 smoothDeltaPosition = Vector2.zero;
     private Vector2 velocity = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component.
+        anim = GetComponent<Animator>();      // Get the Animator component.
 
-        //Don't update position automatically
+        // Don't update position automatically to handle it manually.
         agent.updatePosition = false;
+        agent.updateRotation = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //GoToClick();
-
-        //Calculate speed/animation
+        // Calculate speed and animations based on agent's movement.
         CalculateSpeedAnimation();
 
         if (agent)
         {
-            //Place agent in between the target and the crate
-            agent.SetDestination(targetTransform.position + (crateTransform.position - targetTransform.position) *  (1 - distancePercentage));
+            // Place the agent in between the target and the crate using distancePercentage.
+            agent.SetDestination(targetTransform.position + (crateTransform.position - targetTransform.position) * (1 - distancePercentage));
+
+            FaceTarget();
         }
     }
 
+    // Currently unused but makes agent move to a clicked point on the surface.
     void GoToClick()
     {
         if (Camera.main == null) return;
@@ -56,6 +59,7 @@ public class DogAgentController : MonoBehaviour
         }
     }
 
+    // Calculate speed and animations based on agent's movement.
     void CalculateSpeedAnimation()
     {
         Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
@@ -73,23 +77,61 @@ public class DogAgentController : MonoBehaviour
         if (Time.deltaTime > 1e-5f)
             velocity = smoothDeltaPosition / Time.deltaTime;
 
-        bool shouldMove = velocity.magnitude > 0.005f && agent.remainingDistance >= agent.stoppingDistance; //> agent.radius; //Commenting so agent doesn't "hover"
+        // Determine if the agent should move and update the animation accordingly.
+        bool shouldMove = velocity.magnitude > 0.005f && agent.remainingDistance >= agent.stoppingDistance;
 
         // Update animation parameters
         anim.SetBool("moving", shouldMove);
-        //anim.SetFloat("velx", velocity.x);
-        //anim.SetFloat("vely", velocity.y);
 
-        // Pull character towards agent
+        // Pull character towards agent if necessary
         if (worldDeltaPosition.magnitude > agent.radius)
             transform.position = agent.nextPosition - 0.9f * worldDeltaPosition;
     }
 
+    // Update the position based on animation movement using navigation surface height.
     void OnAnimatorMove()
     {
-        // Update position based on animation movement using navigation surface height
+        //Update transform position based on agent
         Vector3 position = anim.rootPosition;
         position.y = agent.nextPosition.y;
         transform.position = position;
+    }
+
+    void FaceTarget()
+    {
+        //Calculate original steering turn
+        var turnTowardNavSteeringTarget = agent.steeringTarget;
+        Vector3 turnDirection = (turnTowardNavSteeringTarget - transform.position).normalized;
+        Quaternion turnLookRotation = Quaternion.LookRotation(new Vector3(turnDirection.x, 0, turnDirection.z));
+
+        //Calculate look to point towards target
+        // Get the direction from the source to the target.
+        Vector3 directionToTarget = targetTransform.position - transform.position;
+        // Calculate the rotation as an Euler angle in degrees.
+        float angle = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
+
+        print(angle - turnLookRotation.eulerAngles.y);
+
+        //If difference between steer turn and lookAtTarget directions is small, allow steer turn
+        if(Mathf.Abs(angle - turnLookRotation.eulerAngles.y) < 120)
+        {
+            //transform.rotation = Quaternion.Slerp(transform.rotation, turnLookRotation, Time.deltaTime * 2); //Manual technique
+            agent.updateRotation = true;
+            agent.speed = 1f;
+            anim.SetFloat("walkSpeed", 1f);
+        }
+        else
+        {
+            agent.updateRotation = false;
+            agent.speed = 0f;
+            anim.SetBool("moving", false);
+            //anim.SetFloat("walkSpeed", 0.75f);
+            Bark(); //Bark cause you are going in different directino
+        }
+    }
+
+    public void Bark() //Bark behaviour here to control 
+    {
+
     }
 }

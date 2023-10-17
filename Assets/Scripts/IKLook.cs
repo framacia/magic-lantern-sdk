@@ -36,8 +36,6 @@ public class IKLook : MonoBehaviour
         //Calculate angle between agent body transform and target object
         float yRotationDiff = GetYRotationToTarget(transform.gameObject, target.gameObject);
 
-        print(yRotationDiff);
-
         //If above rotation limit, lerp to 0
         if (Mathf.Abs(yRotationDiff) > rotationLimit)
         {

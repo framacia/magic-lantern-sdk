@@ -11,11 +11,9 @@
             "id": "0f6ff5379ba5ff58",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "kanban",
               "state": {
-                "file": "Documentation.md",
-                "mode": "source",
-                "source": false
+                "file": "TO DO - Game Builder.md"
               }
             }
           }
@@ -85,7 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Documentation.md",
+                "file": "TO DO - Game Builder.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +100,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Documentation.md",
+                "file": "TO DO - Game Builder.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +123,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Documentation.md"
+                "file": "TO DO - Game Builder.md"
               }
             }
           },
@@ -145,7 +143,7 @@
             "state": {
               "type": "file-properties",
               "state": {
-                "file": "Documentation.md"
+                "file": "TO DO - Game Builder.md"
               }
             }
           },
@@ -177,10 +175,10 @@
   },
   "active": "0f6ff5379ba5ff58",
   "lastOpenFiles": [
+    "Documentation.md",
     "Assets.md",
     "TO DO - Game Builder.md",
     "TO DO - Scenes.md",
-    "Documentation.md",
     "Notas Meetings.md",
     "New Scene Set-up.md",
     "IP Addresses.md",
