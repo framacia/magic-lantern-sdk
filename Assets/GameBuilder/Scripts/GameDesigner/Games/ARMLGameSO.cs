@@ -11,6 +11,7 @@ namespace FranTest.GameBuilder
         [SerializeField] string gameName;
         [SerializeField] List<Level> levels;
         [SerializeField] List<ScoreEntry> highScores;
+        public bool usesScores;
 
         private IDataService DataService = new JsonDataService();
 
