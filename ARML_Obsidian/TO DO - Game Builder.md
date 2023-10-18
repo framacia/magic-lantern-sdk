@@ -24,6 +24,7 @@ kanban-plugin: basic
 - [ ] Move JSON saving to a point between scene loads or maybe even OnApplicationQuit to avoid save hiccups.
 - [ ] Add functionality to grabber so that it can only be pushed (right now it can be pushed and pulled)
 - [ ] JSON Saving encryption is broken, probably wrong key
+- [ ] Make Dog increase DistancePercentage the closer he is to the placeable.
 
 
 ## DOING
