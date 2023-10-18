@@ -1,8 +1,11 @@
 # Minimum required CMake version
 cmake_minimum_required(VERSION 3.1.0)
 
+# add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/depthai-core EXCLUDE_FROM_ALL)
+
 # Project name
 project(arml_cpp)
+
 
 # Find Boost program_options component
 find_package(Boost REQUIRED COMPONENTS program_options)
@@ -37,11 +40,11 @@ target_link_libraries(camera_motion
     ${Boost_LIBRARIES}
 )
 
-# # Create executable target
-# add_executable(arml_cpp src/camera_motion.cpp)
+# Create executable target
+add_executable(arml_cpp src/camera_motion.cpp)
 
-# # Set C++ standard to C++11 for the executable
-# set_property(TARGET arml_cpp PROPERTY CXX_STANDARD 11)
+# Set C++ standard to C++11 for the executable
+set_property(TARGET arml_cpp PROPERTY CXX_STANDARD 11)
 
 # # Link libraries to the executable
 # target_link_libraries(arml_cpp 
@@ -49,3 +52,5 @@ target_link_libraries(camera_motion
 #     ${DEPENDENCIES}
 #     ${Boost_LIBRARIES}
 # )
+
+# target_link_libraries(arml_cpp PRIVATE depthai::opencv)

@@ -1,7 +1,7 @@
 CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o: \
- /home/fubintlab/libraries/arml_cpp/src/debugCPP.cpp \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp \
  /usr/include/stdc-predef.h \
- /home/fubintlab/libraries/arml_cpp/include/debugCPP.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/debugCPP.h \
  /usr/include/stdio.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
