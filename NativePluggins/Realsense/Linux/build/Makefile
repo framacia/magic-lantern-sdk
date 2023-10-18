@@ -57,10 +57,10 @@ RM = /home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fubintlab/libraries/arml_cpp
+CMAKE_SOURCE_DIR = /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fubintlab/libraries/arml_cpp/build
+CMAKE_BINARY_DIR = /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/arml_cpp/build/CMakeFiles /home/fubintlab/libraries/arml_cpp/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/arml_cpp/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,19 @@ camera_motion: cmake_check_build_system
 camera_motion/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/build
 .PHONY : camera_motion/fast
+
+#=============================================================================
+# Target rules for targets named arml_cpp
+
+# Build rule for target.
+arml_cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 arml_cpp
+.PHONY : arml_cpp
+
+# fast build rule for target.
+arml_cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/build
+.PHONY : arml_cpp/fast
 
 src/camera_motion.o: src/camera_motion.cpp.o
 .PHONY : src/camera_motion.o
@@ -177,6 +190,30 @@ src/debugCPP.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s
 .PHONY : src/debugCPP.cpp.s
 
+src/oakd_motion.o: src/oakd_motion.cpp.o
+.PHONY : src/oakd_motion.o
+
+# target to build an object file
+src/oakd_motion.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o
+.PHONY : src/oakd_motion.cpp.o
+
+src/oakd_motion.i: src/oakd_motion.cpp.i
+.PHONY : src/oakd_motion.i
+
+# target to preprocess a source file
+src/oakd_motion.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.i
+.PHONY : src/oakd_motion.cpp.i
+
+src/oakd_motion.s: src/oakd_motion.cpp.s
+.PHONY : src/oakd_motion.s
+
+# target to generate assembly for a file
+src/oakd_motion.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.s
+.PHONY : src/oakd_motion.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -185,6 +222,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... arml_cpp"
 	@echo "... camera_motion"
 	@echo "... src/camera_motion.o"
 	@echo "... src/camera_motion.i"
@@ -192,6 +230,9 @@ help:
 	@echo "... src/debugCPP.o"
 	@echo "... src/debugCPP.i"
 	@echo "... src/debugCPP.s"
+	@echo "... src/oakd_motion.o"
+	@echo "... src/oakd_motion.i"
+	@echo "... src/oakd_motion.s"
 .PHONY : help
 
 

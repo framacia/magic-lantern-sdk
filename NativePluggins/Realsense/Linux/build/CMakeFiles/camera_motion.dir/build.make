@@ -53,10 +53,10 @@ RM = /home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/bin/cmake -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/fubintlab/libraries/arml_cpp
+CMAKE_SOURCE_DIR = /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/fubintlab/libraries/arml_cpp/build
+CMAKE_BINARY_DIR = /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/camera_motion.dir/depend.make
@@ -70,32 +70,32 @@ include CMakeFiles/camera_motion.dir/progress.make
 include CMakeFiles/camera_motion.dir/flags.make
 
 CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: CMakeFiles/camera_motion.dir/flags.make
-CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: /home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp
+CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp
 CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: CMakeFiles/camera_motion.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/arml_cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o -MF CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o.d -o CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o -c /home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o -MF CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o.d -o CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o -c /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp
 
 CMakeFiles/camera_motion.dir/src/camera_motion.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/camera_motion.dir/src/camera_motion.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp > CMakeFiles/camera_motion.dir/src/camera_motion.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp > CMakeFiles/camera_motion.dir/src/camera_motion.cpp.i
 
 CMakeFiles/camera_motion.dir/src/camera_motion.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/camera_motion.dir/src/camera_motion.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp -o CMakeFiles/camera_motion.dir/src/camera_motion.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp -o CMakeFiles/camera_motion.dir/src/camera_motion.cpp.s
 
 CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o: CMakeFiles/camera_motion.dir/flags.make
-CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o: /home/fubintlab/libraries/arml_cpp/src/debugCPP.cpp
+CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o: /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp
 CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o: CMakeFiles/camera_motion.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/arml_cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o -MF CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o.d -o CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o -c /home/fubintlab/libraries/arml_cpp/src/debugCPP.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o -MF CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o.d -o CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o -c /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp
 
 CMakeFiles/camera_motion.dir/src/debugCPP.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/camera_motion.dir/src/debugCPP.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/arml_cpp/src/debugCPP.cpp > CMakeFiles/camera_motion.dir/src/debugCPP.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp > CMakeFiles/camera_motion.dir/src/debugCPP.cpp.i
 
 CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/arml_cpp/src/debugCPP.cpp -o CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp -o CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s
 
 # Object files for target camera_motion
 camera_motion_OBJECTS = \
@@ -160,7 +160,7 @@ libcamera_motion.so: /usr/local/lib/libopencv_photo.so.4.2.0
 libcamera_motion.so: /usr/local/lib/libopencv_imgproc.so.4.2.0
 libcamera_motion.so: /usr/local/lib/libopencv_core.so.4.2.0
 libcamera_motion.so: CMakeFiles/camera_motion.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fubintlab/libraries/arml_cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libcamera_motion.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library libcamera_motion.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/camera_motion.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -172,6 +172,6 @@ CMakeFiles/camera_motion.dir/clean:
 .PHONY : CMakeFiles/camera_motion.dir/clean
 
 CMakeFiles/camera_motion.dir/depend:
-	cd /home/fubintlab/libraries/arml_cpp/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fubintlab/libraries/arml_cpp /home/fubintlab/libraries/arml_cpp /home/fubintlab/libraries/arml_cpp/build /home/fubintlab/libraries/arml_cpp/build /home/fubintlab/libraries/arml_cpp/build/CMakeFiles/camera_motion.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles/camera_motion.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/camera_motion.dir/depend
 

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp" "CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o" "gcc" "CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o.d"
+  "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/oakd_motion.cpp" "CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o" "gcc" "CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

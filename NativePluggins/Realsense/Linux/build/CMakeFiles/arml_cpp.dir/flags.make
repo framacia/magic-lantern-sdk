@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_PROGRAM_OPTIONS_DYN_LINK
 
-CXX_INCLUDES = -I/home/fubintlab/libraries/arml_cpp/include -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include -isystem /usr/local/include/opencv4
 
 CXX_FLAGS = -std=gnu++11
 

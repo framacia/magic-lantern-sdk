@@ -27,7 +27,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Linux-GNU.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/Linux.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Platform/UnixPaths.cmake"
-  "/home/fubintlab/libraries/arml_cpp/CMakeLists.txt"
+  "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/CMakeLists.txt"
   "CMakeFiles/3.26.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.0/CMakeSystem.cmake"
@@ -64,4 +64,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/camera_motion.dir/DependInfo.cmake"
+  "CMakeFiles/arml_cpp.dir/DependInfo.cmake"
   )

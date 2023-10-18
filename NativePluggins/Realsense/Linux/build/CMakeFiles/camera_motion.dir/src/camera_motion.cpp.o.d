@@ -1,7 +1,7 @@
 CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: \
- /home/fubintlab/libraries/arml_cpp/src/camera_motion.cpp \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp \
  /usr/include/stdc-predef.h \
- /home/fubintlab/libraries/arml_cpp/include/camera_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/camera_motion.h \
  /usr/local/include/opencv4/opencv2/core.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
@@ -230,7 +230,7 @@ CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: \
  /usr/local/include/opencv4/opencv2/flann/defines.h \
  /usr/local/include/opencv4/opencv2/flann/config.h \
  /usr/local/include/opencv4/opencv2/xfeatures2d/nonfree.hpp \
- /home/fubintlab/libraries/arml_cpp/include/debugCPP.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/debugCPP.h \
  /usr/local/include/opencv4/opencv2/opencv.hpp \
  /usr/local/include/opencv4/opencv2/calib3d.hpp \
  /usr/local/include/opencv4/opencv2/core/affine.hpp \
@@ -397,8 +397,8 @@ CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: \
  /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
  /usr/local/include/librealsense2/hpp/rs_pipeline.hpp \
  /usr/local/include/librealsense2/hpp/rs_context.hpp \
- /home/fubintlab/libraries/arml_cpp/include/cv-helpers.hpp \
- /home/fubintlab/libraries/arml_cpp/include/rs_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/cv-helpers.hpp \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/rs_motion.h \
  /usr/include/boost/program_options.hpp \
  /usr/include/boost/program_options/options_description.hpp \
  /usr/include/boost/program_options/config.hpp \
