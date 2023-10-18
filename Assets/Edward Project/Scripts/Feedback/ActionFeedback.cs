@@ -34,11 +34,6 @@ public class ActionFeedback : MonoBehaviour
         audioSource.clip = triggerSFXClips[currentTriggerSFXIndex];
     }
 
-    private void Update()
-    {
-
-    }
-
     public void PlayRandomTriggerFeedback()
     {
         if (triggerSFXClips.Count > 0)

@@ -16,8 +16,19 @@
                 "file": "TO DO - Game Builder.md"
               }
             }
+          },
+          {
+            "id": "4f052f4ad3e068d8",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "TO DO - Game Builder.md"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -173,7 +184,7 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "0f6ff5379ba5ff58",
+  "active": "4f052f4ad3e068d8",
   "lastOpenFiles": [
     "Documentation.md",
     "Assets.md",

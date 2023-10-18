@@ -12,6 +12,7 @@ namespace FranTest.GameBuilder
         [SerializeField] List<Level> levels;
         [SerializeField] List<ScoreEntry> highScores;
         public bool usesScores;
+        public bool isEncrypted;
 
         private IDataService DataService = new JsonDataService();
 
@@ -27,7 +28,7 @@ namespace FranTest.GameBuilder
         {
             highScores.Add(sc);
 
-            if (DataService.SaveData(string.Format("/{0}.json", gameName), highScores, false))
+            if (DataService.SaveData(string.Format("/{0}.json", gameName), highScores, isEncrypted))
             {
                 Debug.Log("Succesfully saved score data");
             }
@@ -35,7 +36,7 @@ namespace FranTest.GameBuilder
 
         public void LoadScores(string path)
         {
-            List<ScoreEntry> loadedScores = DataService.LoadData<List<ScoreEntry>>(path, false);
+            List<ScoreEntry> loadedScores = DataService.LoadData<List<ScoreEntry>>(path, isEncrypted);
 
             highScores = loadedScores;
         }

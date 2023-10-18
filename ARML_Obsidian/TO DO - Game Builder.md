@@ -22,9 +22,8 @@ kanban-plugin: basic
 
 - [ ] Clean up logic related to Interaction Timer
 - [ ] Move JSON saving to a point between scene loads or maybe even OnApplicationQuit to avoid save hiccups.
-- [ ] Dog should always be pointing roughly towards the target - limit transform rotation of the dog so that it nevers is more than 180 degrees away from the target
 - [ ] Add functionality to grabber so that it can only be pushed (right now it can be pushed and pulled)
-- [ ] Bark when walking backwards
+- [ ] JSON Saving encryption is broken, probably wrong key
 
 
 ## DOING
@@ -38,9 +37,11 @@ kanban-plugin: basic
 - [x] Add condition number to Level (generic conditions that must be met to complete Level, eg. place 3 placeables)
 - [x] Define feedback (particle + sound) system - reuse Edwards?
 - [x] Add Unity Event triggers for Grabbables and Placeables.
+- [x] Bark when walking backwards
 - [x] Make bricks particle system
 - [x] Work on walkthrough to explain how to make the wall scene as a user that has downloaded the unity project (whats a placeable, a grabbeble etc)
 - [x] Add option to change the distance to the camera while grabbing
+- [x] Dog should always be pointing roughly towards the target - limit transform rotation of the dog so that it nevers is more than 180 degrees away from the target
 - [x] Set Outline Material thickness from the interactable gameobject (should work as an Instance is created))
 - [x] Automatize Placeable Hierarchy setup/can just use prefab?
 - [x] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code

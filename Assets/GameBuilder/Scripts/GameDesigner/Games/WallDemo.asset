@@ -14,5 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameName: WallDemo
   levels: []
-  highScores: []
+  highScores:
+  - score: 0
+    timeToComplete: 16.518816
+    name: Fran
+    dateTime: 18/10/2023 12:36:03
+  - score: 0
+    timeToComplete: 13.60506
+    name: Fran
+    dateTime: 18/10/2023 12:37:42
   usesScores: 1
+  isEncrypted: 0

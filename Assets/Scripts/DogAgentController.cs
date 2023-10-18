@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static Unity.VisualScripting.Member;
 
 public class DogAgentController : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class DogAgentController : MonoBehaviour
 
     private NavMeshAgent agent;  // The NavMeshAgent component.
     private Animator anim;      // The Animator component for animations.
+    private ActionFeedback actionFeedback;
     private Vector2 smoothDeltaPosition = Vector2.zero;
     private Vector2 velocity = Vector2.zero;
 
@@ -20,6 +20,7 @@ public class DogAgentController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>(); // Get the NavMeshAgent component.
         anim = GetComponent<Animator>();      // Get the Animator component.
+        actionFeedback = GetComponent<ActionFeedback>();
 
         // Don't update position automatically to handle it manually.
         agent.updatePosition = false;
@@ -110,28 +111,31 @@ public class DogAgentController : MonoBehaviour
         // Calculate the rotation as an Euler angle in degrees.
         float angle = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
 
-        print(angle - turnLookRotation.eulerAngles.y);
-
         //If difference between steer turn and lookAtTarget directions is small, allow steer turn
         if(Mathf.Abs(angle - turnLookRotation.eulerAngles.y) < 120)
         {
             //transform.rotation = Quaternion.Slerp(transform.rotation, turnLookRotation, Time.deltaTime * 2); //Manual technique
-            agent.updateRotation = true;
             agent.speed = 1f;
             anim.SetFloat("walkSpeed", 1f);
+            if (agent.updateRotation == true) return; //If already turning, return, so only happens once
+            CancelInvoke(nameof(Bark)); //Using string version as it stops all the bark coroutines
+            agent.updateRotation = true;
         }
         else
         {
-            agent.updateRotation = false;
             agent.speed = 0f;
             anim.SetBool("moving", false);
             //anim.SetFloat("walkSpeed", 0.75f);
-            Bark(); //Bark cause you are going in different directino
+            if (agent.updateRotation == false) return; //If already stopped, return, so only happens once
+            InvokeRepeating(nameof(Bark), 1f, 2f); //Bark cause you are going in different direction
+            agent.updateRotation = false;
         }
     }
 
-    public void Bark() //Bark behaviour here to control 
+    private void Bark() //Bark behaviour here to control 
     {
-
+        anim.SetTrigger("bark");
+        actionFeedback.PlayRandomTriggerFeedback();
+        print("Bark!");
     }
 }
