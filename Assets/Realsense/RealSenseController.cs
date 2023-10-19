@@ -184,7 +184,7 @@ public class RealSenseController : MonoBehaviour
         }
         
         initCamera();
-        initImu();
+        // initImu();
 
         if (featureExtractorType == FeatureExtractorType.SIFT)
             createSIFT(siftNFeatures, siftNOctaveLayers, siftContrastThreshold, siftEdgeThreshold, siftSigma, siftEnable_precise_upscale);
@@ -205,32 +205,32 @@ public class RealSenseController : MonoBehaviour
         config.filterStrengH = filterStrengH;
         config.gamma = gamma;
         
-        setParams(config);
+        // setParams(config);
 
-        firstIteration();
-
-        
-        float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
-        int numberOfSamples = 1000;
-
-        for (int i = 0; i < numberOfSamples; i++)
-        {
-            float[] cameraAngle = RetrieveCameraOrientation();
-            totalCameraAngle[0] += cameraAngle[0];
-            totalCameraAngle[1] += cameraAngle[1];
-            totalCameraAngle[2] += cameraAngle[2];
-        }
-
-        float averageX = totalCameraAngle[0] / numberOfSamples;
-        float averageY = totalCameraAngle[1] / numberOfSamples;
-        float averageZ = totalCameraAngle[2] / numberOfSamples;
+        // firstIteration();
 
         
-        Debug.Log("Average Camera Orientation x: " + averageX);
-        Debug.Log("Average Camera Orientation y: " + averageY);
-        Debug.Log("Average Camera Orientation z: " + averageZ);
+        // float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
+        // int numberOfSamples = 1000;
 
-        angleX = averageZ;
+        // for (int i = 0; i < numberOfSamples; i++)
+        // {
+        //     float[] cameraAngle = RetrieveCameraOrientation();
+        //     totalCameraAngle[0] += cameraAngle[0];
+        //     totalCameraAngle[1] += cameraAngle[1];
+        //     totalCameraAngle[2] += cameraAngle[2];
+        // }
+
+        // float averageX = totalCameraAngle[0] / numberOfSamples;
+        // float averageY = totalCameraAngle[1] / numberOfSamples;
+        // float averageZ = totalCameraAngle[2] / numberOfSamples;
+
+        
+        // Debug.Log("Average Camera Orientation x: " + averageX);
+        // Debug.Log("Average Camera Orientation y: " + averageY);
+        // Debug.Log("Average Camera Orientation z: " + averageZ);
+
+        // angleX = averageZ;
 
 
         trackingThread = new Thread(ThreadUpdate);
@@ -273,11 +273,11 @@ public class RealSenseController : MonoBehaviour
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
             rotatedTranslationVector = Quaternion.AngleAxis(60, Vector3.right) * remappedTranslationVector;
 
-            if (reset_odom == true)
-            {
-                addNewKeyFrame();
-                reset_odom = false;
-            }
+            // if (reset_odom == true)
+            // {
+            //     addNewKeyFrame();
+            //     reset_odom = false;
+            // }
             
         }
         
