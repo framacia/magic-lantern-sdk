@@ -9,6 +9,8 @@
 static const auto lineColor = cv::Scalar(200, 0, 200);
 static const auto pointColor = cv::Scalar(0, 0, 255);
 
+std::shared_ptr<dai::Device> device;
+
 class FeatureTrackerDrawer {
    private:
     static const int circleRadius = 2;
@@ -83,6 +85,8 @@ int FeatureTrackerDrawer::trackedFeaturesPathLength = 10;
 int main() {
     using namespace std;
 
+    device = make_shared<dai::Device>(dai::OpenVINO::VERSION_2021_4, dai::UsbSpeed::HIGH);
+    std::cout << "Devices conected: " << device->getConnectedCameras().size() << std::endl;
     // Create pipeline
     dai::Pipeline pipeline;
 
@@ -149,17 +153,17 @@ int main() {
     printf("Press 's' to switch between Lucas-Kanade optical flow and hardware accelerated motion estimation! \n");
 
     // Connect to device and start pipeline
-    dai::Device device(pipeline);
-
+    // dai::Device device(pipeline);
+    device->startPipeline(pipeline);
     // auto video = device.getOutputQueue("video");
 
     // Output queues used to receive the results
-    auto passthroughImageLeftQueue = device.getOutputQueue("passthroughFrameLeft", 8, false);
-    auto outputFeaturesLeftQueue = device.getOutputQueue("trackedFeaturesLeft", 8, false);
-    auto passthroughImageRightQueue = device.getOutputQueue("passthroughFrameRight", 8, false);
-    auto outputFeaturesRightQueue = device.getOutputQueue("trackedFeaturesRight", 8, false);
+    auto passthroughImageLeftQueue = device->getOutputQueue("passthroughFrameLeft", 8, false);
+    auto outputFeaturesLeftQueue = device->getOutputQueue("trackedFeaturesLeft", 8, false);
+    auto passthroughImageRightQueue = device->getOutputQueue("passthroughFrameRight", 8, false);
+    auto outputFeaturesRightQueue = device->getOutputQueue("trackedFeaturesRight", 8, false);
 
-    auto inputFeatureTrackerConfigQueue = device.getInputQueue("trackedFeaturesConfig");
+    auto inputFeatureTrackerConfigQueue = device->getInputQueue("trackedFeaturesConfig");
 
     const auto leftWindowName = "left";
     auto leftFeatureDrawer = FeatureTrackerDrawer("Feature tracking duration (frames)", leftWindowName);

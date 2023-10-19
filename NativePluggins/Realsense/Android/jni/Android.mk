@@ -16,7 +16,8 @@ LOCAL_LDFLAGS += -DCMAKE_BUILD_TYPE=Release
 include /home/fubintlab/libraries/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk
 
 LOCAL_MODULE += camera_motion
-LOCAL_SRC_FILES := camera_motion.cpp
+LOCAL_SRC_FILES := src/camera_motion.cpp
+LOCAL_SRC_FILES += src/debugCPP.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_SHARED_LIBRARIES := realsense2
 LOCAL_CFLAGS += -std=c++11 -frtti -fexceptions -fopenmp -w
