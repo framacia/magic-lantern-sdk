@@ -23,5 +23,5 @@ MonoBehaviour:
     timeToComplete: 13.60506
     name: Fran
     dateTime: 18/10/2023 12:37:42
-  usesScores: 1
+  usesScores: 0
   isEncrypted: 0

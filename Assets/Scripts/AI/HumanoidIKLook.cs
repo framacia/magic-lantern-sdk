@@ -8,7 +8,7 @@ public class HumanoidIKLook : MonoBehaviour
     Animator animator;
     [SerializeField] Transform target;
     [SerializeField, Range(0, 1)] float lookAtWeight = 1;
-    [SerializeField, Range(0, 1)] float rotationLimit = 0.6f;
+    [SerializeField] Vector3 rotationLimit = new Vector3(0f, 0.6f, 0f);
     [SerializeField, Range(0, 10)] float distanceLimit = 2.6f;
 
     //Dummy pivot
@@ -35,7 +35,10 @@ public class HumanoidIKLook : MonoBehaviour
 
         //Target rotation limit
         float pivotRotY = objPivot.transform.localRotation.y;
-        if (Mathf.Abs(pivotRotY) > rotationLimit || distance > distanceLimit)
+
+        print(objPivot.transform.localRotation);
+
+        if (Mathf.Abs(pivotRotY) > rotationLimit.y || distance > distanceLimit)
         {
             //lookAtWeight = 0f; //Stop tracking
             lookAtWeight = Mathf.Lerp(lookAtWeight, 0, Time.deltaTime * 1.5f); //Stop tracking
@@ -52,6 +55,5 @@ public class HumanoidIKLook : MonoBehaviour
 
         animator.SetLookAtWeight(lookAtWeight);
         animator.SetLookAtPosition(target.position);
-
     }
 }
