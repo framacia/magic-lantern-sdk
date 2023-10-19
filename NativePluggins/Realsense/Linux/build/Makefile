@@ -148,6 +148,7 @@ src/camera_motion.o: src/camera_motion.cpp.o
 # target to build an object file
 src/camera_motion.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o
 .PHONY : src/camera_motion.cpp.o
 
 src/camera_motion.i: src/camera_motion.cpp.i
@@ -156,6 +157,7 @@ src/camera_motion.i: src/camera_motion.cpp.i
 # target to preprocess a source file
 src/camera_motion.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/camera_motion.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.i
 .PHONY : src/camera_motion.cpp.i
 
 src/camera_motion.s: src/camera_motion.cpp.s
@@ -164,6 +166,7 @@ src/camera_motion.s: src/camera_motion.cpp.s
 # target to generate assembly for a file
 src/camera_motion.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/camera_motion.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.s
 .PHONY : src/camera_motion.cpp.s
 
 src/debugCPP.o: src/debugCPP.cpp.o
@@ -190,30 +193,6 @@ src/debugCPP.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s
 .PHONY : src/debugCPP.cpp.s
 
-src/oakd_motion.o: src/oakd_motion.cpp.o
-.PHONY : src/oakd_motion.o
-
-# target to build an object file
-src/oakd_motion.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o
-.PHONY : src/oakd_motion.cpp.o
-
-src/oakd_motion.i: src/oakd_motion.cpp.i
-.PHONY : src/oakd_motion.i
-
-# target to preprocess a source file
-src/oakd_motion.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.i
-.PHONY : src/oakd_motion.cpp.i
-
-src/oakd_motion.s: src/oakd_motion.cpp.s
-.PHONY : src/oakd_motion.s
-
-# target to generate assembly for a file
-src/oakd_motion.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.s
-.PHONY : src/oakd_motion.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -230,9 +209,6 @@ help:
 	@echo "... src/debugCPP.o"
 	@echo "... src/debugCPP.i"
 	@echo "... src/debugCPP.s"
-	@echo "... src/oakd_motion.o"
-	@echo "... src/oakd_motion.i"
-	@echo "... src/oakd_motion.s"
 .PHONY : help
 
 

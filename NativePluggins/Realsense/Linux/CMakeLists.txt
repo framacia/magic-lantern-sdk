@@ -46,11 +46,10 @@ add_executable(arml_cpp src/camera_motion.cpp)
 # Set C++ standard to C++11 for the executable
 set_property(TARGET arml_cpp PROPERTY CXX_STANDARD 11)
 
-# # Link libraries to the executable
-# target_link_libraries(arml_cpp 
-#     camera_motion  # Link to the shared library
-#     ${DEPENDENCIES}
-#     ${Boost_LIBRARIES}
-# )
+# Link libraries to the executable
+target_link_libraries(arml_cpp
+    camera_motion  # Link to the shared library
+    ${DEPENDENCIES}
+    ${Boost_LIBRARIES}
+)
 
-# target_link_libraries(arml_cpp PRIVATE depthai::opencv)

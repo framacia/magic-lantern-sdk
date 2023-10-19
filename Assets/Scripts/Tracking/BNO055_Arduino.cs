@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using UnityEngine;
 using System;
 using System.IO.Ports;
@@ -137,4 +139,5 @@ public class BNO055_Arduino : MonoBehaviour
     }
 }
 
+#endif
 

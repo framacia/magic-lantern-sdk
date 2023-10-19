@@ -69,28 +69,28 @@ include CMakeFiles/arml_cpp.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/arml_cpp.dir/flags.make
 
-CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o: CMakeFiles/arml_cpp.dir/flags.make
-CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o: /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/oakd_motion.cpp
-CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o: CMakeFiles/arml_cpp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o -MF CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o.d -o CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o -c /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/oakd_motion.cpp
+CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: CMakeFiles/arml_cpp.dir/flags.make
+CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp
+CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: CMakeFiles/arml_cpp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o -MF CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o.d -o CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o -c /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp
 
-CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/oakd_motion.cpp > CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.i
+CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp > CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.i
 
-CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/oakd_motion.cpp -o CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.s
+CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp -o CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.s
 
 # Object files for target arml_cpp
 arml_cpp_OBJECTS = \
-"CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o"
+"CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o"
 
 # External object files for target arml_cpp
 arml_cpp_EXTERNAL_OBJECTS =
 
-arml_cpp: CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o
+arml_cpp: CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o
 arml_cpp: CMakeFiles/arml_cpp.dir/build.make
 arml_cpp: libcamera_motion.so
 arml_cpp: /usr/local/lib/libopencv_gapi.so.4.2.0

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o"
-  "CMakeFiles/arml_cpp.dir/src/oakd_motion.cpp.o.d"
+  "CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o"
+  "CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o.d"
   "arml_cpp"
   "arml_cpp.pdb"
 )
