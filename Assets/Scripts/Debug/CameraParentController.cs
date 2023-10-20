@@ -4,18 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using TMPro;
-using System.Diagnostics;
 
 public class CameraParentController : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
     [SerializeField] bool isMouse = false;
     [SerializeField] TMP_Text vectorText;
-    [SerializeField] TMP_Text cpuUsage;
-
-    PerformanceCounter cpuCounter;
-    PerformanceCounter ramCounter;
-
 
     #region Singleton
     public static CameraParentController Instance { get; private set; }
@@ -40,28 +34,6 @@ public class CameraParentController : MonoBehaviour
     {
         Invoke("DelayedStart", 0.5f);
         DontDestroyOnLoad(gameObject.transform.parent);
-
-        cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-        ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-
-        //StartCoroutine(DisplayCpuUsage());
-    }
-
-    public string getCurrentCpuUsage()
-    {
-        return cpuCounter.NextValue().ToString();
-    }
-
-    public string getAvailableRAM()
-    {
-        return ramCounter.NextValue() + "MB";
-    }
-
-    private IEnumerator DisplayCpuUsage()
-    {
-        vectorText.text = getCurrentCpuUsage();
-        yield return new WaitForSeconds(1);
-        StartCoroutine(DisplayCpuUsage());
     }
 
     private void DelayedStart()
@@ -90,8 +62,6 @@ public class CameraParentController : MonoBehaviour
         //{
         //    vectorText.text = transform.position.ToString();
         //}
-
-
     }
 
     private void Move()
