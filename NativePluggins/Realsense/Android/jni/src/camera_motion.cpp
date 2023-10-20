@@ -12,7 +12,8 @@
 #include <chrono>
 #include <iostream>
 
-// #include <boost/program_options.hpp>
+#include <android/log.h>
+
 
 
 rs2::pipeline pipeline;
@@ -48,6 +49,18 @@ float filterSearchWindowSize;
 int filterStrengH;
 float gamma_;
 bool addKeyFrame = false;
+
+// Dimensions for 640x480
+    int sectionX = 180;
+    int sectionY = 65;
+    int sectionWidht = 325;
+    int sectionHeight = 200;
+
+    // // Dimensions for 480x270
+    // int sectionX = 150;
+    // int sectionY = 25;
+    // int sectionWidht = 200;
+    // int sectionHeight = 130;
 
 
 std::vector<std::chrono::milliseconds> durations;
@@ -208,18 +221,6 @@ void firstIteration() {
 
     featureDetection(grayImage, kp1);
 
-    // Dimensions for 640x480
-    int sectionX = 180;
-    int sectionY = 65;
-    int sectionWidht = 325;
-    int sectionHeight = 200;
-
-    // // Dimensions for 480x270
-    // int sectionX = 150;
-    // int sectionY = 25;
-    // int sectionWidht = 200;
-    // int sectionHeight = 130;
-
     cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
     filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
@@ -237,6 +238,7 @@ void firstIteration() {
 
 
 void findFeatures() {
+    auto realsense_time1 = std::chrono::high_resolution_clock::now();
     rs2::frameset frames = pipeline.wait_for_frames();
 
     if (!frames || !frames.get_depth_frame() || !frames.get_color_frame()) {
@@ -244,6 +246,8 @@ void findFeatures() {
         return;
     }
 
+   
+    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     rs2::align alignTo(RS2_STREAM_COLOR);
     frames = alignTo.process(frames);
 
@@ -265,6 +269,8 @@ void findFeatures() {
         return;
     }
 
+
+
     auto depth_profile = depth.get_profile().as<rs2::video_stream_profile>();
     auto colour_profile = colorFrame.get_profile().as<rs2::video_stream_profile>();
     auto _depth_intrin = depth_profile.get_intrinsics();
@@ -272,6 +278,13 @@ void findFeatures() {
     int width = colour_profile.width();
     int height = colour_profile.height();
 
+    auto realsense_time2 = std::chrono::high_resolution_clock::now();
+    auto realsense_duration = std::chrono::duration_cast<std::chrono::milliseconds>(realsense_time1 - realsense_time2);
+    __android_log_print(ANDROID_LOG_INFO, "Unity", "Realsense Duration: %lld milliseconds", realsense_duration.count());
+    // std::string message1 = "The realsense duration time is: " + std::to_string(realsense_duration.count()) + " milliseconds";
+    // Debug::Log(message1, Color::Red);
+
+    
     if (!(algoPrev.x == 0 && algoPrev.y == 0 && algoPrev.z == 0)) {
         float current_angleX = algo.get_theta().x - algoPrev.x;
         float current_angleY = algo.get_theta().y - algoPrev.y;
@@ -299,19 +312,24 @@ void findFeatures() {
     cv::Mat grayImage;
     preprocessImage(grayImage, colorMat);
 
+    auto feature_time1 = std::chrono::high_resolution_clock::now();
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
     featureDetection(grayImage, kp1);
-    
-    int sectionX = 150;
-    int sectionY = 25;
-    int sectionWidht = 200;
-    int sectionHeight = 130;
+
     cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
     filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
     std::cout << "keypoints filtered" << std::endl;
     featureDescriptor->compute(grayImage, kp1Filtered, descriptors1);
+    
+    auto feature_time2 = std::chrono::high_resolution_clock::now();
+    auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time1 - feature_time1);
+    __android_log_print(ANDROID_LOG_INFO, "Unity", "Feature Duration: %lld milliseconds", feature_duration.count());
+
+    // std::string message2 = "The feature duration time is: " + std::to_string(feature_duration.count()) + " milliseconds";
+    // Debug::Log(message2, Color::Red);
+
 
     cv::Mat imageFeatures;
     imageFeatures = colorMat;

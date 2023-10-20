@@ -11,8 +11,6 @@ include $(PREBUILT_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 OPENCV_INSTALL_MODULES:=on
 OPENCV_LIB_TYPE:=STATIC
-LOCAL_LDFLAGS += -DWITH_CUDA=ON
-LOCAL_LDFLAGS += -DCMAKE_BUILD_TYPE=Release
 include /home/fubintlab/libraries/OpenCV-android-sdk/sdk/native/jni/OpenCV.mk
 
 LOCAL_MODULE += camera_motion
