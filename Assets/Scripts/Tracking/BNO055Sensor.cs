@@ -170,41 +170,41 @@ public class BNO055Sensor : MonoBehaviour
 #endif
     }
 
-    /*private void Update()
-    {
-        // Get accelerometer data
-        Vector3 accelerometerData = GetAccelerometer();
-        Debug.Log("Accelerometer: " + accelerometerData);
+    // private void Update()
+    // {
+    //     // Get accelerometer data
+    //     Vector3 accelerometerData = GetAccelerometer();
+    //     Debug.Log("Accelerometer: " + accelerometerData);
 
-        // Get magnetometer data
-        Vector3 magnetometerData = GetMagnetometer();
-        Debug.Log("Magnetometer: " + magnetometerData);
+    //     // Get magnetometer data
+    //     Vector3 magnetometerData = GetMagnetometer();
+    //     Debug.Log("Magnetometer: " + magnetometerData);
 
-        // Get gyroscope data
-        Vector3 gyroscopeData = GetGyroscope();
-        Debug.Log("Gyroscope: " + gyroscopeData);
+    //     // Get gyroscope data
+    //     Vector3 gyroscopeData = GetGyroscope();
+    //     Debug.Log("Gyroscope: " + gyroscopeData);
 
-        // Get euler angles data
-        Vector3 eulerData = GetEulerAngles();
-        Debug.Log("Euler Angles: " + eulerData);
+    //     // Get euler angles data
+    //     Vector3 eulerData = GetEulerAngles();
+    //     Debug.Log("Euler Angles: " + eulerData);
 
-        // Get quaternion data
-        Quaternion quaternionData = GetQuaternion();
-        Debug.Log("Quaternion: " + quaternionData);
+    //     // Get quaternion data
+    //     Quaternion quaternionData = GetQuaternion();
+    //     Debug.Log("Quaternion: " + quaternionData);
 
-        // Get linear acceleration data
-        Vector3 linearAccelData = GetLinearAcceleration();
-        Debug.Log("Linear Acceleration: " + linearAccelData);
+    //     // Get linear acceleration data
+    //     Vector3 linearAccelData = GetLinearAcceleration();
+    //     Debug.Log("Linear Acceleration: " + linearAccelData);
 
-        // Get gravity data
-        Vector3 gravityData = GetGravity();
-        Debug.Log("Gravity: " + gravityData);
+    //     // Get gravity data
+    //     Vector3 gravityData = GetGravity();
+    //     Debug.Log("Gravity: " + gravityData);
 
-        // Get system status data
-        int[] systemStatusData = GetSystemStatus();
-        Debug.Log("System Status: " + systemStatusData[0] + ", " + systemStatusData[1] + ", " + systemStatusData[2]);
+    //     // Get system status data
+    //     int[] systemStatusData = GetSystemStatus();
+    //     Debug.Log("System Status: " + systemStatusData[0] + ", " + systemStatusData[1] + ", " + systemStatusData[2]);
 
-    }*/
+    // }
 
     // Close the device when the script is destroyed
     private void OnDestroy()

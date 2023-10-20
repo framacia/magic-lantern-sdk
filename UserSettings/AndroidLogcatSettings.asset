@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.107:5555",
         "name": "com.UPF.ARML",
-        "processId": 11270,
+        "processId": 2262,
         "exited": false
     },
     "m_SelectedPriority": 4,
@@ -178,14 +178,38 @@
         },
         {
             "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 8433,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 8805,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 9505,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 10266,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
             "name": "com.rockchips.android.leanbacklauncher",
-            "processId": 1872,
+            "processId": 1186,
             "exited": false
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 11270,
+            "processId": 2262,
             "exited": false
         }
     ],

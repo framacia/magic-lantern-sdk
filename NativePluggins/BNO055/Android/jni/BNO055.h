@@ -46,4 +46,4 @@ extern "C" int* getSystemStatus(const char* device_path, int device_address);
 extern "C" void closeDevice();
 
 
-#endif // HELLO_WORLD_PLUGIN_H
+#endif // BNO055_H
