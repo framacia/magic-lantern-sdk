@@ -44,7 +44,7 @@ public class CameraParentController : MonoBehaviour
         cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         ramCounter = new PerformanceCounter("Memory", "Available MBytes");
 
-        StartCoroutine(DisplayCpuUsage());
+        //StartCoroutine(DisplayCpuUsage());
     }
 
     public string getCurrentCpuUsage()
