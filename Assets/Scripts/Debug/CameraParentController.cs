@@ -4,12 +4,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using TMPro;
+using System.Diagnostics;
 
 public class CameraParentController : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
     [SerializeField] bool isMouse = false;
     [SerializeField] TMP_Text vectorText;
+    [SerializeField] TMP_Text cpuUsage;
+
+    PerformanceCounter cpuCounter;
+    PerformanceCounter ramCounter;
+
 
     #region Singleton
     public static CameraParentController Instance { get; private set; }
@@ -34,6 +40,28 @@ public class CameraParentController : MonoBehaviour
     {
         Invoke("DelayedStart", 0.5f);
         DontDestroyOnLoad(gameObject.transform.parent);
+
+        cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+        ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+
+        StartCoroutine(DisplayCpuUsage());
+    }
+
+    public string getCurrentCpuUsage()
+    {
+        return cpuCounter.NextValue().ToString();
+    }
+
+    public string getAvailableRAM()
+    {
+        return ramCounter.NextValue() + "MB";
+    }
+
+    private IEnumerator DisplayCpuUsage()
+    {
+        vectorText.text = getCurrentCpuUsage();
+        yield return new WaitForSeconds(1);
+        StartCoroutine(DisplayCpuUsage());
     }
 
     private void DelayedStart()
@@ -49,6 +77,24 @@ public class CameraParentController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        Move();
+
+        //Close app when user presses Android Home button
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
+        //if (vectorText)
+        //{
+        //    vectorText.text = transform.position.ToString();
+        //}
+
+
+    }
+
+    private void Move()
     {
         float xAxisValue;
         float zAxisValue;
@@ -80,17 +126,6 @@ public class CameraParentController : MonoBehaviour
             //gameObject.transform.localPosition += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
 
             gameObject.transform.localPosition += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
-        }
-
-        //Close app when user presses Android Home button
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
-        if (vectorText)
-        {
-            vectorText.text = transform.position.ToString();
         }
     }
 }
