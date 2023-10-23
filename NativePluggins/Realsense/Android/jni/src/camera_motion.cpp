@@ -655,123 +655,123 @@ void resetOdom() {
 
 
 
-int main(int argc, char const *argv[]) {
-    bool record = false;
-    int fps_color = 60;
-    int fps_depth = 60;
-    int width = 640;
-    int height = 480;
-    int width_depth = 640;
-    int height_depth = 480;
-    if (record) {
-        std::string bagFileAddress = "../20230921_163816.bag";
-        cfg.enable_device_from_file(bagFileAddress, false);
-    } else {
-        colorStreamConfig(width, height, fps_color);
-        depthStreamConfig(width_depth, height_depth, fps_depth);
-    }
-    initCamera();
-    initImu();
+// int main(int argc, char const *argv[]) {
+//     bool record = false;
+//     int fps_color = 60;
+//     int fps_depth = 60;
+//     int width = 640;
+//     int height = 480;
+//     int width_depth = 640;
+//     int height_depth = 480;
+//     if (record) {
+//         std::string bagFileAddress = "../20230921_163816.bag";
+//         cfg.enable_device_from_file(bagFileAddress, false);
+//     } else {
+//         colorStreamConfig(width, height, fps_color);
+//         depthStreamConfig(width_depth, height_depth, fps_depth);
+//     }
+//     initCamera();
+//     initImu();
 
-    CameraConfig config;
-    config.ratioTresh = 0.5;
-    config.minDepth = 0.6;
-    config.maxDepth = 6;
-    config.min3DPoints = 6;
-    config.maxDistanceF2F = 0.3;
-    config.minFeaturesLoopClosure = 200;
-    config.framesUntilLoopClosure = 200;
-    config.noMovementThresh = 1e-04;
-    config.framesNoMovement = 50;
+//     CameraConfig config;
+//     config.ratioTresh = 0.5;
+//     config.minDepth = 0.6;
+//     config.maxDepth = 6;
+//     config.min3DPoints = 6;
+//     config.maxDistanceF2F = 0.3;
+//     config.minFeaturesLoopClosure = 200;
+//     config.framesUntilLoopClosure = 200;
+//     config.noMovementThresh = 0.0001;
+//     config.framesNoMovement = 50;
 
-    setParams(config);
+//     setParams(config);
     
-    int nfeatures = 3000;
-    float scaleFactor = 2;
-    int nlevels = 3;
-    int edgeThreshold = 19;
-    int firstLevel = 0;
-    int WTA_K = 2;
-    int scoreType = 0;
-    int patchSize = 31;
-    int fastThreshold = 20;
-    createORB(nfeatures,
-              scaleFactor,
-              nlevels,
-              edgeThreshold,
-              firstLevel,
-              WTA_K,
-              scoreType,
-              patchSize,
-              fastThreshold);
-    // traj = cv::Mat::zeros(height, width, CV_8UC3);
-    // int rows = 10;
-    // int cols = 10;
-    // // Calculate the width and height of each cell
-    // int cellWidth = traj.cols / cols;
-    // int cellHeight = traj.rows / rows;
-    // // Draw vertical lines
-    // for (int i = 1; i < cols; ++i) {
-    //     int x = i * cellWidth;
-    //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-    // }
-    // // Draw horizontal lines
-    // for (int i = 1; i < rows; ++i) {
-    //     int y = i * cellHeight;
-    //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-    // }
-    auto measure_init_time = std::chrono::steady_clock::now();
-    // const int max_duration_seconds = 30;
-    bool should_break = false;
-    firstIteration();
-    while (!should_break) {
-        auto current_time = std::chrono::steady_clock::now();
-        auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(current_time - measure_init_time).count();
-        // // Check if 30 seconds have passed, and if so, break the loop
-        // if (elapsed_seconds >= max_duration_seconds)
-        // {
-        //     should_break = true;
-        // }
+//     int nfeatures = 3000;
+//     float scaleFactor = 2;
+//     int nlevels = 3;
+//     int edgeThreshold = 19;
+//     int firstLevel = 0;
+//     int WTA_K = 2;
+//     int scoreType = 0;
+//     int patchSize = 31;
+//     int fastThreshold = 20;
+//     createORB(nfeatures,
+//               scaleFactor,
+//               nlevels,
+//               edgeThreshold,
+//               firstLevel,
+//               WTA_K,
+//               scoreType,
+//               patchSize,
+//               fastThreshold);
+//     // traj = cv::Mat::zeros(height, width, CV_8UC3);
+//     // int rows = 10;
+//     // int cols = 10;
+//     // // Calculate the width and height of each cell
+//     // int cellWidth = traj.cols / cols;
+//     // int cellHeight = traj.rows / rows;
+//     // // Draw vertical lines
+//     // for (int i = 1; i < cols; ++i) {
+//     //     int x = i * cellWidth;
+//     //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+//     // }
+//     // // Draw horizontal lines
+//     // for (int i = 1; i < rows; ++i) {
+//     //     int y = i * cellHeight;
+//     //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+//     // }
+//     auto measure_init_time = std::chrono::steady_clock::now();
+//     // const int max_duration_seconds = 30;
+//     bool should_break = false;
+//     firstIteration();
+//     while (!should_break) {
+//         auto current_time = std::chrono::steady_clock::now();
+//         auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(current_time - measure_init_time).count();
+//         // // Check if 30 seconds have passed, and if so, break the loop
+//         // if (elapsed_seconds >= max_duration_seconds)
+//         // {
+//         //     should_break = true;
+//         // }
         
-        findFeatures();
-        float cameraAngle[3] = {0.0f, 0.0f, 0.0f};
+//         findFeatures();
+//         float cameraAngle[3] = {0.0f, 0.0f, 0.0f};
 
-        // Call the GetCameraOrientation function
-        GetCameraOrientation(cameraAngle);
+//         // Call the GetCameraOrientation function
+//         GetCameraOrientation(cameraAngle);
 
-        // Output the calculated camera angles
-        std::cout << "Camera Angle X: " << cameraAngle[0] << " degrees" << std::endl;
-        std::cout << "Camera Angle Y: " << cameraAngle[1] << " degrees" << std::endl;
-        std::cout << "Camera Angle Z: " << cameraAngle[2] << " degrees" << std::endl;
+//         // Output the calculated camera angles
+//         std::cout << "Camera Angle X: " << cameraAngle[0] << " degrees" << std::endl;
+//         std::cout << "Camera Angle Y: " << cameraAngle[1] << " degrees" << std::endl;
+//         std::cout << "Camera Angle Z: " << cameraAngle[2] << " degrees" << std::endl;
 
-        int key = cv::waitKey(1);
-        if (key >= 0)
-        {
-            if (key == 113) {
-                should_break = true;
-            }
-         else if (key == 99) {
-                addKeyFrame = true;  // Set the flag to true
-            }
-        }
-    }
-    long long total_duration = 0;
-    // Start from the second element (index 1) to exclude the first value
-    for (size_t i = 1; i < durations.size(); ++i) {
-        total_duration += durations[i].count();
-    }
-    double average_duration = static_cast<double>(total_duration) / (durations.size()-1);
-    std::cout << "Average Duration: " << average_duration << " milliseconds" << std::endl;
-    while (true) {
-        int key = cv::waitKey(1);
-        if (key >= 0) {
-            if (key == 113) {
-                break; // Break the second loop when a key is pressed
-            }
-        }
-    }
-    // Calculate the average duration
-    cleanupCamera();
-    return 0;
-}
+//         int key = cv::waitKey(1);
+//         if (key >= 0)
+//         {
+//             if (key == 113) {
+//                 should_break = true;
+//             }
+//          else if (key == 99) {
+//                 addKeyFrame = true;  // Set the flag to true
+//             }
+//         }
+//     }
+//     long long total_duration = 0;
+//     // Start from the second element (index 1) to exclude the first value
+//     for (size_t i = 1; i < durations.size(); ++i) {
+//         total_duration += durations[i].count();
+//     }
+//     double average_duration = static_cast<double>(total_duration) / (durations.size()-1);
+//     std::cout << "Average Duration: " << average_duration << " milliseconds" << std::endl;
+//     while (true) {
+//         int key = cv::waitKey(1);
+//         if (key >= 0) {
+//             if (key == 113) {
+//                 break; // Break the second loop when a key is pressed
+//             }
+//         }
+//     }
+//     // Calculate the average duration
+//     cleanupCamera();
+//     return 0;
+// }
 
