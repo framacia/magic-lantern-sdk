@@ -103,6 +103,10 @@ public class RealSenseController : MonoBehaviour
         public float maxDistanceF2F;
         public int minFeaturesLoopClosure;
         public int framesUntilLoopClosure;
+        public float noMovementThresh;
+        public int framesNoMovement;
+
+        
     }
 
 
@@ -120,6 +124,8 @@ public class RealSenseController : MonoBehaviour
     public float maxDistanceF2F = 0.05f;
     public int minFeaturesLoopClosure = 200;
     public int framesUntilLoopClosure = 200;
+    public float noMovementThresh = 0.0001f;
+    public int framesNoMovement = 50;
     public bool useRecord = false;
 
     /// <summary>
@@ -202,6 +208,8 @@ public class RealSenseController : MonoBehaviour
         config.maxDistanceF2F = maxDistanceF2F;
         config.minFeaturesLoopClosure = minFeaturesLoopClosure;
         config.minFeaturesLoopClosure = minFeaturesLoopClosure;
+        config.noMovementThresh = noMovementThresh;
+        config.framesNoMovement = framesNoMovement;
         
         setParams(config);
 
@@ -250,7 +258,7 @@ public class RealSenseController : MonoBehaviour
         transform.localPosition = initialPos + rotatedTranslationVector;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("keyframe added");
+            Debug.Log("Reseting Odometry...");
             reset_odom = true;
         }
 

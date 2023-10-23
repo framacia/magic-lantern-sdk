@@ -78,6 +78,8 @@ struct CameraConfig {
     float maxDistanceF2F;
     int minFeaturesLoopClosure;
     int framesUntilLoopClosure;
+    float noMovementThresh;
+    int framesNoMovement;
 };
 
 std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone);
