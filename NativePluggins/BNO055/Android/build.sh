@@ -13,7 +13,7 @@ $NDK_BUILD_PATH
 LIB_SRC_DIR=./libs/armeabi-v7a
 
 # Define the destination directory where the library should be moved
-LIB_DEST_DIR=../Assets/Plugins/Android
+LIB_DEST_DIR=./Assets/Plugins/Android
 
 # Check if the source directory exists
 if [ -d "$LIB_SRC_DIR" ]; then
