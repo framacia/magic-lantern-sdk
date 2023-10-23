@@ -32,7 +32,7 @@ cv::Mat colorMat;
 std::vector<cv::KeyPoint> prevFeatures;
 cv::Mat prevDescriptors;
 cv::Mat t_f = cv::Mat::zeros(3, 1, CV_64F);
-cv::Mat traj;
+// cv::Mat traj;
 KeyframeContainer container;
 
 int no_move_counter = 0;
@@ -340,33 +340,33 @@ void findFeatures() {
     cv::Mat imageFeatures;
     imageFeatures = colorMat;
 
-    for (int i = 0; i < kp1Filtered.size(); i++) {
-        circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
-    }
+    // for (int i = 0; i < kp1Filtered.size(); i++) {
+    //     circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
+    // }
 
     cv::Mat t_prev = cv::Mat::zeros(3, 1, CV_64F);
     cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
     bool addTF = false;
 
-    traj = cv::Mat::zeros(height, width, CV_8UC3);
-    int rows = 10;
-    int cols = 10;
+    // traj = cv::Mat::zeros(height, width, CV_8UC3);
+    // int rows = 10;
+    // int cols = 10;
 
-    // Calculate the width and height of each cell
-    int cellWidth = traj.cols / cols;
-    int cellHeight = traj.rows / rows;
+    // // Calculate the width and height of each cell
+    // int cellWidth = traj.cols / cols;
+    // int cellHeight = traj.rows / rows;
 
-    // Draw vertical lines
-    for (int i = 1; i < cols; ++i) {
-        int x = i * cellWidth;
-        cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-    }
+    // // Draw vertical lines
+    // for (int i = 1; i < cols; ++i) {
+    //     int x = i * cellWidth;
+    //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+    // }
 
-    // Draw horizontal lines
-    for (int i = 1; i < rows; ++i) {
-        int y = i * cellHeight;
-        cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-    }
+    // // Draw horizontal lines
+    // for (int i = 1; i < rows; ++i) {
+    //     int y = i * cellHeight;
+    //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+    // }
 
     int bestKeyframeId = -1;
     if (!imgColorPrev.empty()) {
@@ -388,10 +388,10 @@ void findFeatures() {
                 for (const cv::DMatch &match : good_matches) {
                     pts1.push_back(kp1Filtered[match.queryIdx].pt);
                     pts2.push_back(kpKeyframe[match.trainIdx].pt);
-                    circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                    cv::Point2f pt1 = pts1.back();
-                    cv::Point2f pt2 = pts2.back();
-                    line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                    // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                    // cv::Point2f pt1 = pts1.back();
+                    // cv::Point2f pt2 = pts2.back();
+                    // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                 }
             } else {
                 auto nokeyframe_t1 = std::chrono::high_resolution_clock::now();
@@ -412,10 +412,10 @@ void findFeatures() {
                     for (const cv::DMatch &match : good_matches) {
                         pts1.push_back(kp1Filtered[match.queryIdx].pt);
                         pts2.push_back(prevFeatures[match.trainIdx].pt);
-                        circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                        cv::Point2f pt1 = pts1.back();
-                        cv::Point2f pt2 = pts2.back();
-                        line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                        // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                        // cv::Point2f pt1 = pts1.back();
+                        // cv::Point2f pt2 = pts2.back();
+                        // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                     }
                 }
             }
@@ -509,9 +509,9 @@ void findFeatures() {
                         }
                         addTF = true;
                     }   
-                int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
-                int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
-                cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
+                // int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
+                // int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
+                // cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
                 }
             } catch (const cv::Exception& e) {
                     std::cerr << "OpenCV Exception: " << e.what() << std::endl;
@@ -534,28 +534,28 @@ void findFeatures() {
         // Put the text on the image
     // cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
 
-    int imageWidth = imageFeatures.cols;
-    int imageHeight = imageFeatures.rows;
+    // int imageWidth = imageFeatures.cols;
+    // int imageHeight = imageFeatures.rows;
 
-    cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
+    // cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
 
-    cv::Mat colorGrayscaleImage;
-    cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
-    // cv::Mat prueba;
-    // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
-    // Copy each image onto the canvas at the desired positions
-    if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
-    std::cout<< " --(!) Error reading images " << std::endl;
-    } else {
-        colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
-        colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
-        imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
-        traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
-        cv::imshow("Concatenated Images", canvas);
-    }
+    // cv::Mat colorGrayscaleImage;
+    // cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
+    // // cv::Mat prueba;
+    // // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
+    // // Copy each image onto the canvas at the desired positions
+    // if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
+    // std::cout<< " --(!) Error reading images " << std::endl;
+    // } else {
+    //     colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
+    //     colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
+    //     imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
+    //     traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
+    //     cv::imshow("Concatenated Images", canvas);
+    // }
     auto total_time2 = std::chrono::high_resolution_clock::now();
     auto total_duration = std::chrono::duration_cast<std::chrono::milliseconds>(total_time2 - total_time1);
-    // __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
+    __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
 }
 
 void createORB(int nfeatures,
