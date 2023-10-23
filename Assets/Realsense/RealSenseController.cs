@@ -29,15 +29,15 @@ public class RealSenseController : MonoBehaviour
     private static extern void setParams(CameraConfig config);
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
-    private static extern void createORB(int nfeatures = 500,
-                                        float scaleFactor = 1.2f,
-                                        int nlevels = 8,
-                                        int edgeThreshold = 31,
-                                        int firstLevel = 0,
-                                        int WTA_K = 2,
-                                        int scoreType = 0,
-                                        int patchSize = 31,
-                                        int fastThreshold = 20
+    private static extern void createORB(int nfeatures,
+                                        float scaleFactor,
+                                        int nlevels,
+                                        int edgeThreshold,
+                                        int firstLevel,
+                                        int WTA_K,
+                                        int scoreType,
+                                        int patchSize,
+                                        int fastThreshold
                                     );
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
@@ -49,8 +49,6 @@ public class RealSenseController : MonoBehaviour
                                         bool enable_precise_upscale = false
                                     );
 
-    // [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
-    // private static extern void createORB();
     [DllImport(PLUGIN_NAME)] 
     private static extern void firstIteration();
 
@@ -79,7 +77,22 @@ public class RealSenseController : MonoBehaviour
     }
 
     [DllImport(PLUGIN_NAME)] 
-    private static extern void addNewKeyFrame();
+    private static extern void resetOdom();
+
+    [DllImport(PLUGIN_NAME)]
+    private static extern IntPtr getJpegBuffer(out int bufferSize);
+
+    public static byte[] GetJpegBuffer(out int bufferSize)
+    {
+        IntPtr bufferPtr = getJpegBuffer(out bufferSize);
+        
+        byte[] jpegBuffer = new byte[bufferSize];
+        Marshal.Copy(bufferPtr, jpegBuffer, 0, bufferSize);
+        
+        Marshal.FreeCoTaskMem(bufferPtr);
+        
+        return jpegBuffer;
+    }
 
   
     public struct CameraConfig {
@@ -88,13 +101,8 @@ public class RealSenseController : MonoBehaviour
         public float maxDepth;
         public int min3DPoints;
         public float maxDistanceF2F;
-        public int maxFeaturesSolver;
-        public float clipLimit;
-        public int tilesGridSize;
-        public int filterTemplateWindowSize;
-        public float filterSearchWindowSize;
-        public int filterStrengH;
-        public float gamma;
+        public int minFeaturesLoopClosure;
+        public int framesUntilLoopClosure;
     }
 
 
@@ -110,13 +118,8 @@ public class RealSenseController : MonoBehaviour
     public float maxDepth = 6.0f;
     public int min3DPoints = 15;
     public float maxDistanceF2F = 0.05f;
-    public int maxFeaturesSolver = 400;
-    public float clipLimit = 3.0f;
-    public int tilesGridSize = 5;
-    public int filterTemplateWindowSize = 5;
-    public float filterSearchWindowSize = 10;
-    public int filterStrengH = 7;
-    public float gamma = 1;
+    public int minFeaturesLoopClosure = 200;
+    public int framesUntilLoopClosure = 200;
     public bool useRecord = false;
 
     /// <summary>
@@ -184,7 +187,7 @@ public class RealSenseController : MonoBehaviour
         }
         
         initCamera();
-        // initImu();
+        initImu();
 
         if (featureExtractorType == FeatureExtractorType.SIFT)
             createSIFT(siftNFeatures, siftNOctaveLayers, siftContrastThreshold, siftEdgeThreshold, siftSigma, siftEnable_precise_upscale);
@@ -197,13 +200,8 @@ public class RealSenseController : MonoBehaviour
         config.maxDepth = maxDepth;
         config.min3DPoints = min3DPoints;
         config.maxDistanceF2F = maxDistanceF2F;
-        config.maxFeaturesSolver = maxFeaturesSolver;
-        config.clipLimit = clipLimit;
-        config.tilesGridSize = tilesGridSize;
-        config.filterTemplateWindowSize = filterTemplateWindowSize;
-        config.filterSearchWindowSize = filterSearchWindowSize;
-        config.filterStrengH = filterStrengH;
-        config.gamma = gamma;
+        config.minFeaturesLoopClosure = minFeaturesLoopClosure;
+        config.minFeaturesLoopClosure = minFeaturesLoopClosure;
         
         setParams(config);
 
@@ -254,9 +252,6 @@ public class RealSenseController : MonoBehaviour
         {
             Debug.Log("keyframe added");
             reset_odom = true;
-            //addNewKeyFrame();
-        
-
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -279,11 +274,11 @@ public class RealSenseController : MonoBehaviour
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
             rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
 
-            // if (reset_odom == true)
-            // {
-            //     addNewKeyFrame();
-            //     reset_odom = false;
-            // }
+            if (reset_odom == true)
+            {
+                resetOdom();
+                reset_odom = false;
+            }
             
         }
         

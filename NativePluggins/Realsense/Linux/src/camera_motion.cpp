@@ -28,10 +28,11 @@ cv::Ptr<cv::Feature2D> featureDescriptor;
 cv::Ptr<cv::FlannBasedMatcher> matcher;
 
 cv::Mat imgColorPrev;
+cv::Mat colorMat;
 std::vector<cv::KeyPoint> prevFeatures;
 cv::Mat prevDescriptors;
 cv::Mat t_f = cv::Mat::zeros(3, 1, CV_64F);
-// cv::Mat traj;
+cv::Mat traj;
 KeyframeContainer container;
 
 int no_move_counter = 0;
@@ -41,16 +42,31 @@ float minDepth;
 float maxDepth;
 int min3DPoints;
 float maxDistanceF2F;
-int maxFeaturesSolver;
-float clipLimit;
-int tilesGridSize;
-int filterTemplateWindowSize;
-float filterSearchWindowSize;
-int filterStrengH;
-float gamma_;
+int minFeaturesLoopClosure;
+int framesUntilLoopClosure;
 bool addKeyFrame = false;
 
-// Dimensions for 640x480
+
+
+std::vector<std::chrono::milliseconds> durations;
+
+// namespace po = boost::program_options;
+
+std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
+        for (size_t i = 0; i < keypoints.size(); i++) {
+            if (zone.contains(keypoints[i].pt)) {
+                continue;
+                }
+            filteredKeypoints.push_back(keypoints[i]);  
+        }
+        return filteredKeypoints;
+}
+
+
+void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1, std::vector<cv::KeyPoint>& filteredKeypoints) {
+    featureExtractor->detect(img, keypoints1);
+    
+    // Dimensions for 640x480
     int sectionX = 180;
     int sectionY = 65;
     int sectionWidht = 325;
@@ -62,13 +78,10 @@ bool addKeyFrame = false;
     // int sectionWidht = 200;
     // int sectionHeight = 130;
 
-
-std::vector<std::chrono::milliseconds> durations;
-
-// namespace po = boost::program_options;
-
-void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1) {
-    featureExtractor->detect(img, keypoints1);
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    filterKeypointsByROI(keypoints1, filteredKeypoints, seccionToFilter);
+    std::cout << "keypoints filtered" << std::endl;
+    featureDescriptor->compute(img, filteredKeypoints, descriptors1);
     
     // std::cout << "Nº features detected: " << keypoints1.size() << std::endl;
 }
@@ -98,7 +111,7 @@ int findBestMatchingKeyframe(const cv::Mat& descriptors1,
             }
         }
         matches.clear();
-        if (goodMatches_aux.size() >= 200 && goodMatches_aux.size() > mostGoodMatches) {
+        if (goodMatches_aux.size() >= minFeaturesLoopClosure && goodMatches_aux.size() > mostGoodMatches) {
             mostGoodMatches = goodMatches.size();
             bestKeyframeId = keyframeIndex;
             goodMatches = goodMatches_aux;
@@ -127,20 +140,6 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat) {
                                 // filterTemplateWindowSize,
                                 // filterSearchWindowSize);
 }
-
-std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
-        for (size_t i = 0; i < keypoints.size(); i++) {
-            if (zone.contains(keypoints[i].pt))
-                {
-                continue;
-                }
-            filteredKeypoints.push_back(keypoints[i]);
-            // filteredDescriptors.push_back(descriptors.row(i));
-        }
-        // return std::make_pair(filteredKeypoints, filteredDescriptors);
-        return filteredKeypoints;
-}
-
 
 void cleanupCamera() {
     t_f = cv::Mat::zeros(3, 1, CV_64F);
@@ -182,9 +181,11 @@ void initCamera() {
 }
 
 void initImu() {
-    imu_cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
-    imu_cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
-    auto imu_profile = imu_pipeline.start(imu_cfg, [&](rs2::frame imu_frame) {
+    try
+    {
+        imu_cfg.enable_stream(RS2_STREAM_ACCEL, RS2_FORMAT_MOTION_XYZ32F);
+        imu_cfg.enable_stream(RS2_STREAM_GYRO, RS2_FORMAT_MOTION_XYZ32F);
+        auto imu_profile = imu_pipeline.start(imu_cfg, [&](rs2::frame imu_frame) {
         auto motion = imu_frame.as<rs2::motion_frame>();
         if (motion && motion.get_profile().stream_type() == RS2_STREAM_GYRO &&
             motion.get_profile().format() == RS2_FORMAT_MOTION_XYZ32F) {
@@ -198,6 +199,14 @@ void initImu() {
             algo.process_accel(accel_data);
         }
     });
+    }
+    catch(const std::exception& e)
+    {
+        std::string error_message = e.what();
+        Debug::Log(error_message, Color::Red);
+    }
+    
+   
 }
 void firstIteration() {
     rs2::frameset frames;
@@ -212,20 +221,14 @@ void firstIteration() {
     if (!colorFrame) {
         return;
     }
-    cv::Mat colorMat = frame_to_mat(colorFrame);
+    colorMat = frame_to_mat(colorFrame);
     cv::Mat grayImage;
     preprocessImage(grayImage, colorMat);
 
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
-
-    featureDetection(grayImage, kp1);
-
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
-    filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
-    std::cout << "keypoints filtered" << std::endl;
-    featureDescriptor->compute(grayImage, kp1Filtered, descriptors1);
+    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
 
     int id = 40;
     std::shared_ptr<Keyframe> keyframe1 = std::make_shared<Keyframe>(id,
@@ -315,7 +318,7 @@ void findFeatures() {
                                                     _color_intrin.coeffs[3],
                                                     _color_intrin.coeffs[4]);
 
-    cv::Mat colorMat = frame_to_mat(colorFrame);
+    colorMat = frame_to_mat(colorFrame);
 
     cv::Mat grayImage;
     preprocessImage(grayImage, colorMat);
@@ -323,14 +326,9 @@ void findFeatures() {
     auto feature_time1 = std::chrono::high_resolution_clock::now();
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
-    featureDetection(grayImage, kp1);
-
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
-    filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
-    std::cout << "keypoints filtered" << std::endl;
-    featureDescriptor->compute(grayImage, kp1Filtered, descriptors1);
-    
+    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
+        
     auto feature_time2 = std::chrono::high_resolution_clock::now();
     auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time2 - feature_time1);
     // __android_log_print(ANDROID_LOG_INFO, "Unity", "Feature Duration: %lld milliseconds", feature_duration.count());
@@ -350,27 +348,26 @@ void findFeatures() {
     cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
     bool addTF = false;
 
-    // traj = cv::Mat::zeros(height, width, CV_8UC3);
-    // int rows = 10;
-    // int cols = 10;
+    traj = cv::Mat::zeros(height, width, CV_8UC3);
+    int rows = 10;
+    int cols = 10;
 
-    // // Calculate the width and height of each cell
-    // int cellWidth = traj.cols / cols;
-    // int cellHeight = traj.rows / rows;
+    // Calculate the width and height of each cell
+    int cellWidth = traj.cols / cols;
+    int cellHeight = traj.rows / rows;
 
-    // // Draw vertical lines
-    // for (int i = 1; i < cols; ++i) {
-    //     int x = i * cellWidth;
-    //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-    // }
+    // Draw vertical lines
+    for (int i = 1; i < cols; ++i) {
+        int x = i * cellWidth;
+        cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+    }
 
-    // // Draw horizontal lines
-    // for (int i = 1; i < rows; ++i) {
-    //     int y = i * cellHeight;
-    //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-    // }
+    // Draw horizontal lines
+    for (int i = 1; i < rows; ++i) {
+        int y = i * cellHeight;
+        cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+    }
 
-    int quantity_frames = 200;
     int bestKeyframeId = -1;
     if (!imgColorPrev.empty()) {
         std::cout << "trying to match" << std::endl;
@@ -381,7 +378,7 @@ void findFeatures() {
         bool is_loop = false;
         std::cout << "Trying to find a match" << std::endl;
         if (kp1Filtered.size() >= 2 && prevFeatures.size() >= 2) {
-            if (frames_after_loop >= quantity_frames) {
+            if (frames_after_loop >= framesUntilLoopClosure) {
                 
                 bestKeyframeId = findBestMatchingKeyframe(descriptors1, good_matches, matches);
             }
@@ -391,10 +388,10 @@ void findFeatures() {
                 for (const cv::DMatch &match : good_matches) {
                     pts1.push_back(kp1Filtered[match.queryIdx].pt);
                     pts2.push_back(kpKeyframe[match.trainIdx].pt);
-                    // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                    // cv::Point2f pt1 = pts1.back();
-                    // cv::Point2f pt2 = pts2.back();
-                    // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                    circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                    cv::Point2f pt1 = pts1.back();
+                    cv::Point2f pt2 = pts2.back();
+                    line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                 }
             } else {
                 auto nokeyframe_t1 = std::chrono::high_resolution_clock::now();
@@ -415,10 +412,10 @@ void findFeatures() {
                     for (const cv::DMatch &match : good_matches) {
                         pts1.push_back(kp1Filtered[match.queryIdx].pt);
                         pts2.push_back(prevFeatures[match.trainIdx].pt);
-                        // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                        // cv::Point2f pt1 = pts1.back();
-                        // cv::Point2f pt2 = pts2.back();
-                        // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                        circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                        cv::Point2f pt1 = pts1.back();
+                        cv::Point2f pt2 = pts2.back();
+                        line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                     }
                 }
             }
@@ -430,16 +427,9 @@ void findFeatures() {
                 vPixel[1] = static_cast<float>(pts1[i].y);
                 float vPixeldepth[2];
                 rs2_project_color_pixel_to_depth_pixel(vPixeldepth, depth_data_uint16, depth_scale, minDepth, maxDepth, &_depth_intrin, &_color_intrin, &depth_to_color_extrin, &color_to_depth_extrin, vPixel);
-                // __android_log_print(ANDROID_LOG_INFO, "Unity", "Depth pixels are x: %f and y: %f", vPixeldepth[0], vPixeldepth[1]);
-                // std::cout << "Depth pixels are x: " << vPixeldepth[0] << " y: " << vPixeldepth[1] << std::endl;
-                // __android_log_print(ANDROID_LOG_INFO, "Unity", "Color pixels are x: %f and y: %f", vPixel[0], vPixel[1]);
-                // std::cout << "Color pixels are x: " << vPixel[0] << " y: " << vPixel[1] << std::endl;
                 float vDepth = depth.get_distance(vPixeldepth[0], vPixeldepth[1]);
                 float vPoint[3];
                 rs2_deproject_pixel_to_point(vPoint, &_depth_intrin, vPixeldepth, vDepth);
-                // vPoint[0] = vPixeldepth[0];
-                // vPoint[1] = vPixeldepth[1];
-                // vPoint[2] = vDepth;
                 float uPixel[2];
                 uPixel[0] = static_cast<float>(pts2[i].x);
                 uPixel[1] = static_cast<float>(pts2[i].y);
@@ -450,73 +440,83 @@ void findFeatures() {
                 }
             }
             cv::Mat tvec1, tvec2, rvec1, rvec2;
-            if (vObjectPoints.size() > min3DPoints) {
-                cv::solvePnPRansac(vObjectPoints,
-                                    vImagePoints,
-                                    cameraMatrix,
-                                    distCoeffs,
-                                    rvec1,
-                                    tvec1,
-                                    false,
-                                    2000,
-                                    5.0f,
-                                    0.999,
-                                    cv::noArray(),
-                                    cv::SOLVEPNP_ITERATIVE);
-                cv::solvePnPRansac(vObjectPoints,
-                                    uImagePoints,
-                                    cameraMatrix,
-                                    distCoeffs,
-                                    rvec2,
-                                    tvec2,
-                                    false,
-                                    2000,
-                                    5.0f,
-                                    0.999,
-                                    cv::noArray(),
-                                    cv::SOLVEPNP_ITERATIVE);
+            try {
+                if (vObjectPoints.size() >= min3DPoints && vImagePoints.size() >= min3DPoints && uImagePoints.size() >= min3DPoints) {
+                    cv::solvePnPRansac(vObjectPoints,
+                                        vImagePoints,
+                                        cameraMatrix,
+                                        distCoeffs,
+                                        rvec1,
+                                        tvec1,
+                                        false,
+                                        2000,
+                                        5.0f,
+                                        0.999,
+                                        cv::noArray(),
+                                        cv::SOLVEPNP_ITERATIVE);
+                    cv::solvePnPRansac(vObjectPoints,
+                                        uImagePoints,
+                                        cameraMatrix,
+                                        distCoeffs,
+                                        rvec2,
+                                        tvec2,
+                                        false,
+                                        2000,
+                                        5.0f,
+                                        0.999,
+                                        cv::noArray(),
+                                        cv::SOLVEPNP_ITERATIVE);
 
-                cv::Mat R1, R2;
-                Rodrigues(rvec1, R1);
-                Rodrigues(rvec2, R2);
+                    
 
-                cv::Mat R_1to2, t_1to2;
-                computeC2MC1(R1, tvec1, R2, tvec2, R_1to2, t_1to2);
+                    std::cout << "paso" << std::endl;
 
-                float distanceX = cv::norm(t_1to2.at<double>(0)-t_prev.at<double>(0));
-                float distanceY = cv::norm(t_1to2.at<double>(1)-t_prev.at<double>(1));
-                float distanceZ = cv::norm(t_1to2.at<double>(2)-t_prev.at<double>(2));
-                if ((distanceX < maxDistanceF2F) && (distanceY < maxDistanceF2F) && (distanceZ < maxDistanceF2F)) {
-                    cv::Mat rvec_1to2;
-                    Rodrigues(R_1to2, rvec_1to2);
-                    if (is_loop && frames_after_loop >= quantity_frames) {
-                        frames_after_loop = 0;
-                        t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
-                        std::cout << "In loop closure" << std::endl;
-                    } else {
-                        if (no_move_counter <= 50) {
-                            t_f += t_1to2;
-                            std::cout << "Camera is moving" << std::endl;
+                    cv::Mat R1, R2;
+                    Rodrigues(rvec1, R1);
+                    Rodrigues(rvec2, R2);
+
+                    cv::Mat R_1to2, t_1to2;
+                    computeC2MC1(R1, tvec1, R2, tvec2, R_1to2, t_1to2);
+
+                    float distanceX = cv::norm(t_1to2.at<double>(0)-t_prev.at<double>(0));
+                    float distanceY = cv::norm(t_1to2.at<double>(1)-t_prev.at<double>(1));
+                    float distanceZ = cv::norm(t_1to2.at<double>(2)-t_prev.at<double>(2));
+                    if ((distanceX < maxDistanceF2F) && (distanceY < maxDistanceF2F) && (distanceZ < maxDistanceF2F)) {
+                        cv::Mat rvec_1to2;
+                        Rodrigues(R_1to2, rvec_1to2);
+                        if (is_loop && frames_after_loop >= framesUntilLoopClosure) {
+                            frames_after_loop = 0;
+                            t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
+                            std::cout << "In loop closure" << std::endl;
                         } else {
-                            std::cout << "Camera not moving" << std::endl;
+                            if (no_move_counter <= 50) {
+                                t_f += t_1to2;
+                                std::cout << "Camera is moving" << std::endl;
+                            } else {
+                                std::cout << "Camera not moving" << std::endl;
+                            }
                         }
-                    }
-                    if (addKeyFrame) {
-                        addKeyFrame = false;
-                        std::shared_ptr<Keyframe> keyframe2 = std::make_shared<Keyframe>(1,
-                                                                                         grayImage.clone(),
-                                                                                         descriptors1.clone(),
-                                                                                         kp1Filtered,
-                                                                                         t_f.clone());
-                        container.addKeyframe(keyframe2);
-                        // std::cout << "New KeyFrame Added" << std::endl;
-                        Debug::Log("New Keyframe Added", Color::Orange);
-                    }
-                    addTF = true;
-                }   
-            // int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
-            // int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
-            // cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
+                        if (addKeyFrame) {
+                            addKeyFrame = false;
+                            std::shared_ptr<Keyframe> keyframe2 = std::make_shared<Keyframe>(1,
+                                                                                            grayImage.clone(),
+                                                                                            descriptors1.clone(),
+                                                                                            kp1Filtered,
+                                                                                            t_f.clone());
+                            container.addKeyframe(keyframe2);
+                            // std::cout << "New KeyFrame Added" << std::endl;
+                            Debug::Log("New Keyframe Added", Color::Orange);
+                        }
+                        addTF = true;
+                    }   
+                int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
+                int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
+                cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
+                }
+            } catch (const cv::Exception& e) {
+                    std::cerr << "OpenCV Exception: " << e.what() << std::endl;
+                    std::string error_message = + e.what();
+                    Debug::Log(error_message, Color::Red);
             }
         }
     }
@@ -529,38 +529,33 @@ void findFeatures() {
         addTF = false;
     }
     frames_after_loop += 1;
-    // auto end_time = std::chrono::high_resolution_clock::now();
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-    // durations.push_back(duration);
-    // std::cout << "Duration: " << duration.count() << " milliseconds" << std::endl;
-
     // std::string fps_text = std::to_string(duration.count()) + " ms";
 
         // Put the text on the image
     // cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
 
-    // int imageWidth = imageFeatures.cols;
-    // int imageHeight = imageFeatures.rows;
+    int imageWidth = imageFeatures.cols;
+    int imageHeight = imageFeatures.rows;
 
-    // cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
+    cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
 
-    // cv::Mat colorGrayscaleImage;
-    // cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
-    // // cv::Mat prueba;
-    // // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
-    // // Copy each image onto the canvas at the desired positions
-    // if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
-    // std::cout<< " --(!) Error reading images " << std::endl;
-    // } else {
-    //     colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
-    //     colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
-    //     imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
-    //     traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
-    //     cv::imshow("Concatenated Images", canvas);
-    // }
+    cv::Mat colorGrayscaleImage;
+    cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
+    // cv::Mat prueba;
+    // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
+    // Copy each image onto the canvas at the desired positions
+    if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
+    std::cout<< " --(!) Error reading images " << std::endl;
+    } else {
+        colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
+        colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
+        imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
+        traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
+        cv::imshow("Concatenated Images", canvas);
+    }
     auto total_time2 = std::chrono::high_resolution_clock::now();
     auto total_duration = std::chrono::duration_cast<std::chrono::milliseconds>(total_time2 - total_time1);
-    __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
+    // __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
 }
 
 void createORB(int nfeatures,
@@ -625,35 +620,21 @@ void setParams(CameraConfig config) {
     maxDepth = config.maxDepth;
     min3DPoints = config.min3DPoints;
     maxDistanceF2F = config.maxDistanceF2F;
-    maxFeaturesSolver = config.maxFeaturesSolver;
-    clipLimit = config.clipLimit;
-    tilesGridSize = config.tilesGridSize;
-    filterTemplateWindowSize = config.filterTemplateWindowSize;
-    filterSearchWindowSize = config.filterSearchWindowSize;
-    filterStrengH = config.filterStrengH;
-    gamma_ = config.gamma_;
 }
 
-void addNewKeyFrame() {
+void resetOdom() {
     t_f = cv::Mat::zeros(3, 1, CV_64F);
 }
 
-// extern "C" const uchar* getJpegBuffer(int frameType, int* bufferSize) {
+extern "C" const uchar* getJpegBuffer(int* bufferSize) {
+    std::vector<uchar> jpegBuffer;
+    cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
+    uchar* unityBuffer = new uchar[jpegBuffer.size()];
+    memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
+    *bufferSize = jpegBuffer.size();
 
-//     std::vector<uchar> jpegBuffer;
-//     if (frameType == 0) {
-//         cv::imencode(".jpeg", image2show, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
-//     } else if (frameType == 1) {
-//         cv::imencode(".jpeg", grayImage, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
-//     }
-//     // Allocate memory in Unity for the buffer and copy the JPEG data
-//     uchar* unityBuffer = new uchar[jpegBuffer.size()];
-//     memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
-//     // Set the buffer size
-//     *bufferSize = jpegBuffer.size();
-
-//     return unityBuffer;
-// }
+    return unityBuffer;
+}
 
 
 
@@ -679,18 +660,13 @@ void addNewKeyFrame() {
 //     config.ratioTresh = 0.5;
 //     config.minDepth = 0.6;
 //     config.maxDepth = 6;
-//     config.min3DPoints = 10;
+//     config.min3DPoints = 6;
 //     config.maxDistanceF2F = 0.3;
-//     config.maxFeaturesSolver = -1;
-//     config.clipLimit = 0.5;
-//     config.tilesGridSize = 7;
-//     config.filterTemplateWindowSize = 5;
-//     config.filterSearchWindowSize = 2;
-//     config.filterStrengH = 15;
-//     config.gamma_ = 0.4;
+//     config.minFeaturesLoopClosure = 200;
+//     config.framesUntilLoopClosure = 200;
 //     setParams(config);
     
-//     int nfeatures = 1000;
+//     int nfeatures = 3000;
 //     float scaleFactor = 2;
 //     int nlevels = 3;
 //     int edgeThreshold = 19;
@@ -736,6 +712,7 @@ void addNewKeyFrame() {
 //         // {
 //         //     should_break = true;
 //         // }
+        
 //         findFeatures();
 //         float cameraAngle[3] = {0.0f, 0.0f, 0.0f};
 

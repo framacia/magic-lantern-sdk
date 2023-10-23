@@ -76,14 +76,11 @@ struct CameraConfig {
     float maxDepth;
     int min3DPoints;
     float maxDistanceF2F;
-    int maxFeaturesSolver;
-    float clipLimit;
-    int tilesGridSize;
-    int filterTemplateWindowSize;
-    float filterSearchWindowSize;
-    int filterStrengH;
-    float gamma_;
+    int minFeaturesLoopClosure;
+    int framesUntilLoopClosure;
 };
+
+std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone);
 
 void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
 
@@ -93,6 +90,8 @@ void computeC2MC1(const cv::Mat &R1, const cv::Mat &tvec1, const cv::Mat &R2, co
 int findBestMatchingKeyframe(const cv::Mat& descriptors1, std::vector<cv::DMatch>& goodMatches,
                              std::vector<std::vector<cv::DMatch>>& matches, cv::DescriptorMatcher& matcher);
 void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
+
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -136,9 +135,9 @@ extern "C" {
 
     void setParams(CameraConfig config); 		
 
-    const uchar* getJpegBuffer(int frameType, int* bufferSize);	
+    const uchar* getJpegBuffer(int* bufferSize);	
 
-    void addNewKeyFrame();
+    void resetOdom();
     
     
     

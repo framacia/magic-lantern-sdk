@@ -50,7 +50,16 @@ int filterStrengH;
 float gamma_;
 bool addKeyFrame = false;
 
-// Dimensions for 640x480
+
+
+std::vector<std::chrono::milliseconds> durations;
+
+// namespace po = boost::program_options;
+
+void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1, std::vector<cv::KeyPoint>& filteredKeypoints) {
+    featureExtractor->detect(img, keypoints1);
+    
+    // Dimensions for 640x480
     int sectionX = 180;
     int sectionY = 65;
     int sectionWidht = 325;
@@ -62,13 +71,10 @@ bool addKeyFrame = false;
     // int sectionWidht = 200;
     // int sectionHeight = 130;
 
-
-std::vector<std::chrono::milliseconds> durations;
-
-// namespace po = boost::program_options;
-
-void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1) {
-    featureExtractor->detect(img, keypoints1);
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    filterKeypointsByROI(keypoints1, filteredKeypoints, seccionToFilter);
+    std::cout << "keypoints filtered" << std::endl;
+    featureDescriptor->compute(img, filteredKeypoints, descriptors1);
     
     // std::cout << "Nº features detected: " << keypoints1.size() << std::endl;
 }
@@ -130,14 +136,11 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat) {
 
 std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
         for (size_t i = 0; i < keypoints.size(); i++) {
-            if (zone.contains(keypoints[i].pt))
-                {
+            if (zone.contains(keypoints[i].pt)) {
                 continue;
                 }
-            filteredKeypoints.push_back(keypoints[i]);
-            // filteredDescriptors.push_back(descriptors.row(i));
+            filteredKeypoints.push_back(keypoints[i]);  
         }
-        // return std::make_pair(filteredKeypoints, filteredDescriptors);
         return filteredKeypoints;
 }
 
@@ -218,14 +221,8 @@ void firstIteration() {
 
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
-
-    featureDetection(grayImage, kp1);
-
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
-    filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
-    std::cout << "keypoints filtered" << std::endl;
-    featureDescriptor->compute(grayImage, kp1Filtered, descriptors1);
+    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
 
     int id = 40;
     std::shared_ptr<Keyframe> keyframe1 = std::make_shared<Keyframe>(id,
@@ -323,14 +320,9 @@ void findFeatures() {
     auto feature_time1 = std::chrono::high_resolution_clock::now();
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
-    featureDetection(grayImage, kp1);
-
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     std::vector<cv::KeyPoint> kp1Filtered;
-    filterKeypointsByROI(kp1, kp1Filtered, seccionToFilter);
-    std::cout << "keypoints filtered" << std::endl;
-    featureDescriptor->compute(grayImage, kp1Filtered, descriptors1);
-    
+    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
+        
     auto feature_time2 = std::chrono::high_resolution_clock::now();
     auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time2 - feature_time1);
     __android_log_print(ANDROID_LOG_INFO, "Unity", "Feature Duration: %lld milliseconds", feature_duration.count());
