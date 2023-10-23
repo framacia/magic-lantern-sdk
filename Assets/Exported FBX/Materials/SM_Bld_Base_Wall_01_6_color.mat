@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: c05f8f927b70923428250a70f75dc0ac, type: 3}
+        m_Texture: {fileID: 2800000, guid: a8c34ceed5719a949ae75774576fe3fe, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1cff0d1aad1708b4f86b5cf1997424cb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -97,8 +97,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
-    - _AlphaToMask: 0
+    - _AlphaClip: 0.275
+    - _AlphaToMask: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -108,7 +108,7 @@ Material:
     - _CloudsSize: 2.75
     - _CloudsStrength: 1
     - _Cull: 2
-    - _Cutoff: 0
+    - _Cutoff: 0.607
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -118,7 +118,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NormalStrength: 1
+    - _NormalStrength: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
