@@ -32,7 +32,7 @@ cv::Mat colorMat;
 std::vector<cv::KeyPoint> prevFeatures;
 cv::Mat prevDescriptors;
 cv::Mat t_f = cv::Mat::zeros(3, 1, CV_64F);
-// cv::Mat traj;
+cv::Mat traj;
 KeyframeContainer container;
 
 int no_move_counter = 0;
@@ -44,6 +44,9 @@ int min3DPoints;
 float maxDistanceF2F;
 int minFeaturesLoopClosure;
 int framesUntilLoopClosure;
+float noMovementThresh;
+int framesNoMovement;
+int maxGoodFeatures;
 bool addKeyFrame = false;
 
 
@@ -51,6 +54,19 @@ bool addKeyFrame = false;
 std::vector<std::chrono::milliseconds> durations;
 
 // namespace po = boost::program_options;
+
+void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches) {
+    std::sort(goodMatches.begin(), goodMatches.end(), 
+                    [](const cv::DMatch& a, const cv::DMatch& b) {
+                        return a.distance < b.distance;
+                    }
+                );
+    if (goodMatches.size() >= maxGoodFeatures) {
+        bestMatches.assign(goodMatches.begin(), goodMatches.begin() + maxGoodFeatures);
+    } else {
+        bestMatches = goodMatches;
+    }
+}
 
 std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
         for (size_t i = 0; i < keypoints.size(); i++) {
@@ -80,7 +96,7 @@ void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Ma
 
     cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
     filterKeypointsByROI(keypoints1, filteredKeypoints, seccionToFilter);
-    std::cout << "keypoints filtered" << std::endl;
+    // std::cout << "keypoints filtered" << std::endl;
     featureDescriptor->compute(img, filteredKeypoints, descriptors1);
     
     // std::cout << "Nº features detected: " << keypoints1.size() << std::endl;
@@ -100,6 +116,7 @@ int findBestMatchingKeyframe(const cv::Mat& descriptors1,
     int mostGoodMatches = 0;
 
     std::vector<cv::DMatch> goodMatches_aux;
+    
     for (int keyframeIndex = 0; keyframeIndex < container.getKeyframeCount(); keyframeIndex++) {
         matcher->knnMatch(descriptors1, container.getKeyframe(keyframeIndex)->getDescriptors(), matches, 2);
         if (!goodMatches_aux.empty()) {
@@ -175,7 +192,7 @@ void initCamera() {
         profile = pipeline.start(cfg);
         }
     catch (const rs2::error& e) {
-        std::string error_message = e.what();
+        std::string error_message =  "Frame pipeline: " + std::string(e.what());;
         Debug::Log(error_message, Color::Red);
     }
 }
@@ -202,12 +219,13 @@ void initImu() {
     }
     catch(const std::exception& e)
     {
-        std::string error_message = e.what();
+        std::string error_message = "Imu pipeline: " + std::string(e.what());
         Debug::Log(error_message, Color::Red);
     }
     
-   
+        
 }
+
 void firstIteration() {
     rs2::frameset frames;
     for (int i = 0; i < 30; i++) {
@@ -300,7 +318,7 @@ void findFeatures() {
         float current_angleX = algo.get_theta().x - algoPrev.x;
         float current_angleY = algo.get_theta().y - algoPrev.y;
         float current_angleZ = algo.get_theta().z - algoPrev.z;
-        if ((abs(current_angleX) > 1e-04 && abs(current_angleY) > 1e-04 && abs(current_angleZ) > 1e-04)) {
+        if ((abs(current_angleX) > noMovementThresh && abs(current_angleY) > noMovementThresh && abs(current_angleZ) > noMovementThresh)) {
             no_move_counter = 0;
         } else {
             no_move_counter += 1;
@@ -328,6 +346,7 @@ void findFeatures() {
     cv::Mat descriptors1;
     std::vector<cv::KeyPoint> kp1Filtered;
     featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
+    // descriptors1.convertTo(descriptors1, CV_32FC1);
         
     auto feature_time2 = std::chrono::high_resolution_clock::now();
     auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time2 - feature_time1);
@@ -340,58 +359,63 @@ void findFeatures() {
     cv::Mat imageFeatures;
     imageFeatures = colorMat;
 
-    // for (int i = 0; i < kp1Filtered.size(); i++) {
-    //     circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
-    // }
+    for (int i = 0; i < kp1Filtered.size(); i++) {
+        circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
+    }
 
     cv::Mat t_prev = cv::Mat::zeros(3, 1, CV_64F);
     cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
     bool addTF = false;
 
-    // traj = cv::Mat::zeros(height, width, CV_8UC3);
-    // int rows = 10;
-    // int cols = 10;
+    traj = cv::Mat::zeros(height, width, CV_8UC3);
+    int rows = 10;
+    int cols = 10;
 
-    // // Calculate the width and height of each cell
-    // int cellWidth = traj.cols / cols;
-    // int cellHeight = traj.rows / rows;
+    // Calculate the width and height of each cell
+    int cellWidth = traj.cols / cols;
+    int cellHeight = traj.rows / rows;
 
-    // // Draw vertical lines
-    // for (int i = 1; i < cols; ++i) {
-    //     int x = i * cellWidth;
-    //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-    // }
+    // Draw vertical lines
+    for (int i = 1; i < cols; ++i) {
+        int x = i * cellWidth;
+        cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+    }
 
-    // // Draw horizontal lines
-    // for (int i = 1; i < rows; ++i) {
-    //     int y = i * cellHeight;
-    //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-    // }
+    // Draw horizontal lines
+    for (int i = 1; i < rows; ++i) {
+        int y = i * cellHeight;
+        cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+    }
 
     int bestKeyframeId = -1;
     if (!imgColorPrev.empty()) {
-        std::cout << "trying to match" << std::endl;
-        matcher = cv::makePtr<cv::FlannBasedMatcher>(new cv::flann::LshIndexParams(5, 20, 2));
+        // std::cout << "trying to match" << std::endl;
+        auto matcher_time1 = std::chrono::high_resolution_clock::now();
+        cv::Ptr<cv::flann::IndexParams> indexParams = new cv::flann::LshIndexParams(5, 20, 2);
+        cv::flann::SearchParams searchParams;
+        
+        matcher = cv::makePtr<cv::FlannBasedMatcher>(indexParams);
         std::vector<std::vector<cv::DMatch>> matches;
         std::vector<cv::DMatch> good_matches;
+        std::vector<cv::DMatch> best_matches;
         std::vector<cv::Point2f> pts1, pts2;
         bool is_loop = false;
-        std::cout << "Trying to find a match" << std::endl;
+        // std::cout << "Trying to find a match" << std::endl;
         if (kp1Filtered.size() >= 2 && prevFeatures.size() >= 2) {
             if (frames_after_loop >= framesUntilLoopClosure) {
-                
                 bestKeyframeId = findBestMatchingKeyframe(descriptors1, good_matches, matches);
             }
             if (bestKeyframeId != -1) {
                 is_loop = true;
                 const auto& kpKeyframe = container.getKeyframe(bestKeyframeId)->getKeypoints();
-                for (const cv::DMatch &match : good_matches) {
+                bestMatchesFilter(good_matches, best_matches);
+                for (const cv::DMatch &match : best_matches) {
                     pts1.push_back(kp1Filtered[match.queryIdx].pt);
                     pts2.push_back(kpKeyframe[match.trainIdx].pt);
-                    // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                    // cv::Point2f pt1 = pts1.back();
-                    // cv::Point2f pt2 = pts2.back();
-                    // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                    circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                    cv::Point2f pt1 = pts1.back();
+                    cv::Point2f pt2 = pts2.back();
+                    line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                 }
             } else {
                 auto nokeyframe_t1 = std::chrono::high_resolution_clock::now();
@@ -408,17 +432,24 @@ void findFeatures() {
                         }
                     }
                 }
-                if (!good_matches.empty()) {
-                    for (const cv::DMatch &match : good_matches) {
+                bestMatchesFilter(good_matches, best_matches);
+                if (!best_matches.empty()) {
+                    for (const cv::DMatch &match : best_matches) {
                         pts1.push_back(kp1Filtered[match.queryIdx].pt);
                         pts2.push_back(prevFeatures[match.trainIdx].pt);
-                        // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                        // cv::Point2f pt1 = pts1.back();
-                        // cv::Point2f pt2 = pts2.back();
-                        // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                        circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                        cv::Point2f pt1 = pts1.back();
+                        cv::Point2f pt2 = pts2.back();
+                        line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                     }
                 }
             }
+            auto matcher_time2 = std::chrono::high_resolution_clock::now();
+            auto matcher_duration = std::chrono::duration_cast<std::chrono::milliseconds>(matcher_time2 - matcher_time1);
+            std::cout << "Matcher duration: " << matcher_duration.count() << " miliseconds" << std::endl;
+            // __android_log_print(ANDROID_LOG_INFO, "Unity", "Matcher Duration: %lld milliseconds", matcher_duration.count());
+
+            auto transformation_time1 = std::chrono::high_resolution_clock::now();
             std::vector<cv::Point2f> uImagePoints, vImagePoints;
             std::vector<cv::Point3f> vObjectPoints;
             for (size_t i = 0; i < pts1.size(); ++i) {
@@ -449,9 +480,9 @@ void findFeatures() {
                                         rvec1,
                                         tvec1,
                                         false,
-                                        2000,
-                                        5.0f,
-                                        0.999,
+                                        300,
+                                        8.0f,
+                                        0.99,
                                         cv::noArray(),
                                         cv::SOLVEPNP_ITERATIVE);
                     cv::solvePnPRansac(vObjectPoints,
@@ -461,15 +492,11 @@ void findFeatures() {
                                         rvec2,
                                         tvec2,
                                         false,
-                                        2000,
-                                        5.0f,
-                                        0.999,
+                                        300,
+                                        8.0f,
+                                        0.99,
                                         cv::noArray(),
                                         cv::SOLVEPNP_ITERATIVE);
-
-                    
-
-                    std::cout << "paso" << std::endl;
 
                     cv::Mat R1, R2;
                     Rodrigues(rvec1, R1);
@@ -487,13 +514,13 @@ void findFeatures() {
                         if (is_loop && frames_after_loop >= framesUntilLoopClosure) {
                             frames_after_loop = 0;
                             t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
-                            std::cout << "In loop closure" << std::endl;
+                            // std::cout << "In loop closure" << std::endl;
                         } else {
-                            if (no_move_counter <= 50) {
+                            if (no_move_counter <= framesNoMovement) {
                                 t_f += t_1to2;
-                                std::cout << "Camera is moving" << std::endl;
+                                // std::cout << "Camera is moving" << std::endl;
                             } else {
-                                std::cout << "Camera not moving" << std::endl;
+                                // std::cout << "Camera not moving" << std::endl;
                             }
                         }
                         if (addKeyFrame) {
@@ -509,15 +536,19 @@ void findFeatures() {
                         }
                         addTF = true;
                     }   
-                // int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
-                // int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
-                // cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
+                int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
+                int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
+                cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
                 }
             } catch (const cv::Exception& e) {
                     std::cerr << "OpenCV Exception: " << e.what() << std::endl;
-                    std::string error_message = + e.what();
+                    std::string error_message =  "OpenCV Exception: " + std::string(e.what());
                     Debug::Log(error_message, Color::Red);
             }
+            auto transformation_time2 = std::chrono::high_resolution_clock::now();
+            auto transformation_duration = std::chrono::duration_cast<std::chrono::milliseconds>(transformation_time2 - transformation_time1);
+            // __android_log_print(ANDROID_LOG_INFO, "Unity", "Transformation Duration: %lld milliseconds", transformation_duration.count());
+
         }
     }
     imgColorPrev = grayImage;
@@ -534,28 +565,30 @@ void findFeatures() {
         // Put the text on the image
     // cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
 
-    // int imageWidth = imageFeatures.cols;
-    // int imageHeight = imageFeatures.rows;
+    int imageWidth = imageFeatures.cols;
+    int imageHeight = imageFeatures.rows;
 
-    // cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
+    cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
 
-    // cv::Mat colorGrayscaleImage;
-    // cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
-    // // cv::Mat prueba;
-    // // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
-    // // Copy each image onto the canvas at the desired positions
-    // if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
-    // std::cout<< " --(!) Error reading images " << std::endl;
-    // } else {
-    //     colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
-    //     colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
-    //     imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
-    //     traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
-    //     cv::imshow("Concatenated Images", canvas);
-    // }
+    cv::Mat colorGrayscaleImage;
+    cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
+    // cv::Mat prueba;
+    // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
+    // Copy each image onto the canvas at the desired positions
+    if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
+    std::cout<< " --(!) Error reading images " << std::endl;
+    } else {
+        colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
+        colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
+        imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
+        traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
+        cv::imshow("Concatenated Images", canvas);
+    }
     auto total_time2 = std::chrono::high_resolution_clock::now();
     auto total_duration = std::chrono::duration_cast<std::chrono::milliseconds>(total_time2 - total_time1);
-    __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
+    std::cout << "Total duration: " << total_duration.count() << " miliseconds" << std::endl;
+
+    // __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
 }
 
 void createORB(int nfeatures,
@@ -620,138 +653,147 @@ void setParams(CameraConfig config) {
     maxDepth = config.maxDepth;
     min3DPoints = config.min3DPoints;
     maxDistanceF2F = config.maxDistanceF2F;
+    minFeaturesLoopClosure = config.minFeaturesLoopClosure;
+    framesUntilLoopClosure = config.framesUntilLoopClosure;
+    noMovementThresh = config.noMovementThresh;
+    framesNoMovement = config.framesNoMovement;
+    maxGoodFeatures = config.maxGoodFeatures;
 }
 
 void resetOdom() {
     t_f = cv::Mat::zeros(3, 1, CV_64F);
 }
 
-extern "C" const uchar* getJpegBuffer(int* bufferSize) {
-    std::vector<uchar> jpegBuffer;
-    cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
-    uchar* unityBuffer = new uchar[jpegBuffer.size()];
-    memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
-    *bufferSize = jpegBuffer.size();
+// extern "C" const uchar* getJpegBuffer(int* bufferSize) {
+//     std::vector<uchar> jpegBuffer;
+//     cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
+//     uchar* unityBuffer = new uchar[jpegBuffer.size()];
+//     memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
+//     *bufferSize = jpegBuffer.size();
 
-    return unityBuffer;
-}
-
-
-
-// int main(int argc, char const *argv[]) {
-//     bool record = false;
-//     int fps_color = 60;
-//     int fps_depth = 60;
-//     int width = 640;
-//     int height = 480;
-//     int width_depth = 640;
-//     int height_depth = 480;
-//     if (record) {
-//         std::string bagFileAddress = "../20230921_163816.bag";
-//         cfg.enable_device_from_file(bagFileAddress, false);
-//     } else {
-//         colorStreamConfig(width, height, fps_color);
-//         depthStreamConfig(width_depth, height_depth, fps_depth);
-//     }
-//     initCamera();
-//     initImu();
-
-//     CameraConfig config;
-//     config.ratioTresh = 0.5;
-//     config.minDepth = 0.6;
-//     config.maxDepth = 6;
-//     config.min3DPoints = 6;
-//     config.maxDistanceF2F = 0.3;
-//     config.minFeaturesLoopClosure = 200;
-//     config.framesUntilLoopClosure = 200;
-//     setParams(config);
-    
-//     int nfeatures = 3000;
-//     float scaleFactor = 2;
-//     int nlevels = 3;
-//     int edgeThreshold = 19;
-//     int firstLevel = 0;
-//     int WTA_K = 2;
-//     int scoreType = 0;
-//     int patchSize = 31;
-//     int fastThreshold = 20;
-//     createORB(nfeatures,
-//               scaleFactor,
-//               nlevels,
-//               edgeThreshold,
-//               firstLevel,
-//               WTA_K,
-//               scoreType,
-//               patchSize,
-//               fastThreshold);
-//     // traj = cv::Mat::zeros(height, width, CV_8UC3);
-//     // int rows = 10;
-//     // int cols = 10;
-//     // // Calculate the width and height of each cell
-//     // int cellWidth = traj.cols / cols;
-//     // int cellHeight = traj.rows / rows;
-//     // // Draw vertical lines
-//     // for (int i = 1; i < cols; ++i) {
-//     //     int x = i * cellWidth;
-//     //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-//     // }
-//     // // Draw horizontal lines
-//     // for (int i = 1; i < rows; ++i) {
-//     //     int y = i * cellHeight;
-//     //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-//     // }
-//     auto measure_init_time = std::chrono::steady_clock::now();
-//     // const int max_duration_seconds = 30;
-//     bool should_break = false;
-//     firstIteration();
-//     while (!should_break) {
-//         auto current_time = std::chrono::steady_clock::now();
-//         auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(current_time - measure_init_time).count();
-//         // // Check if 30 seconds have passed, and if so, break the loop
-//         // if (elapsed_seconds >= max_duration_seconds)
-//         // {
-//         //     should_break = true;
-//         // }
-        
-//         findFeatures();
-//         float cameraAngle[3] = {0.0f, 0.0f, 0.0f};
-
-//         // Call the GetCameraOrientation function
-//         GetCameraOrientation(cameraAngle);
-
-//         // Output the calculated camera angles
-//         std::cout << "Camera Angle X: " << cameraAngle[0] << " degrees" << std::endl;
-//         std::cout << "Camera Angle Y: " << cameraAngle[1] << " degrees" << std::endl;
-//         std::cout << "Camera Angle Z: " << cameraAngle[2] << " degrees" << std::endl;
-
-//         int key = cv::waitKey(1);
-//         if (key >= 0)
-//         {
-//             if (key == 113) {
-//                 should_break = true;
-//             }
-//          else if (key == 99) {
-//                 addKeyFrame = true;  // Set the flag to true
-//             }
-//         }
-//     }
-//     long long total_duration = 0;
-//     // Start from the second element (index 1) to exclude the first value
-//     for (size_t i = 1; i < durations.size(); ++i) {
-//         total_duration += durations[i].count();
-//     }
-//     double average_duration = static_cast<double>(total_duration) / (durations.size()-1);
-//     std::cout << "Average Duration: " << average_duration << " milliseconds" << std::endl;
-//     while (true) {
-//         int key = cv::waitKey(1);
-//         if (key >= 0) {
-//             if (key == 113) {
-//                 break; // Break the second loop when a key is pressed
-//             }
-//         }
-//     }
-//     // Calculate the average duration
-//     cleanupCamera();
-//     return 0;
+//     return unityBuffer;
 // }
+
+
+
+int main(int argc, char const *argv[]) {
+    bool record = false;
+    int fps_color = 60;
+    int fps_depth = 60;
+    int width = 640;
+    int height = 480;
+    int width_depth = 640;
+    int height_depth = 480;
+    if (record) {
+        std::string bagFileAddress = "../20230921_163816.bag";
+        cfg.enable_device_from_file(bagFileAddress, false);
+    } else {
+        colorStreamConfig(width, height, fps_color);
+        depthStreamConfig(width_depth, height_depth, fps_depth);
+    }
+    initCamera();
+    initImu();
+
+    CameraConfig config;
+    config.ratioTresh = 0.5;
+    config.minDepth = 0.6;
+    config.maxDepth = 8;
+    config.min3DPoints = 6;
+    config.maxDistanceF2F = 0.5;
+    config.minFeaturesLoopClosure = 200;
+    config.framesUntilLoopClosure = 200;
+    config.noMovementThresh = 0.0005;
+    config.framesNoMovement = 50;
+    config.maxGoodFeatures = 400;
+
+    setParams(config);
+    
+    int nfeatures = 3000;
+    float scaleFactor = 2;
+    int nlevels = 3;
+    int edgeThreshold = 19;
+    int firstLevel = 0;
+    int WTA_K = 2;
+    int scoreType = 0;
+    int patchSize = 31;
+    int fastThreshold = 20;
+    createORB(nfeatures,
+              scaleFactor,
+              nlevels,
+              edgeThreshold,
+              firstLevel,
+              WTA_K,
+              scoreType,
+              patchSize,
+              fastThreshold);
+    // traj = cv::Mat::zeros(height, width, CV_8UC3);
+    // int rows = 10;
+    // int cols = 10;
+    // // Calculate the width and height of each cell
+    // int cellWidth = traj.cols / cols;
+    // int cellHeight = traj.rows / rows;
+    // // Draw vertical lines
+    // for (int i = 1; i < cols; ++i) {
+    //     int x = i * cellWidth;
+    //     cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+    // }
+    // // Draw horizontal lines
+    // for (int i = 1; i < rows; ++i) {
+    //     int y = i * cellHeight;
+    //     cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+    // }
+    auto measure_init_time = std::chrono::steady_clock::now();
+    // const int max_duration_seconds = 30;
+    bool should_break = false;
+    firstIteration();
+    while (!should_break) {
+        // auto current_time = std::chrono::steady_clock::now();
+        // auto elapsed_seconds = std::chrono::duration_cast<std::chrono::seconds>(current_time - measure_init_time).count();
+        // // Check if 30 seconds have passed, and if so, break the loop
+        // if (elapsed_seconds >= max_duration_seconds)
+        // {
+        //     should_break = true;
+        // }
+        
+        findFeatures();
+        // float cameraAngle[3] = {0.0f, 0.0f, 0.0f};
+
+        // // Call the GetCameraOrientation function
+        // GetCameraOrientation(cameraAngle);
+
+        // // Output the calculated camera angles
+        // std::cout << "Camera Angle X: " << cameraAngle[0] << " degrees" << std::endl;
+        // std::cout << "Camera Angle Y: " << cameraAngle[1] << " degrees" << std::endl;
+        // std::cout << "Camera Angle Z: " << cameraAngle[2] << " degrees" << std::endl;
+
+        int key = cv::waitKey(1);
+        if (key >= 0)
+        {
+            if (key == 113) {
+                should_break = true;
+            }
+         else if (key == 99) {
+                addKeyFrame = true;  // Set the flag to true
+            }
+        }
+    }
+    // long long total_duration = 0;
+    // // Start from the second element (index 1) to exclude the first value
+    // for (size_t i = 1; i < durations.size(); ++i) {
+    //     total_duration += durations[i].count();
+    // }
+    // double average_duration = static_cast<double>(total_duration) / (durations.size()-1);
+    // std::cout << "Average Duration: " << average_duration << " milliseconds" << std::endl;
+    while (true) {
+        int key = cv::waitKey(1);
+        if (key >= 0) {
+            if (key == 113) {
+                break; // Break the second loop when a key is pressed
+            }
+        }
+    }
+    // Calculate the average duration
+    cleanupCamera();
+    return 0;
+}
 
