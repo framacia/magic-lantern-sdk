@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
+    [SerializeField] private Image fadeToBlackTexture;
 
     #region Singleton
     public static SceneController Instance { get; private set; }
@@ -26,20 +29,36 @@ public class SceneController : MonoBehaviour
     }
     #endregion
 
-    public void ResetCurrentScene()
+    public IEnumerator ResetCurrentSceneAdditive()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
         //Are the first 2 lines necessary?
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        yield return SceneManager.UnloadSceneAsync(currentScene);
         Resources.UnloadUnusedAssets();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        StartCoroutine(LoadSceneByReference(currentScene));
+        //SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentScene));
+    }
+
+    public void ResetCurrentSceneSingle()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            ResetCurrentScene();
+            //StartCoroutine(ResetCurrentSceneAdditive());
+            ResetCurrentSceneSingle();
         }
     }
 
+    public IEnumerator LoadSceneByReference(string scene)
+    {
+        Debug.Log($"Started loading scene {scene}");
+        yield return SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+        Debug.Log($"Finished loading scene {scene} and set as active");
+    }
 }

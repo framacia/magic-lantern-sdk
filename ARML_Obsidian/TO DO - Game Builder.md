@@ -29,11 +29,23 @@ kanban-plugin: basic
 
 ## DOING
 
+- [ ] Separate LOGIC (camera, admin, network, controllers) into a separate scene, then load GAME scenes additively
 
 
 ## DONE
 
 **Complete**
+
+
+## BLOCKED
+
+- [ ] Stopped implementing DOTween Timeline system in the middle because not sure it is worth it #timeline
+
+
+***
+
+## Archive
+
 - [x] Make the selection process shader tied to the object placement and not the camera view
 - [x] Add condition number to Level (generic conditions that must be met to complete Level, eg. place 3 placeables)
 - [x] Define feedback (particle + sound) system - reuse Edwards?
@@ -47,17 +59,6 @@ kanban-plugin: basic
 - [x] Automatize Placeable Hierarchy setup/can just use prefab?
 - [x] Make Base Interactor class that sets up Timer etc., then inherit from it for grabbables, characters, point interactors. Maybe Interface is better #code
 - [x] Automatize Grabbable Hierarchy setup/can just use prefab?
-
-
-## BLOCKED
-
-- [ ] Stopped implementing DOTween Timeline system in the middle because not sure it is worth it #timeline
-
-
-***
-
-## Archive
-
 - [x] Automatize Basic interactable Hierarchy setup
 - [x] Adapt grabbing logic to camera gaze
 - [x] We need a LevelController that controls the flow of the application (gets referenced by interactions instead of the playable directors themselves to progress or end game)

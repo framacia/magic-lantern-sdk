@@ -45,6 +45,14 @@ namespace FranTest.GameBuilder
             loadedGameSO.LoadScores($"/{loadedGameSO.GetGameName()}.json");
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.L))
+            {
+                StartCoroutine(SceneController.Instance.LoadSceneByReference(loadedGameSO.gameScene));
+            }
+        }
+
         /// <summary>
         /// Load a game by setting the active ARMLGameSO.
         /// </summary>

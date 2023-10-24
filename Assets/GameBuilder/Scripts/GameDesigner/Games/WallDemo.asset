@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: WallDemo
   m_EditorClassIdentifier: 
   gameName: WallDemo
+  gameScene:
+    m_SceneAsset: {fileID: 102900000, guid: 86b687a1b53cce04eb66e50920c9b632, type: 3}
+    m_SceneName: WallDemoLowPoly
+  lanternInitialTransform: {fileID: 0}
   levels: []
   highScores:
   - score: 0

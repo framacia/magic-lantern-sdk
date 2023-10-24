@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.deltation.toon-shader": "https://github.com/Delt06/urp-toon-shader.git?path=Packages/com.deltation.toon-shader",
     "com.occasoftware.auto-exposure": "file:../Packages/com.occasoftware.auto-exposure/com.occasoftware.auto-exposure",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "1.1.4",

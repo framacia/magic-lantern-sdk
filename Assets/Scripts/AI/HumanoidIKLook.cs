@@ -7,6 +7,7 @@ public class HumanoidIKLook : MonoBehaviour
 {
     Animator animator;
     [SerializeField] Transform target;
+    [SerializeField] bool followMainCamera;
     [SerializeField, Range(0, 1)] float lookAtWeight = 1;
     [SerializeField] Vector3 rotationLimit = new Vector3(0f, 0.6f, 0f);
     [SerializeField, Range(0, 10)] float distanceLimit = 2.6f;
@@ -23,11 +24,20 @@ public class HumanoidIKLook : MonoBehaviour
         objPivot = new GameObject("DummyPivot");
         objPivot.transform.parent = transform;
         objPivot.transform.localPosition = new Vector3(0, 1.7f, 0);
+
+        if (followMainCamera)
+            target = Camera.main?.transform;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
+        if (followMainCamera)
+            target = Camera.main?.transform;
+
+        if (!target)
+            return;
+
         objPivot.transform.LookAt(target);
 
         //Target distance limit
@@ -35,8 +45,6 @@ public class HumanoidIKLook : MonoBehaviour
 
         //Target rotation limit
         float pivotRotY = objPivot.transform.localRotation.y;
-
-        print(objPivot.transform.localRotation);
 
         if (Mathf.Abs(pivotRotY) > rotationLimit.y || distance > distanceLimit)
         {

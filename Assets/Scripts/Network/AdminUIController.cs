@@ -126,14 +126,14 @@ public class AdminUIController : NetworkBehaviour
 
     public void RestartCurrentScene()
     {
-        SceneController.Instance.ResetCurrentScene();
+        SceneController.Instance.ResetCurrentSceneSingle();
         CmdOnRestartCurrentScene();
     }
 
     [Command(requiresAuthority = false)]
     public void CmdOnRestartCurrentScene()
     {
-        SceneController.Instance.ResetCurrentScene();
+        SceneController.Instance.ResetCurrentSceneSingle();
         //ARMLNetworkManager.Instance.ServerChangeScene(SceneManager.GetActiveScene().name);
     }
 }

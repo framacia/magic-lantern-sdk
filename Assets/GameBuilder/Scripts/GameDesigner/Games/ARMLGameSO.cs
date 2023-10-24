@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FranTest.GameBuilder
 {
@@ -9,6 +10,8 @@ namespace FranTest.GameBuilder
     public class ARMLGameSO : ScriptableObject
     {
         [SerializeField] string gameName;
+        public SceneField gameScene;
+        [SerializeField] Transform lanternInitialTransform;
         [SerializeField] List<Level> levels;
         [SerializeField] List<ScoreEntry> highScores;
         public bool usesScores;
@@ -33,7 +36,6 @@ namespace FranTest.GameBuilder
                 Debug.Log("Succesfully saved score data");
             }
         }
-
         public void LoadScores(string path)
         {
             List<ScoreEntry> loadedScores = DataService.LoadData<List<ScoreEntry>>(path, isEncrypted);
@@ -58,5 +60,4 @@ namespace FranTest.GameBuilder
             dateTime = DateTime.Now.ToString();
         }
     }
-
 }
