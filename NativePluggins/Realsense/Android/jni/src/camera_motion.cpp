@@ -46,6 +46,7 @@ int minFeaturesLoopClosure;
 int framesUntilLoopClosure;
 float noMovementThresh;
 int framesNoMovement;
+int maxGoodFeatures;
 bool addKeyFrame = false;
 
 
@@ -53,6 +54,19 @@ bool addKeyFrame = false;
 std::vector<std::chrono::milliseconds> durations;
 
 // namespace po = boost::program_options;
+
+void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches) {
+    std::sort(goodMatches.begin(), goodMatches.end(), 
+                    [](const cv::DMatch& a, const cv::DMatch& b) {
+                        return a.distance < b.distance;
+                    }
+                );
+    if (goodMatches.size() >= maxGoodFeatures) {
+        bestMatches.assign(goodMatches.begin(), goodMatches.begin() + maxGoodFeatures);
+    } else {
+        bestMatches = goodMatches;
+    }
+}
 
 std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
         for (size_t i = 0; i < keypoints.size(); i++) {
@@ -378,18 +392,19 @@ void findFeatures() {
         matcher = cv::makePtr<cv::FlannBasedMatcher>(new cv::flann::LshIndexParams(5, 20, 2));
         std::vector<std::vector<cv::DMatch>> matches;
         std::vector<cv::DMatch> good_matches;
+        std::vector<cv::DMatch> best_matches;
         std::vector<cv::Point2f> pts1, pts2;
         bool is_loop = false;
         std::cout << "Trying to find a match" << std::endl;
         if (kp1Filtered.size() >= 2 && prevFeatures.size() >= 2) {
             if (frames_after_loop >= framesUntilLoopClosure) {
-                
                 bestKeyframeId = findBestMatchingKeyframe(descriptors1, good_matches, matches);
             }
             if (bestKeyframeId != -1) {
                 is_loop = true;
                 const auto& kpKeyframe = container.getKeyframe(bestKeyframeId)->getKeypoints();
-                for (const cv::DMatch &match : good_matches) {
+                bestMatchesFilter(good_matches, best_matches);
+                for (const cv::DMatch &match : best_matches) {
                     pts1.push_back(kp1Filtered[match.queryIdx].pt);
                     pts2.push_back(kpKeyframe[match.trainIdx].pt);
                     // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
@@ -412,19 +427,21 @@ void findFeatures() {
                         }
                     }
                 }
-                if (!good_matches.empty()) {
-                    for (const cv::DMatch &match : good_matches) {
+                bestMatchesFilter(good_matches, best_matches);
+                if (!best_matches.empty()) {
+                    for (const cv::DMatch &match : best_matches) {
                         pts1.push_back(kp1Filtered[match.queryIdx].pt);
                         pts2.push_back(prevFeatures[match.trainIdx].pt);
-                        // circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
-                        // cv::Point2f pt1 = pts1.back();
-                        // cv::Point2f pt2 = pts2.back();
-                        // line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
+                    //     circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
+                    //     cv::Point2f pt1 = pts1.back();
+                    //     cv::Point2f pt2 = pts2.back();
+                    //     line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
                     }
                 }
             }
             auto matcher_time2 = std::chrono::high_resolution_clock::now();
             auto matcher_duration = std::chrono::duration_cast<std::chrono::milliseconds>(matcher_time2 - matcher_time1);
+            std::cout << "Matcher duration: " << matcher_duration.count() << " miliseconds" << std::endl;
             __android_log_print(ANDROID_LOG_INFO, "Unity", "Matcher Duration: %lld milliseconds", matcher_duration.count());
 
             auto transformation_time1 = std::chrono::high_resolution_clock::now();
@@ -475,10 +492,6 @@ void findFeatures() {
                                         0.999,
                                         cv::noArray(),
                                         cv::SOLVEPNP_ITERATIVE);
-
-                    
-
-                    std::cout << "paso" << std::endl;
 
                     cv::Mat R1, R2;
                     Rodrigues(rvec1, R1);
@@ -568,6 +581,8 @@ void findFeatures() {
     // }
     auto total_time2 = std::chrono::high_resolution_clock::now();
     auto total_duration = std::chrono::duration_cast<std::chrono::milliseconds>(total_time2 - total_time1);
+    std::cout << "Total duration: " << total_duration.count() << " miliseconds" << std::endl;
+
     __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
 }
 
@@ -637,6 +652,7 @@ void setParams(CameraConfig config) {
     framesUntilLoopClosure = config.framesUntilLoopClosure;
     noMovementThresh = config.noMovementThresh;
     framesNoMovement = config.framesNoMovement;
+    maxGoodFeatures = config.maxGoodFeatures;
 }
 
 void resetOdom() {
@@ -683,6 +699,7 @@ void resetOdom() {
 //     config.framesUntilLoopClosure = 200;
 //     config.noMovementThresh = 0.0001;
 //     config.framesNoMovement = 50;
+//     config.maxGoodFeatures = 400;
 
 //     setParams(config);
     

@@ -105,6 +105,7 @@ public class RealSenseController : MonoBehaviour
         public int framesUntilLoopClosure;
         public float noMovementThresh;
         public int framesNoMovement;
+        public int maxGoodFeatures;
 
         
     }
@@ -126,6 +127,7 @@ public class RealSenseController : MonoBehaviour
     public int framesUntilLoopClosure = 200;
     public float noMovementThresh = 0.0001f;
     public int framesNoMovement = 50;
+    public int maxGoodFeatures = 500;
     public bool useRecord = false;
 
     /// <summary>
@@ -210,6 +212,8 @@ public class RealSenseController : MonoBehaviour
         config.minFeaturesLoopClosure = minFeaturesLoopClosure;
         config.noMovementThresh = noMovementThresh;
         config.framesNoMovement = framesNoMovement;
+        config.maxGoodFeatures = maxGoodFeatures;
+        
         
         setParams(config);
 
