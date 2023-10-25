@@ -281,8 +281,6 @@ GameObject:
   - component: {fileID: 5319180064161788030}
   - component: {fileID: 8885337631831964406}
   - component: {fileID: 8184032431890755296}
-  - component: {fileID: 3006949143645214118}
-  - component: {fileID: 1888903474645026002}
   - component: {fileID: 211801686867985877}
   m_Layer: 0
   m_Name: Main Camera
@@ -411,43 +409,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!136 &3006949143645214118
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864876935045644810}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.04
-  m_Height: 16.46
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 8.16}
---- !u!114 &1888903474645026002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5864876935045644810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23a5c48f35e85d45ab1ac9ab101284e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimumSquaredDistanceToRegrabPlacedObject: 0.1
-  feedback: {fileID: 0}
 --- !u!114 &211801686867985877
 MonoBehaviour:
   m_ObjectHideFlags: 0

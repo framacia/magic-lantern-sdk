@@ -1,4 +1,5 @@
 using AClockworkBerry;
+using FranTest.GameBuilder;
 using Mirror;
 using System;
 using System.Collections;
@@ -23,8 +24,26 @@ public class NetworkPlayer : NetworkBehaviour
 
     PlayerType playerType;
 
+    public static NetworkPlayer Instance { get; private set; }
+
     private void Awake()
     {
+        if (!Application.isPlaying)
+        {
+            return;
+        }
+        // If there is an instance, and it's not me, delete myself.
+        if (Instance != null && Instance != this)
+        {
+            //Destroy(this); //Don't destroy because there is a player for each connected device, I think
+        }
+        else
+        {
+            Instance = this;
+            transform.SetParent(null);
+            DontDestroyOnLoad(gameObject);
+        }
+
         manager = FindObjectOfType<ARMLNetworkManager>();
         adminUI = FindObjectOfType<AdminUIController>(true);
     }

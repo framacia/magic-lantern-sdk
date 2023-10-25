@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ast3 lw
-  m_Shader: {fileID: -6465566751694194690, guid: 1c4350bdb648b5e49991ee63734d4bf5, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7d5cdaa351e86434da46a99833699a8a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -80,6 +80,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Normal:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -89,6 +93,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RoughnessMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -144,11 +152,13 @@ Material:
     - _HueVariationKwToggle: 0
     - _Metallic: 0
     - _NormalMapKwToggle: 0
+    - _NormalStrength: 1
     - _Occlusion: 0.3571428
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RECEIVE_SHADOWS_OFF: 0
     - _ReceiveShadows: 1
     - _SampleGI: 0
     - _Shininess: 0
@@ -163,6 +173,7 @@ Material:
     - _SubsurfaceIndirect: 0.25
     - _SubsurfaceKwToggle: 0
     - _Surface: 0
+    - _Tiling: 1
     - _TwoSided: 0
     - _WindQuality: 0
     - _WorkflowMode: 1

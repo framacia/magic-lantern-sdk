@@ -139,7 +139,7 @@ Material:
     - _Parallax: 0.02
     - _PureShadowColor: 0
     - _QueueOffset: 0
-    - _Ramp0: 0.01
+    - _Ramp0: -0.04
     - _Ramp1: 0.34
     - _RampSmoothness: 0
     - _RampTriple: 1
