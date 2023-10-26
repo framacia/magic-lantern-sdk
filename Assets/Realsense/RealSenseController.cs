@@ -261,24 +261,9 @@ public class RealSenseController : MonoBehaviour
     {
         while (!isStopped)
         {
-            //if (resetEvent == null)
-            //{
-            //    continue;
-            //}
-
             resetEvent.WaitOne(); //Why this??
+            findFeatures();
 
-            Debug.Log("Hola");
-
-            // Get and use the depth value at the center of the image
-            try
-            {
-                findFeatures();
-            }
-            catch
-            {
-                Debug.LogError("Error in find festures");
-            }
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
