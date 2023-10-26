@@ -49,9 +49,8 @@ public class RealSenseController : MonoBehaviour
                                         bool enable_precise_upscale = false
                                     );
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void firstIteration();
-
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void findFeatures();
@@ -76,7 +75,7 @@ public class RealSenseController : MonoBehaviour
         return cameraAngle;
     }
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void resetOdom();
 
     [DllImport(PLUGIN_NAME)]
@@ -85,17 +84,17 @@ public class RealSenseController : MonoBehaviour
     public static byte[] GetJpegBuffer(out int bufferSize)
     {
         IntPtr bufferPtr = getJpegBuffer(out bufferSize);
-        
+
         byte[] jpegBuffer = new byte[bufferSize];
         Marshal.Copy(bufferPtr, jpegBuffer, 0, bufferSize);
-        
+
         Marshal.FreeCoTaskMem(bufferPtr);
-        
+
         return jpegBuffer;
     }
 
-  
-    public struct CameraConfig {
+    public struct CameraConfig
+    {
         public float ratioTresh;
         public float minDepth;
         public float maxDepth;
@@ -106,11 +105,7 @@ public class RealSenseController : MonoBehaviour
         public float noMovementThresh;
         public int framesNoMovement;
         public int maxGoodFeatures;
-
-        
     }
-
-
 
     public int colorWidth = 640;
     public int colorHeight = 480;
@@ -129,10 +124,6 @@ public class RealSenseController : MonoBehaviour
     public int framesNoMovement = 50;
     public int maxGoodFeatures = 500;
     public bool useRecord = false;
-
-    /// <summary>
-    /// FRAN STARTS HERE
-    /// </summary>
 
     public enum FeatureExtractorType
     {
@@ -170,11 +161,12 @@ public class RealSenseController : MonoBehaviour
 
     private void Start()
     {
-// #if !UNITY_EDITOR
+        //#if !UNITY_EDITOR
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
-        if (useRecord){
+        if (useRecord)
+        {
             string bagFilePath = System.IO.Path.Combine("/sdcard/Documents/20230918_163323.bag");
 
             if (File.Exists(bagFilePath))
@@ -188,12 +180,13 @@ public class RealSenseController : MonoBehaviour
                 // The file does not exist, handle the case where the file is missing.
                 Debug.LogError("The file does not exist: " + bagFilePath);
             }
-            
-        } else {
+        }
+        else
+        {
             colorStreamConfig(colorWidth, colorHeight, colorFPS);
             depthStreamConfig(depthWidth, depthHeight, depthFPS);
         }
-        
+
         initCamera();
         initImu();
 
@@ -213,13 +206,11 @@ public class RealSenseController : MonoBehaviour
         config.noMovementThresh = noMovementThresh;
         config.framesNoMovement = framesNoMovement;
         config.maxGoodFeatures = maxGoodFeatures;
-        
-        
+
         setParams(config);
 
         firstIteration();
 
-        
         // float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
         // int numberOfSamples = 1000;
 
@@ -235,27 +226,20 @@ public class RealSenseController : MonoBehaviour
         // float averageY = totalCameraAngle[1] / numberOfSamples;
         // float averageZ = totalCameraAngle[2] / numberOfSamples;
 
-        
+
         // Debug.Log("Average Camera Orientation x: " + averageX);
         // Debug.Log("Average Camera Orientation y: " + averageY);
         // Debug.Log("Average Camera Orientation z: " + averageZ);
 
         // angleX = averageZ;
 
-
         trackingThread = new Thread(ThreadUpdate);
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
-
-
-      
-        
-        
-// #endif
+        //#endif
     }
 
-// #if !UNITY_EDITOR
-
+    //#if !UNITY_EDITOR
     private void Update()
     {
         resetEvent.Set();
@@ -266,12 +250,10 @@ public class RealSenseController : MonoBehaviour
             reset_odom = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-             Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
-       
-        
-
     }
 
     private void ThreadUpdate()
@@ -291,25 +273,16 @@ public class RealSenseController : MonoBehaviour
                 resetOdom();
                 reset_odom = false;
             }
-            
         }
-        
     }
-
-    // private void OnApplicationQuit()
-    // {
-    //     // CleanupCamera();
-    //     // trackingThread.Join();
-    //     isStopped = true;
-    // }
 
     private void OnDestroy()
     {
-        
+
         isStopped = true;
         resetEvent.Set(); // Signal the thread to exit
         trackingThread.Join(); // Wait for the thread to finish
         cleanupCamera();
     }
-// #endif
+    //#endif
 }

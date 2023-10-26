@@ -292,6 +292,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeToBlackTexture: {fileID: 0}
+  fadeToBlackBetweenLoads: 0
+  fadeDuration: 1
 --- !u!114 &5487979390442206368
 MonoBehaviour:
   m_ObjectHideFlags: 0
