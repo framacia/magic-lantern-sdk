@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FranTest.GameBuilder
 {
-    [ExecuteInEditMode]
+    //[ExecuteInEditMode]
     public class GameManager : MonoBehaviour
     {
         #region Singleton
@@ -32,17 +33,31 @@ namespace FranTest.GameBuilder
         #endregion
 
         [SerializeField] ARMLGameSO loadedGameSO;
+        [SerializeField] bool loadOnStart;
         private int currentScore;
         private float currentTime;
 
         private void Start()
         {
+            if(loadOnStart)
+            {
+                // If Game Scene is already loaded, return
+                if (SceneManager.GetActiveScene().name == loadedGameSO.gameScene)
+                {
+                    Debug.Log($"Scene {loadedGameSO.gameScene} already loaded");
+                    return;
+                }
+
+                StartCoroutine(SceneController.Instance.LoadSceneByReference(loadedGameSO.gameScene));
+                loadOnStart = false;
+            }
+
             // Check if the loaded game scriptable object uses scores.
             if (!loadedGameSO.usesScores)
                 return;
 
             // Load scores from a JSON file based on the game's name.
-            loadedGameSO.LoadScores($"/{loadedGameSO.GetGameName()}.json");
+            //loadedGameSO.LoadScores($"/{loadedGameSO.GetGameName()}.json");
         }
 
         private void Update()
