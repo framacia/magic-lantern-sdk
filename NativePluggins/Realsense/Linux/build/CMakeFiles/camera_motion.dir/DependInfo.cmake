@@ -10,6 +10,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp" "CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o" "gcc" "CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o.d"
   "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/debugCPP.cpp" "CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o" "gcc" "CMakeFiles/camera_motion.dir/src/debugCPP.cpp.o.d"
+  "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/globals.cpp" "CMakeFiles/camera_motion.dir/src/globals.cpp.o" "gcc" "CMakeFiles/camera_motion.dir/src/globals.cpp.o.d"
+  "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/localization.cpp" "CMakeFiles/camera_motion.dir/src/localization.cpp.o" "gcc" "CMakeFiles/camera_motion.dir/src/localization.cpp.o.d"
+  "/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/rs_camera.cpp" "CMakeFiles/camera_motion.dir/src/rs_camera.cpp.o" "gcc" "CMakeFiles/camera_motion.dir/src/rs_camera.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -193,6 +193,78 @@ src/debugCPP.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/debugCPP.cpp.s
 .PHONY : src/debugCPP.cpp.s
 
+src/globals.o: src/globals.cpp.o
+.PHONY : src/globals.o
+
+# target to build an object file
+src/globals.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/globals.cpp.o
+.PHONY : src/globals.cpp.o
+
+src/globals.i: src/globals.cpp.i
+.PHONY : src/globals.i
+
+# target to preprocess a source file
+src/globals.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/globals.cpp.i
+.PHONY : src/globals.cpp.i
+
+src/globals.s: src/globals.cpp.s
+.PHONY : src/globals.s
+
+# target to generate assembly for a file
+src/globals.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/globals.cpp.s
+.PHONY : src/globals.cpp.s
+
+src/localization.o: src/localization.cpp.o
+.PHONY : src/localization.o
+
+# target to build an object file
+src/localization.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/localization.cpp.o
+.PHONY : src/localization.cpp.o
+
+src/localization.i: src/localization.cpp.i
+.PHONY : src/localization.i
+
+# target to preprocess a source file
+src/localization.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/localization.cpp.i
+.PHONY : src/localization.cpp.i
+
+src/localization.s: src/localization.cpp.s
+.PHONY : src/localization.s
+
+# target to generate assembly for a file
+src/localization.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/localization.cpp.s
+.PHONY : src/localization.cpp.s
+
+src/rs_camera.o: src/rs_camera.cpp.o
+.PHONY : src/rs_camera.o
+
+# target to build an object file
+src/rs_camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/rs_camera.cpp.o
+.PHONY : src/rs_camera.cpp.o
+
+src/rs_camera.i: src/rs_camera.cpp.i
+.PHONY : src/rs_camera.i
+
+# target to preprocess a source file
+src/rs_camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/rs_camera.cpp.i
+.PHONY : src/rs_camera.cpp.i
+
+src/rs_camera.s: src/rs_camera.cpp.s
+.PHONY : src/rs_camera.s
+
+# target to generate assembly for a file
+src/rs_camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/src/rs_camera.cpp.s
+.PHONY : src/rs_camera.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -209,6 +281,15 @@ help:
 	@echo "... src/debugCPP.o"
 	@echo "... src/debugCPP.i"
 	@echo "... src/debugCPP.s"
+	@echo "... src/globals.o"
+	@echo "... src/globals.i"
+	@echo "... src/globals.s"
+	@echo "... src/localization.o"
+	@echo "... src/localization.i"
+	@echo "... src/localization.s"
+	@echo "... src/rs_camera.o"
+	@echo "... src/rs_camera.i"
+	@echo "... src/rs_camera.s"
 .PHONY : help
 
 

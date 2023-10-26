@@ -15,6 +15,8 @@ find_package(OpenCV REQUIRED)
 
 find_package(realsense2 REQUIRED)
 
+find_package(Threads REQUIRED) 
+
 # Define dependencies
 set(DEPENDENCIES realsense2 ${OpenCV_LIBS})
 
@@ -29,7 +31,14 @@ include_directories(
     ${realsense2_INCLUDE_DIRS}
 )
 # Create shared library target
-add_library(camera_motion SHARED src/camera_motion.cpp src/debugCPP.cpp)
+add_library(camera_motion
+            SHARED
+            src/camera_motion.cpp
+            src/debugCPP.cpp
+            src/globals.cpp
+            src/localization.cpp
+            src/rs_camera.cpp
+            )
 
 # Set C++ standard to C++11 for the shared library
 set_property(TARGET camera_motion PROPERTY CXX_STANDARD 11)
@@ -50,6 +59,6 @@ set_property(TARGET arml_cpp PROPERTY CXX_STANDARD 11)
 target_link_libraries(arml_cpp
     camera_motion  # Link to the shared library
     ${DEPENDENCIES}
-    ${Boost_LIBRARIES}
+    Threads::Threads
 )
 

@@ -224,15 +224,13 @@ CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: \
  /usr/local/include/opencv4/opencv2/core/optim.hpp \
  /usr/local/include/opencv4/opencv2/core/ovx.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
- /usr/local/include/opencv4/opencv2/xfeatures2d.hpp \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/debugCPP.h \
+ /usr/local/include/opencv4/opencv2/opencv.hpp \
+ /usr/local/include/opencv4/opencv2/calib3d.hpp \
  /usr/local/include/opencv4/opencv2/features2d.hpp \
  /usr/local/include/opencv4/opencv2/flann/miniflann.hpp \
  /usr/local/include/opencv4/opencv2/flann/defines.h \
  /usr/local/include/opencv4/opencv2/flann/config.h \
- /usr/local/include/opencv4/opencv2/xfeatures2d/nonfree.hpp \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/debugCPP.h \
- /usr/local/include/opencv4/opencv2/opencv.hpp \
- /usr/local/include/opencv4/opencv2/calib3d.hpp \
  /usr/local/include/opencv4/opencv2/core/affine.hpp \
  /usr/local/include/opencv4/opencv2/dnn.hpp \
  /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
@@ -398,4 +396,10 @@ CMakeFiles/camera_motion.dir/src/camera_motion.cpp.o: \
  /usr/local/include/librealsense2/hpp/rs_pipeline.hpp \
  /usr/local/include/librealsense2/hpp/rs_context.hpp \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/cv-helpers.hpp \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/rs_motion.h
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/rs_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/globals.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/rs_camera.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/localization.h \
+ /usr/include/c++/9/thread /usr/include/c++/9/future \
+ /usr/include/c++/9/condition_variable /usr/include/c++/9/atomic \
+ /usr/include/c++/9/bits/atomic_futex.h

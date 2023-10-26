@@ -1,6 +1,7 @@
-CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/camera_motion.cpp \
+CMakeFiles/camera_motion.dir/src/localization.cpp.o: \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/src/localization.cpp \
  /usr/include/stdc-predef.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/localization.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/camera_motion.h \
  /usr/local/include/opencv4/opencv2/core.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
@@ -224,7 +225,6 @@ CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: \
  /usr/local/include/opencv4/opencv2/core/optim.hpp \
  /usr/local/include/opencv4/opencv2/core/ovx.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/debugCPP.h \
  /usr/local/include/opencv4/opencv2/opencv.hpp \
  /usr/local/include/opencv4/opencv2/calib3d.hpp \
  /usr/local/include/opencv4/opencv2/features2d.hpp \
@@ -395,10 +395,4 @@ CMakeFiles/arml_cpp.dir/src/camera_motion.cpp.o: \
  /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
  /usr/local/include/librealsense2/hpp/rs_pipeline.hpp \
  /usr/local/include/librealsense2/hpp/rs_context.hpp \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/cv-helpers.hpp \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/rs_motion.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/globals.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/localization.h \
- /usr/include/c++/9/thread /usr/include/c++/9/future \
- /usr/include/c++/9/condition_variable /usr/include/c++/9/atomic \
- /usr/include/c++/9/bits/atomic_futex.h
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/include/globals.h

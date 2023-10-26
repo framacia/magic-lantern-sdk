@@ -83,12 +83,12 @@ clean: CMakeFiles/arml_cpp.dir/clean
 CMakeFiles/camera_motion.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=3,4,5 "Built target camera_motion"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles --progress-num=3,4,5,6,7,8 "Built target camera_motion"
 .PHONY : CMakeFiles/camera_motion.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/camera_motion.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/camera_motion.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 0
 .PHONY : CMakeFiles/camera_motion.dir/rule
@@ -114,7 +114,7 @@ CMakeFiles/arml_cpp.dir/all: CMakeFiles/camera_motion.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/arml_cpp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/arml_cpp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/build/CMakeFiles 0
 .PHONY : CMakeFiles/arml_cpp.dir/rule

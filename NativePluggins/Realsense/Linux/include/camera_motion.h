@@ -2,7 +2,7 @@
 #define CAMERA_MOTION_H
 
 #include <opencv2/core.hpp>
-#include <opencv2/xfeatures2d.hpp>
+// #include <opencv2/xfeatures2d.hpp>
 #include <vector>
 
 
@@ -83,6 +83,10 @@ struct CameraConfig {
     int maxGoodFeatures;
 };
 
+void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches);
+
+void matchingAndFilteringByDistance(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1Filtered, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
+
 std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone);
 
 void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
@@ -90,8 +94,8 @@ void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Ma
 void computeC2MC1(const cv::Mat &R1, const cv::Mat &tvec1, const cv::Mat &R2, const cv::Mat &tvec2,
                   cv::Mat &R_1to2, cv::Mat &tvec_1to2);
 
-int findBestMatchingKeyframe(const cv::Mat& descriptors1, std::vector<cv::DMatch>& goodMatches,
-                             std::vector<std::vector<cv::DMatch>>& matches, cv::DescriptorMatcher& matcher);
+// int findBestMatchingKeyframe(const cv::Mat& descriptors1, std::vector<cv::DMatch>& goodMatches,
+//                              std::vector<std::vector<cv::DMatch>>& matches);
 void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 
 
