@@ -3,10 +3,10 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.107:5555",
         "name": "com.UPF.ARML",
-        "processId": 2100,
+        "processId": 29087,
         "exited": false
     },
-    "m_SelectedPriority": 4,
+    "m_SelectedPriority": 2,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
@@ -179,49 +179,43 @@
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 2299,
+            "processId": 16887,
             "exited": true
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 2325,
+            "processId": 17604,
             "exited": true
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 3813,
+            "processId": 27422,
             "exited": true
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 2700,
+            "processId": 27925,
             "exited": true
         },
         {
             "deviceId": "192.168.121.107:5555",
-            "name": "com.rockchips.android.leanbacklauncher",
-            "processId": 1179,
+            "name": "com.UPF.ARML",
+            "processId": 28105,
             "exited": false
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 12966,
+            "processId": 28593,
             "exited": false
         },
         {
             "deviceId": "192.168.121.107:5555",
             "name": "com.UPF.ARML",
-            "processId": 6331,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.107:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2100,
+            "processId": 29087,
             "exited": false
         }
     ],
@@ -253,7 +247,7 @@
             },
             {
                 "m_Name": "CRASH",
-                "m_Selected": false
+                "m_Selected": true
             }
         ]
     },
