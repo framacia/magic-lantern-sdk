@@ -164,6 +164,7 @@ public class RealSenseController : MonoBehaviour
         //#if !UNITY_EDITOR
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
+
         // Initialize the RealSense camera when the script starts
         if (useRecord)
         {
@@ -260,9 +261,24 @@ public class RealSenseController : MonoBehaviour
     {
         while (!isStopped)
         {
+            //if (resetEvent == null)
+            //{
+            //    continue;
+            //}
+
             resetEvent.WaitOne(); //Why this??
+
+            Debug.Log("Hola");
+
             // Get and use the depth value at the center of the image
-            findFeatures();
+            try
+            {
+                findFeatures();
+            }
+            catch
+            {
+                Debug.LogError("Error in find festures");
+            }
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(translationVector[0], -translationVector[1], translationVector[2]);
@@ -278,7 +294,6 @@ public class RealSenseController : MonoBehaviour
 
     private void OnDestroy()
     {
-
         isStopped = true;
         resetEvent.Set(); // Signal the thread to exit
         trackingThread.Join(); // Wait for the thread to finish
