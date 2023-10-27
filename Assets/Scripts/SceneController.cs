@@ -61,6 +61,13 @@ public class SceneController : MonoBehaviour
 
     public IEnumerator LoadSceneByReference(string scene)
     {
+        // If Game Scene is already loaded, return
+        if (SceneManager.GetActiveScene().name == scene)
+        {
+            Debug.Log($"Scene {scene} already loaded");
+            yield break;
+        }
+
         //Fade to Black
         if (fadeToBlackBetweenLoads)
         {
@@ -83,6 +90,9 @@ public class SceneController : MonoBehaviour
         //SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
         Debug.Log($"Finished loading scene {scene} and set as active");
+
+        //Set Camera transform to Scene Origin 
+        FindObjectOfType<CameraParentController>()?.MoveToSceneOrigin();
 
         //Fade back to game
         if (fadeToBlackBetweenLoads)

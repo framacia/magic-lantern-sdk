@@ -136,6 +136,5 @@ public class DogAgentController : MonoBehaviour
     {
         anim.SetTrigger("bark");
         actionFeedback.PlayRandomTriggerFeedback();
-        print("Bark!");
     }
 }

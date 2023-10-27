@@ -19,7 +19,8 @@
 
   <application>
     <activity android:name="com.unity3d.player.UnityPlayerActivity"
-              android:theme="@style/UnityThemeSelector">
+              android:theme="@style/UnityThemeSelector"
+              android:extractNativeLibs="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

@@ -34,6 +34,7 @@ public class CameraParentController : MonoBehaviour
     {
         Invoke("DelayedStart", 0.5f);
         DontDestroyOnLoad(gameObject.transform.parent);
+        MoveToSceneOrigin();
     }
 
     private void DelayedStart()
@@ -96,6 +97,17 @@ public class CameraParentController : MonoBehaviour
             //gameObject.transform.localPosition += new Vector3(Input.GetAxis("HorizontalArrow"), Input.GetAxis("VerticalArrow"), 0) * Time.deltaTime;
 
             gameObject.transform.localPosition += new Vector3(movementVector.x, 0, movementVector.z) * Time.deltaTime;
+        }
+    }
+
+    public void MoveToSceneOrigin()
+    {
+        Transform sceneOrigin = GameObject.Find("--ORIGIN--").transform;
+
+        if(sceneOrigin)
+        {
+            gameObject.transform.position = sceneOrigin.position;
+            gameObject.transform.rotation = sceneOrigin.rotation;
         }
     }
 }

@@ -41,13 +41,6 @@ namespace FranTest.GameBuilder
         {
             if(loadOnStart)
             {
-                // If Game Scene is already loaded, return
-                if (SceneManager.GetActiveScene().name == loadedGameSO.gameScene)
-                {
-                    Debug.Log($"Scene {loadedGameSO.gameScene} already loaded");
-                    return;
-                }
-
                 StartCoroutine(SceneController.Instance.LoadSceneByReference(loadedGameSO.gameScene));
                 loadOnStart = false;
             }

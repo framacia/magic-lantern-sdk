@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Fishmonger
   m_EditorClassIdentifier: 
   gameName: Fishmonger
+  gameScene:
+    m_SceneAsset: {fileID: 102900000, guid: 1424a98a6ff4fd24dbd639678efe0d6b, type: 3}
+    m_SceneName: GarumCart
+  lanternInitialTransform: {fileID: 0}
   levels: []
   highScores: []
   usesScores: 0
+  isEncrypted: 0

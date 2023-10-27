@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "192.168.121.107:5555",
+    "m_SelectedDeviceId": "192.168.121.101:5555",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -211,6 +211,60 @@
             "name": "com.UPF.ARML",
             "processId": 4984,
             "exited": false
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2214,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3493,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.107:5555",
+            "name": "com.UPF.ARML",
+            "processId": 6097,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1235,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.UPF.ARML",
+            "processId": 1938,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2182,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2031,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1146,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.UPF.ARML",
+            "processId": 988,
+            "exited": false
         }
     ],
     "m_Tags": {
@@ -221,7 +275,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "",
@@ -237,11 +291,11 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "CRASH",
-                "m_Selected": true
+                "m_Selected": false
             }
         ]
     },
@@ -264,7 +318,7 @@
         "Behavior": 0
     },
     "m_FilterOptions": {
-        "m_Filter": "",
+        "m_Filter": "arml",
         "m_UseRegularExpressions": true,
         "m_MatchCase": false
     },
