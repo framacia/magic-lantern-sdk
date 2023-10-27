@@ -145,6 +145,8 @@ extern "C" {
     const uchar* getJpegBuffer(int* bufferSize);	
 
     void resetOdom();
+
+    void addKeyframe();
     
     
     

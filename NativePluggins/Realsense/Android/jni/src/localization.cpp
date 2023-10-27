@@ -30,7 +30,8 @@ int findBestMatchingKeyframe(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1
         const auto& kpKeyframe = container.getKeyframe(bestKeyframeId)->getKeypoints();
         std::vector<cv::DMatch> best_matches;
         bestMatchesFilter(goodMatches, best_matches);
-        for (const cv::DMatch &match : best_matches) {
+        if (!best_matches.empty()){
+             for (const cv::DMatch &match : best_matches) {
             pts1.push_back(kp1Filtered[match.queryIdx].pt);
             pts2.push_back(kpKeyframe[match.trainIdx].pt);
             circle(imageFeatures, pts2.back(), 1, cv::Scalar(255, 0, 0), 1);
@@ -38,6 +39,8 @@ int findBestMatchingKeyframe(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1
             cv::Point2f pt2 = pts2.back();
             line(imageFeatures, pt1, pt2, cv::Scalar(255, 0, 0), 1);
         }
+        }
+       
     }
 
     return bestKeyframeId;

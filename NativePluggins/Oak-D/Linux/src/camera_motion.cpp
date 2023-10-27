@@ -553,7 +553,6 @@ void setParams(CameraConfig config) {
 void addNewKeyFrame() {
     t_f = cv::Mat::zeros(3, 1, CV_64F);
 }
-
 // extern "C" const uchar* getJpegBuffer(int frameType, int* bufferSize) {
 
 //     std::vector<uchar> jpegBuffer;
@@ -707,4 +706,5 @@ void addNewKeyFrame() {
 //     cleanupCamera();
 //     return 0;
 // }
+
 

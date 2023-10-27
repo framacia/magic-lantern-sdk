@@ -13,6 +13,7 @@ std::vector<cv::KeyPoint> prevFeatures;
 cv::Mat prevDescriptors;
 cv::Mat t_f =  cv::Mat::zeros(3, 1, CV_64F);
 cv::Mat imageFeatures;
+
 KeyframeContainer container;
 
 int no_move_counter = 0;

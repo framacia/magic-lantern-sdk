@@ -44,10 +44,19 @@ void RealSenseCamera::initImu() {
 }
 
 void RealSenseCamera::cleanupCamera() {
-    pipeline.stop();
-    imu_pipeline.stop();
-    std::string message = "Memory resources cleaned up!";
-    Debug::Log(message, Color::Red);
+    try
+    {
+        pipeline.stop();
+        imu_pipeline.stop();
+        std::string message = "Camera pipelines stopped!";
+        Debug::Log(message, Color::Red);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n' << std::endl;
+    }
+    
+    
 }
 
 void RealSenseCamera::bagFileStreamConfig(const char* bagFileAddress) {

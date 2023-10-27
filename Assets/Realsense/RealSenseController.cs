@@ -79,6 +79,9 @@ public class RealSenseController : MonoBehaviour
     private static extern void resetOdom();
 
     [DllImport(PLUGIN_NAME)]
+    private static extern void addKeyframe();
+
+    [DllImport(PLUGIN_NAME)]
     private static extern IntPtr getJpegBuffer(out int bufferSize);
 
     public static byte[] GetJpegBuffer(out int bufferSize)
@@ -158,6 +161,7 @@ public class RealSenseController : MonoBehaviour
     AutoResetEvent resetEvent;
     float angleX;
     bool reset_odom = false;
+    bool add_keyframe = false;
 
     private void Start()
     {
@@ -251,6 +255,12 @@ public class RealSenseController : MonoBehaviour
             reset_odom = true;
         }
 
+        // if (Input.GetKeyDown(keyCode.space))
+        // {
+        //     Debug.Log("Trying to add Keyframe...");
+        //     add_Keyframe = true;
+        // }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -274,6 +284,12 @@ public class RealSenseController : MonoBehaviour
                 resetOdom();
                 reset_odom = false;
             }
+
+            // if (add_keyframe == true)
+            // {
+            //     addKeyframe();
+            //     add_keyframe = false;
+            // }
         }
     }
 

@@ -207,6 +207,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.739
       objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: noMovementThresh
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: orbEdgeThreshold
+      value: 19
+      objectReference: {fileID: 0}
     - target: {fileID: 7400952994930251935, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
