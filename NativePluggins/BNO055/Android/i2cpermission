@@ -1,3 +1,4 @@
+adb root
 adb shell
 cd /vendor/etc
 mount -o remount,rw /vendor
