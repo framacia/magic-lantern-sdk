@@ -1,0 +1,37 @@
+// Containers
+
+.ds-node__extension-container
+{
+	background-color: #1D1D1E;
+	padding: 8px;
+}
+
+.ds-node__custom-data-Containers
+{
+	background-color: #212325;
+	border-radius: 4px;
+	padding: 8px;
+}
+
+// Inputs
+.ds-node__textfield > .unity-text-field__input
+{
+	background-color: #1D1D1E;
+	border-color: #27292C;
+	border-radius: 4px;
+	max-width: 240px;
+	min-width: 160px;
+	padding: 8px;
+}
+
+.ds-nod__textfield__hidden > .unity-text-field__input
+{
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.ds-nod__textfield__hidden > .unity-text-field__input:focus
+{
+	background-color: transparent;
+	border-color: transparent;
+}
