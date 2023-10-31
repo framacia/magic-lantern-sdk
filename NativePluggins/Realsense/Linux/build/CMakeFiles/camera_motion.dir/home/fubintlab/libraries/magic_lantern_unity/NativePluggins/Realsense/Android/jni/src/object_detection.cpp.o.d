@@ -1,8 +1,7 @@
-CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/localization.cpp.o: \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/localization.cpp \
+CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/object_detection.cpp.o: \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/object_detection.cpp \
  /usr/include/stdc-predef.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/localization.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/camera_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/globals.h \
  /usr/local/include/opencv4/opencv2/core.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
  /usr/lib/gcc/x86_64-linux-gnu/9/include/limits.h \
@@ -225,12 +224,185 @@ CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/Native
  /usr/local/include/opencv4/opencv2/core/optim.hpp \
  /usr/local/include/opencv4/opencv2/core/ovx.hpp \
  /usr/local/include/opencv4/opencv2/core/cvdef.h \
+ /usr/local/include/opencv4/opencv2/opencv.hpp \
+ /usr/local/include/opencv4/opencv2/calib3d.hpp \
+ /usr/local/include/opencv4/opencv2/features2d.hpp \
+ /usr/local/include/opencv4/opencv2/flann/miniflann.hpp \
+ /usr/local/include/opencv4/opencv2/flann/defines.h \
+ /usr/local/include/opencv4/opencv2/flann/config.h \
+ /usr/local/include/opencv4/opencv2/core/affine.hpp \
+ /usr/local/include/opencv4/opencv2/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/core/async.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/version.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dict.hpp /usr/include/c++/9/map \
+ /usr/include/c++/9/bits/stl_tree.h /usr/include/c++/9/bits/stl_map.h \
+ /usr/include/c++/9/bits/stl_multimap.h \
+ /usr/include/c++/9/bits/erase_if.h \
+ /usr/local/include/opencv4/opencv2/dnn/layer.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.inl.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
+ /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
+ /usr/local/include/opencv4/opencv2/flann.hpp \
+ /usr/local/include/opencv4/opencv2/flann/flann_base.hpp \
+ /usr/include/c++/9/cassert \
+ /usr/local/include/opencv4/opencv2/flann/general.h \
+ /usr/local/include/opencv4/opencv2/flann/matrix.h \
+ /usr/local/include/opencv4/opencv2/flann/params.h \
+ /usr/local/include/opencv4/opencv2/flann/any.h \
+ /usr/local/include/opencv4/opencv2/flann/defines.h \
+ /usr/include/c++/9/iostream \
+ /usr/local/include/opencv4/opencv2/flann/saving.h \
+ /usr/local/include/opencv4/opencv2/flann/nn_index.h \
+ /usr/local/include/opencv4/opencv2/flann/result_set.h \
+ /usr/include/c++/9/set /usr/include/c++/9/bits/stl_set.h \
+ /usr/include/c++/9/bits/stl_multiset.h \
+ /usr/local/include/opencv4/opencv2/flann/all_indices.h \
+ /usr/local/include/opencv4/opencv2/flann/kdtree_index.h \
+ /usr/local/include/opencv4/opencv2/flann/dynamic_bitset.h \
+ /usr/local/include/opencv4/opencv2/flann/dist.h \
+ /usr/local/include/opencv4/opencv2/flann/heap.h \
+ /usr/local/include/opencv4/opencv2/flann/allocator.h \
+ /usr/local/include/opencv4/opencv2/flann/random.h \
+ /usr/local/include/opencv4/opencv2/flann/kdtree_single_index.h \
+ /usr/local/include/opencv4/opencv2/flann/kmeans_index.h \
+ /usr/local/include/opencv4/opencv2/flann/logger.h \
+ /usr/local/include/opencv4/opencv2/flann/composite_index.h \
+ /usr/local/include/opencv4/opencv2/flann/linear_index.h \
+ /usr/local/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
+ /usr/local/include/opencv4/opencv2/flann/lsh_index.h \
+ /usr/local/include/opencv4/opencv2/flann/lsh_table.h \
+ /usr/include/c++/9/iomanip /usr/include/c++/9/locale \
+ /usr/include/c++/9/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/9/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/9/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/9/bits/codecvt.h \
+ /usr/include/c++/9/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/9/bits/locale_conv.h /usr/include/c++/9/unordered_map \
+ /usr/include/c++/9/bits/hashtable.h \
+ /usr/include/c++/9/bits/hashtable_policy.h \
+ /usr/include/c++/9/bits/unordered_map.h /usr/include/c++/9/math.h \
+ /usr/local/include/opencv4/opencv2/flann/autotuned_index.h \
+ /usr/local/include/opencv4/opencv2/flann/ground_truth.h \
+ /usr/local/include/opencv4/opencv2/flann/index_testing.h \
+ /usr/local/include/opencv4/opencv2/flann/timer.h \
+ /usr/local/include/opencv4/opencv2/flann/sampling.h \
+ /usr/local/include/opencv4/opencv2/highgui.hpp \
+ /usr/local/include/opencv4/opencv2/imgcodecs.hpp \
+ /usr/local/include/opencv4/opencv2/videoio.hpp \
+ /usr/local/include/opencv4/opencv2/imgproc.hpp \
+ /usr/local/include/opencv4/opencv2/ml.hpp \
+ /usr/local/include/opencv4/opencv2/ml/ml.inl.hpp \
+ /usr/local/include/opencv4/opencv2/objdetect.hpp \
+ /usr/local/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
+ /usr/local/include/opencv4/opencv2/photo.hpp \
+ /usr/local/include/opencv4/opencv2/shape.hpp \
+ /usr/local/include/opencv4/opencv2/shape/emdL1.hpp \
+ /usr/local/include/opencv4/opencv2/shape/shape_transformer.hpp \
+ /usr/local/include/opencv4/opencv2/shape/hist_cost.hpp \
+ /usr/local/include/opencv4/opencv2/shape/shape_distance.hpp \
+ /usr/local/include/opencv4/opencv2/stitching.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda_types.hpp \
+ /usr/local/include/opencv4/opencv2/core/cuda.inl.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/util.hpp \
+ /usr/include/c++/9/list /usr/include/c++/9/bits/stl_list.h \
+ /usr/include/c++/9/bits/list.tcc \
+ /usr/local/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
+ /usr/include/c++/9/queue /usr/include/c++/9/deque \
+ /usr/include/c++/9/bits/stl_deque.h /usr/include/c++/9/bits/deque.tcc \
+ /usr/include/c++/9/bits/stl_queue.h \
+ /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp \
+ /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
+ /usr/local/include/opencv4/opencv2/superres.hpp \
+ /usr/local/include/opencv4/opencv2/superres/optical_flow.hpp \
+ /usr/local/include/opencv4/opencv2/video.hpp \
+ /usr/local/include/opencv4/opencv2/video/tracking.hpp \
+ /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
+ /usr/local/include/opencv4/opencv2/videostab.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/stabilizer.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/global_motion.hpp \
+ /usr/include/c++/9/fstream \
+ /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h \
+ /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h \
+ /usr/include/c++/9/bits/fstream.tcc \
+ /usr/local/include/opencv4/opencv2/videostab/optical_flow.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/motion_core.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/outlier_rejection.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/motion_stabilizing.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/frame_source.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/log.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/inpainting.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/fast_marching.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/fast_marching_inl.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/deblurring.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/wobble_suppression.hpp \
+ /usr/local/include/opencv4/opencv2/videostab/ring_buffer.hpp \
+ /usr/local/include/opencv4/opencv2/viz.hpp \
+ /usr/local/include/opencv4/opencv2/viz/types.hpp \
+ /usr/local/include/opencv4/opencv2/viz/widgets.hpp \
+ /usr/local/include/opencv4/opencv2/viz/viz3d.hpp \
+ /usr/local/include/opencv4/opencv2/viz/vizcore.hpp \
+ /usr/local/include/librealsense2/rs.hpp \
+ /usr/local/include/librealsense2/rs.h \
+ /usr/local/include/librealsense2/rsutil.h \
+ /usr/lib/gcc/x86_64-linux-gnu/9/include/stdbool.h \
+ /usr/local/include/librealsense2/h/rs_types.h \
+ /usr/local/include/librealsense2/h/rs_sensor.h \
+ /usr/local/include/librealsense2/h/rs_types.h \
+ /usr/local/include/librealsense2/h/rs_context.h \
+ /usr/local/include/librealsense2/h/rs_device.h \
+ /usr/local/include/librealsense2/h/rs_sensor.h \
+ /usr/local/include/librealsense2/h/rs_frame.h \
+ /usr/local/include/librealsense2/h/rs_option.h \
+ /usr/local/include/librealsense2/h/rs_processing.h \
+ /usr/local/include/librealsense2/h/rs_option.h \
+ /usr/local/include/librealsense2/h/rs_record_playback.h \
+ /usr/local/include/librealsense2/hpp/rs_types.hpp \
+ /usr/local/include/librealsense2/rs.h \
+ /usr/local/include/librealsense2/h/rs_context.h \
+ /usr/local/include/librealsense2/h/rs_device.h \
+ /usr/local/include/librealsense2/h/rs_frame.h \
+ /usr/local/include/librealsense2/h/rs_processing.h \
+ /usr/local/include/librealsense2/h/rs_record_playback.h \
+ /usr/local/include/librealsense2/h/rs_sensor.h \
+ /usr/local/include/librealsense2/h/rs_pipeline.h \
+ /usr/local/include/librealsense2/h/rs_config.h \
+ /usr/include/c++/9/iterator /usr/include/c++/9/bits/stream_iterator.h \
+ /usr/local/include/librealsense2/hpp/rs_context.hpp \
+ /usr/local/include/librealsense2/hpp/rs_types.hpp \
+ /usr/local/include/librealsense2/hpp/rs_record_playback.hpp \
+ /usr/local/include/librealsense2/hpp/rs_device.hpp \
+ /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
+ /usr/local/include/librealsense2/hpp/rs_frame.hpp \
+ /usr/local/include/librealsense2/hpp/rs_processing.hpp \
+ /usr/local/include/librealsense2/hpp/rs_options.hpp \
+ /usr/local/include/librealsense2/hpp/rs_device.hpp \
+ /usr/local/include/librealsense2/hpp/rs_frame.hpp \
+ /usr/local/include/librealsense2/hpp/rs_processing.hpp \
+ /usr/local/include/librealsense2/hpp/rs_record_playback.hpp \
+ /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
+ /usr/local/include/librealsense2/hpp/rs_pipeline.hpp \
+ /usr/local/include/librealsense2/hpp/rs_context.hpp \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/rs_camera.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/debugCPP.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/rs_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/camera_motion.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/Core \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/DisableStupidWarnings.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/Macros.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/ConfigureVectorization.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/MKL_support.h \
- /usr/include/c++/9/cassert \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/Constants.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/Meta.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Core/util/ForwardDeclarations.h \
@@ -400,177 +572,5 @@ CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/Native
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Geometry/AlignedBox.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Geometry/Umeyama.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/Eigen/src/Geometry/arch/Geometry_SIMD.h \
- /usr/local/include/opencv4/opencv2/opencv.hpp \
- /usr/local/include/opencv4/opencv2/calib3d.hpp \
- /usr/local/include/opencv4/opencv2/features2d.hpp \
- /usr/local/include/opencv4/opencv2/flann/miniflann.hpp \
- /usr/local/include/opencv4/opencv2/flann/defines.h \
- /usr/local/include/opencv4/opencv2/flann/config.h \
- /usr/local/include/opencv4/opencv2/core/affine.hpp \
- /usr/local/include/opencv4/opencv2/dnn.hpp \
- /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/local/include/opencv4/opencv2/core/async.hpp \
- /usr/local/include/opencv4/opencv2/dnn/version.hpp \
- /usr/local/include/opencv4/opencv2/dnn/dict.hpp /usr/include/c++/9/map \
- /usr/include/c++/9/bits/stl_tree.h /usr/include/c++/9/bits/stl_map.h \
- /usr/include/c++/9/bits/stl_multimap.h \
- /usr/include/c++/9/bits/erase_if.h \
- /usr/local/include/opencv4/opencv2/dnn/layer.hpp \
- /usr/local/include/opencv4/opencv2/dnn/dnn.inl.hpp \
- /usr/local/include/opencv4/opencv2/dnn/utils/inference_engine.hpp \
- /usr/local/include/opencv4/opencv2/dnn/dnn.hpp \
- /usr/local/include/opencv4/opencv2/flann.hpp \
- /usr/local/include/opencv4/opencv2/flann/flann_base.hpp \
- /usr/local/include/opencv4/opencv2/flann/general.h \
- /usr/local/include/opencv4/opencv2/flann/matrix.h \
- /usr/local/include/opencv4/opencv2/flann/params.h \
- /usr/local/include/opencv4/opencv2/flann/any.h \
- /usr/local/include/opencv4/opencv2/flann/defines.h \
- /usr/include/c++/9/iostream \
- /usr/local/include/opencv4/opencv2/flann/saving.h \
- /usr/local/include/opencv4/opencv2/flann/nn_index.h \
- /usr/local/include/opencv4/opencv2/flann/result_set.h \
- /usr/include/c++/9/set /usr/include/c++/9/bits/stl_set.h \
- /usr/include/c++/9/bits/stl_multiset.h \
- /usr/local/include/opencv4/opencv2/flann/all_indices.h \
- /usr/local/include/opencv4/opencv2/flann/kdtree_index.h \
- /usr/local/include/opencv4/opencv2/flann/dynamic_bitset.h \
- /usr/local/include/opencv4/opencv2/flann/dist.h \
- /usr/local/include/opencv4/opencv2/flann/heap.h \
- /usr/local/include/opencv4/opencv2/flann/allocator.h \
- /usr/local/include/opencv4/opencv2/flann/random.h \
- /usr/local/include/opencv4/opencv2/flann/kdtree_single_index.h \
- /usr/local/include/opencv4/opencv2/flann/kmeans_index.h \
- /usr/local/include/opencv4/opencv2/flann/logger.h \
- /usr/local/include/opencv4/opencv2/flann/composite_index.h \
- /usr/local/include/opencv4/opencv2/flann/linear_index.h \
- /usr/local/include/opencv4/opencv2/flann/hierarchical_clustering_index.h \
- /usr/local/include/opencv4/opencv2/flann/lsh_index.h \
- /usr/local/include/opencv4/opencv2/flann/lsh_table.h \
- /usr/include/c++/9/iomanip /usr/include/c++/9/locale \
- /usr/include/c++/9/bits/locale_facets_nonio.h \
- /usr/include/x86_64-linux-gnu/c++/9/bits/time_members.h \
- /usr/include/x86_64-linux-gnu/c++/9/bits/messages_members.h \
- /usr/include/libintl.h /usr/include/c++/9/bits/codecvt.h \
- /usr/include/c++/9/bits/locale_facets_nonio.tcc \
- /usr/include/c++/9/bits/locale_conv.h /usr/include/c++/9/unordered_map \
- /usr/include/c++/9/bits/hashtable.h \
- /usr/include/c++/9/bits/hashtable_policy.h \
- /usr/include/c++/9/bits/unordered_map.h /usr/include/c++/9/math.h \
- /usr/local/include/opencv4/opencv2/flann/autotuned_index.h \
- /usr/local/include/opencv4/opencv2/flann/ground_truth.h \
- /usr/local/include/opencv4/opencv2/flann/index_testing.h \
- /usr/local/include/opencv4/opencv2/flann/timer.h \
- /usr/local/include/opencv4/opencv2/flann/sampling.h \
- /usr/local/include/opencv4/opencv2/highgui.hpp \
- /usr/local/include/opencv4/opencv2/imgcodecs.hpp \
- /usr/local/include/opencv4/opencv2/videoio.hpp \
- /usr/local/include/opencv4/opencv2/imgproc.hpp \
- /usr/local/include/opencv4/opencv2/ml.hpp \
- /usr/local/include/opencv4/opencv2/ml/ml.inl.hpp \
- /usr/local/include/opencv4/opencv2/objdetect.hpp \
- /usr/local/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp \
- /usr/local/include/opencv4/opencv2/photo.hpp \
- /usr/local/include/opencv4/opencv2/shape.hpp \
- /usr/local/include/opencv4/opencv2/shape/emdL1.hpp \
- /usr/local/include/opencv4/opencv2/shape/shape_transformer.hpp \
- /usr/local/include/opencv4/opencv2/shape/hist_cost.hpp \
- /usr/local/include/opencv4/opencv2/shape/shape_distance.hpp \
- /usr/local/include/opencv4/opencv2/stitching.hpp \
- /usr/local/include/opencv4/opencv2/stitching/warpers.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/local/include/opencv4/opencv2/core/cuda.hpp \
- /usr/local/include/opencv4/opencv2/core/cuda_types.hpp \
- /usr/local/include/opencv4/opencv2/core/cuda.inl.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/warpers_inl.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/warpers.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/motion_estimators.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/matchers.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/util.hpp \
- /usr/include/c++/9/list /usr/include/c++/9/bits/stl_list.h \
- /usr/include/c++/9/bits/list.tcc \
- /usr/local/include/opencv4/opencv2/stitching/detail/util_inl.hpp \
- /usr/include/c++/9/queue /usr/include/c++/9/deque \
- /usr/include/c++/9/bits/stl_deque.h /usr/include/c++/9/bits/deque.tcc \
- /usr/include/c++/9/bits/stl_queue.h \
- /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/exposure_compensate.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/seam_finders.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp \
- /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp \
- /usr/local/include/opencv4/opencv2/superres.hpp \
- /usr/local/include/opencv4/opencv2/superres/optical_flow.hpp \
- /usr/local/include/opencv4/opencv2/video.hpp \
- /usr/local/include/opencv4/opencv2/video/tracking.hpp \
- /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
- /usr/local/include/opencv4/opencv2/videostab.hpp \
- /usr/local/include/opencv4/opencv2/videostab/stabilizer.hpp \
- /usr/local/include/opencv4/opencv2/videostab/global_motion.hpp \
- /usr/include/c++/9/fstream \
- /usr/include/x86_64-linux-gnu/c++/9/bits/basic_file.h \
- /usr/include/x86_64-linux-gnu/c++/9/bits/c++io.h \
- /usr/include/c++/9/bits/fstream.tcc \
- /usr/local/include/opencv4/opencv2/videostab/optical_flow.hpp \
- /usr/local/include/opencv4/opencv2/videostab/motion_core.hpp \
- /usr/local/include/opencv4/opencv2/videostab/outlier_rejection.hpp \
- /usr/local/include/opencv4/opencv2/videostab/motion_stabilizing.hpp \
- /usr/local/include/opencv4/opencv2/videostab/frame_source.hpp \
- /usr/local/include/opencv4/opencv2/videostab/log.hpp \
- /usr/local/include/opencv4/opencv2/videostab/inpainting.hpp \
- /usr/local/include/opencv4/opencv2/videostab/fast_marching.hpp \
- /usr/local/include/opencv4/opencv2/videostab/fast_marching_inl.hpp \
- /usr/local/include/opencv4/opencv2/videostab/deblurring.hpp \
- /usr/local/include/opencv4/opencv2/videostab/wobble_suppression.hpp \
- /usr/local/include/opencv4/opencv2/videostab/ring_buffer.hpp \
- /usr/local/include/opencv4/opencv2/viz.hpp \
- /usr/local/include/opencv4/opencv2/viz/types.hpp \
- /usr/local/include/opencv4/opencv2/viz/widgets.hpp \
- /usr/local/include/opencv4/opencv2/viz/viz3d.hpp \
- /usr/local/include/opencv4/opencv2/viz/vizcore.hpp \
- /usr/local/include/librealsense2/rs.hpp \
- /usr/local/include/librealsense2/rs.h \
- /usr/local/include/librealsense2/rsutil.h \
- /usr/lib/gcc/x86_64-linux-gnu/9/include/stdbool.h \
- /usr/local/include/librealsense2/h/rs_types.h \
- /usr/local/include/librealsense2/h/rs_sensor.h \
- /usr/local/include/librealsense2/h/rs_types.h \
- /usr/local/include/librealsense2/h/rs_context.h \
- /usr/local/include/librealsense2/h/rs_device.h \
- /usr/local/include/librealsense2/h/rs_sensor.h \
- /usr/local/include/librealsense2/h/rs_frame.h \
- /usr/local/include/librealsense2/h/rs_option.h \
- /usr/local/include/librealsense2/h/rs_processing.h \
- /usr/local/include/librealsense2/h/rs_option.h \
- /usr/local/include/librealsense2/h/rs_record_playback.h \
- /usr/local/include/librealsense2/hpp/rs_types.hpp \
- /usr/local/include/librealsense2/rs.h \
- /usr/local/include/librealsense2/h/rs_context.h \
- /usr/local/include/librealsense2/h/rs_device.h \
- /usr/local/include/librealsense2/h/rs_frame.h \
- /usr/local/include/librealsense2/h/rs_processing.h \
- /usr/local/include/librealsense2/h/rs_record_playback.h \
- /usr/local/include/librealsense2/h/rs_sensor.h \
- /usr/local/include/librealsense2/h/rs_pipeline.h \
- /usr/local/include/librealsense2/h/rs_config.h \
- /usr/include/c++/9/iterator /usr/include/c++/9/bits/stream_iterator.h \
- /usr/local/include/librealsense2/hpp/rs_context.hpp \
- /usr/local/include/librealsense2/hpp/rs_types.hpp \
- /usr/local/include/librealsense2/hpp/rs_record_playback.hpp \
- /usr/local/include/librealsense2/hpp/rs_device.hpp \
- /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
- /usr/local/include/librealsense2/hpp/rs_frame.hpp \
- /usr/local/include/librealsense2/hpp/rs_processing.hpp \
- /usr/local/include/librealsense2/hpp/rs_options.hpp \
- /usr/local/include/librealsense2/hpp/rs_device.hpp \
- /usr/local/include/librealsense2/hpp/rs_frame.hpp \
- /usr/local/include/librealsense2/hpp/rs_processing.hpp \
- /usr/local/include/librealsense2/hpp/rs_record_playback.hpp \
- /usr/local/include/librealsense2/hpp/rs_sensor.hpp \
- /usr/local/include/librealsense2/hpp/rs_pipeline.hpp \
- /usr/local/include/librealsense2/hpp/rs_context.hpp \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/globals.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/rs_camera.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/debugCPP.h \
- /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/rs_motion.h \
+ /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/localization.h \
  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/../Android/jni/include/object_detection.h

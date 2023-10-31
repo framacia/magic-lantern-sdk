@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/globals.cpp.o.d"
   "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/localization.cpp.o"
   "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/localization.cpp.o.d"
+  "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/object_detection.cpp.o"
+  "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/object_detection.cpp.o.d"
   "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.cpp.o"
   "CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.cpp.o.d"
   "libcamera_motion.pdb"

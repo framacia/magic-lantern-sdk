@@ -2,6 +2,8 @@
 #include <debugCPP.h>
 #include <opencv2/opencv.hpp>
 #include <librealsense2/rs.hpp>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 #include "cv-helpers.hpp"
 #include <globals.h>
@@ -16,6 +18,20 @@
 float3 algoPrev;
 cv::Mat traj;
 std::vector<std::chrono::milliseconds> durations;
+
+// Dimensions for 640x480
+int sectionX = 180;
+int sectionY = 65;
+int sectionWidht = 325;
+int sectionHeight = 200;
+
+int keyFrameId = 0;
+// // Dimensions for 480x270
+// int sectionX = 150;
+// int sectionY = 25;
+// int sectionWidht = 200;
+// int sectionHeight = 130;
+
 
 void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches) {
     std::sort(goodMatches.begin(), goodMatches.end(), 
@@ -57,45 +73,46 @@ void matchingAndFilteringByDistance(cv::Mat descriptors1, std::vector<cv::KeyPoi
 }
 
 
-std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone) {
+void filterKeypointsByROI(std::vector<cv::KeyPoint> keypoints, cv::Mat descriptors, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Mat& filteredDescriptors, cv::Rect &zone) {
         for (size_t i = 0; i < keypoints.size(); i++) {
             if (zone.contains(keypoints[i].pt)) {
                 continue;
                 }
-            filteredKeypoints.push_back(keypoints[i]);  
+            filteredKeypoints.push_back(keypoints[i]);
+            filteredDescriptors.push_back(descriptors.row(i));  
         }
-        return filteredKeypoints;
 }
 
 
-void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1, std::vector<cv::KeyPoint>& filteredKeypoints) {
+void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1) {
     featureExtractor->detect(img, keypoints1);
+    featureDescriptor->compute(img, keypoints1, descriptors1);
     
-    // Dimensions for 640x480
-    int sectionX = 180;
-    int sectionY = 65;
-    int sectionWidht = 325;
-    int sectionHeight = 200;
+    // // Dimensions for 640x480
+    // int sectionX = 180;
+    // int sectionY = 65;
+    // int sectionWidht = 325;
+    // int sectionHeight = 200;
 
-    // // Dimensions for 480x270
-    // int sectionX = 150;
-    // int sectionY = 25;
-    // int sectionWidht = 200;
-    // int sectionHeight = 130;
+    // // // Dimensions for 480x270
+    // // int sectionX = 150;
+    // // int sectionY = 25;
+    // // int sectionWidht = 200;
+    // // int sectionHeight = 130;
 
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
-    filterKeypointsByROI(keypoints1, filteredKeypoints, seccionToFilter);
-    // std::cout << "keypoints filtered" << std::endl;
-    featureDescriptor->compute(img, filteredKeypoints, descriptors1);
+    // cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    // filterKeypointsByROI(keypoints1, filteredKeypoints, seccionToFilter);
+    // // std::cout << "keypoints filtered" << std::endl;
+    // featureDescriptor->compute(img, filteredKeypoints, descriptors1);
     
     // std::cout << "Nº features detected: " << keypoints1.size() << std::endl;
 }
 
-void computeC2MC1(const cv::Mat &R1, const cv::Mat &tvec1, const cv::Mat &R2, const cv::Mat &tvec2,
-                  cv::Mat &R_1to2, cv::Mat &tvec_1to2) {
-    R_1to2 = R2 * R1.t();
-    tvec_1to2 = R2 * (-R1.t()*tvec1) + tvec2;
-}
+// void computeC2MC1(const cv::Mat &R1, const cv::Mat &tvec1, const cv::Mat &R2, const cv::Mat &tvec2,
+//                   cv::Mat &R_1to2, cv::Mat &tvec_1to2) {
+//     R_1to2 = R2 * R1.t();
+//     tvec_1to2 = R2 * (-R1.t()*tvec1) + tvec2;
+// }
 
 void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat) {
     // cv::Mat improvedColorMat;
@@ -139,18 +156,46 @@ void firstIteration() {
 
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
+    
+    featureDetection(grayImage, kp1, descriptors1);
+
     std::vector<cv::KeyPoint> kp1Filtered;
-    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
+    cv::Mat descriptorsFiltered;
 
-    int id = 40;
-    std::shared_ptr<Keyframe> keyframe1 = std::make_shared<Keyframe>(id,
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    filterKeypointsByROI(kp1, descriptors1, kp1Filtered, descriptorsFiltered, seccionToFilter);
+
+    std::string imageName = "Null";
+    Eigen::Quaterniond relativeRot(1.0, 0.0, 0.0, 0.0);
+    Keyframe keyframe1(keyFrameId,
                                                                      grayImage.clone(),
-                                                                     descriptors1.clone(),
-                                                                     kp1Filtered, t_f.clone());
+                                                                     descriptorsFiltered.clone(),
+                                                                     kp1Filtered,
+                                                                     t_f.clone(),
+                                                                     imageName,
+                                                                     t_f.clone()
+                                                                    //  relativeRot
+                                                                     );
 
-    container.addKeyframe(keyframe1);
+
+                                                                
+                                                                   
+
+    container.addKeyframe(std::make_shared<Keyframe>(keyframe1));
+    keyFrameId += 1;
 }
 
+Eigen::Matrix3d cvMatToEigenMatrix(const cv::Mat& cvMat) {
+    Eigen::Matrix3d eigenMatrix;
+    
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            eigenMatrix(i, j) = cvMat.at<double>(i, j);
+        }
+    }
+
+    return eigenMatrix;
+}
 
 void findFeatures() {
     rs2::frameset frames = camera.waitForFrames();
@@ -172,36 +217,16 @@ void findFeatures() {
         return;
     }
     auto total_time1 = std::chrono::high_resolution_clock::now();
-    auto realsense_time1 = std::chrono::high_resolution_clock::now();
-    auto depth_profile = depth.get_profile().as<rs2::video_stream_profile>();
+
     auto colour_profile = colorFrame.get_profile().as<rs2::video_stream_profile>();
-    auto _depth_intrin = depth_profile.get_intrinsics();
-    auto _color_intrin = colour_profile.get_intrinsics();
-    auto depth_to_color_extrin = depth_profile.get_extrinsics_to(camera.getProfile().get_stream(RS2_STREAM_COLOR));
-    auto color_to_depth_extrin = colour_profile.get_extrinsics_to(camera.getProfile().get_stream(RS2_STREAM_DEPTH));
-    auto sensorAuto = camera.getProfile().get_device().first<rs2::depth_sensor>();
-    auto depth_scale = sensorAuto.get_depth_scale();
     int width = colour_profile.width();
     int height = colour_profile.height();
     
-    const void* depth_data = depth.get_data();
-    const uint16_t* depth_data_uint16 = reinterpret_cast<const uint16_t*>(depth_data);
 
-    auto realsense_time2 = std::chrono::high_resolution_clock::now();
-    auto realsense_duration = std::chrono::duration_cast<std::chrono::milliseconds>(realsense_time2 - realsense_time1);
-    // __android_log_print(ANDROID_LOG_INFO, "Unity", "Realsense Duration: %lld milliseconds", realsense_duration.count());
-    // std::string message1 = "The realsense duration time is: " + std::to_string(realsense_duration.count()) + " milliseconds";
-    // Debug::Log(message1, Color::Red);
-    
-    
     if (!(algoPrev.x == 0 && algoPrev.y == 0 && algoPrev.z == 0)) {
         float current_angleX = algo.get_theta().x - algoPrev.x;
         float current_angleY = algo.get_theta().y - algoPrev.y;
         float current_angleZ = algo.get_theta().z - algoPrev.z;
-
-        // std::cout << "current Angle X: " << current_angleX << std::endl;
-        // std::cout << "current Angle Y: " << current_angleY << std::endl;
-        // std::cout << "current Angle Z: " << current_angleZ << std::endl;
 
         if ((abs(current_angleX) > noMovementThresh && abs(current_angleY) > noMovementThresh && abs(current_angleZ) > noMovementThresh)) {
             no_move_counter = 0;
@@ -210,18 +235,8 @@ void findFeatures() {
         }
     }
 
-    cv::Mat cameraMatrix = (cv::Mat_<double>(3, 3) <<
-                                    static_cast<double>(_color_intrin.fx), 0.0, static_cast<double>(_color_intrin.ppx),
-                                    0.0, static_cast<double>(_color_intrin.fy), static_cast<double>(_color_intrin.ppy),
-                                    0.0, 0.0, 1.0);
-
-    cv::Mat distCoeffs = (cv::Mat_<double>(1, 5) << _color_intrin.coeffs[0],
-                                                    _color_intrin.coeffs[1],
-                                                    _color_intrin.coeffs[2],
-                                                    _color_intrin.coeffs[3],
-                                                    _color_intrin.coeffs[4]);
-
     colorMat = frame_to_mat(colorFrame);
+    imageFeatures = colorMat.clone();
 
     cv::Mat grayImage;
     preprocessImage(grayImage, colorMat);
@@ -229,8 +244,29 @@ void findFeatures() {
     auto feature_time1 = std::chrono::high_resolution_clock::now();
     std::vector<cv::KeyPoint> kp1;
     cv::Mat descriptors1;
+    
+    featureDetection(grayImage, kp1, descriptors1);
+    matcher = cv::makePtr<cv::FlannBasedMatcher>(new cv::flann::LshIndexParams(5, 20, 2));
+
+    std::vector<cv::Point2f> pts1Object, pts2Object;
+    int objectId = findObject(descriptors1, kp1, pts1Object, pts2Object);
+
+    // std::cout << "cantidad de imagenes restantes: " << objectContainer.getObjectCount() << std::endl;
+    std::string objectName;
+    if (objectId != -1) {
+        objectName = objectContainer.getObject(objectId)->getImageName();
+        // addKeyFrame = true;
+    } else {
+        // objectName = "No Object detected";
+    }
+    std::cout << objectName << std::endl;
     std::vector<cv::KeyPoint> kp1Filtered;
-    featureDetection(grayImage, kp1, descriptors1, kp1Filtered);
+    cv::Mat descriptorsFiltered;
+   
+    
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    filterKeypointsByROI(kp1, descriptors1, kp1Filtered, descriptorsFiltered, seccionToFilter);
+
         
     auto feature_time2 = std::chrono::high_resolution_clock::now();
     auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time2 - feature_time1);
@@ -238,7 +274,7 @@ void findFeatures() {
 
     // std::string message2 = "The feature duration time is: " + std::to_string(feature_duration.count()) + " milliseconds";
     // Debug::Log(message2, Color::Red);
-    imageFeatures = colorMat.clone();
+    
     cv::Mat t_prev = cv::Mat::zeros(3, 1, CV_64F);
     cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
     bool addTF = false;
@@ -273,7 +309,7 @@ void findFeatures() {
     if (!imgColorPrev.empty()) {
         // std::cout << "trying to match" << std::endl;
         auto matcher_time1 = std::chrono::high_resolution_clock::now();
-        matcher = cv::makePtr<cv::FlannBasedMatcher>(new cv::flann::LshIndexParams(5, 20, 2));
+        
         std::vector<cv::Point2f> pts1, pts2;
         std::vector<cv::Point2f> pts1Keyframe, pts2Keyframe;
         std::vector<cv::Point2f> pts1ToEstimate, pts2ToEstimate;
@@ -283,12 +319,15 @@ void findFeatures() {
         // std::cout << kp1Filtered.size() << " " << prevFeatures.size() << std::endl;
         if (kp1Filtered.size() >= 2 && prevFeatures.size() >= 2) {
             // if (frames_after_loop >= framesUntilLoopClosure) {
+            
             std::thread keyFrameThread([&]() {
-                bestKeyframeId = findBestMatchingKeyframe(descriptors1, kp1Filtered, pts1Keyframe, pts2Keyframe);
+                bestKeyframeId = findBestMatchingKeyframe(descriptorsFiltered, kp1Filtered, pts1Keyframe, pts2Keyframe);
                  });
-
-            matchingAndFilteringByDistance(descriptors1, kp1Filtered, pts1, pts2);
+            
+            matchingAndFilteringByDistance(descriptorsFiltered, kp1Filtered, pts1, pts2);
+           
             keyFrameThread.join();
+           
             // std::cout << "best KeyFrame Id: " << bestKeyframeId << std::endl;
             if (bestKeyframeId != -1) {
                 is_loop = true;
@@ -303,108 +342,79 @@ void findFeatures() {
             auto matcher_duration = std::chrono::duration_cast<std::chrono::milliseconds>(matcher_time2 - matcher_time1);
             // std::cout << "Matcher duration: " << matcher_duration.count() << " miliseconds" << std::endl;
             // __android_log_print(ANDROID_LOG_INFO, "Unity", "Matcher Duration: %lld milliseconds", matcher_duration.count());
-
+   
             auto transformation_time1 = std::chrono::high_resolution_clock::now();
-            std::vector<cv::Point2f> uImagePoints, vImagePoints;
-            std::vector<cv::Point3f> vObjectPoints;
-            if (pts1ToEstimate.size() >= 6 && pts2ToEstimate.size() >= 2) {
-                for (size_t i = 0; i < pts1ToEstimate.size(); ++i) {
-                float vPixel[2];
-                vPixel[0] = static_cast<float>(pts1ToEstimate[i].x);
-                vPixel[1] = static_cast<float>(pts1ToEstimate[i].y);
-                float vPixeldepth[2];
-                rs2_project_color_pixel_to_depth_pixel(vPixeldepth, depth_data_uint16, depth_scale, minDepth, maxDepth, &_depth_intrin, &_color_intrin, &depth_to_color_extrin, &color_to_depth_extrin, vPixel);
-                float vDepth = depth.get_distance(vPixeldepth[0], vPixeldepth[1]);
-                float vPoint[3];
-                rs2_deproject_pixel_to_point(vPoint, &_depth_intrin, vPixeldepth, vDepth);
-                float uPixel[2];
-                uPixel[0] = static_cast<float>(pts2ToEstimate[i].x);
-                uPixel[1] = static_cast<float>(pts2ToEstimate[i].y);
-                    if (vDepth > minDepth && vDepth < maxDepth) {
-                        vObjectPoints.push_back(cv::Point3f(vPoint[0], vPoint[1], vPoint[2]));
-                        vImagePoints.push_back(cv::Point2f(vPixel[0], vPixel[1]));
-                        uImagePoints.push_back(cv::Point2f(uPixel[0], uPixel[1]));
+            cv::Mat R_1to2Object, t_1to2Object;
+           
+              
+            translationCalc(pts1Object, pts1ToEstimate, t_1to2Object, R_1to2Object, colorFrame, depth);
+            std::cout << "translation: " << t_1to2Object << std::endl;
+            
+            cv::Mat R_1to2, t_1to2;
+            translationCalc(pts1ToEstimate, pts2ToEstimate, t_1to2, R_1to2, colorFrame, depth);
+            std::cout << "translation global: " << t_1to2 << std::endl;
+      
+            float distanceX = cv::norm(t_1to2.at<double>(0)-t_prev.at<double>(0));
+            float distanceY = cv::norm(t_1to2.at<double>(1)-t_prev.at<double>(1));
+            float distanceZ = cv::norm(t_1to2.at<double>(2)-t_prev.at<double>(2));
+            
+            if ((distanceX < maxDistanceF2F) && (distanceY < maxDistanceF2F) && (distanceZ < maxDistanceF2F)) {
+                
+                // cv::Mat rvec_1to2;
+                // cv::Rodrigues(R_1to2, rvec_1to2);
+                // if (is_loop && frames_after_loop >= framesUntilLoopClosure) {
+                Eigen::Matrix3d eigenRotationMatrix = cvMatToEigenMatrix(R_1to2);
+                // std::cout << "Eigen Rotation Matrix:\n" << eigenRotationMatrix << std::endl;
+
+                // Convert to quaternions
+                Eigen::Quaterniond quaternion(eigenRotationMatrix);
+                // std::cout << "Quaternion: " << quaternion.coeffs().transpose() << std::endl;
+
+                // Convert to Euler angles (Yaw, Pitch, Roll)
+                Eigen::Matrix3d eulerMatrix = eigenRotationMatrix;
+                Eigen::Vector3d euler = eulerMatrix.eulerAngles(2, 1, 0);  // Yaw, Pitch, Roll
+                // std::cout << "Euler Angles (radians): Roll=" << euler(2) << ", Pitch=" << euler(1) << ", Yaw=" << euler(0) << std::endl;
+                // std::cout << "translation: " << t_1to2 << std::endl;
+                if (is_loop) {
+                    if (no_move_counter <= framesNoMovement) {
+                        // frames_after_loop = 0;
+                        t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
+                        // std::cout << "In loop closure and moving" << std::endl;
+                    } else {
+                        // std::cout << "In loop Closure and not moving" << std::endl;
+                    }
+                } else {
+                    if (no_move_counter <= framesNoMovement) {
+                        t_f += t_1to2;
+                        // std::cout << "Camera is moving" << std::endl;
+                    } else {
+                        // std::cout << "Camera not moving" << std::endl;
                     }
                 }
-            }
-            cv::Mat tvec1, tvec2, rvec1, rvec2;
-            try {
-                if (vObjectPoints.size() >= min3DPoints && vImagePoints.size() >= min3DPoints && uImagePoints.size() >= min3DPoints) {
-                    cv::solvePnPRansac(vObjectPoints,
-                                        vImagePoints,
-                                        cameraMatrix,
-                                        distCoeffs,
-                                        rvec1,
-                                        tvec1,
-                                        false,
-                                        500,
-                                        8.0f,
-                                        0.99,
-                                        cv::noArray(),
-                                        cv::SOLVEPNP_ITERATIVE);
-                    cv::solvePnPRansac(vObjectPoints,
-                                        uImagePoints,
-                                        cameraMatrix,
-                                        distCoeffs,
-                                        rvec2,
-                                        tvec2,
-                                        false,
-                                        500,
-                                        8.0f,
-                                        0.99,
-                                        cv::noArray(),
-                                        cv::SOLVEPNP_ITERATIVE);
-
-                    cv::Mat R1, R2;
-                    cv::Rodrigues(rvec1, R1);
-                    cv::Rodrigues(rvec2, R2);
-
-                    cv::Mat R_1to2, t_1to2;
-                    computeC2MC1(R1, tvec1, R2, tvec2, R_1to2, t_1to2);
-
-                    float distanceX = cv::norm(t_1to2.at<double>(0)-t_prev.at<double>(0));
-                    float distanceY = cv::norm(t_1to2.at<double>(1)-t_prev.at<double>(1));
-                    float distanceZ = cv::norm(t_1to2.at<double>(2)-t_prev.at<double>(2));
-                    
-                    if ((distanceX < maxDistanceF2F) && (distanceY < maxDistanceF2F) && (distanceZ < maxDistanceF2F)) {
-                        cv::Mat rvec_1to2;
-                        cv::Rodrigues(R_1to2, rvec_1to2);
-                        // if (is_loop && frames_after_loop >= framesUntilLoopClosure) {
-                        if (is_loop) {
-                            if (no_move_counter <= framesNoMovement) {
-                                // frames_after_loop = 0;
-                                t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
-                                // std::cout << "In loop closure and moving" << std::endl;
-                            } else {
-                                // std::cout << "In loop Closure and not moving" << std::endl;
-                            }
-                        } else {
-                            if (no_move_counter <= framesNoMovement) {
-                                t_f += t_1to2;
-                                // std::cout << "Camera is moving" << std::endl;
-                            } else {
-                                // std::cout << "Camera not moving" << std::endl;
-                            }
-                        }
-                        if (addKeyFrame) {
-                            addKeyFrame = false;
-                            std::shared_ptr<Keyframe> keyframe2 = std::make_shared<Keyframe>(1,
-                                                                                            grayImage.clone(),
-                                                                                            descriptors1.clone(),
-                                                                                            kp1Filtered,
-                                                                                            t_f.clone());
-                            container.addKeyframe(keyframe2);
-                            // std::cout << "New KeyFrame Added" << std::endl;
-                            Debug::Log("New Keyframe Added", Color::Orange);
-                        }
-                        addTF = true;
-                    }   
+                if (addKeyFrame) {
+                   
+                    Keyframe keyframe2(keyFrameId,
+                                                                                    grayImage.clone(),
+                                                                                    descriptorsFiltered.clone(),
+                                                                                    kp1Filtered,
+                                                                                    t_f.clone(),
+                                                                                    objectContainer.getObject(objectId)->getImageName(),
+                                                                                    t_1to2Object
+                                                                                    );
+                    container.addKeyframe(std::make_shared<Keyframe>(keyframe2));
+                    keyFrameId += 1;
+                    addKeyFrame = false;
+                    // Search for the ID in the vector
+                    objectContainer.removeObjectByIndex(objectId);
+                    std::cout << "New KeyFrame Added" << std::endl;
+                    Debug::Log("New Keyframe Added", Color::Orange);
                 }
-            } catch (const cv::Exception& e) {
-                    std::cerr << "OpenCV Exception: " << e.what() << std::endl;
-                    std::string error_message =  "OpenCV Exception: " + std::string(e.what());
-                    Debug::Log(error_message, Color::Red);
+                // std::cout << "cantidad de keyframes: " << container.getKeyframeCount() << std::endl;
+                // std::cout << "cantidad de objetos por buscar: " << objectContainer.getObjectCount() << std::endl;
+                addTF = true;
+            // }   
             }
+          
             auto transformation_time2 = std::chrono::high_resolution_clock::now();
             auto transformation_duration = std::chrono::duration_cast<std::chrono::milliseconds>(transformation_time2 - transformation_time1);
             // __android_log_print(ANDROID_LOG_INFO, "Unity", "Transformation Duration: %lld milliseconds", transformation_duration.count());
@@ -413,7 +423,7 @@ void findFeatures() {
     }
     imgColorPrev = grayImage;
     prevFeatures = kp1Filtered;
-    prevDescriptors = descriptors1;
+    prevDescriptors = descriptorsFiltered;
     algoPrev = algo.get_theta();
     if (addTF) {
         t_prev = t_1to2;
@@ -426,11 +436,12 @@ void findFeatures() {
     #ifdef BUILD_EXECUTABLE
     int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
     int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
-    cv::circle(traj, cv::Point(x+ width / 2, y+height/2) ,1, CV_RGB(0,255,0), 2);
+    cv::circle(traj, cv::Point(-x+ width / 2, -y+height/2) ,1, CV_RGB(0,255,0), 2);
     // Put the text on the image
     std::string fps_text = std::to_string(total_duration.count()) + " ms";
    
     cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
+    cv::putText(colorMat, objectName, cv::Point(400, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
     
     int imageWidth = imageFeatures.cols;
     int imageHeight = imageFeatures.rows;
@@ -457,6 +468,64 @@ void findFeatures() {
     
 }
 
+float getDepthAtCenter()
+{
+    rs2::frameset frames = camera.waitForFrames();
+    if (!frames) {
+        Debug::Log("One or both frames are null", Color::Red);
+        return 0.0f;
+    }
+
+    rs2::frame colorFrame = frames.get_color_frame();
+    if (!colorFrame) {
+        Debug::Log("Color frame is null", Color::Red);
+        return 0.0f;
+    }
+
+    rs2::depth_frame depth = frames.get_depth_frame();
+
+    if (!depth) {
+        Debug::Log("Depth frame is null", Color::Red);
+        return 0.0f;
+    }
+
+    auto depth_profile = depth.get_profile().as<rs2::video_stream_profile>();
+    auto colour_profile = colorFrame.get_profile().as<rs2::video_stream_profile>();
+    auto _depth_intrin = depth_profile.get_intrinsics();
+    auto _color_intrin = colour_profile.get_intrinsics();
+    auto depth_to_color_extrin = depth_profile.get_extrinsics_to(camera.getProfile().get_stream(RS2_STREAM_COLOR));
+    auto color_to_depth_extrin = colour_profile.get_extrinsics_to(camera.getProfile().get_stream(RS2_STREAM_DEPTH));
+    auto sensorAuto = camera.getProfile().get_device().first<rs2::depth_sensor>();
+    auto depth_scale = sensorAuto.get_depth_scale();
+    int width = colour_profile.width();
+    int height = colour_profile.height();
+    
+    const void* depth_data = depth.get_data();
+    const uint16_t* depth_data_uint16 = reinterpret_cast<const uint16_t*>(depth_data);
+
+    cv::Mat cameraMatrix = (cv::Mat_<double>(3, 3) <<
+                                    static_cast<double>(_color_intrin.fx), 0.0, static_cast<double>(_color_intrin.ppx),
+                                    0.0, static_cast<double>(_color_intrin.fy), static_cast<double>(_color_intrin.ppy),
+                                    0.0, 0.0, 1.0);
+
+    cv::Mat distCoeffs = (cv::Mat_<double>(1, 5) << _color_intrin.coeffs[0],
+                                                    _color_intrin.coeffs[1],
+                                                    _color_intrin.coeffs[2],
+                                                    _color_intrin.coeffs[3],
+                                                    _color_intrin.coeffs[4]);
+    
+    int x = width / 2;
+    int y = height / 2;
+    float vPixel[2];
+    vPixel[0] = x;
+    vPixel[1] = y;
+    float vPixeldepth[2];
+    rs2_project_color_pixel_to_depth_pixel(vPixeldepth, depth_data_uint16, depth_scale, minDepth, maxDepth, &_depth_intrin, &_color_intrin, &depth_to_color_extrin, &color_to_depth_extrin, vPixel);
+    float vDepth = depth.get_distance(vPixeldepth[0], vPixeldepth[1]);
+    
+    return vDepth;
+            
+}
 
 void createORB(int nfeatures,
                float scaleFactor,
@@ -514,7 +583,7 @@ void GetCameraOrientation(float* cameraAngle) {
     cameraAngle[2] = static_cast<float>(-(algo.get_theta().z * 180 / PI_FL) - 90);
 }
 
-void setParams(CameraConfig config) {
+void setParams(systemConfig config) {
     ratioTresh = config.ratioTresh;
     minDepth = config.minDepth;
     maxDepth = config.maxDepth;
@@ -535,13 +604,13 @@ void addKeyframe() {
     addKeyFrame = true;
 }
 
-// extern "C" const uchar* getJpegBuffer(int* bufferSize) {
-//     std::vector<uchar> jpegBuffer;
-//     cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
-//     uchar* unityBuffer = new uchar[jpegBuffer.size()];
-//     memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
-//     *bufferSize = jpegBuffer.size();
+extern "C" const uchar* getJpegBuffer(int* bufferSize) {
+    std::vector<uchar> jpegBuffer;
+    cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
+    uchar* unityBuffer = new uchar[jpegBuffer.size()];
+    memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
+    *bufferSize = jpegBuffer.size();
 
-//     return unityBuffer;
-// }
+    return unityBuffer;
+}
 

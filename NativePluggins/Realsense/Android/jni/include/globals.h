@@ -8,6 +8,7 @@
 #include <rs_motion.h>
 #include <camera_motion.h>
 #include <localization.h>
+#include <object_detection.h>
 // #include <opencv2/xfeatures2d.hpp>
 #include <vector>
 
@@ -26,6 +27,7 @@ extern cv::Mat t_f;
 extern cv::Mat imageFeatures;
 
 extern KeyframeContainer container;
+extern ObjectContainer objectContainer;
 
 extern int no_move_counter;
 extern int frames_after_loop;

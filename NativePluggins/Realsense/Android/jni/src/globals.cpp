@@ -15,6 +15,7 @@ cv::Mat t_f =  cv::Mat::zeros(3, 1, CV_64F);
 cv::Mat imageFeatures;
 
 KeyframeContainer container;
+ObjectContainer objectContainer;
 
 int no_move_counter = 0;
 int frames_after_loop = 100;

@@ -13,7 +13,11 @@
 #include <iostream>
 #include <thread>
 
+
+
 #include <boost/program_options.hpp>
+
+
 
 int main(int argc, char const *argv[]) {
     bool record = false;
@@ -59,10 +63,10 @@ int main(int argc, char const *argv[]) {
     camera.initCamera();
     camera.initImu();
 
-    CameraConfig config;
+    systemConfig config;
     config.ratioTresh = 0.5;
     config.minDepth = 0.3;
-    config.maxDepth = 10;
+    config.maxDepth = 6;
     config.min3DPoints = 6;
     config.maxDistanceF2F = 0.5;
     config.minFeaturesLoopClosure = 100;
@@ -93,10 +97,27 @@ int main(int argc, char const *argv[]) {
               fastThreshold);
 
     bool should_break = false;
+    std::vector<cv::Mat> objectImages;
+    std::vector<std::string> imageNames;
+    std::string fileName = "keyframes.yml";
+    int recover_info = false;
+    if (!recover_info) {
+        readImagesInFolder("/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/images", objectImages, imageNames);
+        std::cout << "cantidad images en folder: " << objectImages.size() << std::endl;
+        
+        extractObjectsFeatures(objectImages, imageNames);
+        std::cout << "cantidad images en contaienr: " << objectContainer.getObjectCount() << std::endl;
+    } else {
+        container.deserialize(fileName);
+    }
+    
+    
+
     firstIteration();
     while (!should_break) {
         
         findFeatures();
+        
         int key = cv::waitKey(1);
         if (key >= 0)
         {
@@ -116,7 +137,11 @@ int main(int argc, char const *argv[]) {
             }
         }
     }
-
+    // serializing the content of keyframes
+    std::cout << "Serializing keyframes..." << std::endl;
+    
+    container.serialize(fileName);
+    std::cout << "File " << fileName << " saved correctly!" << std::endl;
     camera.cleanupCamera();
     return 0;
 }

@@ -26,7 +26,7 @@ public class RealSenseController : MonoBehaviour
     private static extern void initImu();
 
     [DllImport(PLUGIN_NAME)]
-    private static extern void setParams(CameraConfig config);
+    private static extern void setParams(systemConfig config);
 
     [DllImport(PLUGIN_NAME)] // Replace PLUGIN_NAME with the name of your native plugin
     private static extern void createORB(int nfeatures,
@@ -96,7 +96,7 @@ public class RealSenseController : MonoBehaviour
         return jpegBuffer;
     }
 
-    public struct CameraConfig
+    public struct systemConfig
     {
         public float ratioTresh;
         public float minDepth;
@@ -200,7 +200,7 @@ public class RealSenseController : MonoBehaviour
         else if (featureExtractorType == FeatureExtractorType.ORB)
             createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
 
-        CameraConfig config = new CameraConfig();
+        systemConfig config = new systemConfig();
         config.ratioTresh = ratioTresh;
         config.minDepth = minDepth;
         config.maxDepth = maxDepth;

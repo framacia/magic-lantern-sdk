@@ -15,6 +15,8 @@ find_package(realsense2 REQUIRED)
 
 find_package(Threads REQUIRED) 
 
+find_package(nlohmann_json REQUIRED)
+
 # Path to JNI in Android folder
 set(SRC_FILES ${CMAKE_SOURCE_DIR}/../Android/jni)
 
@@ -30,6 +32,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/../Android/jni/include
     ${OpenCV_INCLUDE_DIRS}
     ${realsense2_INCLUDE_DIRS}
+    ${nlohmann_json_INCLUDE_DIRS}
 )
 # Create shared library target
 
@@ -40,6 +43,7 @@ add_library(camera_motion
             ${SRC_FILES}/src/globals.cpp
             ${SRC_FILES}/src/localization.cpp
             ${SRC_FILES}/src/rs_camera.cpp
+            ${SRC_FILES}/src/object_detection.cpp
             )
 
 # Set C++ standard to C++11 for the shared library
@@ -49,6 +53,7 @@ set_property(TARGET camera_motion PROPERTY CXX_STANDARD 11)
 target_link_libraries(camera_motion
     ${DEPENDENCIES}
     Threads::Threads
+    nlohmann_json::nlohmann_json
 )
 
 
@@ -69,6 +74,7 @@ if(BUILD_EXECUTABLE)
         ${DEPENDENCIES}
         Threads::Threads
         Boost::program_options
+        nlohmann_json::nlohmann_json
     )
     message(STATUS "Executable is Enabled")
 else()
