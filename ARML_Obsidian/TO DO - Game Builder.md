@@ -26,6 +26,7 @@ kanban-plugin: basic
 - [ ] JSON Saving encryption is broken, probably wrong key
 - [ ] Make Dog increase DistancePercentage the closer he is to the placeable.
 - [ ] Adapt ChatGPT agent logic into project. Change from config to manual ScriptableObject based creation of characters to be drag-dropped into characters
+- [ ] Extend dialogue graph to accept float answers
 
 
 ## DOING

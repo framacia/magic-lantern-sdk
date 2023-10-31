@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,6 +8,7 @@ namespace DS.Windows
 {
     using Elements;
     using Enumerations;
+    using Utilities;
 
     public class DSGraphView : GraphView
     {
@@ -26,16 +26,19 @@ namespace DS.Windows
             List<Port> compatiblePorts = new List<Port>();
             ports.ForEach(port =>
             {
+                //Can't connect to itself
                 if (startPort == port)
                 {
                     return;
                 }
 
+                //Can't connect to the same node
                 if (startPort.node == port.node)
                 {
                     return;
                 }
 
+                //Can't connect if both are same direction (input/output)
                 if (startPort.direction == port.direction)
                 {
                     return;
@@ -83,7 +86,7 @@ namespace DS.Windows
         #endregion
 
         #region Element Creation
-        private DSNode CreateNode(DSDialogueType dialogueType, Vector2 position)
+        public DSNode CreateNode(DSDialogueType dialogueType, Vector2 position)
         {
             Type nodeType = Type.GetType($"DS.Elements.DS{dialogueType}Node");
 
@@ -94,7 +97,7 @@ namespace DS.Windows
             return node;
         }
 
-        private Group CreateGroup(string title, Vector2 localMousePosition)
+        public Group CreateGroup(string title, Vector2 localMousePosition)
         {
             Group group = new Group()
             {
@@ -118,10 +121,10 @@ namespace DS.Windows
 
         private void AddStyles()
         {
-            StyleSheet graphViewStyleSheet = (StyleSheet)EditorGUIUtility.Load("DialogueSystem/DSGraphViewStyles.uss");
-            StyleSheet nodeStyleSheet = (StyleSheet)EditorGUIUtility.Load("DialogueSystem/DSNodeStyles.uss");
-            styleSheets.Add(graphViewStyleSheet);
-            styleSheets.Add(nodeStyleSheet);
+            this.AddStyleSheets(
+                "DialogueSystem/DSGraphViewStyles.uss",
+                "DialogueSystem/DSNodeStyles.uss"
+                );
         }
         #endregion
     }

@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DS.Elements
 {
     using Enumerations;
-    using UnityEditor.Experimental.GraphView;
+    using Utilities;
 
     public class DSSingleChoiceNode : DSNode
     {
@@ -25,7 +24,7 @@ namespace DS.Elements
             // Output Container
             foreach (string choice in Choices)
             {
-                Port choicePort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
+                Port choicePort = this.CreatePort(choice);
 
                 choicePort.name = choice;
                 outputContainer.Add(choicePort);
