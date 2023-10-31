@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 namespace DS.Elements
 {
     using Enumerations;
+    using Utilities;
 
     /// <summary>
     /// Represents a node in a dialogue system.
@@ -55,12 +56,10 @@ namespace DS.Elements
         public virtual void Draw()
         {
             // Title Container
-            TextField dialogueNameTextField = new TextField()
-            {
-                value = DialogueName
-            };
-            dialogueNameTextField.AddToClassList("ds-node__textfield");
-            dialogueNameTextField.AddToClassList("ds-node__filename-textfield");
+            TextField dialogueNameTextField = DSElementUtility.CreateTextField(DialogueName);
+
+            dialogueNameTextField.AddToClassList("ds-node__text-field");
+            dialogueNameTextField.AddToClassList("ds-node__filename-text-field");
             dialogueNameTextField.AddToClassList("ds-node__textfield__hidden");
 
             titleContainer.Insert(0, dialogueNameTextField);
@@ -82,8 +81,8 @@ namespace DS.Elements
             {
                 value = Text
             };
-            textTextField.AddToClassList("ds-node__textfield");
-            textTextField.AddToClassList("ds-node__quote-textfield");
+            textTextField.AddToClassList("ds-node__text-field");
+            textTextField.AddToClassList("ds-node__quote-text-field");
 
             textFoldout.Add(textTextField);
             customDataContainer.Add(textFoldout);

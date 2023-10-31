@@ -1,10 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TrackingReferenceImageLibrary : MonoBehaviour
 {
+    [Serializable]
+    struct TrackingReferenceImage
+    {
+        public Texture2D Image;
+        public string ID;
+    }
+
     [SerializeField] private List<TrackingReferenceImage> trackingReferenceImageList = new List<TrackingReferenceImage>();
     private Dictionary<string, byte[]> imageDictionary = new Dictionary<string, byte[]>();
     //[SerializeField] private Renderer renderer;
@@ -23,16 +29,10 @@ public class TrackingReferenceImageLibrary : MonoBehaviour
         }
 
         //Load back into texture
+
         //Texture2D convertedTexture = new Texture2D(256, 128, trackingReferenceImageList[0].Image.format, false);
         //convertedTexture.LoadRawTextureData(imageDictionary["bat"]);
         //convertedTexture.Apply();
         //renderer.material.mainTexture = convertedTexture;
     }
-}
-
-[Serializable]
-struct TrackingReferenceImage
-{
-    public Texture2D Image;
-    public string ID;
 }

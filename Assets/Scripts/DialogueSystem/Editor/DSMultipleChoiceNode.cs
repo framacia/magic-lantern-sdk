@@ -50,9 +50,9 @@ namespace DS.Elements
                 {
                     value = choice,
                 };
-                choiceTextField.AddToClassList("ds-node__textfield");
-                choiceTextField.AddToClassList("ds-node__choice-textfield");
-                choiceTextField.AddToClassList("ds-node__textfield__hiden");
+                choiceTextField.AddToClassList("ds-node__text-field");
+                choiceTextField.AddToClassList("ds-node__choice-text-field");
+                choiceTextField.AddToClassList("ds-node__text-field__hidden");
 
                 choicePort.Add(choiceTextField);
                 choicePort.Add(deleteChoiceButton);

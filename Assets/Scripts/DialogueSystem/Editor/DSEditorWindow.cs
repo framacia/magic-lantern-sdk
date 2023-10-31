@@ -8,7 +8,7 @@ namespace DS.Windows
     public class DSEditorWindow : EditorWindow
     {
         [MenuItem("Window/DS/Dialogue Graph")]
-        public static void ShowExample()
+        public static void Open()
         {
             GetWindow<DSEditorWindow>("Dialogue Graph");
         }
@@ -19,6 +19,7 @@ namespace DS.Windows
             AddStyles();
         }
 
+        #region Elements Addition
         private void AddGraphView()
         {
             DSGraphView graphView = new DSGraphView();
@@ -32,7 +33,7 @@ namespace DS.Windows
             StyleSheet styleSheet = (StyleSheet)EditorGUIUtility.Load("DialogueSystem/DSVariables.uss");
             rootVisualElement.styleSheets.Add(styleSheet);
         }
-
+        #endregion
     }
 }
 
