@@ -1,8 +1,6 @@
 #include <globals.h>
 #include <object_detection.h>
-
-
-
+#include <camera_motion.h>
 
 void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& images, std::vector<std::string>& imageNames) {
     cv::String pattern = folderPath + "/*.png";
@@ -21,34 +19,12 @@ void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& ima
     }
 }
 
-cv::Mat centerObject(cv::Mat objectImage) {
-    int width = 640;
-    int height = 480;
-    cv::Mat objectFullImage(height, width, CV_8UC3, cv::Scalar(0, 0, 0));
-
-    int smaller_width = objectImage.cols;
-    int smaller_height = objectImage.rows;
-
-    int x_offset = (width - smaller_width) / 2;
-    int y_offset = (height - smaller_height) / 2;
-
-    cv::Mat roi = objectFullImage(cv::Rect(x_offset, y_offset, smaller_width, smaller_height));
-
-    objectImage.copyTo(roi);
-
-    return objectFullImage;
-
-
-}
 
 void extractObjectsFeatures(std::vector<cv::Mat>& images, std::vector<std::string>& imageNames) {
      for (size_t i = 0; i < images.size(); i++) {
         int id = i;
-        
-        
         std::vector<cv::KeyPoint> kp1;
         cv::Mat descriptors1;
-        
         featureDetection(images[i], kp1, descriptors1);
         std::string imageName = imageNames[i];
         std::shared_ptr<Object> object1 = std::make_shared<Object>(id,
@@ -88,7 +64,7 @@ int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<
         matches.clear();
 
 
-        if (goodMatches_aux.size() >= 30 && goodMatches_aux.size() > mostGoodMatches) {
+        if (goodMatches_aux.size() >= minFeaturesFindObject && goodMatches_aux.size() > mostGoodMatches) {
             goodMatches.clear();
             bestObjectId = objectIndex;
             goodMatches = goodMatches_aux;

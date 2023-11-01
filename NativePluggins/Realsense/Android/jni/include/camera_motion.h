@@ -19,9 +19,9 @@ public:
     // Parameterized constructor
     Keyframe(int id, const cv::Mat& frame, const cv::Mat& descriptors,
              const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& worldTranslation,
-             const std::string& imageName, const cv::Mat& relativeTrans)
+             const std::string& imageName, const cv::Mat& relativeTrans, const cv::Mat& relativeRot)
         : id(id), frame(frame), descriptors(descriptors), keypoints(keypoints),
-          worldTranslation(worldTranslation), imageName(imageName), relativeTrans(relativeTrans) {
+          worldTranslation(worldTranslation), imageName(imageName), relativeTrans(relativeTrans), relativeRot(relativeRot) {
     }
 
     // Getter functions for member variables
@@ -53,6 +53,10 @@ public:
         return relativeTrans;
     }
 
+    cv::Mat getRelativeRot() const {
+        return relativeRot;
+    }
+
     void serialize(cv::FileStorage& fs) const {
         fs << "{" << "id" << id;
         fs << "frame" << frame;
@@ -65,6 +69,7 @@ public:
         fs << "worldTranslation" << worldTranslation;
         fs << "imageName" << imageName;
         fs << "relativeTrans" << relativeTrans;
+        fs << "relativeRot" << relativeRot;
         fs << "}";
     }
 
@@ -82,6 +87,7 @@ public:
         node["worldTranslation"] >> worldTranslation;
         node["imageName"] >> imageName;
         node["relativeTrans"] >> relativeTrans;
+        node["relativeRot"] >> relativeRot;
     }
 
 public:
@@ -92,6 +98,7 @@ public:
     cv::Mat worldTranslation;
     std::string imageName;
     cv::Mat relativeTrans;
+    cv::Mat relativeRot;
 };
 
 class KeyframeContainer {
@@ -152,6 +159,7 @@ struct systemConfig {
     float noMovementThresh;
     int framesNoMovement;
     int maxGoodFeatures;
+    int minFeaturesFindObject;
 };
 
 void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches);
@@ -177,7 +185,7 @@ extern "C" {
     void initImu();
     void firstIteration();
     void findFeatures();
-    float getDepthAtCenter();
+    // float getDepthAtCenter();
     void cleanupCamera();
     void GetTranslationVector(float* t_f_data);
     void GetCameraOrientation(float* cameraAngle);
@@ -194,7 +202,7 @@ extern "C" {
 
     void setParams(systemConfig config); 		
 
-    const uchar* getJpegBuffer(int* bufferSize);	
+    // const uchar* getJpegBuffer(int* bufferSize);	
 
     void resetOdom();
 

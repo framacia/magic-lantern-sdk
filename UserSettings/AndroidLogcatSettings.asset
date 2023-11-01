@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.108:5555",
         "name": "com.UPF.ARML",
-        "processId": 1940,
+        "processId": 2207,
         "exited": false
     },
     "m_SelectedPriority": 2,
@@ -215,19 +215,61 @@
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 6892,
+            "processId": 3522,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4106,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4485,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1181,
             "exited": false
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 5459,
+            "processId": 5418,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 6133,
             "exited": false
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 1940,
+            "processId": 2007,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2776,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 7585,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2207,
             "exited": false
         }
     ],

@@ -22,7 +22,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/GNU-C.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/GNU-CXX.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/Compiler/GNU.cmake"
-  "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/FindBoost.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/FindPackageMessage.cmake"
   "/home/fubintlab/.local/lib/python3.8/site-packages/cmake/data/share/cmake-3.26/Modules/FindThreads.cmake"
@@ -43,15 +42,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/lib/cmake/nlohmann_json/nlohmann_jsonConfig.cmake"
   "/usr/lib/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake"
   "/usr/lib/cmake/nlohmann_json/nlohmann_jsonTargets.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfigVersion.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/BoostDetectToolset-1.71.0.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config-version.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.71.0/boost_headers-config.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/boost_program_options-config-version.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/boost_program_options-config.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/libboost_program_options-variant-shared.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_program_options-1.71.0/libboost_program_options-variant-static.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVConfig.cmake"
   "/usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake"
@@ -72,5 +62,4 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/camera_motion.dir/DependInfo.cmake"
-  "CMakeFiles/arml_cpp.dir/DependInfo.cmake"
   )

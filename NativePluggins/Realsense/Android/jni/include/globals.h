@@ -29,8 +29,6 @@ extern cv::Mat imageFeatures;
 extern KeyframeContainer container;
 extern ObjectContainer objectContainer;
 
-extern int no_move_counter;
-extern int frames_after_loop;
 extern float ratioTresh;
 extern float minDepth;
 extern float maxDepth;
@@ -41,6 +39,9 @@ extern int framesUntilLoopClosure;
 extern float noMovementThresh;
 extern int framesNoMovement;
 extern int maxGoodFeatures;
-extern bool addKeyFrame;
+extern int minFeaturesFindObject;
+
+
+
 
 #endif // REALSENSECAMERA_H

@@ -79,7 +79,10 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
     
     std::vector<cv::Point2f> uImagePoints, vImagePoints;
     std::vector<cv::Point3f> vObjectPoints;
-    cv::Mat tvec1, tvec2, rvec1, rvec2;
+    cv::Mat tvec1(3, 1, CV_32F);
+    cv::Mat tvec2(3, 1, CV_32F);
+    cv::Mat rvec1(3, 1, CV_32F);
+    cv::Mat rvec2(3, 1, CV_32F);
     try {
        
         if (pts1.size() >= 2 && pts2.size() >= 2) {
@@ -99,11 +102,11 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
                     float uPixel[2];
                     uPixel[0] = static_cast<float>(pts2[i].x);
                     uPixel[1] = static_cast<float>(pts2[i].y);
-                        if (vDepth > minDepth && vDepth < maxDepth) {
-                            vObjectPoints.push_back(cv::Point3f(vPoint[0], vPoint[1], vPoint[2]));
-                            vImagePoints.push_back(cv::Point2f(vPixel[0], vPixel[1]));
-                            uImagePoints.push_back(cv::Point2f(uPixel[0], uPixel[1]));
-                        }
+                    if (vDepth > minDepth && vDepth < maxDepth) {
+                        vObjectPoints.push_back(cv::Point3f(vPoint[0], vPoint[1], vPoint[2]));
+                        vImagePoints.push_back(cv::Point2f(vPixel[0], vPixel[1]));
+                        uImagePoints.push_back(cv::Point2f(uPixel[0], uPixel[1]));
+                    }
                 // } else {
                 //     // vPixeldepth is out of range
                 //     std::cout << "vPixeldepth is out of range." << std::endl;
@@ -121,7 +124,7 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
                             false,
                             1500,
                             8.0f,
-                            0.999,
+                            0.99,
                             cv::noArray(),
                             cv::SOLVEPNP_ITERATIVE);
         cv::solvePnPRansac(vObjectPoints,
@@ -133,15 +136,19 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
                             false,
                             1500,
                             8.0f,
-                            0.999,
+                            0.99,
                             cv::noArray(),
                             cv::SOLVEPNP_ITERATIVE);
 
-        cv::Mat R1, R2;
+        // }
+
+        cv::Mat R1(3, 3, CV_32F);
+        cv::Mat R2(3, 3, CV_32F);
         cv::Rodrigues(rvec1, R1);
         cv::Rodrigues(rvec2, R2);
 
-        cv::Mat t_1to2,  R_1to2;
+        cv::Mat t_1to2(3, 1, CV_32F);
+        cv::Mat R_1to2(3, 3, CV_32F);
         computeC2MC1(R1, tvec1, R2, tvec2, R_1to2, t_1to2);
 
         global_R = R_1to2.t();

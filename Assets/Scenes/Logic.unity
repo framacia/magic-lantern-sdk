@@ -180,6 +180,23 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06ab40369ce01d24e89a36426d3c8756, type: 3}
+--- !u!1 &1511082032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7141001504416892511, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+  m_PrefabInstance: {fileID: 1686527687273543928}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1511082040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511082032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebaa067e6ba59e671b8c6dbf57bfc6b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1840185479 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7101006522065001639, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
@@ -208,8 +225,20 @@ PrefabInstance:
       value: 1.739
       objectReference: {fileID: 0}
     - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: minDepth
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: maxDistanceF2F
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: maxGoodFeatures
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: noMovementThresh
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: orbEdgeThreshold
@@ -259,10 +288,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: --LANTERN--
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 242660471381394438, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7141001504416892511, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1511082040}
   m_SourcePrefab: {fileID: 100100000, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
 --- !u!1001 &6159361165595569550
 PrefabInstance:

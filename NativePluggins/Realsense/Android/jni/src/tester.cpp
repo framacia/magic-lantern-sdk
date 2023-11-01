@@ -74,6 +74,7 @@ int main(int argc, char const *argv[]) {
     config.noMovementThresh = 0.5;
     config.framesNoMovement = 50;
     config.maxGoodFeatures = 1000;
+    config.minFeaturesFindObject = 30;
 
     setParams(config);
     

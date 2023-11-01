@@ -53,7 +53,6 @@ set_property(TARGET camera_motion PROPERTY CXX_STANDARD 11)
 target_link_libraries(camera_motion
     ${DEPENDENCIES}
     Threads::Threads
-    nlohmann_json::nlohmann_json
 )
 
 
@@ -74,7 +73,6 @@ if(BUILD_EXECUTABLE)
         ${DEPENDENCIES}
         Threads::Threads
         Boost::program_options
-        nlohmann_json::nlohmann_json
     )
     message(STATUS "Executable is Enabled")
 else()

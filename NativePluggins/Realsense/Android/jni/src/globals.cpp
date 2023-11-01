@@ -17,8 +17,6 @@ cv::Mat imageFeatures;
 KeyframeContainer container;
 ObjectContainer objectContainer;
 
-int no_move_counter = 0;
-int frames_after_loop = 100;
 float ratioTresh;
 float minDepth;
 float maxDepth;
@@ -29,4 +27,4 @@ int framesUntilLoopClosure;
 float noMovementThresh;
 int framesNoMovement;
 int maxGoodFeatures;
-bool addKeyFrame = false;
+int minFeaturesFindObject;
