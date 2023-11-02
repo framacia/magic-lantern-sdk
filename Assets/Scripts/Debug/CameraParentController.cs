@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class CameraParentController : MonoBehaviour
 {
@@ -106,8 +105,7 @@ public class CameraParentController : MonoBehaviour
 
         if(sceneOrigin)
         {
-            gameObject.transform.position = sceneOrigin.position;
-            gameObject.transform.rotation = sceneOrigin.rotation;
+            gameObject.transform.SetPositionAndRotation(sceneOrigin.position, sceneOrigin.rotation);
         }
     }
 }

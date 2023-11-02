@@ -7,13 +7,17 @@ namespace DS.Windows
     using Elements;
     using Enumerations;
 
-    public class DSSearchWindow : ScriptableObject//, ISearchWindowProvider
+    public class DSSearchWindow : ScriptableObject, ISearchWindowProvider
     {
         private DSGraphView graphView;
+        private Texture2D indentationIcon;
 
         public void Initialize(DSGraphView dsGraphView)
         {
             graphView = dsGraphView;
+            indentationIcon = new Texture2D(1, 1);
+            indentationIcon.SetPixel(0, 0, Color.clear);
+            indentationIcon.Apply();
         }
 
         public List<SearchTreeEntry> CreateSearchTree(SearchWindowContext context)
@@ -22,18 +26,18 @@ namespace DS.Windows
             {
                 new SearchTreeGroupEntry(new GUIContent("Create Element")),
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Node"), 1),
-                new SearchTreeEntry(new GUIContent("Single Choice"))
+                new SearchTreeEntry(new GUIContent("Single Choice", indentationIcon))
                 {
                     level = 2,
                     userData = DSDialogueType.SingleChoice
                 },
-                new SearchTreeEntry(new GUIContent("Multiple Choice"))
+                new SearchTreeEntry(new GUIContent("Multiple Choice", indentationIcon))
                 {
                     level = 2,
                     userData = DSDialogueType.MultipleChoice
                 },
                 new SearchTreeGroupEntry(new GUIContent("Dialogue Group"), 1),
-                new SearchTreeEntry(new GUIContent("Single Group"))
+                new SearchTreeEntry(new GUIContent("Single Group", indentationIcon))
                 {
                     level = 2,
                     userData = new Group()
@@ -43,25 +47,35 @@ namespace DS.Windows
             return searchTreeEntries;
         }
 
-        //public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
-        //{
-        //    switch (SearchTreeEntry.userData)
-        //    {
-        //        case DSDialogueType.SingleChoice:
-        //            {
-        //                DSSingleChoiceNode singleChoiceNode = (DSSingleChoiceNode)graphView.CreateNode(DSDialogueType.SingleChoice, context.screenMousePosition);
-        //                return true;
-        //            }
-        //        case DSDialogueType.MultipleChoice:
-        //            {
-        //                DSMultipleChoiceNode multipleChoiceNode = (DSMultipleChoiceNode)graphView.CreateNode(DSDialogueType.MultipleChoice, context.screenMousePosition);
-        //                return true;
-        //            }
-        //        case Group _: //You can type underscore when you don't need to use the instance of a class in a case
-        //            {
-        //                return true;
-        //            }
-        //    }
-        //}
+        public bool OnSelectEntry(SearchTreeEntry SearchTreeEntry, SearchWindowContext context)
+        {
+            Vector2 localMousePosition = graphView.GetLocalMousePosition(context.screenMousePosition, true);
+
+            switch (SearchTreeEntry.userData)
+            {
+                case DSDialogueType.SingleChoice:
+                    {
+                        DSSingleChoiceNode singleChoiceNode = (DSSingleChoiceNode)graphView.CreateNode(DSDialogueType.SingleChoice, localMousePosition);
+                        graphView.AddElement(singleChoiceNode);
+                        return true;
+                    }
+                case DSDialogueType.MultipleChoice:
+                    {
+                        DSMultipleChoiceNode multipleChoiceNode = (DSMultipleChoiceNode)graphView.CreateNode(DSDialogueType.MultipleChoice, localMousePosition);
+                        graphView.AddElement(multipleChoiceNode);
+                        return true;
+                    }
+                case Group _: //You can type underscore when you don't need to use the instance of a class in a case
+                    {
+                        DSGroup group = graphView.CreateGroup("DialogueGroup", localMousePosition);
+                        graphView.AddElement(group);
+                        return true;
+                    }
+                default:
+                    {
+                        return false;
+                    }
+            }
+        }
     }
 }
