@@ -11,7 +11,6 @@ namespace FranTest.GameBuilder
     {
         [SerializeField] string gameName;
         public SceneField gameScene;
-        [SerializeField] Transform lanternInitialTransform;
         [SerializeField] List<Level> levels;
         [SerializeField] List<ScoreEntry> highScores;
         public bool usesScores;
