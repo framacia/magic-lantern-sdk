@@ -17,6 +17,8 @@ void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& ima
             imageNames.push_back(imageName);
         }
     }
+
+    extractObjectsFeatures(images, imageNames);
 }
 
 

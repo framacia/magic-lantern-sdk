@@ -105,8 +105,6 @@ int main(int argc, char const *argv[]) {
     if (!recover_info) {
         readImagesInFolder("/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/images", objectImages, imageNames);
         std::cout << "cantidad images en folder: " << objectImages.size() << std::endl;
-        
-        extractObjectsFeatures(objectImages, imageNames);
         std::cout << "cantidad images en contaienr: " << objectContainer.getObjectCount() << std::endl;
     } else {
         container.deserialize(fileName);
@@ -126,7 +124,7 @@ int main(int argc, char const *argv[]) {
                 should_break = true;
             }
          else if (key == 99) {
-                addKeyFrame = true;
+                addKeyframe();
             }
         }
     }

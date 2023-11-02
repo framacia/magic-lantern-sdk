@@ -76,8 +76,20 @@ private:
     std::vector<std::shared_ptr<Object>> Objects; 
 };
 
-void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
-void extractObjectsFeatures(std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
 int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
+void extractObjectsFeatures(std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
+
+#ifdef __cplusplus
+extern "C" {
+    #endif
+
+    void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
+    
+    
+    
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // OBJECT_DETECTION_H

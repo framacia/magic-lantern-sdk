@@ -26,14 +26,14 @@ std::vector<std::chrono::milliseconds> durations;
 // Dimensions for 640x480
 int sectionX = 180;
 int sectionY = 65;
-int sectionWidht = 325;
+int sectionWidth = 325;
 int sectionHeight = 200;
 
 int keyFrameId = 0;
 // // Dimensions for 480x270
 // int sectionX = 150;
 // int sectionY = 25;
-// int sectionWidht = 200;
+// int sectionWidth = 200;
 // int sectionHeight = 130;
 
 
@@ -145,7 +145,7 @@ void firstIteration() {
     std::vector<cv::KeyPoint> kp1Filtered;
     cv::Mat descriptorsFiltered;
 
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidth, sectionHeight);
     filterKeypointsByROI(kp1, descriptors1, kp1Filtered, descriptorsFiltered, seccionToFilter);
 
     std::string imageName = "First Frame";
@@ -230,7 +230,7 @@ void findFeatures() {
     }
     std::vector<cv::KeyPoint> kp1Filtered;
     cv::Mat descriptorsFiltered;
-    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidht, sectionHeight);
+    cv::Rect seccionToFilter(sectionX, sectionY, sectionWidth, sectionHeight);
     filterKeypointsByROI(kp1, descriptors1, kp1Filtered, descriptorsFiltered, seccionToFilter);
         
     auto feature_time2 = std::chrono::high_resolution_clock::now();
@@ -521,6 +521,15 @@ void resetOdom() {
 void addKeyframe() {
     addKeyFrame = true;
 }
+
+void setProjectorZone(int _sectionX, int _sectionY, int _sectionWidth, int _sectionHeight) {
+    sectionX = _sectionX;
+    sectionY = _sectionY;
+    sectionWidth = _sectionWidth;
+    sectionHeight = _sectionHeight;
+}
+
+
 
 extern "C" const uchar* getJpegBuffer(int* bufferSize) {
     std::vector<uchar> jpegBuffer;

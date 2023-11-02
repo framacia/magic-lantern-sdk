@@ -207,6 +207,8 @@ extern "C" {
     void resetOdom();
 
     void addKeyframe();
+
+    void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
     
     
     

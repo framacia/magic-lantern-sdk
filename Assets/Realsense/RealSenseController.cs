@@ -100,6 +100,9 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern float GetDepthAtCenter();
 
+    [DllImport(PLUGIN_NAME)]
+    private static extern  void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
+
   
     public struct systemConfig {
         public float ratioTresh;
@@ -136,6 +139,10 @@ public class RealSenseController : MonoBehaviour
     public int framesNoMovement = 50;
     public int maxGoodFeatures = 500;
     public int minFeaturesFindObject = 30;
+    public int xRectangle = 180;
+    public int yRectangle = 65;
+    public int widthRectangle = 325;
+    public int heightRectangle = 200;
     public bool useRecord = false;
     
 
@@ -226,6 +233,8 @@ public class RealSenseController : MonoBehaviour
         
         
         setParams(config);
+        
+        setProjectorZone(xRectangle, yRectangle, widthRectangle, heightRectangle);
 
         firstIteration();
 
