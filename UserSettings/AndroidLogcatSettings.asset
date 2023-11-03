@@ -3,10 +3,10 @@
     "m_SelectedPackage": {
         "deviceId": "192.168.121.108:5555",
         "name": "com.UPF.ARML",
-        "processId": 5857,
+        "processId": 9187,
         "exited": false
     },
-    "m_SelectedPriority": 2,
+    "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
@@ -268,38 +268,38 @@
         },
         {
             "deviceId": "192.168.121.108:5555",
+            "name": "com.android.tv.settings",
+            "processId": 926,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 2169,
+            "processId": 8185,
             "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 2325,
+            "processId": 8425,
             "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 3785,
-            "exited": false
+            "processId": 8647,
+            "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 6337,
-            "exited": false
+            "processId": 8958,
+            "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 7295,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 5857,
+            "processId": 9187,
             "exited": false
         }
     ],

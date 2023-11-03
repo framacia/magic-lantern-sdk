@@ -102,7 +102,7 @@ public class CameraParentController : MonoBehaviour
 
     public void MoveToSceneOrigin()
     {
-        Transform sceneOrigin = GameObject.Find("--ORIGIN--").transform;
+        Transform sceneOrigin = GameObject.Find("--ORIGIN--")?.transform;
 
         if(sceneOrigin)
         {
