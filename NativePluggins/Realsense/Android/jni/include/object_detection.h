@@ -18,15 +18,15 @@ public:
         return id;
     }
 
-    cv::Mat getFrame() const {
+    const cv::Mat& getFrame() const {
         return frame;
     }
 
-    cv::Mat getDescriptors() const {
+    const cv::Mat& getDescriptors() const {
         return descriptors;
     }
 
-    std::vector<cv::KeyPoint> getKeypoints() const {
+    const std::vector<cv::KeyPoint>& getKeypoints() const {
         return keypoints;
     }
 
@@ -76,7 +76,8 @@ private:
     std::vector<std::shared_ptr<Object>> Objects; 
 };
 
-int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
+int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<cv::Point2f>& pts1,
+               std::vector<cv::Point2f>& pts2);
 void extractObjectsFeatures(cv::Mat& image, std::string& imageName);
 
 #ifdef __cplusplus

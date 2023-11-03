@@ -42,8 +42,6 @@ public class BNO055Sensor : MonoBehaviour
     // Public variables to set device path and address
     private string devicePath = "/dev/i2c-5";
     private int deviceAddress = 0x28;
-    private byte registerAddress = 0x3d;
-    private byte mode = 0x08;
 
     public static BNO055Sensor Instance { get; private set; }
 

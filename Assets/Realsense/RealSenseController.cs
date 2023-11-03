@@ -9,31 +9,38 @@ public class RealSenseController : MonoBehaviour
     private const string PLUGIN_NAME = "camera_motion";
 
     #region Native Plugin Methods
+    // Stops pipeline and resets global variables, called OnDestroy
     [DllImport(PLUGIN_NAME)]
-    private static extern void cleanupCamera();
+    private static extern void cleanupCamera(); 
 
+    // Sets resolution, dimension and fps of the RGB stream, called on Start
     [DllImport(PLUGIN_NAME)]
     private static extern void colorStreamConfig(int width, int height, int fps);
+
+    // Sets resolution, dimension and fps of the Depth stream, called on Start
     [DllImport(PLUGIN_NAME)]
     private static extern void depthStreamConfig(int width, int height, int fps);
 
+    // Specifies bag file to read prerecorded image data
     [DllImport(PLUGIN_NAME)]
     private static extern void bagFileStreamConfig(string bagFileAddress);
 
+    // Starts camera pipeline
     [DllImport(PLUGIN_NAME)]
     private static extern void initCamera();
 
+    // Starts IMU pipeline
     [DllImport(PLUGIN_NAME)]
     private static extern void initImu();
 
+    // Updates the tracking parameter configuration
     [DllImport(PLUGIN_NAME)]
     private static extern void setParams(systemConfig config);
 
+    // Creates ORB feature extractor
+    // see cv::ORB::create
     [DllImport(PLUGIN_NAME)]
-    private static extern void cropRectangleFeatures(int initX, int initY, int endX, int endY);
-
-    [DllImport(PLUGIN_NAME)]
-    private static extern void createORB(int nfeatures,
+    private static extern void createORB(int nfeatures, 
                                         float scaleFactor,
                                         int nlevels,
                                         int edgeThreshold,
@@ -44,22 +51,37 @@ public class RealSenseController : MonoBehaviour
                                         int fastThreshold
                                     );
 
-    [DllImport(PLUGIN_NAME)]
-    private static extern void createSIFT(int nfeatures = 0,
-                                        int nOctaveLayers = 3,
-                                        double contrastThreshold = 0.04,
-                                        double edgeThreshold = 10,
-                                        double sigma = 1.6,
-                                        bool enable_precise_upscale = false
-                                    );
+    // [DllImport(PLUGIN_NAME)]
+    // private static extern void createSIFT(int nfeatures = 0,
+    //                                     int nOctaveLayers = 3,
+    //                                     double contrastThreshold = 0.04,
+    //                                     double edgeThreshold = 10,
+    //                                     double sigma = 1.6,
+    //                                     bool enable_precise_upscale = false
+    //                                 );
 
+    // Waits n frames then waits for the camera to warmup
+    // TODO make the wait delay a parameter
+    // TODO rename function
     [DllImport(PLUGIN_NAME)]
     private static extern void firstIteration();
 
-
+    // Process current frame
+    // - get camera frame
+    // - extract features
+    // - look for reference image/object in frame
+    // - filter features by crop area
+    // - find matches with known keyframe
+    // - find matches with prev frame
+    // - filter by best matches
+    // - reproject color pixels to the depth frame
+    // - calculate transform between current and previous frame (or keyframe)
+    // - calculate accumulated transform (from world origin)
+    // TODO rename
     [DllImport(PLUGIN_NAME)]
     private static extern void findFeatures();
 
+    // Get world position of the camera
     [DllImport(PLUGIN_NAME)]
     private static extern void getTranslationVector(float[] t_f_data);
 
@@ -70,16 +92,18 @@ public class RealSenseController : MonoBehaviour
         return t_f_data;
     }
 
+    // Get world rotation of camera VIO
     [DllImport(PLUGIN_NAME)]
     private static extern void getCameraRotation(float[] R_f_data);
 
-    public static Quaternion RetrieveCameraQuaternions()
+    public static float[] RetrieveCameraQuaternions()
     {
         float[] R_f_data = new float[4];
         getCameraRotation(R_f_data);
-        return new Quaternion(R_f_data[0], R_f_data[1], R_f_data[2], R_f_data[3]);
+        return R_f_data;
     }
 
+    // Get world rotation of camera IMU
     [DllImport(PLUGIN_NAME)]
     private static extern void getCameraOrientation(float[] cameraAngle);
 
@@ -90,15 +114,20 @@ public class RealSenseController : MonoBehaviour
         return cameraAngle;
     }
 
+    // Resets odometry origin to current frame
+    // (e.g., call to fix odometry to a known point after drift)
     [DllImport(PLUGIN_NAME)]
     private static extern void resetOdom();
 
+    // Add current frame to list of known keyframes
     [DllImport(PLUGIN_NAME)]
     private static extern void addKeyframe();
 
+    // Returns true if current frame is a loop closure (recognized keyframe)
     [DllImport(PLUGIN_NAME)]
     private static extern bool isLoop();
 
+    // Returns current frame RGB image
     [DllImport(PLUGIN_NAME)]
     private static extern IntPtr getJpegBuffer(out int bufferSize);
 
@@ -114,31 +143,50 @@ public class RealSenseController : MonoBehaviour
         return jpegBuffer;
     }
 
+    // Returns distance to object at center of frame in meters
     [DllImport(PLUGIN_NAME)]
     private static extern float GetDepthAtCenter();
 
+    // Ignores the features within region of the image - use RealSenseViewer to get coordinates
     [DllImport(PLUGIN_NAME)]
     private static extern void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
 
+    // Write keyframe list to a YAML file
     [DllImport(PLUGIN_NAME)]
     private static extern void serializeKeyframeData(string fileName);
 
+    // Load keyframe list to a YAML file
     [DllImport(PLUGIN_NAME)]
     private static extern void deserializeKeyframeData(string fileName);
     #endregion
 
     public struct systemConfig
     {
+        // DO NOT EDIT UNLESS YOU ABSOLUTELY KNOW WHAT YOUŔE DOING  
+        // When comparing two features in a match, 
+        // this ratio is used to ensure there is enough distance between them to be meaningful.
+        // Smaller values will reject more matches
         public float ratioTresh;
+        // Feature must be > minDepth (in m) from camera to be considered for matches
         public float minDepth;
+        // Feature must be < maxDepth (in m) from camera to be considered for matches
         public float maxDepth;
+        // Min number of reprojected features to use current frame in odometry
+        // (too low will produce poor or unreliable tracking, too high will drop too many frames)
         public int min3DPoints;
+        // Only consider odometry frame if less than this distance from prev frame
         public float maxDistanceF2F;
+        // Minimum amount of feature matches between current frame and keyframe to consider it a loop closure
         public int minFeaturesLoopClosure;
-        public int framesUntilLoopClosure;
+        // Minimum rotation to consider the camera in movement
         public float noMovementThresh;
+        // Number of frames below noMovementThresh required to consider camera not in movement.
         public int framesNoMovement;
+        // Maximum number of good matches considered for the calculation of transformations
+        // If number is too big processing may slow down, but if its too small tracking may be unreliable
         public int maxGoodFeatures;
+        // Minimum feature matches to consider an object detected.
+        // Should be between 30 or 40 (renato test)
         public int minFeaturesFindObject;
     }
 
@@ -239,7 +287,6 @@ public class RealSenseController : MonoBehaviour
         config.min3DPoints = min3DPoints;
         config.maxDistanceF2F = maxDistanceF2F;
         config.minFeaturesLoopClosure = minFeaturesLoopClosure;
-        config.minFeaturesLoopClosure = minFeaturesLoopClosure;
         config.noMovementThresh = noMovementThresh;
         config.framesNoMovement = framesNoMovement;
         config.maxGoodFeatures = maxGoodFeatures;
@@ -265,7 +312,7 @@ public class RealSenseController : MonoBehaviour
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
 
-        imuCameraRotation = GetComponent<IMUCameraRotation?>();
+        // imuCameraRotation = GetComponent<IMUCameraRotation?>();
     }
 
     private void Update()
@@ -277,6 +324,7 @@ public class RealSenseController : MonoBehaviour
         transform.localPosition = initialCamPosition + rotattedTranslationVector;
 
         remappedRealSenseRotation = new Quaternion(quaternionsCamera[0], -quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
+        transform.rotation = remappedRealSenseRotation;
 
         //Reset Odometry
         if (Input.GetKeyDown(KeyCode.Space))
@@ -299,10 +347,10 @@ public class RealSenseController : MonoBehaviour
         }
 
         //Loop closure trigger
-        if (loopClosure)
-        {
-            OnLoopClosure();
-        }
+        // if (loopClosure)
+        // {
+        //     OnLoopClosure();
+        // }
     }
 
     private void ThreadUpdate()
@@ -317,11 +365,13 @@ public class RealSenseController : MonoBehaviour
             Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
             rotattedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
 
+            quaternionsCamera = RetrieveCameraQuaternions();
+            
             //Get raw RealSense rotation and remap it to camera
-            remappedRealSenseRotation = new Quaternion(RetrieveCameraQuaternions().x,
-                -RetrieveCameraQuaternions().y,
-                RetrieveCameraQuaternions().z,
-                RetrieveCameraQuaternions().w);
+            // remappedRealSenseRotation = new Quaternion(RetrieveCameraQuaternions().x,
+            //         -RetrieveCameraQuaternions().y,
+            //         RetrieveCameraQuaternions().z,
+            //         RetrieveCameraQuaternions().w);
 
             loopClosure = isLoop();
 
@@ -339,15 +389,15 @@ public class RealSenseController : MonoBehaviour
         }
     }
 
-    private void OnLoopClosure()
-    {
-        //Send RealSense rotation to IMU script
-        if (imuCameraRotation)
-            imuCameraRotation.ReceiveRealSenseLoopClosure(remappedRealSenseRotation);
+    // private void OnLoopClosure()
+    // {
+    //     //Send RealSense rotation to IMU script
+    //     if (imuCameraRotation)
+    //         imuCameraRotation.ReceiveRealSenseLoopClosure(remappedRealSenseRotation);
         
-        //Set false so it only runs one frame
-        loopClosure = false;
-    }
+    //     //Set false so it only runs one frame
+    //     loopClosure = false;
+    // }
 
     private void OnDestroy()
     {

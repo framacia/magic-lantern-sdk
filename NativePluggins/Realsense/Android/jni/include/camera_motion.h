@@ -1,51 +1,53 @@
 #ifndef CAMERA_MOTION_H
 #define CAMERA_MOTION_H
 
+#include <vector>
+#include <memory>
+
 #include <opencv2/core.hpp>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-// #include <opencv2/xfeatures2d.hpp>
-#include <vector>
-#include <memory>
+
+
 
 
 class Keyframe {
 public:
-    // Default constructor
+    
     Keyframe() {
-        // Initialize member variables with default values or leave them uninitialized.
+
     }
 
-    // Parameterized constructor
+
     Keyframe(int id, const cv::Mat& frame, const cv::Mat& descriptors,
              const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& worldTranslation, const cv::Mat& worldRot,
              const std::string& imageName, const cv::Mat& relativeTrans, const cv::Mat& relativeRot)
         : id(id), frame(frame), descriptors(descriptors), keypoints(keypoints),
-          worldTranslation(worldTranslation), worldRot(worldRot), imageName(imageName), relativeTrans(relativeTrans), relativeRot(relativeRot) {
+          worldTranslation(worldTranslation), worldRot(worldRot), imageName(imageName),
+          relativeTrans(relativeTrans), relativeRot(relativeRot) {
     }
 
-    // Getter functions for member variables
     int getId() const {
         return id;
     }
 
-    cv::Mat getFrame() const {
+    const cv::Mat& getFrame() const {
         return frame;
     }
 
-    cv::Mat getDescriptors() const {
+    const cv::Mat& getDescriptors() const {
         return descriptors;
     }
 
-    std::vector<cv::KeyPoint> getKeypoints() const {
+    const std::vector<cv::KeyPoint>& getKeypoints() const {
         return keypoints;
     }
 
-    cv::Mat getWorldTrans() const {
+    const cv::Mat& getWorldTrans() const {
         return worldTranslation;
     }
 
-    cv::Mat getWorldRot() const {
+    const cv::Mat& getWorldRot() const {
         return worldRot;
     }
 
@@ -53,11 +55,11 @@ public:
         return imageName;
     }
 
-    cv::Mat getRelativeTrans() const {
+    const cv::Mat& getRelativeTrans() const {
         return relativeTrans;
     }
 
-    cv::Mat getRelativeRot() const {
+    const cv::Mat& getRelativeRot() const {
         return relativeRot;
     }
 
@@ -169,14 +171,12 @@ struct systemConfig {
     int minFeaturesFindObject;
 };
 
-void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches);
-
-void matchingAndFilteringByDistance(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1Filtered, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
-
-void filterKeypointsByROI(std::vector<cv::KeyPoint> keypoints, cv::Mat descriptors, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Mat& filteredDescriptors, cv::Rect &zone);
-
-void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
-
+void bestMatchesFilter(std::vector<cv::DMatch>& goodMatches, std::vector<cv::DMatch>& bestMatches);
+void matchingAndFilteringByDistance(const cv::Mat& descriptors1, const std::vector<cv::KeyPoint>& kp1Filtered,
+                                    std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
+void filterKeypointsByROI(const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& descriptors,
+                          std::vector<cv::KeyPoint>& filteredKeypoints, cv::Mat& filteredDescriptors, cv::Rect &zone);
+void featureDetection(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
 void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 
 
@@ -185,49 +185,33 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 extern "C" {
     #endif
 
-    // void colorStreamConfig(int width, int height, int fps);
-    // void depthStreamConfig(int width, int height, int fps);
-    // void bagFileStreamConfig(const char* bagFileAddress);
-    // void initCamera();
-    // void initImu();
     void firstIteration();
     void findFeatures();
-    // float getDepthAtCenter();
-    // void cleanupCamera();
+    float getDepthAtCenter();
     void getTranslationVector(float* t_f_data);
     void getCameraRotation(float* R_f_data);
     void getCameraOrientation(float* cameraAngle);
-    
-    void createORB(int  	nfeatures,
-                   float  	scaleFactor,
-                   int  	nlevels,
-                   int  	edgeThreshold,
-                   int  	firstLevel,
-                   int  	WTA_K,
-                   int  	scoreType,
-                   int  	patchSize,
-                   int  	fastThreshold); 	
+    void createORB(int nfeatures,
+                   float scaleFactor,
+                   int nlevels,
+                   int edgeThreshold,
+                   int firstLevel,
+                   int WTA_K,
+                   int scoreType,
+                   int patchSize,
+                   int fastThreshold); 	
 
     void setParams(systemConfig config); 		
-
-    // const uchar* getJpegBuffer(int* bufferSize);	
-
+    const uchar* getJpegBuffer(int* bufferSize);	
     void resetOdom();
-
     void addKeyframe();
-
     bool isLoop();
-
     void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
-
     void serializeKeyframeData(const char* fileName);
-
     void deserializeKeyframeData(const char* fileName);
     
-
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif // CAMERA_MOTION_H

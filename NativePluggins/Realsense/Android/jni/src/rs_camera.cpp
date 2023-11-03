@@ -2,8 +2,6 @@
 #include <globals.h>
 
 RealSenseCamera::RealSenseCamera() {
-    // Initialize the camera configuration here
-    // You can set default values or leave it to the user to configure
 }
 
 RealSenseCamera::~RealSenseCamera() {
@@ -44,19 +42,15 @@ void RealSenseCamera::initImu() {
 }
 
 void RealSenseCamera::cleanupCamera() {
-    try
-    {
+    try {
         pipeline.stop();
         imu_pipeline.stop();
         std::string message = "Camera pipelines stopped!";
         Debug::Log(message, Color::Red);
+    } catch(const std::exception& e) {
+        std::string error_message = e.what();
+        Debug::Log(error_message, Color::Red);
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n' << std::endl;
-    }
-    
-    
 }
 
 void RealSenseCamera::bagFileStreamConfig(const char* bagFileAddress) {
@@ -83,8 +77,6 @@ rs2::frameset RealSenseCamera::waitForFrames() {
 rs2::pipeline_profile RealSenseCamera::getProfile() {
     return profile;
 }
-
-
 
 void initCamera() {
     camera.initCamera();

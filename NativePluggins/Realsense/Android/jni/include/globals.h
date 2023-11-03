@@ -9,7 +9,6 @@
 #include <camera_motion.h>
 #include <localization.h>
 #include <object_detection.h>
-// #include <opencv2/xfeatures2d.hpp>
 #include <vector>
 
 extern RealSenseCamera camera;
@@ -41,8 +40,5 @@ extern float noMovementThresh;
 extern int framesNoMovement;
 extern int maxGoodFeatures;
 extern int minFeaturesFindObject;
-
-
-
 
 #endif // REALSENSECAMERA_H

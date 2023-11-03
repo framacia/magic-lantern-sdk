@@ -13,7 +13,6 @@ public class BNO055_Arduino : MonoBehaviour
     Vector3 camStartEuler;
     private Vector3 initialImuRotation = Vector3.zero;
     public static BNO055_Arduino Instance { get; private set; }
-    public float maxThreshold = 0.1f;
 
     private void Awake()
     {
