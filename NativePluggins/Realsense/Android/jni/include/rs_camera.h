@@ -36,6 +36,7 @@ extern "C" {
     void depthStreamConfig(int width, int height, int fps);
     void bagFileStreamConfig(const char* bagFileAddress);
     void initCamera();
+    void initImu();
     void cleanupCamera();
     
 #ifdef __cplusplus

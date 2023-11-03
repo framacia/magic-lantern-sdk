@@ -129,6 +129,19 @@ camera_motion/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/build
 .PHONY : camera_motion/fast
 
+#=============================================================================
+# Target rules for targets named arml_cpp
+
+# Build rule for target.
+arml_cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 arml_cpp
+.PHONY : arml_cpp
+
+# fast build rule for target.
+arml_cpp/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/build
+.PHONY : arml_cpp/fast
+
 home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/camera_motion.o: home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/camera_motion.cpp.o
 .PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/camera_motion.o
 
@@ -273,6 +286,30 @@ home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jn
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/camera_motion.dir/build.make CMakeFiles/camera_motion.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.cpp.s
 .PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.cpp.s
 
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.o: home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.o
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.o
+
+# target to build an object file
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.o
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.o
+
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.i: home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.i
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.i
+
+# target to preprocess a source file
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.i
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.i
+
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.s: home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.s
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.s
+
+# target to generate assembly for a file
+home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/arml_cpp.dir/build.make CMakeFiles/arml_cpp.dir/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.s
+.PHONY : home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -281,6 +318,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... arml_cpp"
 	@echo "... camera_motion"
 	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/camera_motion.o"
 	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/camera_motion.i"
@@ -300,6 +338,9 @@ help:
 	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.o"
 	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.i"
 	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/rs_camera.s"
+	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.o"
+	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.i"
+	@echo "... home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/src/tester.s"
 .PHONY : help
 
 

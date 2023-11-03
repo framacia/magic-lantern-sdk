@@ -24,6 +24,7 @@ extern cv::Mat colorMat;
 extern std::vector<cv::KeyPoint> prevFeatures;
 extern cv::Mat prevDescriptors;
 extern cv::Mat t_f;
+extern cv::Mat R_f;
 extern cv::Mat imageFeatures;
 
 extern KeyframeContainer container;

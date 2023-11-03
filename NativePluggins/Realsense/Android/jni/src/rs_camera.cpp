@@ -109,3 +109,7 @@ void colorStreamConfig(int width, int height, int fps) {
 void depthStreamConfig(int width, int height, int fps) {
     camera.depthStreamConfig(width, height, fps);
 }
+
+
+
+

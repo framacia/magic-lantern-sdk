@@ -2,6 +2,7 @@
 #include <debugCPP.h>
 #include <opencv2/opencv.hpp>
 #include <librealsense2/rs.hpp>
+#include <Eigen/Dense>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 
@@ -15,19 +16,22 @@
 #include <iostream>
 #include <thread>
 
-#include <android/log.h>
+// #include <android/log.h>
 
 float3 algoPrev;
 cv::Mat traj;
-bool addKeyFrame = false;
+bool add_keyframe = false;
+bool add_keyframe_by_hand = false;
+bool is_loop = false;
+
 int no_move_counter = 0;
 std::vector<std::chrono::milliseconds> durations;
 
 // Dimensions for 640x480
-int sectionX = 180;
-int sectionY = 65;
-int sectionWidth = 325;
-int sectionHeight = 200;
+int sectionX;
+int sectionY;
+int sectionWidth;
+int sectionHeight;
 
 int keyFrameId = 0;
 // // Dimensions for 480x270
@@ -113,6 +117,10 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat) {
 }
 
 void firstIteration() {
+    
+    
+    
+
     rs2::frameset frames = camera.waitForFrames();
 
     for (int i = 0; i < 30; i++) {
@@ -155,6 +163,7 @@ void firstIteration() {
                                                                      descriptorsFiltered.clone(),
                                                                      kp1Filtered,
                                                                      t_f.clone(),
+                                                                     relativeRot.clone(),
                                                                      imageName,
                                                                      t_f.clone(),
                                                                      relativeRot.clone()
@@ -224,7 +233,7 @@ void findFeatures() {
     std::string objectName;
     if (objectId != -1) {
         objectName = objectContainer.getObject(objectId)->getImageName();
-        addKeyFrame = true;
+        add_keyframe = true;
     } else {
         objectName = "No Object detected";
     }
@@ -235,36 +244,36 @@ void findFeatures() {
         
     auto feature_time2 = std::chrono::high_resolution_clock::now();
     auto feature_duration = std::chrono::duration_cast<std::chrono::milliseconds>(feature_time2 - feature_time1);
-    __android_log_print(ANDROID_LOG_INFO, "Unity", "Feature Duration: %lld milliseconds", feature_duration.count());
-    cv::Mat t_prev = cv::Mat::zeros(3, 1, CV_32F);
-    cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_32F);
+    // __android_log_print(ANDROID_LOG_INFO, "Unity", "Feature Duration: %lld milliseconds", feature_duration.count());
+    cv::Mat t_prev = cv::Mat::zeros(3, 1, CV_64F);
+    cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
     bool addTF = false;
 
-    // #ifdef BUILD_EXECUTABLE
-    //     for (int i = 0; i < kp1Filtered.size(); i++) {
-    //         circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
-    //     }
+    #ifdef BUILD_EXECUTABLE
+        for (int i = 0; i < kp1Filtered.size(); i++) {
+            circle(imageFeatures, kp1Filtered[i].pt, 1, cv::Scalar(0, 255, 0), 1);
+        }
 
-    //     traj = cv::Mat::zeros(height, width, CV_8UC3);
-    //     int rows = 10;
-    //     int cols = 10;
+        traj = cv::Mat::zeros(height, width, CV_8UC3);
+        int rows = 10;
+        int cols = 10;
 
-    //     // Calculate the width and height of each cell
-    //     int cellWidth = traj.cols / cols;
-    //     int cellHeight = traj.rows / rows;
+        // Calculate the width and height of each cell
+        int cellWidth = traj.cols / cols;
+        int cellHeight = traj.rows / rows;
 
-    //     // Draw vertical lines
-    //     for (int i = 1; i < cols; ++i) {
-    //         int x = i * cellWidth;
-    //         cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
-    //     }
+        // Draw vertical lines
+        for (int i = 1; i < cols; ++i) {
+            int x = i * cellWidth;
+            cv::line(traj, cv::Point(x, 0), cv::Point(x, traj.rows), cv::Scalar(255, 255, 255), 1);
+        }
 
-    //     // Draw horizontal lines
-    //     for (int i = 1; i < rows; ++i) {
-    //         int y = i * cellHeight;
-    //         cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
-    //     }
-    // #endif
+        // Draw horizontal lines
+        for (int i = 1; i < rows; ++i) {
+            int y = i * cellHeight;
+            cv::line(traj, cv::Point(0, y), cv::Point(traj.cols, y), cv::Scalar(255, 255, 255), 1);
+        }
+    #endif
 
     int bestKeyframeId = -1;
     if (!imgColorPrev.empty()) {
@@ -272,7 +281,7 @@ void findFeatures() {
         std::vector<cv::Point2f> pts1, pts2;
         std::vector<cv::Point2f> pts1Keyframe, pts2Keyframe;
         std::vector<cv::Point2f> pts1ToEstimate, pts2ToEstimate;
-        bool is_loop = false;
+        is_loop = false;
         if (kp1Filtered.size() >= 2 && prevFeatures.size() >= 2) {
             std::thread keyFrameThread([&]() {
                 bestKeyframeId = findBestMatchingKeyframe(descriptorsFiltered, kp1Filtered, pts1Keyframe, pts2Keyframe);
@@ -291,51 +300,76 @@ void findFeatures() {
             auto matcher_time2 = std::chrono::high_resolution_clock::now();
             auto matcher_duration = std::chrono::duration_cast<std::chrono::milliseconds>(matcher_time2 - matcher_time1);
             std::cout << "Matcher duration: " << matcher_duration.count() << " miliseconds" << std::endl;
-            __android_log_print(ANDROID_LOG_INFO, "Unity", "Matcher Duration: %lld milliseconds", matcher_duration.count());
+            // __android_log_print(ANDROID_LOG_INFO, "Unity", "Matcher Duration: %lld milliseconds", matcher_duration.count());
             auto transformation_time1 = std::chrono::high_resolution_clock::now();
 
-            cv::Mat R_1to2Object(3, 3, CV_32F);
-            cv::Mat t_1to2Object(3, 1, CV_32F);
-            translationCalc(pts1Object, pts1ToEstimate, t_1to2Object, R_1to2Object, colorFrame, depth);
-
-            cv::Mat R_1to2(3, 3, CV_32F);
+    
+            cv::Mat R_1to2 = cv::Mat::eye(3, 3, CV_64F);
             translationCalc(pts1ToEstimate, pts2ToEstimate, t_1to2, R_1to2, colorFrame, depth);
-            if (!t_1to2.empty()){
+            if (!t_1to2.empty() && !R_1to2.empty()){
+                cv::Mat R_1to2Object = cv::Mat::eye(3, 3, CV_64F);
+                cv::Mat t_1to2Object = cv::Mat::zeros(3, 1, CV_64F);
+                if (pts1Object.size() >= min3DPoints) {
+                    translationCalc(pts1Object, pts1ToEstimate, t_1to2Object, R_1to2Object, colorFrame, depth);
+                }    
+
                 float distanceX = cv::norm(t_1to2.at<double>(0)-t_prev.at<double>(0));
                 float distanceY = cv::norm(t_1to2.at<double>(1)-t_prev.at<double>(1));
                 float distanceZ = cv::norm(t_1to2.at<double>(2)-t_prev.at<double>(2));
                 if ((distanceX < maxDistanceF2F) && (distanceY < maxDistanceF2F) && (distanceZ < maxDistanceF2F)) {
-           
                     if (is_loop && no_move_counter <= framesNoMovement) {
-                            t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getPose();
+                            R_f = R_f * container.getKeyframe(bestKeyframeId)->getWorldRot();
+                            t_f = t_1to2 + container.getKeyframe(bestKeyframeId)->getWorldTrans();
                     } else {
                         if (no_move_counter <= framesNoMovement) {
-                            t_f += t_1to2;
+                            R_f = R_f * R_1to2;
+                            t_f += t_1to2; 
                         }
                     }
-                    if (addKeyFrame) {
+                    if (add_keyframe) {
                         Keyframe keyframe2(keyFrameId,
                                            grayImage.clone(),
                                            descriptorsFiltered.clone(),
                                            kp1Filtered,
                                            t_f.clone(),
+                                           R_f.clone(),
                                            objectContainer.getObject(objectId)->getImageName(),
                                            t_1to2Object.clone(),
                                            R_1to2Object.clone());
                         container.addKeyframe(std::make_shared<Keyframe>(keyframe2));
                         keyFrameId += 1;
-                        addKeyFrame = false;
-                        objectContainer.removeObjectByIndex(objectId);
+                        add_keyframe = false;
                         std::cout << "New KeyFrame Added" << std::endl;
-                        Debug::Log("New Keyframe Added", Color::Orange);
+                        std::string message = "New Keyframe Added related to: " + objectContainer.getObject(objectId)->getImageName();
+                        Debug::Log(message, Color::Orange);
+                        objectContainer.removeObjectByIndex(objectId);
+                        
+                    } else if (add_keyframe_by_hand) {
+                        std::string name = "By Hand";
+                        Keyframe keyframe2(keyFrameId,
+                                            grayImage.clone(),
+                                            descriptorsFiltered.clone(),
+                                            kp1Filtered,
+                                            t_f.clone(),
+                                            R_f.clone(),
+                                            name,
+                                            t_1to2.clone(),
+                                            R_1to2.clone());
+                        container.addKeyframe(std::make_shared<Keyframe>(keyframe2));
+                        keyFrameId += 1;
+                        add_keyframe_by_hand = false;
+                        std::cout << "New KeyFrame Added" << std::endl;
+                        std::string message = "New Keyframe Added related to: " + name;
+                        Debug::Log(message, Color::Orange);
                     }
+                   
                     addTF = true;
 
                 }
             }
             auto transformation_time2 = std::chrono::high_resolution_clock::now();
             auto transformation_duration = std::chrono::duration_cast<std::chrono::milliseconds>(transformation_time2 - transformation_time1);
-            __android_log_print(ANDROID_LOG_INFO, "Unity", "Transformation Duration: %lld milliseconds", transformation_duration.count());
+            // __android_log_print(ANDROID_LOG_INFO, "Unity", "Transformation Duration: %lld milliseconds", transformation_duration.count());
     
         }
     }
@@ -347,42 +381,43 @@ void findFeatures() {
         t_prev = t_1to2;
         addTF = false;
     }
+    
     auto total_time2 = std::chrono::high_resolution_clock::now();
     auto total_duration = std::chrono::duration_cast<std::chrono::milliseconds>(total_time2 - total_time1);
-     __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
+    //  __android_log_print(ANDROID_LOG_INFO, "Unity", "Total Duration: %lld milliseconds", total_duration.count());
 
-    // #ifdef BUILD_EXECUTABLE
-    // int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
-    // int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
-    // cv::circle(traj, cv::Point(-x+ width / 2, -y+height/2) ,1, CV_RGB(0,255,0), 2);
-    // // Put the text on the image
-    // std::string fps_text = std::to_string(total_duration.count()) + " ms";
+    #ifdef BUILD_EXECUTABLE
+    int x = static_cast<int>((t_f.at<double>(0) / 5) * width);
+    int y = static_cast<int>((t_f.at<double>(2) / 5) * height);
+    cv::circle(traj, cv::Point(-x+ width / 2, -y+height/2) ,1, CV_RGB(0,255,0), 2);
+    // Put the text on the image
+    std::string fps_text = std::to_string(total_duration.count()) + " ms";
    
-    // cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
-    // cv::putText(colorMat, objectName, cv::Point(400, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
+    cv::putText(colorMat, fps_text, cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
+    cv::putText(colorMat, objectName, cv::Point(400, 30), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(0, 0, 255), 2);
     
-    // int imageWidth = imageFeatures.cols;
-    // int imageHeight = imageFeatures.rows;
+    int imageWidth = imageFeatures.cols;
+    int imageHeight = imageFeatures.rows;
 
-    // cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
+    cv::Mat canvas = cv::Mat::zeros(2 * imageHeight, 2 * imageWidth, imageFeatures.type());
 
-    // cv::Mat colorGrayscaleImage;
-    // cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
-    // // cv::Mat prueba;
-    // // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
-    // // Copy each image onto the canvas at the desired positions
-    // if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
-    // std::cout<< " --(!) Error reading images " << std::endl;
-    // } else {
-    //     colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
-    //     colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
-    //     imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
-    //     traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
-    //     cv::imshow("Concatenated Images", canvas);
-    // }
+    cv::Mat colorGrayscaleImage;
+    cv::cvtColor(grayImage, colorGrayscaleImage, cv::COLOR_GRAY2BGR);
+    // cv::Mat prueba;
+    // cv::cvtColor(traj, prueba, cv::COLOR_GRAY2BGR);
+    // Copy each image onto the canvas at the desired positions
+    if ( !colorMat.data || !colorGrayscaleImage.data || !imageFeatures.data || !traj.data ) {
+    std::cout<< " --(!) Error reading images " << std::endl;
+    } else {
+        colorMat.copyTo(canvas(cv::Rect(0, 0, imageWidth, imageHeight)));
+        colorGrayscaleImage.copyTo(canvas(cv::Rect(imageWidth, 0, imageWidth, imageHeight)));
+        imageFeatures.copyTo(canvas(cv::Rect(0, imageHeight, imageWidth, imageHeight)));
+        traj.copyTo(canvas(cv::Rect(imageWidth, imageHeight, imageWidth, imageHeight)));
+        cv::imshow("Concatenated Images", canvas);
+    }
 
-    // std::cout << "Total duration: " << total_duration.count() << " miliseconds" << std::endl;
-    // #endif
+    std::cout << "Total duration: " << total_duration.count() << " miliseconds" << std::endl;
+    #endif
     
 }
 
@@ -481,7 +516,7 @@ void createORB(int nfeatures,
 
 }
 
-void GetTranslationVector(float* t_f_data) {
+void getTranslationVector(float* t_f_data) {
     if (t_f.empty()) {
         return;
     }
@@ -490,7 +525,28 @@ void GetTranslationVector(float* t_f_data) {
     }
 }
 
-void GetCameraOrientation(float* cameraAngle) {
+void getCameraRotation(float* R_f_data) {
+    if (R_f.empty()) {
+        return;
+    }
+
+    Eigen::Matrix3d eigenRotationMatrix;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                eigenRotationMatrix(i, j) = R_f.at<double>(i, j);
+            }
+        }
+    Eigen::Quaterniond quaternion(eigenRotationMatrix);
+
+    R_f_data[0] = static_cast<float>(quaternion.x());
+    R_f_data[1] = static_cast<float>(quaternion.y());
+    R_f_data[2] = static_cast<float>(quaternion.z());
+    R_f_data[3] = static_cast<float>(quaternion.w());
+
+
+}
+
+void getCameraOrientation(float* cameraAngle) {
     if (algo.get_theta().x == 0 && algo.get_theta().y == 0 && algo.get_theta().z == 0) {
         return;
     }    
@@ -510,7 +566,7 @@ void setParams(systemConfig config) {
     noMovementThresh = config.noMovementThresh / 10000;
     framesNoMovement = config.framesNoMovement;
     maxGoodFeatures = config.maxGoodFeatures;
-    minFeaturesFindObject = config.minFeaturesLoopClosure;
+    minFeaturesFindObject = config.minFeaturesFindObject;
 
 }
 
@@ -519,7 +575,11 @@ void resetOdom() {
 }
 
 void addKeyframe() {
-    addKeyFrame = true;
+    add_keyframe_by_hand = true;
+}
+
+bool isLoop() {
+    return is_loop;
 }
 
 void setProjectorZone(int _sectionX, int _sectionY, int _sectionWidth, int _sectionHeight) {
@@ -529,15 +589,27 @@ void setProjectorZone(int _sectionX, int _sectionY, int _sectionWidth, int _sect
     sectionHeight = _sectionHeight;
 }
 
-
-
-extern "C" const uchar* getJpegBuffer(int* bufferSize) {
-    std::vector<uchar> jpegBuffer;
-    cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
-    uchar* unityBuffer = new uchar[jpegBuffer.size()];
-    memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
-    *bufferSize = jpegBuffer.size();
-
-    return unityBuffer;
+void serializeKeyframeData(const char *fileName) {
+    std::string fileNameStr(fileName);
+    container.serialize(fileName);
+    
 }
+
+void deserializeKeyframeData(const char *fileName) {
+    std::string fileNameStr(fileName);
+    container.deserialize(fileName);
+}
+// extern "C" const uchar* getJpegBuffer(int* bufferSize) {
+
+
+//     std::vector<uchar> jpegBuffer;
+
+//     cv::imencode(".jpeg", colorMat, jpegBuffer, std::vector<int>{cv::IMWRITE_JPEG_QUALITY, 100});
+//     uchar* unityBuffer = new uchar[jpegBuffer.size()];
+//     memcpy(unityBuffer, jpegBuffer.data(), jpegBuffer.size());
+//     *bufferSize = jpegBuffer.size();
+
+//     return unityBuffer;
+// }
+
 

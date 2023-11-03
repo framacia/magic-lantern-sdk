@@ -3,6 +3,8 @@ using System.Threading;
 using UnityEngine;
 using System.IO;
 using System;
+using Unity.Properties;
+using Unity.Mathematics;
 
 public class RealSenseController : MonoBehaviour
 {
@@ -60,27 +62,43 @@ public class RealSenseController : MonoBehaviour
     private static extern void findFeatures();
 
     [DllImport(PLUGIN_NAME)] 
-    private static extern void GetTranslationVector(float[] t_f_data);
+    private static extern void getTranslationVector(float[] t_f_data);
 
     public static float[] RetrieveTranslationVector()
     {
         float[] t_f_data = new float[3];
-        GetTranslationVector(t_f_data);
+        getTranslationVector(t_f_data);
         return t_f_data;
     }
 
     [DllImport(PLUGIN_NAME)] 
-    private static extern void GetCameraOrientation(float[] cameraAngle);
+    private static extern void getCameraRotation(float[] R_f_data);
+
+    public static float[] RetrieveCameraQuaternions()
+    {
+        float[] R_f_data = new float[4];
+        getCameraRotation(R_f_data);
+        return R_f_data;
+    }
+
+    [DllImport(PLUGIN_NAME)] 
+    private static extern void getCameraOrientation(float[] cameraAngle);
 
     public static float[] RetrieveCameraOrientation()
     {
         float[] cameraAngle = new float[3];
-        GetCameraOrientation(cameraAngle);
+        getCameraOrientation(cameraAngle);
         return cameraAngle;
     }
 
     [DllImport(PLUGIN_NAME)] 
     private static extern void resetOdom();
+
+    [DllImport(PLUGIN_NAME)] 
+    private static extern void addKeyframe();
+
+    [DllImport(PLUGIN_NAME)] 
+    private static extern bool isLoop();
 
     [DllImport(PLUGIN_NAME)]
     private static extern IntPtr getJpegBuffer(out int bufferSize);
@@ -103,6 +121,14 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern  void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
 
+    [DllImport(PLUGIN_NAME)]
+    private static extern void serializeKeyframeData(string fileName);
+
+      [DllImport(PLUGIN_NAME)]
+    private static extern void deserializeKeyframeData(string fileName);
+
+    
+
   
     public struct systemConfig {
         public float ratioTresh;
@@ -121,7 +147,7 @@ public class RealSenseController : MonoBehaviour
     }
 
 
-
+    public bool localizationMode = false;
     public int colorWidth = 640;
     public int colorHeight = 480;
     public int colorFPS = 30;
@@ -143,7 +169,9 @@ public class RealSenseController : MonoBehaviour
     public int yRectangle = 65;
     public int widthRectangle = 325;
     public int heightRectangle = 200;
+    public string fileName = "keyframeDatabase.yml";
     public bool useRecord = false;
+    public string bagFileName = "bag1.bag";
     
 
     /// <summary>
@@ -181,8 +209,12 @@ public class RealSenseController : MonoBehaviour
     bool isStopped = false;
     Thread trackingThread;
     AutoResetEvent resetEvent;
-    float angleX;
     bool reset_odom = false;
+    bool add_keyframe_by_hand = false;
+    string filePath;
+    bool is_loop = false;
+
+    float[] quaternionsCamera;
 
     private void Start()
     {
@@ -190,8 +222,11 @@ public class RealSenseController : MonoBehaviour
         initialPos = transform.localPosition;
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
+        string systemPath = Application.persistentDataPath;
         if (useRecord){
-            string bagFilePath = System.IO.Path.Combine("/sdcard/Documents/20230918_163323.bag");
+           
+            string bagFilePath = systemPath + bagFileName;
+            
 
             if (File.Exists(bagFilePath))
             {
@@ -236,7 +271,15 @@ public class RealSenseController : MonoBehaviour
         
         setProjectorZone(xRectangle, yRectangle, widthRectangle, heightRectangle);
 
-        firstIteration();
+        filePath = systemPath + "/" + fileName;
+        if (!localizationMode) {
+            FindObjectOfType<TrackingReferenceImageLibrary>().ConvertImagesToByteArrays();
+            firstIteration();
+        } else {
+            deserializeKeyframeData(filePath);
+        }
+
+        
 
         
         // float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
@@ -279,10 +322,20 @@ public class RealSenseController : MonoBehaviour
     {
         resetEvent.Set();
         transform.localPosition = initialPos + rotatedTranslationVector;
+
+        quaternion rotation = new quaternion(quaternionsCamera[0], quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
+        transform.rotation = rotation;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Reseting Odometry...");
             reset_odom = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            Debug.Log("Adding Keyframe...");
+            add_keyframe_by_hand = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -304,11 +357,28 @@ public class RealSenseController : MonoBehaviour
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
             rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
+            
+            quaternionsCamera = RetrieveCameraQuaternions();
+            float qx = quaternionsCamera[0];
+            float qy = quaternionsCamera[1];
+            float qz = quaternionsCamera[2];
+            float qw = quaternionsCamera[3];
+
+           
+            // Debug.Log($"Quaternion: x={qx}, y={qy}, z={qz}, w={qw}");
+            bool loopClosure = isLoop();
+            Debug.Log($"Loop closure: {loopClosure}");
 
             if (reset_odom == true)
             {
                 resetOdom();
                 reset_odom = false;
+            }
+
+            if (add_keyframe_by_hand == true)
+            {
+                addKeyframe();
+                add_keyframe_by_hand = false;
             }
             
         }
@@ -316,8 +386,10 @@ public class RealSenseController : MonoBehaviour
     }
 
     private void OnDestroy()
-    {
-        
+    {   
+        if (!localizationMode) {
+            serializeKeyframeData(filePath);
+        }
         isStopped = true;
         resetEvent.Set(); 
         trackingThread.Join(); 

@@ -18,10 +18,10 @@ public:
 
     // Parameterized constructor
     Keyframe(int id, const cv::Mat& frame, const cv::Mat& descriptors,
-             const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& worldTranslation,
+             const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& worldTranslation, const cv::Mat& worldRot,
              const std::string& imageName, const cv::Mat& relativeTrans, const cv::Mat& relativeRot)
         : id(id), frame(frame), descriptors(descriptors), keypoints(keypoints),
-          worldTranslation(worldTranslation), imageName(imageName), relativeTrans(relativeTrans), relativeRot(relativeRot) {
+          worldTranslation(worldTranslation), worldRot(worldRot), imageName(imageName), relativeTrans(relativeTrans), relativeRot(relativeRot) {
     }
 
     // Getter functions for member variables
@@ -41,8 +41,12 @@ public:
         return keypoints;
     }
 
-    cv::Mat getPose() const {
+    cv::Mat getWorldTrans() const {
         return worldTranslation;
+    }
+
+    cv::Mat getWorldRot() const {
+        return worldRot;
     }
 
     std::string getImageName() const {
@@ -67,6 +71,7 @@ public:
         }
         fs << "]";
         fs << "worldTranslation" << worldTranslation;
+        fs << "worldRot" << worldRot;
         fs << "imageName" << imageName;
         fs << "relativeTrans" << relativeTrans;
         fs << "relativeRot" << relativeRot;
@@ -85,6 +90,7 @@ public:
             keypoints.push_back(keypoint);
         }
         node["worldTranslation"] >> worldTranslation;
+        node["worldRot"] >> worldRot;
         node["imageName"] >> imageName;
         node["relativeTrans"] >> relativeTrans;
         node["relativeRot"] >> relativeRot;
@@ -96,6 +102,7 @@ public:
     cv::Mat descriptors;
     std::vector<cv::KeyPoint> keypoints;
     cv::Mat worldTranslation;
+    cv::Mat worldRot;
     std::string imageName;
     cv::Mat relativeTrans;
     cv::Mat relativeRot;
@@ -178,17 +185,18 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 extern "C" {
     #endif
 
-    void colorStreamConfig(int width, int height, int fps);
-    void depthStreamConfig(int width, int height, int fps);
-    void bagFileStreamConfig(const char* bagFileAddress);
-    void initCamera();
-    void initImu();
+    // void colorStreamConfig(int width, int height, int fps);
+    // void depthStreamConfig(int width, int height, int fps);
+    // void bagFileStreamConfig(const char* bagFileAddress);
+    // void initCamera();
+    // void initImu();
     void firstIteration();
     void findFeatures();
     // float getDepthAtCenter();
-    void cleanupCamera();
-    void GetTranslationVector(float* t_f_data);
-    void GetCameraOrientation(float* cameraAngle);
+    // void cleanupCamera();
+    void getTranslationVector(float* t_f_data);
+    void getCameraRotation(float* R_f_data);
+    void getCameraOrientation(float* cameraAngle);
     
     void createORB(int  	nfeatures,
                    float  	scaleFactor,
@@ -208,9 +216,13 @@ extern "C" {
 
     void addKeyframe();
 
+    bool isLoop();
+
     void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
-    
-    
+
+    void serializeKeyframeData(const char* fileName);
+
+    void deserializeKeyframeData(const char* fileName);
     
 
 #ifdef __cplusplus

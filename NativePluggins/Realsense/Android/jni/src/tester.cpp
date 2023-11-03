@@ -102,13 +102,13 @@ int main(int argc, char const *argv[]) {
     std::vector<std::string> imageNames;
     std::string fileName = "keyframes.yml";
     int recover_info = false;
-    if (!recover_info) {
-        readImagesInFolder("/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/images", objectImages, imageNames);
-        std::cout << "cantidad images en folder: " << objectImages.size() << std::endl;
-        std::cout << "cantidad images en contaienr: " << objectContainer.getObjectCount() << std::endl;
-    } else {
-        container.deserialize(fileName);
-    }
+    // if (!recover_info) {
+    //     processImages("/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Linux/images", objectImages, imageNames);
+    //     std::cout << "cantidad images en folder: " << objectImages.size() << std::endl;
+    //     std::cout << "cantidad images en contaienr: " << objectContainer.getObjectCount() << std::endl;
+    // } else {
+    //     container.deserialize(fileName);
+    // }
     
     
 
@@ -116,7 +116,8 @@ int main(int argc, char const *argv[]) {
     while (!should_break) {
         
         findFeatures();
-        
+        // bool value = isLoop();
+        // std::cout << "Loop Closure: " << value << std::endl;
         int key = cv::waitKey(1);
         if (key >= 0)
         {
@@ -137,10 +138,10 @@ int main(int argc, char const *argv[]) {
         }
     }
     // serializing the content of keyframes
-    std::cout << "Serializing keyframes..." << std::endl;
+    // std::cout << "Serializing keyframes..." << std::endl;
     
-    container.serialize(fileName);
-    std::cout << "File " << fileName << " saved correctly!" << std::endl;
+    // container.serialize(fileName);
+    // std::cout << "File " << fileName << " saved correctly!" << std::endl;
     camera.cleanupCamera();
     return 0;
 }

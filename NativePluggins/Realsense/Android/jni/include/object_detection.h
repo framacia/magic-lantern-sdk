@@ -77,13 +77,13 @@ private:
 };
 
 int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
-void extractObjectsFeatures(std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
+void extractObjectsFeatures(cv::Mat& image, std::string& imageName);
 
 #ifdef __cplusplus
 extern "C" {
     #endif
 
-    void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& images, std::vector<std::string>& imageNames);
+    void processImages(const void* imageBytes, int imageBytesSize, const char* imageName);
     
     
     

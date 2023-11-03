@@ -2,44 +2,24 @@
 #include <object_detection.h>
 #include <camera_motion.h>
 
-void readImagesInFolder(const std::string& folderPath, std::vector<cv::Mat>& images, std::vector<std::string>& imageNames) {
-    cv::String pattern = folderPath + "/*.png";
-    std::vector<cv::String> imagePaths;
-    cv::glob(pattern, imagePaths);
-
-    for (const cv::String& imagePath : imagePaths) {
-        cv::Mat image = cv::imread(imagePath, cv::IMREAD_COLOR);
-        if (!image.data) {
-            std::cerr << "Could not open or find the image: " << imagePath << std::endl;
-        } else {
-            images.push_back(image);
-            std::string imageName = imagePath.substr(imagePath.find_last_of("/") + 1);
-            imageNames.push_back(imageName);
-        }
-    }
-
-    extractObjectsFeatures(images, imageNames);
-}
 
 
-void extractObjectsFeatures(std::vector<cv::Mat>& images, std::vector<std::string>& imageNames) {
-     for (size_t i = 0; i < images.size(); i++) {
-        int id = i;
-        std::vector<cv::KeyPoint> kp1;
-        cv::Mat descriptors1;
-        featureDetection(images[i], kp1, descriptors1);
-        std::string imageName = imageNames[i];
-        std::shared_ptr<Object> object1 = std::make_shared<Object>(id,
-                                                                   images[i].clone(),
-                                                                   descriptors1.clone(),
-                                                                   kp1,
-                                                                   imageName);
 
-        objectContainer.addObject(object1);
-    }
+void extractObjectsFeatures(cv::Mat& image, std::string& imageName) {
+    int id = objectContainer.getObjectCount();
+    std::vector<cv::KeyPoint> kp1;
+    cv::Mat descriptors1;
+    featureDetection(image, kp1, descriptors1);
+    std::shared_ptr<Object> object1 = std::make_shared<Object>(id,
+                                                                image.clone(),
+                                                                descriptors1.clone(),
+                                                                kp1,
+                                                                imageName);
+
+    objectContainer.addObject(object1);
+
 
 }
-
 
 
 int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2) {
@@ -94,6 +74,27 @@ int findObject(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1, std::vector<
     }
 
     return bestObjectId;
+}
+
+void processImages(const void* imageBytes, int imageBytesSize, const char* imageName) {
+    if (imageBytes == nullptr || imageBytesSize <= 0) {
+        return;
+    }
+   
+    std::vector<uchar> imageBuffer(imageBytesSize);
+    std::copy(static_cast<const uchar*>(imageBytes), static_cast<const uchar*>(imageBytes) + imageBytesSize, imageBuffer.begin());
+
+    cv::Mat image = cv::imdecode(imageBuffer, cv::IMREAD_COLOR);
+   
+    std::string imageNameStr(imageName);
+    
+    if (!image.empty()) {
+        std::string name(imageName);
+        extractObjectsFeatures(image, name);
+    } else {
+        // Handle the image decoding failure, e.g., log an error or return early.
+    }
+ 
 }
 
 

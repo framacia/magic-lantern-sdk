@@ -79,10 +79,10 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
     
     std::vector<cv::Point2f> uImagePoints, vImagePoints;
     std::vector<cv::Point3f> vObjectPoints;
-    cv::Mat tvec1(3, 1, CV_32F);
-    cv::Mat tvec2(3, 1, CV_32F);
-    cv::Mat rvec1(3, 1, CV_32F);
-    cv::Mat rvec2(3, 1, CV_32F);
+    cv::Mat tvec1 = cv::Mat::zeros(3, 1, CV_64F);
+    cv::Mat tvec2 = cv::Mat::zeros(3, 1, CV_64F);
+    cv::Mat rvec1 = cv::Mat::zeros(3, 1, CV_64F);
+    cv::Mat rvec2 = cv::Mat::zeros(3, 1, CV_64F);
     try {
        
         if (pts1.size() >= 2 && pts2.size() >= 2) {
@@ -122,9 +122,9 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
                             rvec1,
                             tvec1,
                             false,
-                            1500,
+                            500,
                             8.0f,
-                            0.99,
+                            0.9,
                             cv::noArray(),
                             cv::SOLVEPNP_ITERATIVE);
         cv::solvePnPRansac(vObjectPoints,
@@ -134,21 +134,21 @@ void translationCalc(std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& p
                             rvec2,
                             tvec2,
                             false,
-                            1500,
+                            500,
                             8.0f,
-                            0.99,
+                            0.9,
                             cv::noArray(),
                             cv::SOLVEPNP_ITERATIVE);
 
         // }
 
-        cv::Mat R1(3, 3, CV_32F);
-        cv::Mat R2(3, 3, CV_32F);
+        cv::Mat R1 = cv::Mat::zeros(3, 3, CV_64F);
+        cv::Mat R2 = cv::Mat::eye(3, 3, CV_64F);
         cv::Rodrigues(rvec1, R1);
         cv::Rodrigues(rvec2, R2);
 
-        cv::Mat t_1to2(3, 1, CV_32F);
-        cv::Mat R_1to2(3, 3, CV_32F);
+        cv::Mat t_1to2 = cv::Mat::zeros(3, 1, CV_64F);
+        cv::Mat R_1to2 = cv::Mat::eye(3, 1, CV_64F);
         computeC2MC1(R1, tvec1, R2, tvec2, R_1to2, t_1to2);
 
         global_R = R_1to2.t();
