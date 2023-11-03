@@ -244,6 +244,13 @@ public class RealSenseController : MonoBehaviour
 
     private IMUCameraRotation imuCameraRotation;
 
+    private void Awake()
+    {
+#if UNITY_EDITOR
+        GetComponent<RealSenseController>().enabled = false;
+#endif
+    }
+
     private void Start()
     {
         //Get Camera initial position to apply as offset
@@ -347,10 +354,10 @@ public class RealSenseController : MonoBehaviour
         }
 
         //Loop closure trigger
-        // if (loopClosure)
-        // {
-        //     OnLoopClosure();
-        // }
+        if (loopClosure)
+        {
+            //OnLoopClosure();
+        }
     }
 
     private void ThreadUpdate()

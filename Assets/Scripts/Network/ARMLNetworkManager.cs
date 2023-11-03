@@ -34,13 +34,18 @@ public class ARMLNetworkManager : NetworkManager
     // Start is called before the first frame update
     void Start()
     {
+
+        Debug.Log("que esta pasando 3");
+
 #if UNITY_EDITOR
         isAdmin = true;
 #endif
 
         if (!isAdmin)
         {
+            Debug.Log("que esta pasando");
             StartHost();
+            Debug.Log("que esta pasando 2");
             GetComponent<NetworkManagerHUD>().enabled = false;
             //TODO Handle the on-screen notifications for Admin connected/disconnected etc.
         }
