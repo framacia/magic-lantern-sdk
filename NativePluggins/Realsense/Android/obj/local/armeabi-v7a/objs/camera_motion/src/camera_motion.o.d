@@ -306,6 +306,24 @@
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/android_include/librealsense2/hpp/rs_processing.hpp \
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/android_include/librealsense2/hpp/rs_options.hpp \
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/android_include/librealsense2/hpp/rs_pipeline.hpp \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/Dense \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/Eigenvalues \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/Tridiagonalization.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/RealSchur.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./HessenbergDecomposition.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/EigenSolver.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./RealSchur.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./Tridiagonalization.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/ComplexSchur.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./ComplexSchur.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/RealQZ.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./RealQZ.h \
+  /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/cv-helpers.hpp \
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/globals.h \
   /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/rs_camera.h \
@@ -924,6 +942,42 @@
 /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/android_include/librealsense2/hpp/rs_options.hpp:
 
 /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/android_include/librealsense2/hpp/rs_pipeline.hpp:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/Dense:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/Eigenvalues:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/Tridiagonalization.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/RealSchur.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./HessenbergDecomposition.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/EigenSolver.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./RealSchur.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./Tridiagonalization.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/ComplexSchur.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./ComplexSchur.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/RealQZ.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/./RealQZ.h:
+
+/home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
 
 /home/fubintlab/libraries/magic_lantern_unity/NativePluggins/Realsense/Android/jni/include/cv-helpers.hpp:
 
