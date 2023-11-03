@@ -100,7 +100,7 @@ namespace DS.Windows
         {
             ContextualMenuManipulator contextualMenuManipulator = new ContextualMenuManipulator(
                 menuEvent => menuEvent.menu.AppendAction("Add Group", actionEvent =>
-                AddElement(CreateGroup("DialogueGroup", GetLocalMousePosition(actionEvent.eventInfo.localMousePosition))))
+                CreateGroup("DialogueGroup", GetLocalMousePosition(actionEvent.eventInfo.localMousePosition)))
             );
 
             return contextualMenuManipulator;
@@ -127,6 +127,20 @@ namespace DS.Windows
 
             AddGroup(group);
 
+            AddElement(group);
+
+            foreach(GraphElement selectedElement in selection)
+            {
+                if(selectedElement is not DSNode)
+                {
+                    continue;
+                }
+
+                DSNode node = (DSNode)selectedElement;
+
+                group.AddElement(node);
+            }
+
             return group;
         }
         #endregion
@@ -137,8 +151,10 @@ namespace DS.Windows
             deleteSelection = (operationName, askUser) =>
             {
                 Type groupType = typeof(DSGroup);
+                Type edgeType = typeof(Edge);
 
                 List<DSGroup> groupsToDelete = new List<DSGroup>();
+                List<Edge> edgesToDelete = new List<Edge>();
                 List<DSNode> nodesToDelete = new List<DSNode>();
 
                 foreach (GraphElement element in selection)
@@ -150,21 +166,46 @@ namespace DS.Windows
                         continue;
                     }
 
+                    if(element.GetType() == edgeType)
+                    {
+                        Edge edge = (Edge)element;
+
+                        edgesToDelete.Add(edge);
+
+                        continue;
+                    }
+
                     if(element.GetType() != groupType)
                     {
                         continue;
                     }
 
                     DSGroup group = (DSGroup)element;
-                    RemoveGroup(group);
 
                     groupsToDelete.Add(group);
                 }
 
                 foreach(DSGroup group in groupsToDelete)
                 {
+                    List<DSNode> groupNodes = new List<DSNode>();
+                    foreach(GraphElement groupElement in group.containedElements)
+                    {
+                        if(groupElement is not DSNode)
+                        {
+                            continue;
+                        }
+
+                        groupNodes.Add((DSNode)groupElement);
+                    }
+
+                    group.RemoveElements(groupNodes);
+
+                    RemoveGroup(group);
+
                     RemoveElement(group);
                 }
+
+                DeleteElements(edgesToDelete);
 
                 foreach (DSNode node in nodesToDelete)
                 {
@@ -174,6 +215,8 @@ namespace DS.Windows
                     }
 
                     RemoveUngroupedNode(node);
+
+                    node.DisconnectAllPorts();
 
                     RemoveElement(node);
                 }

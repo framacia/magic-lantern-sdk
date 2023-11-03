@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace DS.Windows
@@ -7,10 +8,20 @@ namespace DS.Windows
 
     public class DSEditorWindow : EditorWindow
     {
+        private readonly string defaultFileName = "DialoguesFileName";
+
         [MenuItem("Window/DS/Dialogue Graph")]
         public static void Open()
         {
             GetWindow<DSEditorWindow>("Dialogue Graph");
+        }
+
+        private void OnEnable()
+        {
+            AddGraphView();
+            AddToolbar();
+
+            AddStyles();
         }
 
         private void CreateGUI()
@@ -26,6 +37,20 @@ namespace DS.Windows
             graphView.StretchToParentSize();
 
             rootVisualElement.Add(graphView);
+        }
+
+        private void AddToolbar()
+        {
+            Toolbar toolbar = new Toolbar();
+
+            TextField fileNameTextField = DSElementUtility.CreateTextField(defaultFileName, "File Name:");
+
+            Button saveButton = DSElementUtility.CreateButton("Save");
+
+            toolbar.Add(fileNameTextField);
+            toolbar.Add(saveButton);
+
+            rootVisualElement.Add(toolbar);
         }
 
         private void AddStyles()

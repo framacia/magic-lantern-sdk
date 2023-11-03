@@ -67,8 +67,7 @@ namespace DS.Windows
                     }
                 case Group _: //You can type underscore when you don't need to use the instance of a class in a case
                     {
-                        DSGroup group = graphView.CreateGroup("DialogueGroup", localMousePosition);
-                        graphView.AddElement(group);
+                        graphView.CreateGroup("DialogueGroup", localMousePosition);
                         return true;
                     }
                 default:
