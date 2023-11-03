@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WallDemoLowPoly.unity
     guid: 86b687a1b53cce04eb66e50920c9b632
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/GarumCart.unity
     guid: 1424a98a6ff4fd24dbd639678efe0d6b
   m_configObjects:

@@ -1,15 +1,14 @@
+using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
-using System.IO;
-using System;
-using Unity.Properties;
-using Unity.Mathematics;
 
 public class RealSenseController : MonoBehaviour
 {
     private const string PLUGIN_NAME = "camera_motion";
 
+    #region Native Plugin Methods
     [DllImport(PLUGIN_NAME)]
     private static extern void cleanupCamera();
 
@@ -33,7 +32,7 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern void cropRectangleFeatures(int initX, int initY, int endX, int endY);
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void createORB(int nfeatures,
                                         float scaleFactor,
                                         int nlevels,
@@ -45,7 +44,7 @@ public class RealSenseController : MonoBehaviour
                                         int fastThreshold
                                     );
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void createSIFT(int nfeatures = 0,
                                         int nOctaveLayers = 3,
                                         double contrastThreshold = 0.04,
@@ -54,14 +53,14 @@ public class RealSenseController : MonoBehaviour
                                         bool enable_precise_upscale = false
                                     );
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void firstIteration();
 
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void findFeatures();
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void getTranslationVector(float[] t_f_data);
 
     public static float[] RetrieveTranslationVector()
@@ -71,17 +70,17 @@ public class RealSenseController : MonoBehaviour
         return t_f_data;
     }
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void getCameraRotation(float[] R_f_data);
 
-    public static float[] RetrieveCameraQuaternions()
+    public static Quaternion RetrieveCameraQuaternions()
     {
         float[] R_f_data = new float[4];
         getCameraRotation(R_f_data);
-        return R_f_data;
+        return new Quaternion(R_f_data[0], R_f_data[1], R_f_data[2], R_f_data[3]);
     }
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void getCameraOrientation(float[] cameraAngle);
 
     public static float[] RetrieveCameraOrientation()
@@ -91,13 +90,13 @@ public class RealSenseController : MonoBehaviour
         return cameraAngle;
     }
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void resetOdom();
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern void addKeyframe();
 
-    [DllImport(PLUGIN_NAME)] 
+    [DllImport(PLUGIN_NAME)]
     private static extern bool isLoop();
 
     [DllImport(PLUGIN_NAME)]
@@ -106,12 +105,12 @@ public class RealSenseController : MonoBehaviour
     public static byte[] GetJpegBuffer(out int bufferSize)
     {
         IntPtr bufferPtr = getJpegBuffer(out bufferSize);
-        
+
         byte[] jpegBuffer = new byte[bufferSize];
         Marshal.Copy(bufferPtr, jpegBuffer, 0, bufferSize);
-        
+
         Marshal.FreeCoTaskMem(bufferPtr);
-        
+
         return jpegBuffer;
     }
 
@@ -119,18 +118,17 @@ public class RealSenseController : MonoBehaviour
     private static extern float GetDepthAtCenter();
 
     [DllImport(PLUGIN_NAME)]
-    private static extern  void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
+    private static extern void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
 
     [DllImport(PLUGIN_NAME)]
     private static extern void serializeKeyframeData(string fileName);
 
-      [DllImport(PLUGIN_NAME)]
+    [DllImport(PLUGIN_NAME)]
     private static extern void deserializeKeyframeData(string fileName);
+    #endregion
 
-    
-
-  
-    public struct systemConfig {
+    public struct systemConfig
+    {
         public float ratioTresh;
         public float minDepth;
         public float maxDepth;
@@ -142,92 +140,75 @@ public class RealSenseController : MonoBehaviour
         public int framesNoMovement;
         public int maxGoodFeatures;
         public int minFeaturesFindObject;
-
-        
     }
 
-
-    public bool localizationMode = false;
-    public int colorWidth = 640;
-    public int colorHeight = 480;
-    public int colorFPS = 30;
-    public int depthWidth = 640;
-    public int depthHeight = 480;
-    public int depthFPS = 30;
-    public float ratioTresh = 0.7f;
-    public float minDepth = 0.0f;
-    public float maxDepth = 6.0f;
-    public int min3DPoints = 15;
-    public float maxDistanceF2F = 0.05f;
-    public int minFeaturesLoopClosure = 200;
-    public int framesUntilLoopClosure = 200;
-    public float noMovementThresh = 0.0001f;
-    public int framesNoMovement = 50;
-    public int maxGoodFeatures = 500;
-    public int minFeaturesFindObject = 30;
-    public int xRectangle = 180;
-    public int yRectangle = 65;
-    public int widthRectangle = 325;
-    public int heightRectangle = 200;
-    public string fileName = "keyframeDatabase.yml";
-    public bool useRecord = false;
-    public string bagFileName = "bag1.bag";
-    
-
-    /// <summary>
-    /// FRAN STARTS HERE
-    /// </summary>
-
-    public enum FeatureExtractorType
-    {
-        SIFT,
-        ORB
-    }
-
-    public FeatureExtractorType featureExtractorType;
+    #region Odometry Parameters
+    [SerializeField] private bool localizationMode = false;
+    [SerializeField] private int colorWidth = 640;
+    [SerializeField] private int colorHeight = 480;
+    [SerializeField] private int colorFPS = 30;
+    [SerializeField] private int depthWidth = 640;
+    [SerializeField] private int depthHeight = 480;
+    [SerializeField] private int depthFPS = 30;
+    [SerializeField] private float ratioTresh = 0.7f;
+    [SerializeField] private float minDepth = 0.0f;
+    [SerializeField] private float maxDepth = 6.0f;
+    [SerializeField] private int min3DPoints = 15;
+    [SerializeField] private float maxDistanceF2F = 0.05f;
+    [SerializeField] private int minFeaturesLoopClosure = 200;
+    [SerializeField] private int framesUntilLoopClosure = 200;
+    [SerializeField] private float noMovementThresh = 0.0001f;
+    [SerializeField] private int framesNoMovement = 50;
+    [SerializeField] private int maxGoodFeatures = 500;
+    [SerializeField] private int minFeaturesFindObject = 30;
+    [SerializeField] private int xRectangle = 180;
+    [SerializeField] private int yRectangle = 65;
+    [SerializeField] private int widthRectangle = 325;
+    [SerializeField] private int heightRectangle = 200;
+    [SerializeField] private string fileName = "keyframeDatabase.yml";
+    [SerializeField] private bool useRecord = false;
+    [SerializeField] private string bagFileName = "bag1.bag";
 
     //ORB Parameters
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbNFeatures = 500;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private float orbScaleFactor = 1.2f;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbNLevels = 8;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbEdgeThreshold = 31;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbFirstLevel = 0;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbWTA_K = 2;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbScoreType = 0;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbPatchSize = 31;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.ORB)][SerializeField] private int orbFastThreshold = 20;
+    [Header("ORB Parameters")]
+    [SerializeField] private int orbNFeatures = 500;
+    [SerializeField] private float orbScaleFactor = 1.2f;
+    [SerializeField] private int orbNLevels = 8;
+    [SerializeField] private int orbEdgeThreshold = 31;
+    [SerializeField] private int orbFirstLevel = 0;
+    [SerializeField] private int orbWTA_K = 2;
+    [SerializeField] private int orbScoreType = 0;
+    [SerializeField] private int orbPatchSize = 31;
+    [SerializeField] private int orbFastThreshold = 20;
+    #endregion
 
-    //SIFT Parameters
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private int siftNFeatures = 0;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private int siftNOctaveLayers = 3;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private double siftContrastThreshold = 0.04;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private double siftEdgeThreshold = 10;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private double siftSigma = 1.6;
-    [DrawIf(nameof(featureExtractorType), FeatureExtractorType.SIFT)][SerializeField] private bool siftEnable_precise_upscale = false;
+    private Vector3 rotattedTranslationVector, initialCamPosition;
+    private bool isStopped = false;
+    private Thread trackingThread;
+    private AutoResetEvent resetEvent;
+    private bool reset_odom = false;
+    private bool add_keyframe_by_hand = false;
+    private string filePath;
 
-    Vector3 rotatedTranslationVector, initialPos;
-    bool isStopped = false;
-    Thread trackingThread;
-    AutoResetEvent resetEvent;
-    bool reset_odom = false;
-    bool add_keyframe_by_hand = false;
-    string filePath;
-    bool is_loop = false;
+    private float[] quaternionsCamera;
+    private bool loopClosure;
+    private Quaternion remappedRealSenseRotation;
 
-    float[] quaternionsCamera;
+    private IMUCameraRotation imuCameraRotation;
 
     private void Start()
     {
-// #if !UNITY_EDITOR
-        initialPos = transform.localPosition;
+        //Get Camera initial position to apply as offset
+        initialCamPosition = transform.localPosition;
+
         Debug.Log("---------------------------------- INICIO PROGRAMA --------------------------------");
         // Initialize the RealSense camera when the script starts
         string systemPath = Application.persistentDataPath;
-        if (useRecord){
-           
-            string bagFilePath = systemPath + bagFileName;
-            
 
+        //Records video with camera
+        if (useRecord)
+        {
+            string bagFilePath = systemPath + bagFileName;
             if (File.Exists(bagFilePath))
             {
                 // The file exists, you can proceed with your operations on the file.
@@ -239,19 +220,17 @@ public class RealSenseController : MonoBehaviour
                 // The file does not exist, handle the case where the file is missing.
                 Debug.LogError("The file does not exist: " + bagFilePath);
             }
-            
-        } else {
+        }
+        else
+        {
             colorStreamConfig(colorWidth, colorHeight, colorFPS);
             depthStreamConfig(depthWidth, depthHeight, depthFPS);
         }
-        
+
         initCamera();
         initImu();
 
-        if (featureExtractorType == FeatureExtractorType.SIFT)
-            createSIFT(siftNFeatures, siftNOctaveLayers, siftContrastThreshold, siftEdgeThreshold, siftSigma, siftEnable_precise_upscale);
-        else if (featureExtractorType == FeatureExtractorType.ORB)
-            createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
+        createORB(orbNFeatures, orbScaleFactor, orbNLevels, orbEdgeThreshold, orbFirstLevel, orbWTA_K, orbScoreType, orbPatchSize, orbFastThreshold);
 
         systemConfig config = new systemConfig();
         config.ratioTresh = ratioTresh;
@@ -265,109 +244,86 @@ public class RealSenseController : MonoBehaviour
         config.framesNoMovement = framesNoMovement;
         config.maxGoodFeatures = maxGoodFeatures;
         config.minFeaturesFindObject = minFeaturesFindObject;
-        
-        
+
         setParams(config);
-        
+
         setProjectorZone(xRectangle, yRectangle, widthRectangle, heightRectangle);
 
         filePath = systemPath + "/" + fileName;
-        if (!localizationMode) {
+        if (!localizationMode)
+        {
             FindObjectOfType<TrackingReferenceImageLibrary>().ConvertImagesToByteArrays();
             firstIteration();
-        } else {
+        }
+        else
+        {
             deserializeKeyframeData(filePath);
         }
 
-        
-
-        
-        // float[] totalCameraAngle = new float[3] { 0.0f, 0.0f, 0.0f };
-        // int numberOfSamples = 1000;
-
-        // for (int i = 0; i < numberOfSamples; i++)
-        // {
-        //     float[] cameraAngle = RetrieveCameraOrientation();
-        //     totalCameraAngle[0] += cameraAngle[0];
-        //     totalCameraAngle[1] += cameraAngle[1];
-        //     totalCameraAngle[2] += cameraAngle[2];
-        // }
-
-        // float averageX = totalCameraAngle[0] / numberOfSamples;
-        // float averageY = totalCameraAngle[1] / numberOfSamples;
-        // float averageZ = totalCameraAngle[2] / numberOfSamples;
-
-        
-        // Debug.Log("Average Camera Orientation x: " + averageX);
-        // Debug.Log("Average Camera Orientation y: " + averageY);
-        // Debug.Log("Average Camera Orientation z: " + averageZ);
-
-        // angleX = averageZ;
-
-
+        //Thread handling
         trackingThread = new Thread(ThreadUpdate);
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
 
-
-      
-        
-        
-// #endif
+        imuCameraRotation = GetComponent<IMUCameraRotation?>();
     }
-
-// #if !UNITY_EDITOR
 
     private void Update()
     {
+        //Thread
         resetEvent.Set();
-        transform.localPosition = initialPos + rotatedTranslationVector;
 
-        quaternion rotation = new quaternion(quaternionsCamera[0], quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
-        transform.rotation = rotation;
+        //Apply RealSense position to camera, + initialPosition
+        transform.localPosition = initialCamPosition + rotattedTranslationVector;
 
+        remappedRealSenseRotation = new Quaternion(quaternionsCamera[0], -quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
+
+        //Reset Odometry
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Reseting Odometry...");
+            Debug.Log("Resetting Odometry...");
             reset_odom = true;
         }
 
+        //Add keyframe
         if (Input.GetKeyDown(KeyCode.Y))
         {
             Debug.Log("Adding Keyframe...");
             add_keyframe_by_hand = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-             Application.Quit();
+        //Close application - TODO Don't have this here
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
-       
-        
 
+        //Loop closure trigger
+        if (loopClosure)
+        {
+            OnLoopClosure();
+        }
     }
 
     private void ThreadUpdate()
     {
         while (!isStopped)
         {
-            resetEvent.WaitOne(); 
+            resetEvent.WaitOne();
 
             findFeatures();
             //float depth = GetDepthAtCenter();
             float[] translationVector = RetrieveTranslationVector();
             Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
-            rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
-            
-            quaternionsCamera = RetrieveCameraQuaternions();
-            float qx = quaternionsCamera[0];
-            float qy = quaternionsCamera[1];
-            float qz = quaternionsCamera[2];
-            float qw = quaternionsCamera[3];
+            rotattedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
 
-           
-            // Debug.Log($"Quaternion: x={qx}, y={qy}, z={qz}, w={qw}");
-            bool loopClosure = isLoop();
-            Debug.Log($"Loop closure: {loopClosure}");
+            //Get raw RealSense rotation and remap it to camera
+            remappedRealSenseRotation = new Quaternion(RetrieveCameraQuaternions().x,
+                -RetrieveCameraQuaternions().y,
+                RetrieveCameraQuaternions().z,
+                RetrieveCameraQuaternions().w);
+
+            loopClosure = isLoop();
 
             if (reset_odom == true)
             {
@@ -380,20 +336,28 @@ public class RealSenseController : MonoBehaviour
                 addKeyframe();
                 add_keyframe_by_hand = false;
             }
-            
         }
+    }
+
+    private void OnLoopClosure()
+    {
+        //Send RealSense rotation to IMU script
+        if (imuCameraRotation)
+            imuCameraRotation.ReceiveRealSenseLoopClosure(remappedRealSenseRotation);
         
+        //Set false so it only runs one frame
+        loopClosure = false;
     }
 
     private void OnDestroy()
-    {   
-        if (!localizationMode) {
+    {
+        if (!localizationMode)
+        {
             serializeKeyframeData(filePath);
         }
         isStopped = true;
-        resetEvent.Set(); 
-        trackingThread.Join(); 
+        resetEvent.Set();
+        trackingThread.Join();
         cleanupCamera();
     }
-// #endif
 }
