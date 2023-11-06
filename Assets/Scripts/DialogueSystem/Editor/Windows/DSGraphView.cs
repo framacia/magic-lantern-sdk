@@ -20,6 +20,28 @@ namespace DS.Windows
         private SerializableDictionary<string, DSGroupErrorData> groups;
         private SerializableDictionary<Group, SerializableDictionary<string, DSNodeErrorData>> groupedNodes;
 
+        private int repeatedNamesAmount;
+
+        public int RepeatedNamesAmount
+        {
+            get
+            {
+                return repeatedNamesAmount;
+            }
+            set
+            {
+                repeatedNamesAmount = value;
+                if (repeatedNamesAmount == 0)
+                {
+                    editorWindow.EnableSaving();
+                }
+                else
+                {
+                    editorWindow.DisableSaving();
+                }
+            }
+        }
+
         public DSGraphView(DSEditorWindow dsEditorWindow)
         {
             editorWindow = dsEditorWindow;
@@ -129,9 +151,9 @@ namespace DS.Windows
 
             AddElement(group);
 
-            foreach(GraphElement selectedElement in selection)
+            foreach (GraphElement selectedElement in selection)
             {
-                if(selectedElement is not DSNode)
+                if (selectedElement is not DSNode)
                 {
                     continue;
                 }
@@ -166,7 +188,7 @@ namespace DS.Windows
                         continue;
                     }
 
-                    if(element.GetType() == edgeType)
+                    if (element.GetType() == edgeType)
                     {
                         Edge edge = (Edge)element;
 
@@ -175,7 +197,7 @@ namespace DS.Windows
                         continue;
                     }
 
-                    if(element.GetType() != groupType)
+                    if (element.GetType() != groupType)
                     {
                         continue;
                     }
@@ -185,12 +207,12 @@ namespace DS.Windows
                     groupsToDelete.Add(group);
                 }
 
-                foreach(DSGroup group in groupsToDelete)
+                foreach (DSGroup group in groupsToDelete)
                 {
                     List<DSNode> groupNodes = new List<DSNode>();
-                    foreach(GraphElement groupElement in group.containedElements)
+                    foreach (GraphElement groupElement in group.containedElements)
                     {
-                        if(groupElement is not DSNode)
+                        if (groupElement is not DSNode)
                         {
                             continue;
                         }
@@ -221,29 +243,6 @@ namespace DS.Windows
                     RemoveElement(node);
                 }
             };
-        }
-
-        private void RemoveGroup(DSGroup group)
-        {
-            string oldGroupName = group.oldTitle;
-
-            List<DSGroup> groupsList = groups[oldGroupName].Groups;
-
-            groupsList.Remove(group);
-
-            group.ResetStyle();
-
-            if(groupsList.Count == 1)
-            {
-                groupsList[0].ResetStyle();
-
-                return;
-            }
-
-            if(groupsList.Count == 0)
-            {
-                groups.Remove(oldGroupName);
-            }
         }
 
         private void OnGroupElementsAdded()
@@ -290,10 +289,11 @@ namespace DS.Windows
             groupTitleChanged = (group, newTitle) =>
             {
                 DSGroup dsGroup = (DSGroup)group;
+                dsGroup.title = newTitle.RemoveWhitespaces().RemoveSpecialCharacters();
 
                 RemoveGroup(dsGroup);
 
-                dsGroup.oldTitle = newTitle;
+                dsGroup.oldTitle = dsGroup.title;
 
                 AddGroup(dsGroup);
             };
@@ -304,7 +304,7 @@ namespace DS.Windows
         #region Repeated Elements
         public void AddUngroupedNode(DSNode node)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
 
             if (!ungroupedNodes.ContainsKey(nodeName))
             {
@@ -326,13 +326,14 @@ namespace DS.Windows
 
             if (ungroupedNodesList.Count == 2)
             {
+                ++RepeatedNamesAmount;
                 ungroupedNodesList[0].SetErrorStyle(errorColor);
             }
         }
 
         public void RemoveUngroupedNode(DSNode node)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
 
             List<DSNode> ungroupedNodesList = ungroupedNodes[nodeName].Nodes;
 
@@ -342,6 +343,7 @@ namespace DS.Windows
 
             if (ungroupedNodesList.Count == 1)
             {
+                --RepeatedNamesAmount;
                 ungroupedNodesList[0].ResetStyle();
 
                 return;
@@ -356,7 +358,7 @@ namespace DS.Windows
 
         private void AddGroup(DSGroup group)
         {
-            string groupName = group.title;
+            string groupName = group.title.ToLower();
 
             if (!groups.ContainsKey(groupName))
             {
@@ -377,15 +379,40 @@ namespace DS.Windows
 
             group.SetErrorStyle(errorColor);
 
-            if(groupsList.Count == 2)
+            if (groupsList.Count == 2)
             {
+                ++RepeatedNamesAmount;
                 groupsList[0].SetErrorStyle(errorColor);
+            }
+        }
+
+        private void RemoveGroup(DSGroup group)
+        {
+            string oldGroupName = group.oldTitle.ToLower();
+
+            List<DSGroup> groupsList = groups[oldGroupName].Groups;
+
+            groupsList.Remove(group);
+
+            group.ResetStyle();
+
+            if (groupsList.Count == 1)
+            {
+                groupsList[0].ResetStyle();
+
+                return;
+            }
+
+            if (groupsList.Count == 0)
+            {
+                --RepeatedNamesAmount;
+                groups.Remove(oldGroupName);
             }
         }
 
         public void AddGroupedNode(DSNode node, Group group)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
 
             node.Group = null;
 
@@ -415,13 +442,14 @@ namespace DS.Windows
 
             if (groupedNodesList.Count == 2)
             {
+                ++RepeatedNamesAmount;
                 groupedNodesList[0].SetErrorStyle(errorColor);
             }
         }
 
         public void RemoveGroupedNode(DSNode node, Group group)
         {
-            string nodeName = node.DialogueName;
+            string nodeName = node.DialogueName.ToLower();
 
             List<DSNode> groupedNodesList = groupedNodes[group][nodeName].Nodes;
 
@@ -431,6 +459,7 @@ namespace DS.Windows
 
             if (groupedNodesList.Count == 1)
             {
+                --RepeatedNamesAmount;
                 groupedNodesList[0].ResetStyle();
 
                 return;

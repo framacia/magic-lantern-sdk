@@ -9,6 +9,8 @@ namespace DS.Windows
     public class DSEditorWindow : EditorWindow
     {
         private readonly string defaultFileName = "DialoguesFileName";
+        private TextField fileNameTextField;
+        private Button saveButton;
 
         [MenuItem("Window/DS/Dialogue Graph")]
         public static void Open()
@@ -24,11 +26,12 @@ namespace DS.Windows
             AddStyles();
         }
 
-        private void CreateGUI()
-        {
-            AddGraphView();
-            AddStyles();
-        }
+        //private void CreateGUI()
+        //{
+        //    AddGraphView();
+        //    AddToolbar();
+        //    AddStyles();
+        //}
 
         #region Elements Addition
         private void AddGraphView()
@@ -43,19 +46,36 @@ namespace DS.Windows
         {
             Toolbar toolbar = new Toolbar();
 
-            TextField fileNameTextField = DSElementUtility.CreateTextField(defaultFileName, "File Name:");
+            fileNameTextField = DSElementUtility.CreateTextField(defaultFileName, "File Name:", callback =>
+            {
+                fileNameTextField.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+            });
 
-            Button saveButton = DSElementUtility.CreateButton("Save");
+            saveButton = DSElementUtility.CreateButton("Save");
 
             toolbar.Add(fileNameTextField);
             toolbar.Add(saveButton);
 
+            toolbar.AddStyleSheets("DialogueSystem/DSToolbarStyles.uss");
             rootVisualElement.Add(toolbar);
         }
 
         private void AddStyles()
         {
             rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
+        }
+        #endregion
+
+        #region Utility Methods
+
+        public void EnableSaving()
+        {
+            saveButton.SetEnabled(true);
+        }
+
+        public void DisableSaving()
+        {
+            saveButton.SetEnabled(false);
         }
         #endregion
     }
