@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DS.Elements
 {
+    using Data.Save;
     using Enumerations;
     using Utilities;
     using Windows;
@@ -14,6 +17,8 @@ namespace DS.Elements
     /// </summary>
     public class DSNode : Node
     {
+        public string ID { get; set; }
+
         /// <summary>
         /// The name of the dialogue.
         /// </summary>
@@ -22,7 +27,7 @@ namespace DS.Elements
         /// <summary>
         /// The list of choices for the dialogue.
         /// </summary>
-        public List<string> Choices { get; set; }
+        public List<DSChoiceSaveData> Choices { get; set; }
 
         /// <summary>
         /// The text of the dialogue.
@@ -33,9 +38,10 @@ namespace DS.Elements
         /// The type of the dialogue.
         /// </summary>
         public DSDialogueType DialogueType { get; set; }
-        public Group Group { get; set; }
+        public DSGroup Group { get; set; }
 
-        private DSGraphView graphView;
+        protected DSGraphView graphView;
+
         private Color defaultBackgroundColor;
 
         /// <summary>
@@ -44,8 +50,9 @@ namespace DS.Elements
         /// <param name="position">The position of the DSNode.</param>
         public virtual void Initialize(DSGraphView dsGraphView, Vector2 position)
         {
+            ID = Guid.NewGuid().ToString();
             DialogueName = "DialogueName";
-            Choices = new List<string>();
+            Choices = new List<DSChoiceSaveData>();
             Text = "Dialogue text.";
 
             graphView = dsGraphView;
@@ -67,6 +74,21 @@ namespace DS.Elements
             {
                 TextField target = (TextField)callback.target;
                 target.value = callback.newValue.RemoveWhitespaces().RemoveSpecialCharacters();
+
+                if (string.IsNullOrEmpty(target.value))
+                {
+                    if (!string.IsNullOrEmpty(DialogueName))
+                    {
+                        ++graphView.NameErrorsAmount;
+                    }
+                }
+                else
+                {
+                    if(string.IsNullOrEmpty(DialogueName))
+                    {
+                        --graphView.NameErrorsAmount;
+                    }
+                }
 
                 if (Group == null)
                 {
@@ -107,7 +129,10 @@ namespace DS.Elements
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text");
 
-            TextField textTextField = DSElementUtility.CreateTextArea(Text);
+            TextField textTextField = DSElementUtility.CreateTextArea(Text, null, callback =>
+            {
+                Text = callback.newValue;
+            });
             textTextField.AddClasses(
                 "ds-node__text-field",
                 "ds-node__quote-text-field"
@@ -147,7 +172,7 @@ namespace DS.Elements
 
         private void DisconnectPorts(VisualElement container)
         {
-            foreach(Port port in container.Children())
+            foreach (Port port in container.Children())
             {
                 if (!port.connected)
                 {
@@ -156,6 +181,13 @@ namespace DS.Elements
 
                 graphView.DeleteElements(port.connections);
             }
+        }
+
+        public bool IsStartingNode()
+        {
+            Port inputPort = (Port)inputContainer.Children().First();
+
+            return !inputPort.connected;
         }
 
         public void SetErrorStyle(Color color)

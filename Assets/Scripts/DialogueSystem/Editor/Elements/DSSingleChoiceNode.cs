@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DS.Elements
 {
+    using Data.Save;
     using Enumerations;
     using Utilities;
     using Windows;
@@ -15,7 +16,12 @@ namespace DS.Elements
 
             DialogueType = DSDialogueType.SingleChoice;
 
-            Choices.Add("Next Dialogue");
+            DSChoiceSaveData choiceData = new DSChoiceSaveData()
+            {
+                Text = "Next Dialogue"
+            };
+
+            Choices.Add(choiceData);
         }
 
         public override void Draw()
@@ -23,11 +29,11 @@ namespace DS.Elements
             base.Draw();
 
             // Output Container
-            foreach (string choice in Choices)
+            foreach (DSChoiceSaveData choice in Choices)
             {
-                Port choicePort = this.CreatePort(choice);
+                Port choicePort = this.CreatePort(choice.Text);
 
-                choicePort.name = choice;
+                choicePort.userData = choice;
                 outputContainer.Add(choicePort);
             }
 
