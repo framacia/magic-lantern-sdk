@@ -25,6 +25,8 @@ namespace DS.Utilities
         private static Dictionary<string, DSDialogueGroupSO> createdDialogueGroups;
         private static Dictionary<string, DSDialogueSO> createdDialogues;
 
+        private static Dictionary<string, DSGroup> loadedGroups;
+
         public static void Initialize(DSGraphView dsGraphView, string graphName)
         {
             graphView = dsGraphView;
@@ -37,6 +39,8 @@ namespace DS.Utilities
 
             createdDialogueGroups = new Dictionary<string, DSDialogueGroupSO>();
             createdDialogues = new Dictionary<string, DSDialogueSO>();
+
+            loadedGroups = new Dictionary<string, DSGroup>();
         }
 
         #region Save Methods
@@ -109,11 +113,11 @@ namespace DS.Utilities
 
         private static void UpdateOldGroups(List<string> currentGroupNames, DSGraphSaveDataSO graphData)
         {
-            if(graphData.OldGroupNames != null && graphData.OldGroupNames.Count != 0)
+            if (graphData.OldGroupNames != null && graphData.OldGroupNames.Count != 0)
             {
                 List<string> groupsToRemove = graphData.OldGroupNames.Except(currentGroupNames).ToList();
 
-                foreach(string groupToRemove in groupsToRemove)
+                foreach (string groupToRemove in groupsToRemove)
                 {
                     RemoveFolder($"{containerFolderPath}/Groups/{groupsToRemove}");
                 }
@@ -133,7 +137,7 @@ namespace DS.Utilities
                 SaveNodeToGraph(node, graphData);
                 SaveNodeToScriptableObject(node, dialogueContainer);
 
-                if(node.Group != null)
+                if (node.Group != null)
                 {
                     groupedNodeNames.AddItem(node.Group.title, node.DialogueName);
 
@@ -227,11 +231,11 @@ namespace DS.Utilities
 
         private static void UpdateDialogueChoicesConnections()
         {
-            foreach(DSNode node in nodes)
+            foreach (DSNode node in nodes)
             {
                 DSDialogueSO dialogue = createdDialogues[node.ID];
 
-                for(int choiceIndex = 0; choiceIndex < node.Choices.Count; choiceIndex++)
+                for (int choiceIndex = 0; choiceIndex < node.Choices.Count; choiceIndex++)
                 {
                     DSChoiceSaveData nodeChoice = node.Choices[choiceIndex];
 
@@ -249,9 +253,9 @@ namespace DS.Utilities
 
         private static void UpdateOldGroupedNodes(SerializableDictionary<string, List<string>> currentGroupedNodeNames, DSGraphSaveDataSO graphData)
         {
-            if(graphData.OldGroupedNodeNames != null && graphData.OldGroupedNodeNames.Count != 0) 
+            if (graphData.OldGroupedNodeNames != null && graphData.OldGroupedNodeNames.Count != 0)
             {
-                foreach(KeyValuePair<string, List<string>> oldGroupedNode in graphData.OldGroupedNodeNames)
+                foreach (KeyValuePair<string, List<string>> oldGroupedNode in graphData.OldGroupedNodeNames)
                 {
                     List<string> nodesToRemove = new List<string>();
 
@@ -260,7 +264,7 @@ namespace DS.Utilities
                         nodesToRemove = oldGroupedNode.Value.Except(currentGroupedNodeNames[oldGroupedNode.Key]).ToList();
                     }
 
-                    foreach(string nodeToRemove in nodesToRemove)
+                    foreach (string nodeToRemove in nodesToRemove)
                     {
                         RemoveAsset($"{containerFolderPath}/Groups/{oldGroupedNode.Key}/Dialogues", nodeToRemove);
                     }
@@ -272,11 +276,11 @@ namespace DS.Utilities
 
         private static void UpdateOldUngroupedNodes(List<string> currentUngroupedNodeNames, DSGraphSaveDataSO graphData)
         {
-            if(graphData.OldUngroupedNodeNames != null && graphData.OldUngroupedNodeNames.Count != 0) 
+            if (graphData.OldUngroupedNodeNames != null && graphData.OldUngroupedNodeNames.Count != 0)
             {
                 List<string> nodesToRemove = graphData.OldUngroupedNodeNames.Except(currentUngroupedNodeNames).ToList();
 
-                foreach(string nodeToRemove in nodesToRemove)
+                foreach (string nodeToRemove in nodesToRemove)
                 {
                     RemoveAsset($"{containerFolderPath}/Global/Dialogues", nodeToRemove);
                 }
@@ -285,6 +289,59 @@ namespace DS.Utilities
             graphData.OldUngroupedNodeNames = new List<string>(currentUngroupedNodeNames);
         }
         #endregion
+        #endregion
+
+        #region Load Methods
+        public static void Load()
+        {
+            DSGraphSaveDataSO graphData = LoadAsset<DSGraphSaveDataSO>("Assets/Editor/DialogueSystem/Graphs", graphFileName);
+
+            if (graphData == null)
+            {
+                EditorUtility.DisplayDialog(
+                    "Couldn't load the file!",
+                    "The file at the following path could not be found:\n\n" +
+                    $"Assets/Editor/DialogueSystem/Graphs/{graphFileName}\n\n" +
+                    "Make sure you chose the right file and it's placed at the folder path mentioned above.",
+                    "Thanks!"
+                    );
+
+                return;
+            }
+
+            DSEditorWindow.UpdateFileName(graphData.FileName);
+
+            LoadGroups(graphData.Groups);
+            LoadNodes(graphData.Nodes);
+        }
+
+        private static void LoadGroups(List<DSGroupSaveData> groups)
+        {
+            foreach (DSGroupSaveData groupData in groups)
+            {
+                DSGroup group = graphView.CreateGroup(groupData.Name, groupData.Position);
+
+                group.ID = groupData.ID;
+
+                loadedGroups.Add(group.ID, group);
+            }
+        }
+
+        private static void LoadNodes(List<DSNodeSaveData> nodes)
+        {
+            foreach(DSNodeSaveData nodeData in nodes)
+            {
+                DSNode node = graphView.CreateNode(nodeData.Name, nodeData.DialogueType, nodeData.Position, false);
+
+                node.ID = nodeData.ID;
+                node.Choices = nodeData.Choices;
+                node.Text = nodeData.Text;
+
+                node.Draw();
+
+                graphView.AddElement(node);
+            }
+        }
         #endregion
 
         #region Creation Methods
@@ -340,8 +397,7 @@ namespace DS.Utilities
         private static T CreateAsset<T>(string path, string assetName) where T : ScriptableObject
         {
             string fullPath = $"{path}/{assetName}.asset";
-
-            T asset = AssetDatabase.LoadAssetAtPath<T>(fullPath);
+            T asset = LoadAsset<T>(path, assetName);
 
             if (asset == null)
             {
@@ -351,6 +407,13 @@ namespace DS.Utilities
             }
 
             return asset;
+        }
+
+        private static T LoadAsset<T>(string path, string assetName) where T : ScriptableObject
+        {
+            string fullPath = $"{path}/{assetName}.asset";
+
+            return AssetDatabase.LoadAssetAtPath<T>(fullPath);
         }
 
         private static void RemoveAsset(string path, string assetName)

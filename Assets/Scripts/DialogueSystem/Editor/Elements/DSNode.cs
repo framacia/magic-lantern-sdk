@@ -48,10 +48,10 @@ namespace DS.Elements
         /// Initializes the DSNode with the specified position.
         /// </summary>
         /// <param name="position">The position of the DSNode.</param>
-        public virtual void Initialize(DSGraphView dsGraphView, Vector2 position)
+        public virtual void Initialize(string nodeName, DSGraphView dsGraphView, Vector2 position)
         {
             ID = Guid.NewGuid().ToString();
-            DialogueName = "DialogueName";
+            DialogueName = nodeName;
             Choices = new List<DSChoiceSaveData>();
             Text = "Dialogue text.";
 

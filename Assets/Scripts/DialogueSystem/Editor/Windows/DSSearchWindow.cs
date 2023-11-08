@@ -55,13 +55,13 @@ namespace DS.Windows
             {
                 case DSDialogueType.SingleChoice:
                     {
-                        DSSingleChoiceNode singleChoiceNode = (DSSingleChoiceNode)graphView.CreateNode(DSDialogueType.SingleChoice, localMousePosition);
+                        DSSingleChoiceNode singleChoiceNode = (DSSingleChoiceNode)graphView.CreateNode("DialogueName", DSDialogueType.SingleChoice, localMousePosition);
                         graphView.AddElement(singleChoiceNode);
                         return true;
                     }
                 case DSDialogueType.MultipleChoice:
                     {
-                        DSMultipleChoiceNode multipleChoiceNode = (DSMultipleChoiceNode)graphView.CreateNode(DSDialogueType.MultipleChoice, localMousePosition);
+                        DSMultipleChoiceNode multipleChoiceNode = (DSMultipleChoiceNode)graphView.CreateNode("DialogueName", DSDialogueType.MultipleChoice, localMousePosition);
                         graphView.AddElement(multipleChoiceNode);
                         return true;
                     }
