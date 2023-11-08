@@ -278,6 +278,9 @@ public class RealSenseController : MonoBehaviour
     {
         while (!isStopped)
         {
+            if (resetEvent == null)
+                return;
+
             resetEvent.WaitOne(); //Why this??
             // Get and use the depth value at the center of the image
             findFeatures();

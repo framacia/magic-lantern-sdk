@@ -51,6 +51,7 @@ public class IMUCameraRotation : MonoBehaviour
 #if UNITY_ANDROID && !UNITY_EDITOR
         //Quaternion imuRotation = BNO055_Arduino.Instance.GetQuaternion();
         Quaternion imuRotation = BNO055Sensor.Instance.GetQuaternion();
+        print(imuRotation);
         Quaternion remappedImuRotation = new Quaternion(imuRotation.y, imuRotation.z, imuRotation.x, imuRotation.w);
         //remappedImuRotation = Quaternion.AngleAxis(-90, Vector3.right) * remappedImuRotation;
 

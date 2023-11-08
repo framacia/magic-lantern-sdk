@@ -37,12 +37,15 @@ namespace FranTest.GameBuilder
 
         private void Start()
         {
+            //StartCoroutine(SceneController.Instance.LoadSceneByReference(loadedGameSO.gameScene));
+
             // Check if the loaded game scriptable object uses scores.
             if (!loadedGameSO.usesScores)
                 return;
 
             // Load scores from a JSON file based on the game's name.
             loadedGameSO.LoadScores($"/{loadedGameSO.GetGameName()}.json");
+
         }
 
         private void Update()
