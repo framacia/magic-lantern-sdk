@@ -1,19 +1,13 @@
 {
-    "m_SelectedDeviceId": "192.168.121.108:5555",
+    "m_SelectedDeviceId": "192.168.121.100:5555",
     "m_SelectedPackage": {
-        "deviceId": "192.168.121.108:5555",
-        "name": "com.UPF.ARML",
-        "processId": 6672,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
-    "m_SelectedPriority": 2,
+    "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 11101,
-            "exited": true
-        },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
@@ -36,66 +30,42 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
             "processId": 23784,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.whatsapp",
+            "processId": 7022,
             "exited": false
         },
         {
             "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2210,
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1159,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2383,
+            "processId": 954,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2411,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.android.launcher3",
-            "processId": 1033,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2345,
+            "processId": 2056,
             "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2909,
-            "exited": false
+            "processId": 1985,
+            "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
-            "processId": 2285,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2458,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2763,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 3174,
+            "processId": 2130,
             "exited": false
         },
         {
@@ -233,73 +203,37 @@
         {
             "deviceId": "192.168.121.101:5555",
             "name": "com.rockchips.android.leanbacklauncher",
-            "processId": 1235,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.101:5555",
-            "name": "com.UPF.ARML",
-            "processId": 1938,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.101:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2182,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.101:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2031,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.101:5555",
-            "name": "com.rockchips.android.leanbacklauncher",
             "processId": 1146,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "192.168.121.101:5555",
             "name": "com.UPF.ARML",
             "processId": 988,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 7295,
             "exited": true
         },
         {
-            "deviceId": "192.168.121.108:5555",
+            "deviceId": "192.168.121.101:5555",
             "name": "com.UPF.ARML",
-            "processId": 5857,
+            "processId": 2115,
             "exited": true
         },
         {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 5626,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
+            "deviceId": "192.168.121.101:5555",
             "name": "com.rockchips.android.leanbacklauncher",
-            "processId": 1117,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2391,
+            "processId": 1165,
             "exited": false
         },
         {
-            "deviceId": "192.168.121.108:5555",
+            "deviceId": "192.168.121.101:5555",
             "name": "com.UPF.ARML",
-            "processId": 6672,
+            "processId": 1952,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.101:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2153,
             "exited": false
         }
     ],
@@ -311,7 +245,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -327,11 +261,11 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
-                "m_Selected": false
+                "m_Selected": true
             }
         ]
     },
@@ -354,7 +288,7 @@
         "Behavior": 0
     },
     "m_FilterOptions": {
-        "m_Filter": "arml",
+        "m_Filter": "",
         "m_UseRegularExpressions": true,
         "m_MatchCase": false
     },

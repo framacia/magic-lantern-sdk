@@ -11,7 +11,7 @@ public class RealSenseController : MonoBehaviour
     #region Native Plugin Methods
     // Stops pipeline and resets global variables, called OnDestroy
     [DllImport(PLUGIN_NAME)]
-    private static extern void cleanupCamera(); 
+    private static extern void cleanupCamera();
 
     // Sets resolution, dimension and fps of the RGB stream, called on Start
     [DllImport(PLUGIN_NAME)]
@@ -40,7 +40,7 @@ public class RealSenseController : MonoBehaviour
     // Creates ORB feature extractor
     // see cv::ORB::create
     [DllImport(PLUGIN_NAME)]
-    private static extern void createORB(int nfeatures, 
+    private static extern void createORB(int nfeatures,
                                         float scaleFactor,
                                         int nlevels,
                                         int edgeThreshold,
@@ -249,6 +249,7 @@ public class RealSenseController : MonoBehaviour
 #if UNITY_EDITOR
         GetComponent<RealSenseController>().enabled = false;
 #endif
+        isStopped = false;
     }
 
     private void Start()
@@ -373,7 +374,7 @@ public class RealSenseController : MonoBehaviour
             rotattedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
 
             quaternionsCamera = RetrieveCameraQuaternions();
-            
+
             //Get raw RealSense rotation and remap it to camera
             // remappedRealSenseRotation = new Quaternion(RetrieveCameraQuaternions().x,
             //         -RetrieveCameraQuaternions().y,
@@ -396,12 +397,13 @@ public class RealSenseController : MonoBehaviour
         }
     }
 
+    // Still trying to make this work TODO
     // private void OnLoopClosure()
     // {
     //     //Send RealSense rotation to IMU script
     //     if (imuCameraRotation)
     //         imuCameraRotation.ReceiveRealSenseLoopClosure(remappedRealSenseRotation);
-        
+
     //     //Set false so it only runs one frame
     //     loopClosure = false;
     // }
