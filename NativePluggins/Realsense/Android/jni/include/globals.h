@@ -8,7 +8,7 @@
 #include <rs_motion.h>
 #include <camera_motion.h>
 #include <localization.h>
-// #include <opencv2/xfeatures2d.hpp>
+#include <object_detection.h>
 #include <vector>
 
 extern RealSenseCamera camera;
@@ -23,12 +23,12 @@ extern cv::Mat colorMat;
 extern std::vector<cv::KeyPoint> prevFeatures;
 extern cv::Mat prevDescriptors;
 extern cv::Mat t_f;
+extern cv::Mat R_f;
 extern cv::Mat imageFeatures;
 
 extern KeyframeContainer container;
+extern ObjectContainer objectContainer;
 
-extern int no_move_counter;
-extern int frames_after_loop;
 extern float ratioTresh;
 extern float minDepth;
 extern float maxDepth;
@@ -39,6 +39,6 @@ extern int framesUntilLoopClosure;
 extern float noMovementThresh;
 extern int framesNoMovement;
 extern int maxGoodFeatures;
-extern bool addKeyFrame;
+extern int minFeaturesFindObject;
 
 #endif // REALSENSECAMERA_H

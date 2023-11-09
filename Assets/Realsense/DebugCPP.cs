@@ -9,7 +9,9 @@ public class DebugCPP : MonoBehaviour
     // Use this for initialization
     void OnEnable()
     {
+#if !UNITY_EDITOR
         RegisterDebugCallback(OnDebugCallback);
+#endif
     }
 
     //------------------------------------------------------------------------------------------------

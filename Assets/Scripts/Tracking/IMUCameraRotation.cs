@@ -34,6 +34,13 @@ public class IMUCameraRotation : MonoBehaviour
 
     private Vector3 averagedAccelerationVector;
 
+    private void Awake()
+    {
+#if UNITY_EDITOR
+        GetComponent<IMUCameraRotation>().enabled = false;
+#endif
+    }
+
     private void Start()
     {
         lastRotation = Quaternion.identity;
@@ -48,38 +55,36 @@ public class IMUCameraRotation : MonoBehaviour
 
     void UpdateRotation()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        //Quaternion imuRotation = BNO055_Arduino.Instance.GetQuaternion();
+        //Get absolute rotation from IMU and remap it for camera
         Quaternion imuRotation = BNO055Sensor.Instance.GetQuaternion();
         Quaternion remappedImuRotation = new Quaternion(imuRotation.y, imuRotation.z, imuRotation.x, imuRotation.w);
-        //remappedImuRotation = Quaternion.AngleAxis(-90, Vector3.right) * remappedImuRotation;
 
+        //Always true at the beginning
         if (initialImuRotation == Vector3.zero)
         {
             initialImuRotation = remappedImuRotation.eulerAngles;
         }
 
-        // Update the rotation of the cylinder based on the received qc
+        // Substract initial IMU rotation, the absolute rotation becomes origin (0)
         correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
 
+        //Add Camera start Rotation as offset
         transform.localEulerAngles = correctedImuRotation + camStartEuler;
-#else
-        //correctedImuRotation = Vector3.zero;
-#endif
-
-        //Get average Angular Velocity of IMU rotation
-        //Vector3 imuAngularVelocity = GetAngularVelocityVector(correctedImuRotation);
-        //Vector3 accelerationVector = imuAngularVelocity * accelerationAmount;
-
-
     }
 
+    public void ReceiveRealSenseLoopClosure(Quaternion loopQuaternion)
+    {
+        transform.localEulerAngles = loopQuaternion.eulerAngles;
+        initialImuRotation = loopQuaternion.eulerAngles;
+    }
+
+    #region Old Methods
     Vector3 GetAngularVelocityVector(Vector3 rotation)
     {
         var deltaRot = Quaternion.Euler(rotation) * Quaternion.Inverse(lastRotation);
         var eulerRot = new Vector3(
-            Mathf.DeltaAngle(0, deltaRot.eulerAngles.x), 
-            Mathf.DeltaAngle(0, deltaRot.eulerAngles.y), 
+            Mathf.DeltaAngle(0, deltaRot.eulerAngles.x),
+            Mathf.DeltaAngle(0, deltaRot.eulerAngles.y),
             Mathf.DeltaAngle(0, deltaRot.eulerAngles.z));
 
         lastRotation = Quaternion.Euler(rotation);
@@ -124,4 +129,5 @@ public class IMUCameraRotation : MonoBehaviour
         averageFrames = (int)value;
         averageFramesText.text = "Frames " + value.ToString();
     }
+    #endregion
 }

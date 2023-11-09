@@ -18,12 +18,14 @@ LOCAL_SRC_FILES := src/camera_motion.cpp
 LOCAL_SRC_FILES += src/debugCPP.cpp
 LOCAL_SRC_FILES += src/globals.cpp
 LOCAL_SRC_FILES += src/localization.cpp
+LOCAL_SRC_FILES += src/object_detection.cpp
 LOCAL_SRC_FILES += src/rs_camera.cpp
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/android_include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/include
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/android_include
 LOCAL_SHARED_LIBRARIES := realsense2
-LOCAL_CFLAGS += -std=c++11 -frtti -fexceptions -fopenmp -w
-LOCAL_LDLIBS += -llog 
+LOCAL_CFLAGS += -frtti -fexceptions -fopenmp -w
+LOCAL_CPPFLAGS += -std=c++11
+LOCAL_LDLIBS += -llog
 LOCAL_LDFLAGS += -fopenmp
 
 

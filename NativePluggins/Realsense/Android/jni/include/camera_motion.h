@@ -1,54 +1,123 @@
 #ifndef CAMERA_MOTION_H
 #define CAMERA_MOTION_H
 
-#include <opencv2/core.hpp>
-// #include <opencv2/xfeatures2d.hpp>
 #include <vector>
+#include <memory>
+
+#include <opencv2/core.hpp>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
+
 
 
 class Keyframe {
 public:
-    // Constructor
-    Keyframe(int id, const cv::Mat& frame, const cv::Mat& descriptors,
-             const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& pose)
-        : id(id), frame(frame), descriptors(descriptors), keypoints(keypoints), pose(pose) {
+    
+    Keyframe() {
+
     }
 
-    // Getter functions for member variables
+
+    Keyframe(int id, const cv::Mat& frame, const cv::Mat& descriptors,
+             const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& worldTranslation, const cv::Mat& worldRot,
+             const std::string& imageName, const cv::Mat& relativeTrans, const cv::Mat& relativeRot)
+        : id(id), frame(frame), descriptors(descriptors), keypoints(keypoints),
+          worldTranslation(worldTranslation), worldRot(worldRot), imageName(imageName),
+          relativeTrans(relativeTrans), relativeRot(relativeRot) {
+    }
+
     int getId() const {
         return id;
     }
 
-    cv::Mat getFrame() const {
+    const cv::Mat& getFrame() const {
         return frame;
     }
 
-    cv::Mat getDescriptors() const {
+    const cv::Mat& getDescriptors() const {
         return descriptors;
     }
 
-    std::vector<cv::KeyPoint> getKeypoints() const {
+    const std::vector<cv::KeyPoint>& getKeypoints() const {
         return keypoints;
     }
 
-    cv::Mat getPose() const {
-        return pose;
+    const cv::Mat& getWorldTrans() const {
+        return worldTranslation;
     }
 
-private:
+    const cv::Mat& getWorldRot() const {
+        return worldRot;
+    }
+
+    std::string getImageName() const {
+        return imageName;
+    }
+
+    const cv::Mat& getRelativeTrans() const {
+        return relativeTrans;
+    }
+
+    const cv::Mat& getRelativeRot() const {
+        return relativeRot;
+    }
+
+    void serialize(cv::FileStorage& fs) const {
+        fs << "{" << "id" << id;
+        fs << "frame" << frame;
+        fs << "descriptors" << descriptors;
+        fs << "keypoints" << "[";
+        for (const auto& keypoint : keypoints) {
+            fs << "{:" << "x" << keypoint.pt.x << "y" << keypoint.pt.y << "}";
+        }
+        fs << "]";
+        fs << "worldTranslation" << worldTranslation;
+        fs << "worldRot" << worldRot;
+        fs << "imageName" << imageName;
+        fs << "relativeTrans" << relativeTrans;
+        fs << "relativeRot" << relativeRot;
+        fs << "}";
+    }
+
+    void deserialize(cv::FileNode node) {
+        node["id"] >> id;
+        node["frame"] >> frame;
+        node["descriptors"] >> descriptors;
+        cv::FileNode keypointsNode = node["keypoints"];
+        for (cv::FileNodeIterator it = keypointsNode.begin(); it != keypointsNode.end(); ++it) {
+            cv::KeyPoint keypoint;
+            (*it)["x"] >> keypoint.pt.x;
+            (*it)["y"] >> keypoint.pt.y;
+            keypoints.push_back(keypoint);
+        }
+        node["worldTranslation"] >> worldTranslation;
+        node["worldRot"] >> worldRot;
+        node["imageName"] >> imageName;
+        node["relativeTrans"] >> relativeTrans;
+        node["relativeRot"] >> relativeRot;
+    }
+
+public:
     int id;
     cv::Mat frame;
     cv::Mat descriptors;
     std::vector<cv::KeyPoint> keypoints;
-    cv::Mat pose;
+    cv::Mat worldTranslation;
+    cv::Mat worldRot;
+    std::string imageName;
+    cv::Mat relativeTrans;
+    cv::Mat relativeRot;
 };
 
 class KeyframeContainer {
 public:
+    std::vector<std::shared_ptr<Keyframe>> keyframes;
+
     void addKeyframe(std::shared_ptr<Keyframe> keyframe) {
         keyframes.push_back(keyframe);
     }
-    
+
     std::shared_ptr<Keyframe> getKeyframe(int index) const {
         if (index >= 0 && index < keyframes.size()) {
             return keyframes[index];
@@ -57,7 +126,6 @@ public:
         }
     }
 
-    // Get the total number of keyframes in the container
     int getKeyframeCount() const {
         return keyframes.size();
     }
@@ -66,11 +134,30 @@ public:
         keyframes.clear();
     }
 
-private:
-    std::vector<std::shared_ptr<Keyframe>> keyframes; // Use shared_ptr
+    void serialize(const std::string& filename) const {
+        cv::FileStorage fs(filename, cv::FileStorage::WRITE);
+        fs << "Keyframes" << "[";
+        for (const std::shared_ptr<Keyframe>& keyframe : keyframes) {
+            keyframe->serialize(fs);
+        }
+        fs << "]";
+        fs.release();
+    }
+
+    void deserialize(const std::string& filename) {
+        cv::FileStorage fs(filename, cv::FileStorage::READ);
+        cv::FileNode keyframesNode = fs["Keyframes"];
+        keyframes.clear();
+        for (cv::FileNodeIterator it = keyframesNode.begin(); it != keyframesNode.end(); ++it) {
+            std::shared_ptr<Keyframe> keyframe = std::make_shared<Keyframe>();
+            keyframe->deserialize(*it);
+            keyframes.push_back(keyframe);
+        }
+        fs.release();
+    }
 };
 
-struct CameraConfig {
+struct systemConfig {
     float ratioTresh;
     float minDepth;
     float maxDepth;
@@ -81,21 +168,15 @@ struct CameraConfig {
     float noMovementThresh;
     int framesNoMovement;
     int maxGoodFeatures;
+    int minFeaturesFindObject;
 };
 
-void bestMatchesFilter(std::vector<cv::DMatch> goodMatches, std::vector<cv::DMatch>& bestMatches);
-
-void matchingAndFilteringByDistance(cv::Mat descriptors1, std::vector<cv::KeyPoint> kp1Filtered, std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
-
-std::vector<cv::KeyPoint> filterKeypointsByROI(std::vector<cv::KeyPoint> &keypoints, std::vector<cv::KeyPoint> &filteredKeypoints, cv::Rect &zone);
-
-void featureDetection(cv::Mat img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
-
-void computeC2MC1(const cv::Mat &R1, const cv::Mat &tvec1, const cv::Mat &R2, const cv::Mat &tvec2,
-                  cv::Mat &R_1to2, cv::Mat &tvec_1to2);
-
-// int findBestMatchingKeyframe(const cv::Mat& descriptors1, std::vector<cv::DMatch>& goodMatches,
-//                              std::vector<std::vector<cv::DMatch>>& matches);
+void bestMatchesFilter(std::vector<cv::DMatch>& goodMatches, std::vector<cv::DMatch>& bestMatches);
+void matchingAndFilteringByDistance(const cv::Mat& descriptors1, const std::vector<cv::KeyPoint>& kp1Filtered,
+                                    std::vector<cv::Point2f>& pts1, std::vector<cv::Point2f>& pts2);
+void filterKeypointsByROI(const std::vector<cv::KeyPoint>& keypoints, const cv::Mat& descriptors,
+                          std::vector<cv::KeyPoint>& filteredKeypoints, cv::Mat& filteredDescriptors, cv::Rect &zone);
+void featureDetection(const cv::Mat& img, std::vector<cv::KeyPoint>& keypoints1, cv::Mat& descriptors1);
 void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 
 
@@ -104,54 +185,33 @@ void preprocessImage(cv::Mat& inputImage, cv::Mat& colorMat);
 extern "C" {
     #endif
 
-    void colorStreamConfig(int width, int height, int fps);
-    void depthStreamConfig(int width, int height, int fps);
-    void bagFileStreamConfig(const char* bagFileAddress);
-    void initCamera();
-    void initImu();
     void firstIteration();
     void findFeatures();
-    // float GetDepthAtCenter();
-    void cleanupCamera();
-    void GetTranslationVector(float* t_f_data);
-    void GetCameraOrientation(float* cameraAngle);
-    
-    void createORB(int  	nfeatures,
-                   float  	scaleFactor,
-                   int  	nlevels,
-                   int  	edgeThreshold,
-                   int  	firstLevel,
-                   int  	WTA_K,
-                   int  	scoreType,
-                   int  	patchSize,
-                   int  	fastThreshold); 	
-    
-    void createSIFT(int  	nfeatures,
-		            int  	nOctaveLayers,
-		            double  	contrastThreshold,
-		            double  	edgeThreshold,
-		            double  	sigma,
-		            bool  	enable_precise_upscale);
+    float getDepthAtCenter();
+    void getTranslationVector(float* t_f_data);
+    void getCameraRotation(float* R_f_data);
+    void getCameraOrientation(float* cameraAngle);
+    void createORB(int nfeatures,
+                   float scaleFactor,
+                   int nlevels,
+                   int edgeThreshold,
+                   int firstLevel,
+                   int WTA_K,
+                   int scoreType,
+                   int patchSize,
+                   int fastThreshold); 	
 
-    void createFAST_BRIEF(int  	nfeatures,
-		            int  	nOctaveLayers,
-		            double  	contrastThreshold,
-		            double  	edgeThreshold,
-		            double  	sigma,
-		            bool  	enable_precise_upscale);
-
-    void setParams(CameraConfig config); 		
-
+    void setParams(systemConfig config); 		
     const uchar* getJpegBuffer(int* bufferSize);	
-
     void resetOdom();
+    void addKeyframe();
+    bool isLoop();
+    void setProjectorZone(int sectionX, int sectionY, int sectionWidth, int sectionHeight);
+    void serializeKeyframeData(const char* fileName);
+    void deserializeKeyframeData(const char* fileName);
     
-    
-    
-
 #ifdef __cplusplus
 }
 #endif
-
 
 #endif // CAMERA_MOTION_H

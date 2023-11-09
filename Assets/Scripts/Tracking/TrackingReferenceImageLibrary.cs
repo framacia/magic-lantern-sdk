@@ -24,6 +24,8 @@ public class TrackingReferenceImageLibrary : MonoBehaviour
 
     [SerializeField] private List<TrackingReferenceImage> trackingReferenceImageList = new List<TrackingReferenceImage>();
     private Dictionary<string, byte[]> imageDictionary = new Dictionary<string, byte[]>();
+    //[SerializeField] private Renderer renderer;
+
 
     // private void Awake()
     // {
@@ -81,3 +83,5 @@ public static class ExtensionMethod
         return readableText;
     }
 }
+
+
