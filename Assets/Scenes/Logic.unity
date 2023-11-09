@@ -1213,6 +1213,10 @@ PrefabInstance:
       propertyPath: fadeToBlackTexture
       value: 
       objectReference: {fileID: 1840185479}
+    - target: {fileID: 2985437891254325974, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
+      propertyPath: fadeToBlackBetweenLoads
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3589402201954114862, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: trackingReferenceImageList.Array.size
       value: 1
@@ -1259,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7050215831513672053, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: ShowLog
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7454560100018189815, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: m_Enabled

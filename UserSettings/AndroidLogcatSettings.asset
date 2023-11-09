@@ -1,5 +1,5 @@
 {
-    "m_SelectedDeviceId": "192.168.121.100:5555",
+    "m_SelectedDeviceId": "192.168.121.108:5555",
     "m_SelectedPackage": {
         "deviceId": "",
         "name": "",
@@ -66,6 +66,12 @@
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
             "processId": 2130,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4327,
             "exited": false
         },
         {
@@ -234,6 +240,48 @@
             "deviceId": "192.168.121.101:5555",
             "name": "com.UPF.ARML",
             "processId": 2153,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2152,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2302,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.android.tv.settings",
+            "processId": 986,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 3554,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1139,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4391,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 4651,
             "exited": false
         }
     ],

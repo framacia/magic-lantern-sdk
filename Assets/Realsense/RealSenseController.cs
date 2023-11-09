@@ -3,6 +3,10 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using UnityEngine;
+using Unity.Jobs;
+using Unity.Burst;
+using Unity.Mathematics;
+using Unity.Collections;
 
 public class RealSenseController : MonoBehaviour
 {
@@ -79,17 +83,17 @@ public class RealSenseController : MonoBehaviour
     // - calculate accumulated transform (from world origin)
     // TODO rename
     [DllImport(PLUGIN_NAME)]
-    private static extern void findFeatures();
+    public static extern void findFeatures();
 
     // Get world position of the camera
     [DllImport(PLUGIN_NAME)]
     private static extern void getTranslationVector(float[] t_f_data);
 
-    public static float[] RetrieveTranslationVector()
+    public static Vector3 RetrieveTranslationVector()
     {
         float[] t_f_data = new float[3];
         getTranslationVector(t_f_data);
-        return t_f_data;
+        return new Vector3(t_f_data[0], t_f_data[1], t_f_data[2]);
     }
 
     // Get world rotation of camera VIO
@@ -117,15 +121,15 @@ public class RealSenseController : MonoBehaviour
     // Resets odometry origin to current frame
     // (e.g., call to fix odometry to a known point after drift)
     [DllImport(PLUGIN_NAME)]
-    private static extern void resetOdom();
+    public static extern void resetOdom();
 
     // Add current frame to list of known keyframes
     [DllImport(PLUGIN_NAME)]
-    private static extern void addKeyframe();
+    public static extern void addKeyframe();
 
     // Returns true if current frame is a loop closure (recognized keyframe)
     [DllImport(PLUGIN_NAME)]
-    private static extern bool isLoop();
+    public static extern bool isLoop();
 
     // Returns current frame RGB image
     [DllImport(PLUGIN_NAME)]
@@ -230,7 +234,7 @@ public class RealSenseController : MonoBehaviour
     [SerializeField] private int orbFastThreshold = 20;
     #endregion
 
-    private Vector3 rotattedTranslationVector, initialCamPosition;
+    private Vector3 realSenseTranslationVector, initialCamPosition;
     private bool isStopped = false;
     private Thread trackingThread;
     private AutoResetEvent resetEvent;
@@ -243,6 +247,8 @@ public class RealSenseController : MonoBehaviour
     private Quaternion remappedRealSenseRotation;
 
     private IMUCameraRotation imuCameraRotation;
+
+    private JobHandle jobHandle;
 
     private void Awake()
     {
@@ -320,6 +326,7 @@ public class RealSenseController : MonoBehaviour
         trackingThread.Start();
         resetEvent = new AutoResetEvent(false);
 
+        // Used for image tracking reposition
         // imuCameraRotation = GetComponent<IMUCameraRotation?>();
     }
 
@@ -328,11 +335,22 @@ public class RealSenseController : MonoBehaviour
         //Thread
         resetEvent.Set();
 
-        //Apply RealSense position to camera, + initialPosition
-        transform.localPosition = initialCamPosition + rotattedTranslationVector;
+        //Job Testing
+        //FindFeaturesJob findFeaturesJob = new FindFeaturesJob()
+        //{
+        //    realSenseTranslationVector = realSenseTranslationVector
+        //};
 
-        remappedRealSenseRotation = new Quaternion(quaternionsCamera[0], -quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
-        transform.rotation = remappedRealSenseRotation;
+        //jobHandle = findFeaturesJob.Schedule();
+
+        ////Apply RealSense position to camera, + initialPosition
+        Vector3 remappedTranslationVector = new Vector3(-realSenseTranslationVector.x, realSenseTranslationVector.y, -realSenseTranslationVector.z);
+        Vector3 rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
+        transform.localPosition = initialCamPosition + rotatedTranslationVector;
+
+        //Apply RealSense rotation to camera
+        //remappedRealSenseRotation = new Quaternion(quaternionsCamera[0], -quaternionsCamera[1], quaternionsCamera[2], quaternionsCamera[3]);
+        //transform.rotation = remappedRealSenseRotation;
 
         //Reset Odometry
         if (Input.GetKeyDown(KeyCode.Space))
@@ -361,6 +379,17 @@ public class RealSenseController : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        ////Apply RealSense position to camera, + initialPosition
+
+        //jobHandle.Complete();
+
+        //Vector3 remappedTranslationVector = new Vector3(-realSenseTranslationVector.x, realSenseTranslationVector.y, -realSenseTranslationVector.z);
+        //Vector3 rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
+        //transform.localPosition = initialCamPosition + rotatedTranslationVector;
+    }
+
     private void ThreadUpdate()
     {
         while (!isStopped)
@@ -369,17 +398,12 @@ public class RealSenseController : MonoBehaviour
 
             findFeatures();
             //float depth = GetDepthAtCenter();
-            float[] translationVector = RetrieveTranslationVector();
-            Vector3 remappedTranslationVector = new Vector3(-translationVector[0], translationVector[1], -translationVector[2]);
-            rotattedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
 
-            quaternionsCamera = RetrieveCameraQuaternions();
+            //Get RealSense translation
+            realSenseTranslationVector = RetrieveTranslationVector();
 
-            //Get raw RealSense rotation and remap it to camera
-            // remappedRealSenseRotation = new Quaternion(RetrieveCameraQuaternions().x,
-            //         -RetrieveCameraQuaternions().y,
-            //         RetrieveCameraQuaternions().z,
-            //         RetrieveCameraQuaternions().w);
+            //Get RealSense rotation
+            //quaternionsCamera = RetrieveCameraQuaternions();
 
             loopClosure = isLoop();
 
@@ -410,6 +434,13 @@ public class RealSenseController : MonoBehaviour
 
     private void OnDestroy()
     {
+#if !UNITY_EDITOR
+        CleanUp();
+#endif
+    }
+
+    private void CleanUp()
+    {
         if (!localizationMode)
         {
             serializeKeyframeData(filePath);
@@ -418,5 +449,20 @@ public class RealSenseController : MonoBehaviour
         resetEvent.Set();
         trackingThread.Join();
         cleanupCamera();
+    }
+}
+
+public struct FindFeaturesJob : IJob
+{
+    public Vector3 realSenseTranslationVector;
+
+    public void Execute()
+    {
+        //Find features
+        RealSenseController.findFeatures();
+
+        Debug.Log(RealSenseController.RetrieveTranslationVector());
+        //Get translation vector
+        realSenseTranslationVector = RealSenseController.RetrieveTranslationVector();
     }
 }
