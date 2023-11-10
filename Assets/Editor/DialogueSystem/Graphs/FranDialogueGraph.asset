@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0202a3095b7477a4091d56344f0af6b3, type: 3}
+  m_Name: FranDialogueGraph
+  m_EditorClassIdentifier: 
+  <FileName>k__BackingField: FranDialogue
+  <Groups>k__BackingField: []
+  <Nodes>k__BackingField:
+  - <ID>k__BackingField: cc1a9478-67dd-45fb-97f2-6aa822389cd4
+    <Name>k__BackingField: 3
+    <Text>k__BackingField: You chose Yes.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 92c5f15c-8251-4726-9508-eba61b4d6888
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 690, y: 154}
+    <AudioClip>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: e767f172-d394-4bd7-93b9-01a7265429c6
+    <Name>k__BackingField: 6
+    <Text>k__BackingField: Literally nothing
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Why?
+      <NodeID>k__BackingField: a0ea6aeb-6452-4329-b95c-5815c1714c5e
+    - <Text>k__BackingField: Ok
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1761, y: 208}
+    <AudioClip>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: a0ea6aeb-6452-4329-b95c-5815c1714c5e
+    <Name>k__BackingField: DialogueName
+    <Text>k__BackingField: idk.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 2151, y: 271}
+    <AudioClip>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: 92c5f15c-8251-4726-9508-eba61b4d6888
+    <Name>k__BackingField: 5
+    <Text>k__BackingField: You want to know what that means?
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Ok
+      <NodeID>k__BackingField: e767f172-d394-4bd7-93b9-01a7265429c6
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 1034, y: 169}
+    <AudioClip>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: 7ba3142f-3eb7-413b-95ae-5c58080d20dd
+    <Name>k__BackingField: 4
+    <Text>k__BackingField: You chose No.
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 690, y: 383}
+    <AudioClip>k__BackingField: {fileID: 0}
+  - <ID>k__BackingField: a372aea9-cc09-44d1-bad9-142db5acd607
+    <Name>k__BackingField: 1
+    <Text>k__BackingField: 'sdfsdfsdfs
+
+'
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: b4e95f87-6fb8-4ae5-9206-e1412d48187b
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: -74, y: 235}
+    <AudioClip>k__BackingField: {fileID: 8300000, guid: c249d4875cd170144a8e6dd2513baad5, type: 3}
+  - <ID>k__BackingField: b4e95f87-6fb8-4ae5-9206-e1412d48187b
+    <Name>k__BackingField: 2
+    <Text>k__BackingField: Choose
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Yes
+      <NodeID>k__BackingField: cc1a9478-67dd-45fb-97f2-6aa822389cd4
+    - <Text>k__BackingField: No
+      <NodeID>k__BackingField: 7ba3142f-3eb7-413b-95ae-5c58080d20dd
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 1
+    <Position>k__BackingField: {x: 307, y: 235}
+    <AudioClip>k__BackingField: {fileID: 8300000, guid: a2d21ffa779d22945952cf1000b02750, type: 3}
+  <OldGroupNames>k__BackingField: []
+  <OldUngroupedNodeNames>k__BackingField:
+  - 3
+  - 6
+  - DialogueName
+  - 5
+  - 4
+  - 1
+  - 2
+  <OldGroupedNodeNames>k__BackingField:
+    list: []
