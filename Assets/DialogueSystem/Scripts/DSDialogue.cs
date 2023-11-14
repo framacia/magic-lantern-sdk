@@ -31,6 +31,7 @@ namespace DS
 
         //Behaviour
         [SerializeField] private bool autoContinueSingleChoice;
+        [SerializeField] private float secondsToAutoContinue;
 
         //UnityEvent
         [SerializeField] private UnityEvent OnDialogueFinishedEvent;
@@ -85,7 +86,7 @@ namespace DS
             audioSource.Play();
 
             //Wait for current clip to end + silence offset
-            yield return new WaitForSeconds(audioSource.clip.length + 2f);
+            yield return new WaitForSeconds(audioSource.clip.length + secondsToAutoContinue);
 
             //If it's single choice and autoContinue activated, go to Next Dialogue
             if (dialogue.DialogueType == DSDialogueType.SingleChoice && autoContinueSingleChoice)

@@ -10,6 +10,8 @@ namespace DS.Elements
 {
     using Data.Save;
     using Enumerations;
+    using UnityEditor;
+    using UnityEngine.Events;
     using Utilities;
     using Windows;
 
@@ -21,8 +23,9 @@ namespace DS.Elements
         public string Text { get; set; }
         public DSDialogueType DialogueType { get; set; }
         public DSGroup Group { get; set; }
-
         public AudioClip AudioClip { get; set; }
+        public AnimationClip AnimationClip {  get; set; } 
+        public int EndID { get; set; }
 
         protected DSGraphView graphView;
         private Color defaultBackgroundColor;
@@ -132,8 +135,18 @@ namespace DS.Elements
 
             //Audio clip
             ObjectField audioField = DSElementUtility.CreateObjectField(AudioClip, "AudioClip", typeof(AudioClip), callback => AudioClip = (AudioClip)callback.newValue);
-
             customDataContainer.Add(audioField);
+
+            //Animation Clip
+            ObjectField animationField = DSElementUtility.CreateObjectField(AnimationClip, "AnimationClip", typeof(AnimationClip), callback => AnimationClip = (AnimationClip)callback.newValue);
+
+            //End ID
+            IntegerField endIDField = DSElementUtility.CreateIntegerField(EndID, "End ID", 1, callback => EndID = callback.newValue);
+            customDataContainer.Add(animationField);
+
+            //Check if any output port is connected, if not it's an ending node, then draw the End ID Property
+            //if (IsEndingNode())
+            customDataContainer.Add(endIDField);
 
             extensionContainer.Add(customDataContainer);
         }
@@ -172,6 +185,13 @@ namespace DS.Elements
             Port inputPort = (Port) inputContainer.Children().First();
 
             return !inputPort.connected;
+        }
+
+        public bool IsEndingNode()
+        {
+            Port outputPort = (Port)outputContainer.Children().First();
+
+            return !outputPort.connected;
         }
 
         public void SetErrorStyle(Color color)

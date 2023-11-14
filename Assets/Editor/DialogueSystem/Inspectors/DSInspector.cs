@@ -28,6 +28,7 @@ namespace DS.Inspectors
 
         //Behaviour
         private SerializedProperty autoContinueSingleChoiceProperty;
+        private SerializedProperty secondsToAutoContinueProperty;
 
         //UnityEvent
         private SerializedProperty OnDialogueFinishedEventProperty;
@@ -48,6 +49,7 @@ namespace DS.Inspectors
             choiceDisplayTextsProperty = serializedObject.FindProperty("choiceDisplayTexts");
 
             autoContinueSingleChoiceProperty = serializedObject.FindProperty("autoContinueSingleChoice");
+            secondsToAutoContinueProperty = serializedObject.FindProperty("secondsToAutoContinue");
 
             OnDialogueFinishedEventProperty = serializedObject.FindProperty("OnDialogueFinishedEvent");
         }
@@ -208,6 +210,7 @@ namespace DS.Inspectors
         {
             DSInspectorUtility.DrawHeader("Behaviour");
             autoContinueSingleChoiceProperty.DrawPropertyField();
+            secondsToAutoContinueProperty.DrawPropertyField();
         }
 
         private void DrawUnityEvent()

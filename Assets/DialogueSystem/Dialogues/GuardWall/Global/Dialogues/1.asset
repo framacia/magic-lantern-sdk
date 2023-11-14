@@ -19,4 +19,6 @@ MonoBehaviour:
     <NextDialogue>k__BackingField: {fileID: 11400000, guid: cdba663f7c16cc4498c3f74ef1d9979b, type: 2}
   <DialogueType>k__BackingField: 0
   <IsStartingDialogue>k__BackingField: 1
+  <IsEndingDialogue>k__BackingField: 0
   <AudioClip>k__BackingField: {fileID: 8300000, guid: 49b8ee7ba2f8f2d4c9ff12a2cc427ca2, type: 3}
+  <EndID>k__BackingField: 0

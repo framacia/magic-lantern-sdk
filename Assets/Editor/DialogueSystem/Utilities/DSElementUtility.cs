@@ -83,5 +83,22 @@ namespace DS.Utilities
 
             return objectField;
         }
+
+        public static IntegerField CreateIntegerField(int value = 0, string label = null, int maxLength = 1, EventCallback<ChangeEvent<int>> onValueChanged = null)
+        {
+            IntegerField integerField = new IntegerField()
+            {
+                value = value,
+                maxLength = maxLength,
+                label = label
+            };
+
+            if (onValueChanged != null)
+            {
+                integerField.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return integerField;
+        }
     }
 }
