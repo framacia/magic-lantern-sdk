@@ -108,10 +108,10 @@ public class InteractionTimer : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (!cam)
-            return;
+        //if (!cam)
+        //    return;
 
-        panel.position = cam.WorldToScreenPoint(this.transform.position);
+        //panel.position = cam.WorldToScreenPoint(this.transform.position);
         fillIndicator.fillAmount = InteractionPercent;
     }
 

@@ -26,6 +26,12 @@ namespace DS.Inspectors
         private SerializedProperty dialogueDisplayTextProperty;
         private SerializedProperty choiceDisplayTextsProperty;
 
+        //Behaviour
+        private SerializedProperty autoContinueSingleChoiceProperty;
+
+        //UnityEvent
+        private SerializedProperty OnDialogueFinishedEventProperty;
+
         private void OnEnable()
         {
             dialogueContainerProperty = serializedObject.FindProperty("dialogueContainer");
@@ -40,6 +46,10 @@ namespace DS.Inspectors
 
             dialogueDisplayTextProperty = serializedObject.FindProperty("dialogueDisplayText");
             choiceDisplayTextsProperty = serializedObject.FindProperty("choiceDisplayTexts");
+
+            autoContinueSingleChoiceProperty = serializedObject.FindProperty("autoContinueSingleChoice");
+
+            OnDialogueFinishedEventProperty = serializedObject.FindProperty("OnDialogueFinishedEvent");
         }
 
         public override void OnInspectorGUI()
@@ -108,6 +118,10 @@ namespace DS.Inspectors
             DrawDialogueArea(dialogueNames, dialogueFolderPath);
 
             DrawDisplayTextArea();
+
+            DrawBehaviourArea();
+
+            DrawUnityEvent();
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -188,6 +202,18 @@ namespace DS.Inspectors
             DSInspectorUtility.DrawHeader("Display Text");
             dialogueDisplayTextProperty.DrawPropertyField();
             choiceDisplayTextsProperty.DrawPropertyField();
+        }
+
+        private void DrawBehaviourArea()
+        {
+            DSInspectorUtility.DrawHeader("Behaviour");
+            autoContinueSingleChoiceProperty.DrawPropertyField();
+        }
+
+        private void DrawUnityEvent()
+        {
+            DSInspectorUtility.DrawHeader("Event");
+            OnDialogueFinishedEventProperty.DrawPropertyField();
         }
 
         private void StopDrawing(string reason, MessageType messageType = MessageType.Info)

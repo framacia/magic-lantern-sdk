@@ -27,6 +27,7 @@ kanban-plugin: basic
 - [ ] Make Dog increase DistancePercentage the closer he is to the placeable.
 - [ ] Adapt ChatGPT agent logic into project. Change from config to manual ScriptableObject based creation of characters to be drag-dropped into characters
 - [ ] Extend dialogue graph to accept float answers
+- [ ] When we change to on axis projector, remove offset from angle check on FixedUpdate of CameraPointedObject
 
 
 ## DOING

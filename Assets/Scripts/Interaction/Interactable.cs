@@ -10,7 +10,7 @@ using UnityEngine.Events;
 public abstract class Interactable : MonoBehaviour
 {
     protected Transform camera;
-    [HideInInspector] public InteractionTimer iTimer;
+    public InteractionTimer iTimer;
 
     [Header("Interaction")]
     [SerializeField] protected InteractionType interactionType;

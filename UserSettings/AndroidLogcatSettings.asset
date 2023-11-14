@@ -245,43 +245,43 @@
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 2152,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 2302,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.android.tv.settings",
-            "processId": 986,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 3554,
+            "processId": 1900,
             "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.rockchips.android.leanbacklauncher",
-            "processId": 1139,
-            "exited": false
-        },
-        {
-            "deviceId": "192.168.121.108:5555",
-            "name": "com.UPF.ARML",
-            "processId": 4391,
+            "processId": 1166,
             "exited": true
         },
         {
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
-            "processId": 4651,
+            "processId": 2916,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 6827,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1188,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 1961,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.108:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2016,
             "exited": false
         }
     ],
