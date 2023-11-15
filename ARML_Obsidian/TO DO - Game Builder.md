@@ -28,6 +28,7 @@ kanban-plugin: basic
 - [ ] Adapt ChatGPT agent logic into project. Change from config to manual ScriptableObject based creation of characters to be drag-dropped into characters
 - [ ] Extend dialogue graph to accept float answers
 - [ ] When we change to on axis projector, remove offset from angle check on FixedUpdate of CameraPointedObject
+- [ ] Add fucntionality to allow for camera pointed objects to need to look away from given angles in order to be able to interact with it again (and also make it so that angle is proportional to distance between camera and object)
 
 
 ## DOING

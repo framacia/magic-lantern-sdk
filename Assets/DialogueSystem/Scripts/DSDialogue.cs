@@ -7,6 +7,7 @@ namespace DS
 {
     using Enumerations;
     using ScriptableObjects;
+    using System;
     using System.Collections;
 
     public class DSDialogue : MonoBehaviour
@@ -29,12 +30,15 @@ namespace DS
         [SerializeField] private TMP_Text dialogueDisplayText;
         [SerializeField] private List<TMP_Text> choiceDisplayTexts;
 
-        //Behaviour
+        // Behaviour
         [SerializeField] private bool autoContinueSingleChoice;
         [SerializeField] private float secondsToAutoContinue;
 
-        //UnityEvent
+        // UnityEvent
         [SerializeField] private UnityEvent OnDialogueFinishedEvent;
+
+        //STT Vosk
+        [SerializeField] private STTMicController sttMicController;
 
         private AudioSource audioSource;
 
@@ -48,6 +52,8 @@ namespace DS
             dialogueDisplayText.text = string.Empty;
             foreach (TMP_Text choiceDisplayText in choiceDisplayTexts)
                 choiceDisplayText.gameObject.SetActive(false);
+
+            sttMicController.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -65,6 +71,8 @@ namespace DS
             {
                 dialogue = nextDialogue;
                 DisplayTextCurrentDialogue();
+
+                //Stop then Start Audio
                 StopCoroutine(PlayAudioCurrentDialogue());
                 StartCoroutine(PlayAudioCurrentDialogue());
             }
@@ -107,11 +115,17 @@ namespace DS
                     choiceDisplayTexts[i].gameObject.SetActive(true);
                     choiceDisplayTexts[i].text = dialogue.Choices[i].Text;
                 }
+
+                //Activate STT Mic
+                sttMicController.gameObject.SetActive(true);
             }
             else //Otherwise deactivate choice text
             {
                 foreach (TMP_Text text in choiceDisplayTexts)
                     text.gameObject.SetActive(false);
+
+                //Deactivate STT Mic
+                sttMicController.gameObject.SetActive(false);
             }
         }
 
@@ -131,6 +145,20 @@ namespace DS
         public void ChangeDialogueContainer(DSDialogueContainerSO newDialogueContainer)
         {
             dialogueContainer = newDialogueContainer;
+        }
+
+        public void CheckTranscriptionResult(string result)
+        {
+            //Loop through all choice texts to find a match
+            for (int i = 0; i < dialogue.Choices.Count; i++)
+            {
+                if(dialogue.Choices[i].Text.IndexOf(result, 0, StringComparison.CurrentCultureIgnoreCase) > -1)
+                {
+                    //Success!
+                    GoToNextDialogue(i);
+                    return;
+                }
+            }
         }
     }
 }

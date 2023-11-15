@@ -33,6 +33,9 @@ namespace DS.Inspectors
         //UnityEvent
         private SerializedProperty OnDialogueFinishedEventProperty;
 
+        //STT Vosk
+        private SerializedProperty sttMicControllerProperty;
+
         private void OnEnable()
         {
             dialogueContainerProperty = serializedObject.FindProperty("dialogueContainer");
@@ -52,6 +55,8 @@ namespace DS.Inspectors
             secondsToAutoContinueProperty = serializedObject.FindProperty("secondsToAutoContinue");
 
             OnDialogueFinishedEventProperty = serializedObject.FindProperty("OnDialogueFinishedEvent");
+
+            sttMicControllerProperty = serializedObject.FindProperty("sttMicController");
         }
 
         public override void OnInspectorGUI()
@@ -211,6 +216,7 @@ namespace DS.Inspectors
             DSInspectorUtility.DrawHeader("Behaviour");
             autoContinueSingleChoiceProperty.DrawPropertyField();
             secondsToAutoContinueProperty.DrawPropertyField();
+            sttMicControllerProperty.DrawPropertyField();
         }
 
         private void DrawUnityEvent()
