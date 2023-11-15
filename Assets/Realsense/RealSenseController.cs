@@ -2,11 +2,9 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using UnityEngine;
 using Unity.Jobs;
-using Unity.Burst;
-using Unity.Mathematics;
-using Unity.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class RealSenseController : MonoBehaviour
 {
@@ -135,8 +133,9 @@ public class RealSenseController : MonoBehaviour
     [DllImport(PLUGIN_NAME)]
     private static extern IntPtr getJpegBuffer(out int bufferSize);
 
-    public static byte[] GetJpegBuffer(out int bufferSize)
+    public static byte[] GetJpegBuffer()
     {
+        int bufferSize = 0;
         IntPtr bufferPtr = getJpegBuffer(out bufferSize);
 
         byte[] jpegBuffer = new byte[bufferSize];
@@ -249,6 +248,10 @@ public class RealSenseController : MonoBehaviour
     private IMUCameraRotation imuCameraRotation;
 
     private JobHandle jobHandle;
+
+    //Display Camera Feed
+    [SerializeField] bool captureFirstFrame;
+    [SerializeField] RawImage feedDisplayImage;
 
     private void Awake()
     {
@@ -388,6 +391,22 @@ public class RealSenseController : MonoBehaviour
         //Vector3 remappedTranslationVector = new Vector3(-realSenseTranslationVector.x, realSenseTranslationVector.y, -realSenseTranslationVector.z);
         //Vector3 rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
         //transform.localPosition = initialCamPosition + rotatedTranslationVector;
+
+        if (captureFirstFrame)
+        {
+            //Display image feed
+            //Texture2D tex = new Texture2D(colorWidth, colorHeight);
+            //tex.LoadImage(GetJpegBuffer(out bufferSize));
+            //tex.Apply();
+            //feedDisplayImage.texture = tex;
+
+            //Save into image file
+            System.IO.File.WriteAllBytes($"{Application.persistentDataPath}/FirstFrame.jpeg", GetJpegBuffer());
+
+            //Deactivate white image
+            feedDisplayImage.gameObject.SetActive(false);
+            captureFirstFrame = false;
+        }
     }
 
     private void ThreadUpdate()
@@ -452,17 +471,17 @@ public class RealSenseController : MonoBehaviour
     }
 }
 
-public struct FindFeaturesJob : IJob
-{
-    public Vector3 realSenseTranslationVector;
+//public struct FindFeaturesJob : IJob
+//{
+//    public Vector3 realSenseTranslationVector;
 
-    public void Execute()
-    {
-        //Find features
-        RealSenseController.findFeatures();
+//    public void Execute()
+//    {
+//        //Find features
+//        RealSenseController.findFeatures();
 
-        Debug.Log(RealSenseController.RetrieveTranslationVector());
-        //Get translation vector
-        realSenseTranslationVector = RealSenseController.RetrieveTranslationVector();
-    }
-}
+//        Debug.Log(RealSenseController.RetrieveTranslationVector());
+//        //Get translation vector
+//        realSenseTranslationVector = RealSenseController.RetrieveTranslationVector();
+//    }
+//}
