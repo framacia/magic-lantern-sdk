@@ -400,6 +400,8 @@ public class RealSenseController : MonoBehaviour
             //tex.Apply();
             //feedDisplayImage.texture = tex;
 
+            feedDisplayImage.gameObject.SetActive(true);
+
             //Save into image file
             System.IO.File.WriteAllBytes($"{Application.persistentDataPath}/FirstFrame.jpeg", GetJpegBuffer());
 
