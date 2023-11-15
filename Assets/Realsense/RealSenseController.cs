@@ -331,6 +331,28 @@ public class RealSenseController : MonoBehaviour
 
         // Used for image tracking reposition
         // imuCameraRotation = GetComponent<IMUCameraRotation?>();
+
+        if (captureFirstFrame)
+        {
+            Invoke(nameof(SaveFrame), 0.5f);
+        }
+    }
+
+    private void SaveFrame()
+    {
+        //Display image feed
+        //Texture2D tex = new Texture2D(colorWidth, colorHeight);
+        //tex.LoadImage(GetJpegBuffer(out bufferSize));
+        //tex.Apply();
+        //feedDisplayImage.texture = tex;
+
+        feedDisplayImage.gameObject.SetActive(true);
+
+        //Save into image file
+        System.IO.File.WriteAllBytes($"{Application.persistentDataPath}/FirstFrame.jpeg", GetJpegBuffer());
+
+        //Deactivate white image
+        feedDisplayImage.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -391,24 +413,6 @@ public class RealSenseController : MonoBehaviour
         //Vector3 remappedTranslationVector = new Vector3(-realSenseTranslationVector.x, realSenseTranslationVector.y, -realSenseTranslationVector.z);
         //Vector3 rotatedTranslationVector = Quaternion.AngleAxis(0, Vector3.right) * remappedTranslationVector;
         //transform.localPosition = initialCamPosition + rotatedTranslationVector;
-
-        if (captureFirstFrame)
-        {
-            //Display image feed
-            //Texture2D tex = new Texture2D(colorWidth, colorHeight);
-            //tex.LoadImage(GetJpegBuffer(out bufferSize));
-            //tex.Apply();
-            //feedDisplayImage.texture = tex;
-
-            feedDisplayImage.gameObject.SetActive(true);
-
-            //Save into image file
-            System.IO.File.WriteAllBytes($"{Application.persistentDataPath}/FirstFrame.jpeg", GetJpegBuffer());
-
-            //Deactivate white image
-            feedDisplayImage.gameObject.SetActive(false);
-            captureFirstFrame = false;
-        }
     }
 
     private void ThreadUpdate()

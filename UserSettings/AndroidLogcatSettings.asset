@@ -1,31 +1,13 @@
 {
     "m_SelectedDeviceId": "192.168.121.100:5555",
     "m_SelectedPackage": {
-        "deviceId": "192.168.121.100:5555",
-        "name": "com.UPF.ARML",
-        "processId": 2008,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 12165,
-            "exited": true
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 16980,
-            "exited": true
-        },
-        {
-            "deviceId": "DM4XEYM7NB9P9PGM",
-            "name": "com.UPF.ARML",
-            "processId": 20777,
-            "exited": true
-        },
         {
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.UPF.ARML",
@@ -36,48 +18,60 @@
             "deviceId": "DM4XEYM7NB9P9PGM",
             "name": "com.whatsapp",
             "processId": 7022,
+            "exited": true
+        },
+        {
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.mi.android.globallauncher",
+            "processId": 10128,
             "exited": false
         },
         {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 18178,
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.kbabilinski.voskspeech",
+            "processId": 5886,
             "exited": true
         },
         {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.liuzho.file.explorer",
-            "processId": 18366,
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.kbabilinski.voskspeech",
+            "processId": 9057,
             "exited": true
         },
         {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 21127,
-            "exited": true
-        },
-        {
-            "deviceId": "192.168.121.100:5555",
-            "name": "com.UPF.ARML",
-            "processId": 3125,
-            "exited": true
+            "deviceId": "DM4XEYM7NB9P9PGM",
+            "name": "com.kbabilinski.voskspeech",
+            "processId": 12356,
+            "exited": false
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.rockchips.android.leanbacklauncher",
             "processId": 1196,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
             "processId": 2026,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "192.168.121.100:5555",
             "name": "com.UPF.ARML",
             "processId": 2008,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.UPF.ARML",
+            "processId": 2598,
+            "exited": true
+        },
+        {
+            "deviceId": "192.168.121.100:5555",
+            "name": "com.android.tv.settings",
+            "processId": 934,
             "exited": false
         },
         {
@@ -288,6 +282,54 @@
             "deviceId": "192.168.121.108:5555",
             "name": "com.UPF.ARML",
             "processId": 2016,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.omgodse.notally",
+            "processId": 13018,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.rockchips.android.leanbacklauncher",
+            "processId": 1146,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 13948,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 14917,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 15163,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 15386,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 15947,
+            "exited": false
+        },
+        {
+            "deviceId": "192.168.121.103:5555",
+            "name": "com.UPF.ARML",
+            "processId": 16742,
             "exited": false
         }
     ],
