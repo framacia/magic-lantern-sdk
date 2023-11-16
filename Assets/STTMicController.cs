@@ -40,12 +40,23 @@ public class STTMicController : MonoBehaviour
         dsDialogue.CheckTranscriptionResult(result.Phrases[0].Text);
     }
 
-    public void ToggleRecording()
+    public IEnumerator ToggleRecording(float secondsToAutoStop = 0)
     {
         //Change bool
         isRecording = !isRecording;
 
         recordingIcon.SetActive(isRecording);
         voskSTT?.ToggleRecording();
+
+        //Auto stop recording after given seconds
+        if(secondsToAutoStop == 0)
+        {
+            yield break;
+        }
+        else
+        {
+            yield return new WaitForSeconds(secondsToAutoStop);
+            StartCoroutine(ToggleRecording(0));
+        }
     }
 }

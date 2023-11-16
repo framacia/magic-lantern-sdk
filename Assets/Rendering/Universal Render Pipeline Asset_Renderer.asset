@@ -61,7 +61,8 @@ MonoBehaviour:
   - {fileID: 2042675986598318685}
   - {fileID: 7935918618846822934}
   - {fileID: -863637449729396371}
-  m_RendererFeatureMap: 6de6c63fc7a54a8ecdd2fe9a15c7b8785dd269bcfc0a591c1602c602f00b226e6db127b250be03f4
+  - {fileID: 3515837187683190731}
+  m_RendererFeatureMap: 6de6c63fc7a54a8ecdd2fe9a15c7b8785dd269bcfc0a591c1602c602f00b226e6db127b250be03f4cb07f7634bc3ca30
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -142,6 +143,23 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &3515837187683190731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7afc38c2d1fc5794db8af8261ba5f3b1, type: 3}
+  m_Name: Custom Pass
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  mask:
+    serializedVersion: 2
+    m_Bits: 1
+  Event: 250
 --- !u!114 &7935918618846822934
 MonoBehaviour:
   m_ObjectHideFlags: 0

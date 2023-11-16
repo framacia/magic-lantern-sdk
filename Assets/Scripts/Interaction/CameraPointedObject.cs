@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Scripting;
-using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using TNRD.Utilities;
 #endif
@@ -14,10 +8,15 @@ public class CameraPointedObject : Interactable
 {
     [Header("Camera Pointed Object")]
     [SerializeField] private float targetAngle = 5f;
+
     [SerializeField, Tooltip("Triggers unless you are looking at the object")]
     private bool invertAngleCheck = false;
+
+    [SerializeField, Tooltip("Maximum distance in meters between camera and object allowed for interaction. 0 for infinite")]
+    float maximumTriggerDistance = 5;
+
     [SerializeField] private bool checkObstaclesRaycast = false;
-    public LayerMask blockingLayers = 0;
+    [SerializeField] LayerMask blockingLayers = 0;
 
     [Header("Event")]
     [SerializeField] protected UnityEvent OnObjectInteractedEvent;
@@ -37,10 +36,19 @@ public class CameraPointedObject : Interactable
     // If this is not FixedUpdate, IMU cam rotation may not be registered, also it's better to raycast on FixedUpdate
     void FixedUpdate()
     {
+        //Check if there's reference to camera
         if (camera == null)
         {
             camera = Camera.main?.transform;
             return; //return here to avoid null reference exception
+        }
+
+        //If camera too far away, stop interaction
+        if (Vector3.Distance(this.transform.position, camera.transform.position) > maximumTriggerDistance
+            && maximumTriggerDistance != 0)
+        {
+            StopTimer();
+            return;
         }
 
         Vector3 camToThis = this.transform.position - camera.transform.position;
@@ -59,10 +67,14 @@ public class CameraPointedObject : Interactable
                 raycastResult = false;
         }
 
+        //If hit something, stop checking
+        if (raycastResult)
+            return;
+
         //Normal angle check
         if (!invertAngleCheck)
         {
-            if (angle <= targetAngle && !raycastResult)
+            if (angle <= targetAngle)
             {
                 AngleCheckSuccessful();
             }
@@ -73,7 +85,7 @@ public class CameraPointedObject : Interactable
         }
         else //Inverted angle check
         {
-            if (angle >= targetAngle && !raycastResult)
+            if (angle >= targetAngle)
             {
                 AngleCheckSuccessful();
             }

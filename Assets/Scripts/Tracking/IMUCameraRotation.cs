@@ -1,11 +1,5 @@
-using System;
-using System.Runtime.InteropServices;
-using System.Collections;
-using UnityEngine;
-using Unity.VisualScripting;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Rendering.UI;
+using UnityEngine;
 
 public class IMUCameraRotation : MonoBehaviour
 {
@@ -14,13 +8,13 @@ public class IMUCameraRotation : MonoBehaviour
 
     private Vector3 correctedImuRotation;
 
-    [SerializeField] float accelerationThreshold = 15f;
-    [SerializeField] float accelerationAmount = 0.01f;
-    [SerializeField] float updateRate = 120f;
+    //[SerializeField] float accelerationThreshold = 15f;
+    //[SerializeField] float accelerationAmount = 0.01f;
+    //[SerializeField] float updateRate = 120f;
 
-    [SerializeField] TMPro.TextMeshProUGUI accelerationThresholdText;
-    [SerializeField] TMPro.TextMeshProUGUI accelerationAmountText;
-    [SerializeField] TMPro.TextMeshProUGUI averageFramesText;
+    //[SerializeField] TMPro.TextMeshProUGUI accelerationThresholdText;
+    //[SerializeField] TMPro.TextMeshProUGUI accelerationAmountText;
+    //[SerializeField] TMPro.TextMeshProUGUI averageFramesText;
 
     //PostProcessingController postProcessingController;
 
@@ -28,7 +22,7 @@ public class IMUCameraRotation : MonoBehaviour
     private Quaternion lastRotation;
 
     //Averaging stuff   
-    [SerializeField] int averageFrames = 1;
+    //[SerializeField] int averageFrames = 1;
     private int count;
     Queue<Vector3> averagedImuAngularVelocityQueue = new Queue<Vector3>();
 
@@ -79,55 +73,55 @@ public class IMUCameraRotation : MonoBehaviour
     }
 
     #region Old Methods
-    Vector3 GetAngularVelocityVector(Vector3 rotation)
-    {
-        var deltaRot = Quaternion.Euler(rotation) * Quaternion.Inverse(lastRotation);
-        var eulerRot = new Vector3(
-            Mathf.DeltaAngle(0, deltaRot.eulerAngles.x),
-            Mathf.DeltaAngle(0, deltaRot.eulerAngles.y),
-            Mathf.DeltaAngle(0, deltaRot.eulerAngles.z));
+    //Vector3 GetAngularVelocityVector(Vector3 rotation)
+    //{
+    //    var deltaRot = Quaternion.Euler(rotation) * Quaternion.Inverse(lastRotation);
+    //    var eulerRot = new Vector3(
+    //        Mathf.DeltaAngle(0, deltaRot.eulerAngles.x),
+    //        Mathf.DeltaAngle(0, deltaRot.eulerAngles.y),
+    //        Mathf.DeltaAngle(0, deltaRot.eulerAngles.z));
 
-        lastRotation = Quaternion.Euler(rotation);
+    //    lastRotation = Quaternion.Euler(rotation);
 
-        return eulerRot / Time.deltaTime;
-    }
+    //    return eulerRot / Time.deltaTime;
+    //}
 
-    Vector3 GetAveragedAccelerationVector(Vector3 vector)
-    {
-        averagedImuAngularVelocityQueue.Enqueue(vector);
+    //Vector3 GetAveragedAccelerationVector(Vector3 vector)
+    //{
+    //    averagedImuAngularVelocityQueue.Enqueue(vector);
 
-        if (averagedImuAngularVelocityQueue.Count >= averageFrames)
-        {
-            var vectorSum = Vector3.zero;
+    //    if (averagedImuAngularVelocityQueue.Count >= averageFrames)
+    //    {
+    //        var vectorSum = Vector3.zero;
 
-            foreach (Vector3 v in averagedImuAngularVelocityQueue)
-            {
-                vectorSum += v;
-            }
+    //        foreach (Vector3 v in averagedImuAngularVelocityQueue)
+    //        {
+    //            vectorSum += v;
+    //        }
 
-            averagedAccelerationVector = vectorSum / averagedImuAngularVelocityQueue.Count;
-            averagedImuAngularVelocityQueue.Clear();
-        }
+    //        averagedAccelerationVector = vectorSum / averagedImuAngularVelocityQueue.Count;
+    //        averagedImuAngularVelocityQueue.Clear();
+    //    }
 
-        return averagedAccelerationVector;
-    }
+    //    return averagedAccelerationVector;
+    //}
 
-    public void SetAccelerationThreshold(float value)
-    {
-        accelerationThreshold = value;
-        accelerationThresholdText.text = "Threshold " + value.ToString();
-    }
+    //public void SetAccelerationThreshold(float value)
+    //{
+    //    accelerationThreshold = value;
+    //    accelerationThresholdText.text = "Threshold " + value.ToString();
+    //}
 
-    public void SetAccelerationAmount(float value)
-    {
-        accelerationAmount = value;
-        accelerationAmountText.text = "Amount " + value.ToString();
-    }
+    //public void SetAccelerationAmount(float value)
+    //{
+    //    accelerationAmount = value;
+    //    accelerationAmountText.text = "Amount " + value.ToString();
+    //}
 
-    public void SetAverageFrames(float value)
-    {
-        averageFrames = (int)value;
-        averageFramesText.text = "Frames " + value.ToString();
-    }
+    //public void SetAverageFrames(float value)
+    //{
+    //    averageFrames = (int)value;
+    //    averageFramesText.text = "Frames " + value.ToString();
+    //}
     #endregion
 }

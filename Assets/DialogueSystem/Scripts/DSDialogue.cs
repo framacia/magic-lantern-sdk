@@ -69,6 +69,9 @@ namespace DS
             DSDialogueSO nextDialogue = dialogue.Choices[choiceIndex].NextDialogue;
             if (nextDialogue != null)
             {
+                if (dialogue.DialogueType == DSDialogueType.MultipleChoice)
+                    Debug.Log($"Dialogue Choice {dialogue.Choices[choiceIndex].Text} was selected");
+
                 dialogue = nextDialogue;
                 DisplayTextCurrentDialogue();
 
@@ -118,6 +121,9 @@ namespace DS
 
                 //Activate STT Mic
                 sttMicController.gameObject.SetActive(true);
+
+                //Optional, start recording
+                StartCoroutine(sttMicController.ToggleRecording(3));
             }
             else //Otherwise deactivate choice text
             {
@@ -139,6 +145,7 @@ namespace DS
 
         private void DialogueFinished()
         {
+            Debug.Log($"Dialogue {dialogueContainer.FileName} finished");
             OnDialogueFinishedEvent?.Invoke();
         }
 
@@ -152,7 +159,7 @@ namespace DS
             //Loop through all choice texts to find a match
             for (int i = 0; i < dialogue.Choices.Count; i++)
             {
-                if(dialogue.Choices[i].Text.IndexOf(result, 0, StringComparison.CurrentCultureIgnoreCase) > -1)
+                if (dialogue.Choices[i].Text.IndexOf(result, 0, StringComparison.CurrentCultureIgnoreCase) > -1)
                 {
                     //Success!
                     GoToNextDialogue(i);
