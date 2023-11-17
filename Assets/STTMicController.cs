@@ -40,7 +40,12 @@ public class STTMicController : MonoBehaviour
         dsDialogue.CheckTranscriptionResult(result.Phrases[0].Text);
     }
 
-    public IEnumerator ToggleRecording(float secondsToAutoStop = 0)
+    public void ToggleRecording()
+    {
+        StartCoroutine(ToggleRecordingCoroutine(0));
+    }
+
+    public IEnumerator ToggleRecordingCoroutine(float secondsToAutoStop = 0)
     {
         //Change bool
         isRecording = !isRecording;
@@ -56,7 +61,7 @@ public class STTMicController : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(secondsToAutoStop);
-            StartCoroutine(ToggleRecording(0));
+            StartCoroutine(ToggleRecordingCoroutine(0));
         }
     }
 }

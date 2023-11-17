@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 namespace DS
 {
@@ -9,6 +10,9 @@ namespace DS
     using ScriptableObjects;
     using System;
     using System.Collections;
+    using System.Globalization;
+    using System.Text;
+    using Unity.VisualScripting;
 
     public class DSDialogue : MonoBehaviour
     {
@@ -31,8 +35,19 @@ namespace DS
         [SerializeField] private List<TMP_Text> choiceDisplayTexts;
 
         // Behaviour
+        enum DialogueInteractionType
+        {
+            Selection,
+            Speaking
+        }
+        [SerializeField] private DialogueInteractionType dialogueInteractionType = DialogueInteractionType.Selection;
+
         [SerializeField] private bool autoContinueSingleChoice;
         [SerializeField] private float secondsToAutoContinue;
+
+        // Default Answers
+        [SerializeField] private AudioClip didNotHearClip;
+        [SerializeField] private AudioClip didNotUnderstandClip;
 
         // UnityEvent
         [SerializeField] private UnityEvent OnDialogueFinishedEvent;
@@ -47,6 +62,15 @@ namespace DS
             audioSource = GetComponent<AudioSource?>();
 
             startingDialogue = dialogue;
+
+            //If Interaction Type is not Selection, deactivate choice camera pointed objects
+            if (dialogueInteractionType != DialogueInteractionType.Selection)
+            {
+                foreach (var choiceText in choiceDisplayTexts)
+                {
+                    choiceText.GetComponent<CameraPointedObject?>().enabled = false;
+                }
+            }
 
             //Remove text from displayTexts
             dialogueDisplayText.text = string.Empty;
@@ -70,7 +94,9 @@ namespace DS
             if (nextDialogue != null)
             {
                 if (dialogue.DialogueType == DSDialogueType.MultipleChoice)
+                {
                     Debug.Log($"Dialogue Choice {dialogue.Choices[choiceIndex].Text} was selected");
+                }
 
                 dialogue = nextDialogue;
                 DisplayTextCurrentDialogue();
@@ -119,11 +145,14 @@ namespace DS
                     choiceDisplayTexts[i].text = dialogue.Choices[i].Text;
                 }
 
-                //Activate STT Mic
-                sttMicController.gameObject.SetActive(true);
+                if (dialogueInteractionType == DialogueInteractionType.Speaking)
+                {
+                    //Activate STT Mic
+                    sttMicController.gameObject.SetActive(true);                    
 
-                //Optional, start recording
-                StartCoroutine(sttMicController.ToggleRecording(3));
+                    //Optional, start recording
+                    //StartCoroutine(sttMicController.ToggleRecording(3));
+                }
             }
             else //Otherwise deactivate choice text
             {
@@ -156,16 +185,99 @@ namespace DS
 
         public void CheckTranscriptionResult(string result)
         {
-            //Loop through all choice texts to find a match
+            //Nothing was received
+            if (string.IsNullOrEmpty(result))
+            {
+                //Say that you have not heard the person
+                StartCoroutine(DisplayDefaultAnswer(0));
+                return;
+            }
+
+            var compareInfo = CultureInfo.InvariantCulture.CompareInfo;
+
+            List<int> possibleMatchesIndexes = new List<int>();
+
+            //Loop through all choice texts to find matches
             for (int i = 0; i < dialogue.Choices.Count; i++)
             {
-                if (dialogue.Choices[i].Text.IndexOf(result, 0, StringComparison.CurrentCultureIgnoreCase) > -1)
+                if (RemoveDiacritics(result).Contains(RemoveDiacritics(dialogue.Choices[i].Text), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    //Success!
-                    GoToNextDialogue(i);
-                    return;
+                    //Success! Add to match list
+                    possibleMatchesIndexes.Add(i);
                 }
             }
+
+            //If more than one match, or none, ask again
+            if (possibleMatchesIndexes.Count != 1)
+            {
+                //Ask again, say the answer was not clear
+                StartCoroutine(DisplayDefaultAnswer(1));
+            }
+            else //If one match exactly, answer accepted
+            {
+                GoToNextDialogue(possibleMatchesIndexes[0]);
+            }
+        }
+
+        private IEnumerator DisplayDefaultAnswer(int defaultAnswerIndex)
+        {
+            yield return new WaitForSeconds(1);
+
+            AudioClip defaultAnswerClip;
+            string defaultAnswerText;
+
+            switch (defaultAnswerIndex)
+            {
+                case 0:
+                    defaultAnswerClip = didNotHearClip;
+                    defaultAnswerText = "Perdona, no te he oído, ¿puedes volver a hablar?";
+                    break;
+                case 1:
+                    defaultAnswerClip = didNotUnderstandClip;
+                    defaultAnswerText = "Disculpa, no te he entendido, ¿puedes responder de nuevo?";
+                    break;
+                default:
+                    defaultAnswerClip = didNotUnderstandClip;
+                    defaultAnswerText = "Disculpa, no te he entendido, ¿puedes responder de nuevo?";
+                    break;
+            }
+
+            //Display/say default answer
+            dialogueDisplayText.text = defaultAnswerText;
+
+            //Stop current clip if there was one
+            audioSource.Stop();
+            audioSource.clip = defaultAnswerClip;
+            audioSource.Play();
+
+            yield break;
+            //I added this to repeat the question, but maybe it's weird to do that
+
+            //yield return new WaitForSeconds(defaultAnswerClip.length + 3);
+
+            ////Go back to choice dialogue
+            //DisplayTextCurrentDialogue();
+
+            ////Stop then Start Audio
+            //StopCoroutine(PlayAudioCurrentDialogue());
+            //StartCoroutine(PlayAudioCurrentDialogue());
+        }
+
+        static string RemoveDiacritics(string text)
+        {
+            string formD = text.Normalize(NormalizationForm.FormD);
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char ch in formD)
+            {
+                UnicodeCategory uc = CharUnicodeInfo.GetUnicodeCategory(ch);
+                if (uc != UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(ch);
+                }
+            }
+
+            return sb.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }

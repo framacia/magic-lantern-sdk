@@ -10,53 +10,63 @@ namespace DS.Inspectors
     public class DSInspector : Editor
     {
         /* Dialogue Scriptable Objects */
-        private SerializedProperty dialogueContainerProperty;
-        private SerializedProperty dialogueGroupProperty;
-        private SerializedProperty dialogueProperty;
+        private SerializedProperty dialogueContainer;
+        private SerializedProperty dialogueGroup;
+        private SerializedProperty dialogue;
 
         /* Filters */
-        private SerializedProperty groupedDialoguesProperty;
-        private SerializedProperty startingDialoguesOnlyProperty;
+        private SerializedProperty groupedDialogues;
+        private SerializedProperty startingDialoguesOnly;
 
         /* Indexes */
-        private SerializedProperty selectedDialogueGroupIndexProperty;
-        private SerializedProperty selectedDialogueIndexProperty;
+        private SerializedProperty selectedDialogueGroupIndex;
+        private SerializedProperty selectedDialogueIndex;
 
         // Display Text
-        private SerializedProperty dialogueDisplayTextProperty;
-        private SerializedProperty choiceDisplayTextsProperty;
+        private SerializedProperty dialogueDisplayText;
+        private SerializedProperty choiceDisplayTexts;
 
         //Behaviour
-        private SerializedProperty autoContinueSingleChoiceProperty;
-        private SerializedProperty secondsToAutoContinueProperty;
+        private SerializedProperty autoContinueSingleChoice;
+        private SerializedProperty secondsToAutoContinue;
+        private SerializedProperty dialogueInteractionType;
+
+        //Default Answers
+        private SerializedProperty didNotHearClip;
+        private SerializedProperty didNotUnderstandClip;
 
         //UnityEvent
-        private SerializedProperty OnDialogueFinishedEventProperty;
+        private SerializedProperty OnDialogueFinishedEvent;
 
         //STT Vosk
-        private SerializedProperty sttMicControllerProperty;
+        private SerializedProperty sttMicController;
+
 
         private void OnEnable()
         {
-            dialogueContainerProperty = serializedObject.FindProperty("dialogueContainer");
-            dialogueGroupProperty = serializedObject.FindProperty("dialogueGroup");
-            dialogueProperty = serializedObject.FindProperty("dialogue");
+            dialogueContainer = serializedObject.FindProperty(nameof(dialogueContainer));
+            dialogueGroup = serializedObject.FindProperty(nameof(dialogueGroup));
+            dialogue = serializedObject.FindProperty(nameof(dialogue));
 
-            groupedDialoguesProperty = serializedObject.FindProperty("groupedDialogues");
-            startingDialoguesOnlyProperty = serializedObject.FindProperty("startingDialoguesOnly");
+            groupedDialogues = serializedObject.FindProperty(nameof(groupedDialogues));
+            startingDialoguesOnly = serializedObject.FindProperty(nameof(startingDialoguesOnly));
 
-            selectedDialogueGroupIndexProperty = serializedObject.FindProperty("selectedDialogueGroupIndex");
-            selectedDialogueIndexProperty = serializedObject.FindProperty("selectedDialogueIndex");
+            selectedDialogueGroupIndex = serializedObject.FindProperty(nameof(selectedDialogueGroupIndex));
+            selectedDialogueIndex = serializedObject.FindProperty(nameof(selectedDialogueIndex));
 
-            dialogueDisplayTextProperty = serializedObject.FindProperty("dialogueDisplayText");
-            choiceDisplayTextsProperty = serializedObject.FindProperty("choiceDisplayTexts");
+            dialogueDisplayText = serializedObject.FindProperty(nameof(dialogueDisplayText));
+            choiceDisplayTexts = serializedObject.FindProperty(nameof(choiceDisplayTexts));
 
-            autoContinueSingleChoiceProperty = serializedObject.FindProperty("autoContinueSingleChoice");
-            secondsToAutoContinueProperty = serializedObject.FindProperty("secondsToAutoContinue");
+            autoContinueSingleChoice = serializedObject.FindProperty(nameof(autoContinueSingleChoice));
+            secondsToAutoContinue = serializedObject.FindProperty(nameof(secondsToAutoContinue));
+            dialogueInteractionType = serializedObject.FindProperty(nameof(dialogueInteractionType));
 
-            OnDialogueFinishedEventProperty = serializedObject.FindProperty("OnDialogueFinishedEvent");
+            didNotHearClip = serializedObject.FindProperty(nameof(didNotHearClip));
+            didNotUnderstandClip = serializedObject.FindProperty(nameof(didNotUnderstandClip));
 
-            sttMicControllerProperty = serializedObject.FindProperty("sttMicController");
+            sttMicController = serializedObject.FindProperty(nameof(sttMicController));
+
+            OnDialogueFinishedEvent = serializedObject.FindProperty(nameof(OnDialogueFinishedEvent));
         }
 
         public override void OnInspectorGUI()
@@ -65,7 +75,7 @@ namespace DS.Inspectors
 
             DrawDialogueContainerArea();
 
-            DSDialogueContainerSO currentDialogueContainer = (DSDialogueContainerSO) dialogueContainerProperty.objectReferenceValue;
+            DSDialogueContainerSO currentDialogueContainer = (DSDialogueContainerSO) dialogueContainer.objectReferenceValue;
 
             if (currentDialogueContainer == null)
             {
@@ -76,8 +86,8 @@ namespace DS.Inspectors
 
             DrawFiltersArea();
 
-            bool currentGroupedDialoguesFilter = groupedDialoguesProperty.boolValue;
-            bool currentStartingDialoguesOnlyFilter = startingDialoguesOnlyProperty.boolValue;
+            bool currentGroupedDialoguesFilter = groupedDialogues.boolValue;
+            bool currentStartingDialoguesOnlyFilter = startingDialoguesOnly.boolValue;
             
             List<string> dialogueNames;
 
@@ -98,11 +108,11 @@ namespace DS.Inspectors
 
                 DrawDialogueGroupArea(currentDialogueContainer, dialogueGroupNames);
 
-                DSDialogueGroupSO dialogueGroup = (DSDialogueGroupSO) dialogueGroupProperty.objectReferenceValue;
+                DSDialogueGroupSO dialogueGroupSO = (DSDialogueGroupSO) dialogueGroup.objectReferenceValue;
 
-                dialogueNames = currentDialogueContainer.GetGroupedDialogueNames(dialogueGroup, currentStartingDialoguesOnlyFilter);
+                dialogueNames = currentDialogueContainer.GetGroupedDialogueNames(dialogueGroupSO, currentStartingDialoguesOnlyFilter);
 
-                dialogueFolderPath += $"/Groups/{dialogueGroup.GroupName}/Dialogues";
+                dialogueFolderPath += $"/Groups/{dialogueGroupSO.GroupName}/Dialogues";
 
                 dialogueInfoMessage = "There are no" + (currentStartingDialoguesOnlyFilter ? " Starting" : "") + " Dialogues in this Dialogue Group.";
             }
@@ -128,6 +138,10 @@ namespace DS.Inspectors
 
             DrawBehaviourArea();
 
+            DrawDefaultAnswersArea();
+
+            DrawSTTArea();
+
             DrawUnityEvent();
 
             serializedObject.ApplyModifiedProperties();
@@ -137,7 +151,7 @@ namespace DS.Inspectors
         {
             DSInspectorUtility.DrawHeader("Dialogue Container");
 
-            dialogueContainerProperty.DrawPropertyField();
+            dialogueContainer.DrawPropertyField();
 
             DSInspectorUtility.DrawSpace();
         }
@@ -146,8 +160,8 @@ namespace DS.Inspectors
         {
             DSInspectorUtility.DrawHeader("Filters");
 
-            groupedDialoguesProperty.DrawPropertyField();
-            startingDialoguesOnlyProperty.DrawPropertyField();
+            groupedDialogues.DrawPropertyField();
+            startingDialoguesOnly.DrawPropertyField();
 
             DSInspectorUtility.DrawSpace();
         }
@@ -156,25 +170,25 @@ namespace DS.Inspectors
         {
             DSInspectorUtility.DrawHeader("Dialogue Group");
 
-            int oldSelectedDialogueGroupIndex = selectedDialogueGroupIndexProperty.intValue;
+            int oldSelectedDialogueGroupIndex = selectedDialogueGroupIndex.intValue;
 
-            DSDialogueGroupSO oldDialogueGroup = (DSDialogueGroupSO) dialogueGroupProperty.objectReferenceValue;
+            DSDialogueGroupSO oldDialogueGroup = (DSDialogueGroupSO) dialogueGroup.objectReferenceValue;
 
             bool isOldDialogueGroupNull = oldDialogueGroup == null;
 
             string oldDialogueGroupName = isOldDialogueGroupNull ? "" : oldDialogueGroup.GroupName;
 
-            UpdateIndexOnNamesListUpdate(dialogueGroupNames, selectedDialogueGroupIndexProperty, oldSelectedDialogueGroupIndex, oldDialogueGroupName, isOldDialogueGroupNull);
+            UpdateIndexOnNamesListUpdate(dialogueGroupNames, selectedDialogueGroupIndex, oldSelectedDialogueGroupIndex, oldDialogueGroupName, isOldDialogueGroupNull);
 
-            selectedDialogueGroupIndexProperty.intValue = DSInspectorUtility.DrawPopup("Dialogue Group", selectedDialogueGroupIndexProperty, dialogueGroupNames.ToArray());
+            selectedDialogueGroupIndex.intValue = DSInspectorUtility.DrawPopup("Dialogue Group", selectedDialogueGroupIndex, dialogueGroupNames.ToArray());
 
-            string selectedDialogueGroupName = dialogueGroupNames[selectedDialogueGroupIndexProperty.intValue];
+            string selectedDialogueGroupName = dialogueGroupNames[selectedDialogueGroupIndex.intValue];
 
             DSDialogueGroupSO selectedDialogueGroup = DSIOUtility.LoadAsset<DSDialogueGroupSO>($"Assets/DialogueSystem/Dialogues/{dialogueContainer.FileName}/Groups/{selectedDialogueGroupName}", selectedDialogueGroupName);
 
-            dialogueGroupProperty.objectReferenceValue = selectedDialogueGroup;
+            dialogueGroup.objectReferenceValue = selectedDialogueGroup;
 
-            DSInspectorUtility.DrawDisabledFields(() => dialogueGroupProperty.DrawPropertyField());
+            DSInspectorUtility.DrawDisabledFields(() => dialogueGroup.DrawPropertyField());
 
             DSInspectorUtility.DrawSpace();
         }
@@ -183,46 +197,59 @@ namespace DS.Inspectors
         {
             DSInspectorUtility.DrawHeader("Dialogue");
 
-            int oldSelectedDialogueIndex = selectedDialogueIndexProperty.intValue;
+            int oldSelectedDialogueIndex = selectedDialogueIndex.intValue;
 
-            DSDialogueSO oldDialogue = (DSDialogueSO) dialogueProperty.objectReferenceValue;
+            DSDialogueSO oldDialogue = (DSDialogueSO) dialogue.objectReferenceValue;
 
             bool isOldDialogueNull = oldDialogue == null;
 
             string oldDialogueName = isOldDialogueNull ? "" : oldDialogue.DialogueName;
 
-            UpdateIndexOnNamesListUpdate(dialogueNames, selectedDialogueIndexProperty, oldSelectedDialogueIndex, oldDialogueName, isOldDialogueNull);
+            UpdateIndexOnNamesListUpdate(dialogueNames, selectedDialogueIndex, oldSelectedDialogueIndex, oldDialogueName, isOldDialogueNull);
 
-            selectedDialogueIndexProperty.intValue = DSInspectorUtility.DrawPopup("Dialogue", selectedDialogueIndexProperty, dialogueNames.ToArray());
+            selectedDialogueIndex.intValue = DSInspectorUtility.DrawPopup("Dialogue", selectedDialogueIndex, dialogueNames.ToArray());
 
-            string selectedDialogueName = dialogueNames[selectedDialogueIndexProperty.intValue];
+            string selectedDialogueName = dialogueNames[selectedDialogueIndex.intValue];
 
             DSDialogueSO selectedDialogue = DSIOUtility.LoadAsset<DSDialogueSO>(dialogueFolderPath, selectedDialogueName);
 
-            dialogueProperty.objectReferenceValue = selectedDialogue;
+            dialogue.objectReferenceValue = selectedDialogue;
 
-            DSInspectorUtility.DrawDisabledFields(() => dialogueProperty.DrawPropertyField());
+            DSInspectorUtility.DrawDisabledFields(() => dialogue.DrawPropertyField());
         }
 
         private void DrawDisplayTextArea()
         {
             DSInspectorUtility.DrawHeader("Display Text");
-            dialogueDisplayTextProperty.DrawPropertyField();
-            choiceDisplayTextsProperty.DrawPropertyField();
+            dialogueDisplayText.DrawPropertyField();
+            choiceDisplayTexts.DrawPropertyField();
         }
 
         private void DrawBehaviourArea()
         {
             DSInspectorUtility.DrawHeader("Behaviour");
-            autoContinueSingleChoiceProperty.DrawPropertyField();
-            secondsToAutoContinueProperty.DrawPropertyField();
-            sttMicControllerProperty.DrawPropertyField();
+            dialogueInteractionType.DrawPropertyField();
+            autoContinueSingleChoice.DrawPropertyField();
+            secondsToAutoContinue.DrawPropertyField();
+        }
+
+        private void DrawDefaultAnswersArea()
+        {
+            DSInspectorUtility.DrawHeader("Default Answers");
+            didNotHearClip.DrawPropertyField();
+            didNotUnderstandClip.DrawPropertyField();
+        }
+
+        private void DrawSTTArea()
+        {
+            DSInspectorUtility.DrawHeader("TTS");
+            sttMicController.DrawPropertyField();
         }
 
         private void DrawUnityEvent()
         {
             DSInspectorUtility.DrawHeader("Event");
-            OnDialogueFinishedEventProperty.DrawPropertyField();
+            OnDialogueFinishedEvent.DrawPropertyField();
         }
 
         private void StopDrawing(string reason, MessageType messageType = MessageType.Info)
