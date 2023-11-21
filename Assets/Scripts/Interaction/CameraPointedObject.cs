@@ -17,6 +17,10 @@ public class CameraPointedObject : Interactable
 
     [SerializeField] private bool checkObstaclesRaycast = false;
     [SerializeField] LayerMask blockingLayers = 0;
+    
+    //Re-triggering
+    [SerializeField, Tooltip("Once triggered, do you need to look away before you can trigger it again?")] bool canRetrigger = true;
+    private bool alreadyTriggered = false;
 
     [Header("Event")]
     [SerializeField] protected UnityEvent OnObjectInteractedEvent;
@@ -36,6 +40,8 @@ public class CameraPointedObject : Interactable
     // If this is not FixedUpdate, IMU cam rotation may not be registered, also it's better to raycast on FixedUpdate
     void FixedUpdate()
     {
+        print(alreadyTriggered);
+
         //Check if there's reference to camera
         if (camera == null)
         {
@@ -70,6 +76,8 @@ public class CameraPointedObject : Interactable
         //If hit something, stop checking
         if (raycastResult)
             return;
+
+        //If can't retrigger
 
         //Normal angle check
         if (!invertAngleCheck)
@@ -118,6 +126,9 @@ public class CameraPointedObject : Interactable
 
     private void AngleCheckSuccessful()
     {
+        if (alreadyTriggered)
+            return;
+
         //If Dwell mode, start timer
         if (interactionType == InteractionType.Dwell)
             StartTimer();
@@ -132,6 +143,9 @@ public class CameraPointedObject : Interactable
         AddOutlineMaterial(renderer);
         UpdateOutlineFill(renderer);
         feedback?.PlayProgressFeedback();
+
+        if (!canRetrigger)
+            alreadyTriggered = true;
     }
 
     private void AngleCheckFail()
@@ -143,5 +157,8 @@ public class CameraPointedObject : Interactable
             RemoveOutlineMaterial(renderer);
 
         feedback?.StopProgressFeedback();
+
+        if (!canRetrigger)
+            alreadyTriggered = false;
     }
 }
