@@ -25,7 +25,8 @@ public class DialogueSystemBehaviour : PlayableBehaviour
                 //Maybe we can foreach all the grouped and ungrouped dialogues until we find one that is a starting dialogue
             }
 
-            dsDialogue.RestartDialogue();
+            if(dsDialogue.isActiveAndEnabled)
+                dsDialogue.RestartDialogue();
 
             alreadyDone = true;
         }

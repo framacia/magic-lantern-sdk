@@ -45,6 +45,7 @@ public class SceneController : MonoBehaviour
         StartCoroutine(LoadSceneByReference(currentScene));
     }
 
+    //This is Obsolete ever since we divided Logic and Levels -- EDIT actually not, since Logic is just bootstrap, then it's Don't Delete on Load
     public void ResetCurrentSceneSingle()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -62,10 +63,15 @@ public class SceneController : MonoBehaviour
     public IEnumerator LoadSceneByReference(string scene)
     {
         // If Game Scene is already loaded, return
-        if (SceneManager.GetActiveScene().name == scene)
+        for (int i = 0; i < SceneManager.sceneCount; i++)
         {
-            Debug.Log($"Scene {scene} already loaded");
-            yield break;
+            if (SceneManager.GetSceneAt(i).name == scene)
+            {
+                Debug.Log($"Scene {scene} already loaded");
+                //Set active just in case
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+                yield break;
+            }
         }
 
         //Fade to Black
