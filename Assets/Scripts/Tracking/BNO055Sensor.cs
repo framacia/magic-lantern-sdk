@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BNO055Sensor : MonoBehaviour
@@ -156,9 +154,10 @@ public class BNO055Sensor : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        SetModeCheck();
+#if UNITY_EDITOR
+        return;
 #endif
+        SetModeCheck();
     }
 
     void SetModeCheck()
@@ -178,8 +177,9 @@ public class BNO055Sensor : MonoBehaviour
     // Close the device when the script is destroyed
     private void OnDestroy()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        closeDevice();
+#if UNITY_EDITOR
+        return;
 #endif
+        closeDevice();
     }
 }

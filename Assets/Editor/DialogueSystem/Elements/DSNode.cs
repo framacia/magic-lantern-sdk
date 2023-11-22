@@ -25,7 +25,7 @@ namespace DS.Elements
         public DSGroup Group { get; set; }
         public AudioClip AudioClip { get; set; }
         public AnimationClip AnimationClip {  get; set; } 
-        public int EndID { get; set; }
+        public int EventID { get; set; }
 
         protected DSGraphView graphView;
         private Color defaultBackgroundColor;
@@ -141,12 +141,12 @@ namespace DS.Elements
             ObjectField animationField = DSElementUtility.CreateObjectField(AnimationClip, "AnimationClip", typeof(AnimationClip), callback => AnimationClip = (AnimationClip)callback.newValue);
 
             //End ID
-            IntegerField endIDField = DSElementUtility.CreateIntegerField(EndID, "End ID", 1, callback => EndID = callback.newValue);
+            IntegerField eventIDField = DSElementUtility.CreateIntegerField(EventID, "Event ID", 1, callback => EventID = callback.newValue);
             customDataContainer.Add(animationField);
 
             //Check if any output port is connected, if not it's an ending node, then draw the End ID Property
             //if (IsEndingNode())
-            customDataContainer.Add(endIDField);
+            customDataContainer.Add(eventIDField);
 
             extensionContainer.Add(customDataContainer);
         }

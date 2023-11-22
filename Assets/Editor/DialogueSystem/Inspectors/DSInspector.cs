@@ -36,6 +36,8 @@ namespace DS.Inspectors
         private SerializedProperty didNotUnderstandClip;
 
         //UnityEvent
+        private SerializedProperty OnDialogueEventIndex1;
+        private SerializedProperty OnDialogueEventIndex2;
         private SerializedProperty OnDialogueFinishedEvent;
 
         //STT Vosk
@@ -66,6 +68,8 @@ namespace DS.Inspectors
 
             sttMicController = serializedObject.FindProperty(nameof(sttMicController));
 
+            OnDialogueEventIndex1 = serializedObject.FindProperty(nameof(OnDialogueEventIndex1));
+            OnDialogueEventIndex2 = serializedObject.FindProperty(nameof(OnDialogueEventIndex2));
             OnDialogueFinishedEvent = serializedObject.FindProperty(nameof(OnDialogueFinishedEvent));
         }
 
@@ -75,7 +79,7 @@ namespace DS.Inspectors
 
             DrawDialogueContainerArea();
 
-            DSDialogueContainerSO currentDialogueContainer = (DSDialogueContainerSO) dialogueContainer.objectReferenceValue;
+            DSDialogueContainerSO currentDialogueContainer = (DSDialogueContainerSO)dialogueContainer.objectReferenceValue;
 
             if (currentDialogueContainer == null)
             {
@@ -88,7 +92,7 @@ namespace DS.Inspectors
 
             bool currentGroupedDialoguesFilter = groupedDialogues.boolValue;
             bool currentStartingDialoguesOnlyFilter = startingDialoguesOnly.boolValue;
-            
+
             List<string> dialogueNames;
 
             string dialogueFolderPath = $"Assets/DialogueSystem/Dialogues/{currentDialogueContainer.FileName}";
@@ -108,7 +112,7 @@ namespace DS.Inspectors
 
                 DrawDialogueGroupArea(currentDialogueContainer, dialogueGroupNames);
 
-                DSDialogueGroupSO dialogueGroupSO = (DSDialogueGroupSO) dialogueGroup.objectReferenceValue;
+                DSDialogueGroupSO dialogueGroupSO = (DSDialogueGroupSO)dialogueGroup.objectReferenceValue;
 
                 dialogueNames = currentDialogueContainer.GetGroupedDialogueNames(dialogueGroupSO, currentStartingDialoguesOnlyFilter);
 
@@ -133,18 +137,15 @@ namespace DS.Inspectors
             }
 
             DrawDialogueArea(dialogueNames, dialogueFolderPath);
-
             DrawDisplayTextArea();
-
             DrawBehaviourArea();
-
             DrawDefaultAnswersArea();
-
             DrawSTTArea();
-
             DrawUnityEvent();
 
-            serializedObject.ApplyModifiedProperties();
+            //Apply if not currently running, if not dialogue does not advance when custom inspector open
+            if (!EditorApplication.isPlaying)
+                serializedObject.ApplyModifiedProperties();
         }
 
         private void DrawDialogueContainerArea()
@@ -172,7 +173,7 @@ namespace DS.Inspectors
 
             int oldSelectedDialogueGroupIndex = selectedDialogueGroupIndex.intValue;
 
-            DSDialogueGroupSO oldDialogueGroup = (DSDialogueGroupSO) dialogueGroup.objectReferenceValue;
+            DSDialogueGroupSO oldDialogueGroup = (DSDialogueGroupSO)dialogueGroup.objectReferenceValue;
 
             bool isOldDialogueGroupNull = oldDialogueGroup == null;
 
@@ -199,7 +200,7 @@ namespace DS.Inspectors
 
             int oldSelectedDialogueIndex = selectedDialogueIndex.intValue;
 
-            DSDialogueSO oldDialogue = (DSDialogueSO) dialogue.objectReferenceValue;
+            DSDialogueSO oldDialogue = (DSDialogueSO)dialogue.objectReferenceValue;
 
             bool isOldDialogueNull = oldDialogue == null;
 
@@ -249,6 +250,8 @@ namespace DS.Inspectors
         private void DrawUnityEvent()
         {
             DSInspectorUtility.DrawHeader("Event");
+            OnDialogueEventIndex1.DrawPropertyField();
+            OnDialogueEventIndex2.DrawPropertyField();
             OnDialogueFinishedEvent.DrawPropertyField();
         }
 

@@ -10,11 +10,11 @@ kanban-plugin: basic
 - [ ] Find a way to make LevelController apply/revert timeline changes when switching back and forth between levels
 - [ ] Is it worth updating TransformLerp system into DOTween?
 - [ ] Consider making a custom EditorScript for interactables (due to the weird inheritance serialized field order)
-- [ ] Integrate Lip-Sync
 - [ ] Automatize Character setup (animation, gaze, dialogue canvas)
 - [ ] Move grabbing collision logic to Grabbable objects and not CameraGrabber
 - [ ] Change camera background colour to indicate interactable areas of interest (Paul says magic vs. lantern mode)
 - [ ] Idea for X-Ray/infrared mode - take 3D scan texture of environment and filter it for simulating (x ray, infrared, whatever)
+- [ ] Adapt ChatGPT agent logic into project. Change from config to manual ScriptableObject based creation of characters to be drag-dropped into characters
 - [ ] Use button to show information/video about object you are pointing at
 
 
@@ -25,20 +25,20 @@ kanban-plugin: basic
 - [ ] Add functionality to grabber so that it can only be pushed (right now it can be pushed and pulled)
 - [ ] JSON Saving encryption is broken, probably wrong key
 - [ ] Make Dog increase DistancePercentage the closer he is to the placeable.
-- [ ] Adapt ChatGPT agent logic into project. Change from config to manual ScriptableObject based creation of characters to be drag-dropped into characters
 - [ ] Extend dialogue graph to accept float answers
 - [ ] When we change to on axis projector, remove offset from angle check on FixedUpdate of CameraPointedObject
-- [ ] Add fucntionality to allow for camera pointed objects to need to look away from given angles in order to be able to interact with it again (and also make it so that angle is proportional to distance between camera and object)
 
 
 ## DOING
 
-- [ ] Separate LOGIC (camera, admin, network, controllers) into a separate scene, then load GAME scenes additively
 
 
 ## DONE
 
 **Complete**
+- [x] Separate LOGIC (camera, admin, network, controllers) into a separate scene, then load GAME scenes additively
+- [x] Add fucntionality to allow for camera pointed objects to need to look away from given angles in order to be able to interact with it again (and also make it so that angle is proportional to distance between camera and object)
+- [x] Integrate Lip-Sync
 
 
 ## BLOCKED

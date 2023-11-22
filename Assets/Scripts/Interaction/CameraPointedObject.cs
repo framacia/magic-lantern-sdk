@@ -19,7 +19,7 @@ public class CameraPointedObject : Interactable
     [SerializeField] LayerMask blockingLayers = 0;
     
     //Re-triggering
-    [SerializeField, Tooltip("Once triggered, do you need to look away before you can trigger it again?")] bool canRetrigger = true;
+    [SerializeField, Tooltip("Once triggered, can you trigger it again immediately without looking away?")] bool canRetrigger = true;
     private bool alreadyTriggered = false;
 
     [Header("Event")]
@@ -40,8 +40,6 @@ public class CameraPointedObject : Interactable
     // If this is not FixedUpdate, IMU cam rotation may not be registered, also it's better to raycast on FixedUpdate
     void FixedUpdate()
     {
-        print(alreadyTriggered);
-
         //Check if there's reference to camera
         if (camera == null)
         {

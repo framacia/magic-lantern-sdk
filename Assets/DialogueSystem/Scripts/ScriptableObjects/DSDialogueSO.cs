@@ -15,9 +15,9 @@ namespace DS.ScriptableObjects
         [field: SerializeField] public bool IsStartingDialogue { get; set; }
         [field: SerializeField] public bool IsEndingDialogue { get; set; }
         [field: SerializeField] public AudioClip AudioClip { get; set; }
-        [field: SerializeField] public int EndID { get; set; }
+        [field: SerializeField] public int EventID { get; set; }
 
-        public void Initialize(string dialogueName, string text, List<DSDialogueChoiceData> choices, DSDialogueType dialogueType, bool isStartingDialogue, bool isEndingDialogue, AudioClip audioClip = null, int endID = 0)
+        public void Initialize(string dialogueName, string text, List<DSDialogueChoiceData> choices, DSDialogueType dialogueType, bool isStartingDialogue, bool isEndingDialogue, AudioClip audioClip = null, int eventID = 0)
         {
             DialogueName = dialogueName;
             Text = text;
@@ -26,7 +26,7 @@ namespace DS.ScriptableObjects
             IsStartingDialogue = isStartingDialogue;
             IsEndingDialogue = isEndingDialogue;
             AudioClip = audioClip;
-            EndID = endID;
+            EventID = eventID;
         }
     }
 }

@@ -21,4 +21,4 @@ MonoBehaviour:
   <IsStartingDialogue>k__BackingField: 0
   <IsEndingDialogue>k__BackingField: 1
   <AudioClip>k__BackingField: {fileID: 8300000, guid: 263cbc1cab701284190f5100f1699478, type: 3}
-  <EndID>k__BackingField: 1
+  <EventID>k__BackingField: 2

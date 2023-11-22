@@ -1,18 +1,16 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Linq;
 
 namespace DS
 {
     using Enumerations;
     using ScriptableObjects;
-    using System;
-    using System.Collections;
-    using System.Globalization;
-    using System.Text;
-    using Unity.VisualScripting;
 
     public class DSDialogue : MonoBehaviour
     {
@@ -49,13 +47,16 @@ namespace DS
         [SerializeField] private AudioClip didNotHearClip;
         [SerializeField] private AudioClip didNotUnderstandClip;
 
-        // UnityEvent
-        [SerializeField] private UnityEvent OnDialogueFinishedEvent;
-
         //STT Vosk
         [SerializeField] private STTMicController sttMicController;
 
+        // UnityEvent
+        [SerializeField] private UnityEvent OnDialogueEventIndex1;
+        [SerializeField] private UnityEvent OnDialogueEventIndex2;
+        [SerializeField] private UnityEvent OnDialogueFinishedEvent;
+
         private AudioSource audioSource;
+
 
         private void Start()
         {
@@ -84,7 +85,7 @@ namespace DS
         {
             if (Input.GetKeyDown(KeyCode.J))
             {
-                RestartDialogue();
+                //RestartDialogue();
             }
         }
 
@@ -98,8 +99,14 @@ namespace DS
                     Debug.Log($"Dialogue Choice {dialogue.Choices[choiceIndex].Text} was selected");
                 }
 
+                //If placed here, it will happen right before next dialogue
+                InvokeEventDialogue();
+
                 dialogue = nextDialogue;
                 DisplayTextCurrentDialogue();
+
+                //If placed here, it will happen right when the dialogue appears
+                //InvokeEventDialogue();
 
                 //Stop then Start Audio
                 StopCoroutine(PlayAudioCurrentDialogue());
@@ -107,8 +114,28 @@ namespace DS
             }
             else
             {
-                DialogueFinished(); //Can use this to trigger events
+                DialogueFinished(); //Can use this to trigger events - old version
                 dialogueDisplayText.text = "";
+            }
+        }
+
+        private void InvokeEventDialogue()
+        {
+            //If Event ID is not 0, then an event is expected
+            if (dialogue.EventID > 0)
+            {
+                int eventID = dialogue.EventID;
+                switch (eventID)
+                {
+                    case 1:
+                        OnDialogueEventIndex1?.Invoke();
+                        break;
+                    case 2:
+                        OnDialogueEventIndex2?.Invoke();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -148,10 +175,10 @@ namespace DS
                 if (dialogueInteractionType == DialogueInteractionType.Speaking)
                 {
                     //Activate STT Mic
-                    sttMicController.gameObject.SetActive(true);                    
+                    sttMicController.gameObject.SetActive(true);
 
                     //Optional, start recording
-                    //StartCoroutine(sttMicController.ToggleRecording(3));
+                    StartCoroutine(sttMicController.ToggleRecordingCoroutine(3));
                 }
             }
             else //Otherwise deactivate choice text
@@ -251,6 +278,7 @@ namespace DS
             audioSource.Play();
 
             yield break;
+
             //I added this to repeat the question, but maybe it's weird to do that
 
             //yield return new WaitForSeconds(defaultAnswerClip.length + 3);

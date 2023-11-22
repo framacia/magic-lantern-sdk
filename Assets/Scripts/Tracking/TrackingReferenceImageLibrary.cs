@@ -37,7 +37,8 @@ public class TrackingReferenceImageLibrary : MonoBehaviour
         foreach (TrackingReferenceImage referenceImage in trackingReferenceImageList)
         {
             Texture2D compressed = referenceImage.Image;
-            Texture2D tex = compressed.DeCompress();
+            //Texture2D tex = compressed.DeCompress();
+            Texture2D tex = DeCompress(compressed); //If this works you can delete extension method below
 
             byte[] imageBytes = tex.EncodeToPNG();
             string imageName = referenceImage.ID;
@@ -48,8 +49,6 @@ public class TrackingReferenceImageLibrary : MonoBehaviour
             processImages(imageBytesPtr, imageBytes.Length, imageName);
 
             Marshal.FreeHGlobal(imageBytesPtr);
-
-
         }
 
         //Load back into texture
@@ -59,11 +58,8 @@ public class TrackingReferenceImageLibrary : MonoBehaviour
         //convertedTexture.Apply();
         //renderer.material.mainTexture = convertedTexture;
     }
-}
 
-public static class ExtensionMethod
-{
-    public static Texture2D DeCompress(this Texture2D source)
+    private Texture2D DeCompress(Texture2D source)
     {
         RenderTexture renderTex = RenderTexture.GetTemporary(
                     source.width,
@@ -84,4 +80,25 @@ public static class ExtensionMethod
     }
 }
 
+//public static class ExtensionMethod
+//{
+//    public static Texture2D DeCompress(this Texture2D source)
+//    {
+//        RenderTexture renderTex = RenderTexture.GetTemporary(
+//                    source.width,
+//                    source.height,
+//                    0,
+//                    RenderTextureFormat.Default,
+//                    RenderTextureReadWrite.Linear);
 
+//        Graphics.Blit(source, renderTex);
+//        RenderTexture previous = RenderTexture.active;
+//        RenderTexture.active = renderTex;
+//        Texture2D readableText = new Texture2D(source.width, source.height);
+//        readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
+//        readableText.Apply();
+//        RenderTexture.active = previous;
+//        RenderTexture.ReleaseTemporary(renderTex);
+//        return readableText;
+//    }
+//}

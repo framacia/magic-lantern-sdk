@@ -167,7 +167,7 @@ namespace DS.Utilities
                 DialogueType = node.DialogueType,
                 Position = node.GetPosition().position,
                 AudioClip = node.AudioClip,
-                EndID = node.EndID,
+                EventID = node.EventID,
             };
 
             graphData.Nodes.Add(nodeData);
@@ -198,7 +198,7 @@ namespace DS.Utilities
                 node.IsStartingNode(),
                 node.IsEndingNode(),
                 node.AudioClip,
-                node.EndID
+                node.EventID
             );
 
             createdDialogues.Add(node.ID, dialogue);
@@ -331,7 +331,7 @@ namespace DS.Utilities
                 node.Choices = choices;
                 node.Text = nodeData.Text;
                 node.AudioClip = nodeData.AudioClip;
-                node.EndID = nodeData.EndID;
+                node.EventID = nodeData.EventID;
 
                 node.Draw();
 

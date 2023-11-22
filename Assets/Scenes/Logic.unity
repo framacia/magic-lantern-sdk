@@ -525,7 +525,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1992890457
 Transform:
   m_ObjectHideFlags: 0
@@ -552,6 +552,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 242660471381394438, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1028620591269512488, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -570,7 +574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6885840636511614686, guid: 79cecb298a5e3bf40a2048ff98890029, type: 3}
       propertyPath: yRectangle
@@ -948,7 +952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1149350298963853579, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: loadOnStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1619379334752497443, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: sceneId
@@ -993,6 +997,10 @@ PrefabInstance:
     - target: {fileID: 1735666250757421351, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2169312427746055409, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2985437891254325974, guid: f2b7cdb81f9566e4196bd9d7706ce54c, type: 3}
       propertyPath: fadeToBlackTexture

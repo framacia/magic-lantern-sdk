@@ -17,6 +17,6 @@ namespace DS.Data.Save
         [field: SerializeField] public DSDialogueType DialogueType { get; set; }
         [field: SerializeField] public Vector2 Position { get; set; }
         [field: SerializeField] public AudioClip AudioClip { get; set; }
-        [field: SerializeField] public int EndID { get; set; }
+        [field: SerializeField] public int EventID { get; set; }
     }
 }

@@ -15,17 +15,6 @@ MonoBehaviour:
   <FileName>k__BackingField: GuardWall
   <Groups>k__BackingField: []
   <Nodes>k__BackingField:
-  - <ID>k__BackingField: c5d70c3b-4058-4143-9eaf-f6253ad3d27b
-    <Name>k__BackingField: 2
-    <Text>k__BackingField: "\xA1Con lo que nos ha costado construirlo!"
-    <Choices>k__BackingField:
-    - <Text>k__BackingField: Next Dialogue
-      <NodeID>k__BackingField: 8dd93a41-0d48-4a3a-813e-a2385e1788cc
-    <GroupID>k__BackingField: 
-    <DialogueType>k__BackingField: 0
-    <Position>k__BackingField: {x: 913, y: 341}
-    <AudioClip>k__BackingField: {fileID: 8300000, guid: 92cf06b00dfc34f41b03a33bf6cb752d, type: 3}
-    <EndID>k__BackingField: 0
   - <ID>k__BackingField: 8dd93a41-0d48-4a3a-813e-a2385e1788cc
     <Name>k__BackingField: 3
     <Text>k__BackingField: "\xBFMe ayudar\xE1s a arreglarlo? Creo que ser\xEDa lo
@@ -39,7 +28,7 @@ MonoBehaviour:
     <DialogueType>k__BackingField: 1
     <Position>k__BackingField: {x: 1686, y: 341}
     <AudioClip>k__BackingField: {fileID: 8300000, guid: a58dd88b75a439746ab528956b1a2499, type: 3}
-    <EndID>k__BackingField: 0
+    <EventID>k__BackingField: 0
   - <ID>k__BackingField: b830738c-76b5-4b53-b2d8-26fc4cb35bc0
     <Name>k__BackingField: 1
     <Text>k__BackingField: "\xA1Hey! \xBFQu\xE9 has hecho con el muro?"
@@ -50,7 +39,7 @@ MonoBehaviour:
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 233, y: 266}
     <AudioClip>k__BackingField: {fileID: 8300000, guid: 49b8ee7ba2f8f2d4c9ff12a2cc427ca2, type: 3}
-    <EndID>k__BackingField: 0
+    <EventID>k__BackingField: 1
   - <ID>k__BackingField: a0de59c6-da75-4955-b4e0-2b5cfd82a210
     <Name>k__BackingField: 4A
     <Text>k__BackingField: "\xA1Gracias!"
@@ -61,7 +50,7 @@ MonoBehaviour:
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 2412, y: 264}
     <AudioClip>k__BackingField: {fileID: 8300000, guid: e2da0cf6d91eb0346a5b7cae02c53a3e, type: 3}
-    <EndID>k__BackingField: 0
+    <EventID>k__BackingField: 0
   - <ID>k__BackingField: 2c9ec70d-e1a1-43a8-b5e7-7582a3f50703
     <Name>k__BackingField: 4B
     <Text>k__BackingField: "Pues qu\xE9 mal \xBFno?"
@@ -72,13 +61,24 @@ MonoBehaviour:
     <DialogueType>k__BackingField: 0
     <Position>k__BackingField: {x: 2497, y: 574}
     <AudioClip>k__BackingField: {fileID: 8300000, guid: 263cbc1cab701284190f5100f1699478, type: 3}
-    <EndID>k__BackingField: 1
+    <EventID>k__BackingField: 2
+  - <ID>k__BackingField: c5d70c3b-4058-4143-9eaf-f6253ad3d27b
+    <Name>k__BackingField: 2
+    <Text>k__BackingField: "\xA1Con lo que nos ha costado construirlo!"
+    <Choices>k__BackingField:
+    - <Text>k__BackingField: Next Dialogue
+      <NodeID>k__BackingField: 8dd93a41-0d48-4a3a-813e-a2385e1788cc
+    <GroupID>k__BackingField: 
+    <DialogueType>k__BackingField: 0
+    <Position>k__BackingField: {x: 913, y: 341}
+    <AudioClip>k__BackingField: {fileID: 8300000, guid: 92cf06b00dfc34f41b03a33bf6cb752d, type: 3}
+    <EventID>k__BackingField: 2
   <OldGroupNames>k__BackingField: []
   <OldUngroupedNodeNames>k__BackingField:
-  - 2
   - 3
   - 1
   - 4A
   - 4B
+  - 2
   <OldGroupedNodeNames>k__BackingField:
     list: []
