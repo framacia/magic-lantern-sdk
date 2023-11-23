@@ -71,7 +71,10 @@ public class Placeable : Interactable
     public void StartPlacingObject(GameObject other)
     {
         pendingPlacedObject = other;
-        iTimer.StartInteraction();
+
+        if (interactionType == InteractionType.Dwell)
+            iTimer.StartInteraction();
+
         AddOutlineMaterial(displayMesh.GetComponent<Renderer>());
     }
 
@@ -113,5 +116,22 @@ public class Placeable : Interactable
     public void UpdatePlacing()
     {
         UpdateOutlineFill(displayMesh.GetComponent<Renderer>());
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+
+    }
+
+    private void Update()
+    {
+        if (pendingPlacedObject == null || interactionType != InteractionType.Button)
+            return;
+
+        //Button Place
+        if (Input.GetMouseButtonDown(0))
+        {
+            iTimer.OnFinishInteraction();
+        }
     }
 }

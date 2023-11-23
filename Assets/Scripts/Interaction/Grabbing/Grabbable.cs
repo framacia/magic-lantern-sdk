@@ -62,7 +62,9 @@ public abstract class Grabbable : Interactable
             return false;
 
         attemptingToGrab = true;
-        iTimer.StartInteraction();
+
+        if (interactionType == InteractionType.Dwell)
+            iTimer.StartInteraction();
 
         //Set outline material
         if (outlineMaterial != null)
@@ -186,6 +188,7 @@ public abstract class Grabbable : Interactable
     //Used to update the fill rate of the placeable outline material
     private void OnTriggerStay(Collider other)
     {
+        //Pleaceble
         Placeable p = other.GetComponent<Placeable>();
         if (p != null)
         {
@@ -202,5 +205,17 @@ public abstract class Grabbable : Interactable
         //Set outline material
         if (outlineMaterial != null)
             UpdateOutlineFill(renderer);
+    }
+
+    private void Update()
+    {
+        if (!attemptingToGrab || interactionType != InteractionType.Button)
+            return;
+
+        //Button Grab
+        if (Input.GetMouseButtonDown(0))
+        {
+            iTimer.OnFinishInteraction();
+        }
     }
 }

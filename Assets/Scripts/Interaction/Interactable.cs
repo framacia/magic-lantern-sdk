@@ -13,7 +13,7 @@ public abstract class Interactable : MonoBehaviour
     public InteractionTimer iTimer;
 
     [Header("Interaction")]
-    [SerializeField] protected InteractionType interactionType;
+    [SerializeField] public InteractionType interactionType;
     [SerializeField] protected float requiredInteractionTime = 1.5f;
 
     protected GameObject model;

@@ -277,6 +277,9 @@ namespace DS
             audioSource.clip = defaultAnswerClip;
             audioSource.Play();
 
+            //Optional, start recording
+            StartCoroutine(sttMicController.ToggleRecordingCoroutine(3));
+
             yield break;
 
             //I added this to repeat the question, but maybe it's weird to do that
