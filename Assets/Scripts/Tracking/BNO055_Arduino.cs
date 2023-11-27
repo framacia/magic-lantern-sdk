@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
 using System.IO.Ports;
 using System.Threading;
+using UnityEngine;
 
 public class BNO055_Arduino : MonoBehaviour
 {
@@ -38,7 +38,7 @@ public class BNO055_Arduino : MonoBehaviour
         serialPort.WriteTimeout = 100;
         serialPort.ReadTimeout = 500;
         serialPort.DtrEnable = true;
-        serialPort.RtsEnable = true; 
+        serialPort.RtsEnable = true;
 
         try
         {
@@ -61,46 +61,50 @@ public class BNO055_Arduino : MonoBehaviour
     void Update()
     {
         // Update the rotation of the GameObject based on received quaternion data
-        if (isRunning) {
+        if (isRunning)
+        {
             // if (qxPrev != 0 && qyPrev != 0 && qzPrev != 0) {
             //     double differenceX = Math.Abs(qxPrev - qx);
             //     double differenceY = Math.Abs(qyPrev - qy);
             //     double differenceZ = Math.Abs(qzPrev - qz);
             //     if ((float)differenceX <= maxThreshold && (float)differenceY <= maxThreshold && (float)differenceZ <= maxThreshold) {
-                    Quaternion remappedImuRotation = new Quaternion((float)qy, -(float)qz, -(float)qx, (float)qw);
-                    if (initialImuRotation == Vector3.zero) {
-                        initialImuRotation = remappedImuRotation.eulerAngles;
-                    }
+            Quaternion remappedImuRotation = new Quaternion((float)qy, -(float)qz, -(float)qx, (float)qw);
+            if (initialImuRotation == Vector3.zero)
+            {
+                initialImuRotation = remappedImuRotation.eulerAngles;
+            }
 
-                    Vector3 correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
+            Vector3 correctedImuRotation = remappedImuRotation.eulerAngles - initialImuRotation;
 
-                    transform.localEulerAngles = correctedImuRotation + camStartEuler;
+            print("IMU Rotation: " + correctedImuRotation);
 
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        Debug.Log("Restarted rotation");        
-                        initialImuRotation = remappedImuRotation.eulerAngles;
-                    }
-                }
-            // }
-            // qxPrev = qx;
-            // qyPrev = qy;
-            // qzPrev = qz;
-            // qwPrev = qw;
+            transform.localEulerAngles = correctedImuRotation + camStartEuler;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("Restarted rotation");
+                initialImuRotation = remappedImuRotation.eulerAngles;
+            }
+        }
+        // }
+        // qxPrev = qx;
+        // qyPrev = qy;
+        // qzPrev = qz;
+        // qwPrev = qw;
         // }
 
 
-        
+
     }
 
     void ReadSerialData()
     {
         while (isRunning)
-        {  
+        {
             try
             {
                 string data = serialPort.ReadLine();
-                Debug.Log("data: "+ data);
+                Debug.Log("data: " + data);
                 string[] values = data.Split(',');
 
                 if (values.Length == 4 && double.TryParse(values[0], out qx) && double.TryParse(values[1], out qy)

@@ -54,7 +54,7 @@ public class PoseFollower : MonoBehaviour
         }
 
         Vector3 eulerDiff = EulerRot(rosRot) - rosStartEuler;
-        transform.localRotation = Quaternion.Euler(camStartEuler + eulerDiff);
+        //transform.localRotation = Quaternion.Euler(camStartEuler + eulerDiff);
         transform.localPosition = rosPos - camStartPos;
     }
 }

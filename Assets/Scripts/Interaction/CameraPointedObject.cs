@@ -56,7 +56,8 @@ public class CameraPointedObject : Interactable
         }
 
         Vector3 camToThis = this.transform.position - camera.transform.position;
-        float angle = Vector3.Angle(Quaternion.AngleAxis(-12.5f, Vector3.right) * camera.transform.forward, camToThis); //APPLIED LENS SHIFT OFFSET, TODO REVERT WHEN RECEIVE ONAXIS PROJECTOR
+        float angle = Vector3.Angle(camera.transform.forward, camToThis); //WITHOUT LENS SHIFT OFFSET
+        //float angle = Vector3.Angle(Quaternion.AngleAxis(-12.5f, Vector3.right) * camera.transform.forward, camToThis); //APPLIED LENS SHIFT OFFSET, TODO REVERT WHEN RECEIVE ONAXIS PROJECTOR
 
         //Check if there is a collider blocking the raycast. The camera pointed object does not use collider.
         bool raycastResult = false;
