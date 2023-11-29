@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class RigidbodyInteraction : MonoBehaviour
 {
+    [SerializeField] private bool printVelocity;
+
     Rigidbody rb;
     Camera cam;
 
@@ -29,5 +31,11 @@ public class RigidbodyInteraction : MonoBehaviour
         Vector3 forceVector = cam.transform.forward * force;
 
         rb.AddForce(forceVector);
+    }
+
+    private void Update()
+    {
+        if (printVelocity)
+            print(rb.velocity);
     }
 }

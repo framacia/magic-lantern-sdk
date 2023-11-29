@@ -33,9 +33,11 @@ public abstract class Grabbable : Interactable
     [field: SerializeField]
     protected float lerpScale { get; private set; } = 7.0f;
 
-    //TODO Should be in parent class
     [field: Header("Event")]
     [SerializeField] protected UnityEvent OnObjectGrabbedEvent;
+    [field: Tooltip("This event is called when the button is pressed WHILE the Grabbable is currently being grabbed")]
+    [SerializeField] protected UnityEvent OnButtonDownWhileGrabbedEvent;
+    [SerializeField] protected UnityEvent OnButtonUpWhileGrabbedEvent;
 
     // ---- Grab subscribable void actions
     public Action OnStartGrabbing;
@@ -209,13 +211,26 @@ public abstract class Grabbable : Interactable
 
     private void Update()
     {
-        if (!attemptingToGrab || interactionType != InteractionType.Button)
-            return;
-
-        //Button Grab
         if (Input.GetMouseButtonDown(0))
         {
-            iTimer.OnFinishInteraction();
+            //Button Grab
+            if (attemptingToGrab && interactionType == InteractionType.Button)
+            {
+                iTimer.OnFinishInteraction();
+            }
+
+            if(state == GrabbableState.GRABBED)
+            {
+                OnButtonDownWhileGrabbedEvent?.Invoke();
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (state == GrabbableState.GRABBED)
+            {
+                OnButtonUpWhileGrabbedEvent?.Invoke();
+            }
         }
     }
 }
